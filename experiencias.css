@@ -1,0 +1,17 @@
+/* experiencias.css */
+/* Si necesitas estilos específicos para la página de listado de experiencias, añádelos aquí.
+   Muchos estilos de .filters-card y .listing-card pueden ser reutilizados de alquileres.css si los hiciste globales,
+   o de style.css. */
+
+#filters-sidebar-experiencias .filters-card { /* Para que los filtros se peguen */
+    position: sticky; 
+    top: 100px;      
+    max-height: calc(100vh - 120px); 
+    overflow-y: auto; 
+}
+@media (max-width: 767.98px) {
+    #filters-sidebar-experiencias .filters-card {
+        position: static;
+        margin-bottom: 2rem;
+    }
+}

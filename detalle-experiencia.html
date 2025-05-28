@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Experiencia - Turismo Seguro San Juan</title> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="detalle-alquiler.css"> Si quieres reutilizar algunos estilos -->
+    <link rel="stylesheet" href="detalle-experiencia.css"> <!-- CSS específico -->
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+        <!-- ... tu navbar ... (asegúrate que "Experiencias" esté activo o el enlace a index#experiencias) -->
+    </nav>
+
+    <main class="container mt-5 pt-5" id="experience-details-container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1 class="mb-2" id="experienceTitle">Cargando nombre de la experiencia...</h1>
+                <p class="text-muted mb-4"><i class="fas fa-map-marker-alt me-1"></i> <span id="experienceLocation">Cargando ubicación...</span></p>
+
+                <div id="experienceImageCarousel" class="carousel slide shadow-sm mb-4" data-bs-ride="carousel">
+                    <div class="carousel-indicators" id="experienceImageCarouselIndicators"></div>
+                    <div class="carousel-inner rounded" id="experienceImageCarouselInner">
+                        <div class="carousel-item active">
+                            <img src="https://via.placeholder.com/800x500/cccccc/000000?text=Cargando+Imagen" class="d-block w-100" alt="Imagen principal">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#experienceImageCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#experienceImageCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+                
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Sobre esta Experiencia</h4>
+                        <p id="experienceDescription">Cargando descripción detallada...</p>
+                        <p><strong>Duración Estimada:</strong> <span id="experienceDuration">...</span></p>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">¿Qué Incluye?</h4>
+                        <ul class="list-unstyled" id="experienceIncludes">
+                            <!-- Se carga con JS -->
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card shadow-sm mb-4" id="notIncludesSection" style="display:none;">
+                    <div class="card-body">
+                        <h4 class="card-title">¿Qué NO Incluye?</h4>
+                        <ul class="list-unstyled" id="experienceNotIncludes">
+                            <!-- Se carga con JS -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm mb-4" id="recommendationsSection" style="display:none;">
+                    <div class="card-body">
+                        <h4 class="card-title">Recomendaciones</h4>
+                        <ul class="list-unstyled" id="experienceRecommendations">
+                            <!-- Se carga con JS -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="col-lg-4" id="experience-sidebar">
+                <div class="card shadow-sm sticky-top" style="top: 100px;">
+                    <div class="card-body text-center">
+                        <h3 class="card-title price text-primary mb-2" id="experiencePrice">Consultar</h3>
+                        
+                        <div class="alert alert-success d-flex align-items-center my-3" role="alert">
+                           <i class="fas fa-check-circle fa-2x me-3"></i>
+                           <div>
+                               <strong>Operador Verificado por TS</strong><br>
+                               <small>Esta experiencia es ofrecida por un proveedor validado.</small>
+                           </div>
+                        </div>
+
+                        <div id="verifiedOperatorSection" style="display:none;">
+                            <h5>Contacta al Operador:</h5>
+                            <p class="fw-bold fs-5" id="verifiedOperatorName">Nombre del Operador</p>
+                            <a href="#" id="verifiedOperatorWhatsapp" class="btn btn-success w-100 mb-2" target="_blank" style="display:none;">
+                                <i class="fab fa-whatsapp me-2"></i> WhatsApp
+                            </a>
+                            <a href="#" id="verifiedOperatorEmail" class="btn btn-outline-primary w-100" style="display:none;">
+                                <i class="fas fa-envelope me-2"></i> Enviar Email
+                            </a>
+                        </div>
+                        
+                        <hr class="my-4">
+                        <p class="small text-muted">¿Dudas generales sobre la experiencia o el proceso de Turismo Seguro? <a href="index.html#contacto">Contáctanos</a>.</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white mt-5">
+       <!-- ... tu footer ... -->
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="detalle-experiencia.js"></script> 
+</body>
+</html>

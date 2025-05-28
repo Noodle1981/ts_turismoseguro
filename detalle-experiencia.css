@@ -1,0 +1,12 @@
+/* detalle-experiencia.css */
+#experienceImageCarousel .carousel-item img {
+    max-height: 450px;
+    object-fit: cover;
+}
+
+#experienceIncludes li i,
+#experienceNotIncludes li i,
+#experienceRecommendations li i {
+    width: 20px;
+    text-align: center;
+}

@@ -47,7 +47,7 @@
                         <a class="nav-link" href="#contacto">Contacto</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-primary text-white ms-lg-2" href="#">Solicitar Validador</a>
+                        <a class="nav-link btn btn-primary text-white ms-lg-2" href="#">Solicitar</a>
                     </li>
                 </ul>
             </div>
@@ -107,7 +107,7 @@
         </div>
     </section>
 
-    <!-- Sección Alquileres Destacados -->
+        <!-- Sección Alquileres Destacados -->
     <section id="alquileres" class="py-5 bg-light">
         <div class="container">
             <div class="text-center mb-5">
@@ -115,69 +115,70 @@
                 <p class="lead text-muted">Encuentra tu hogar temporal ideal, con la seguridad que mereces.</p>
             </div>
             <div class="row g-4">
-                <!-- Ejemplo de Card de Alquiler (repetir para más) -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card listing-card shadow-sm">
+                <!-- Alquiler 1: Medanito (ID: 123) -->
+                <div class="col-md-6 col-lg-4" data-id="123"> <!-- Añadido data-id aquí también, aunque no se use para filtrar en home -->
+                    <div class="card listing-card shadow-sm h-100">
                         <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
-                        <img src="img/propiedades/medanopileta.jpg" class="card-img-top" alt="Departamento Moderno">
-                        <div class="card-body">
-                            <h5 class="card-title">Refréscate en el Medanito de Rason</h5>
-                            <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Capital, San Juan</p>
-                            <p class="card-text price h4 text-primary">$XX.XXX <span class="fs-6 text-muted">por el día</span></p>
+                        <img src="img/propiedades/medanopileta.jpg" class="card-img-top" alt="Quinta en El Medanito">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Refréscate en el Medanito</h5>
+                            <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Rawson, San Juan</p>
+                            <p class="card-text price h4 text-primary">$25.000 <span class="fs-6 text-muted">por día</span></p>
                             <ul class="list-inline-item-separated">
-                                <li><i class="fas fa-bed"></i> 2 hab.</li>
-                                <li><i class="fas fa-bath"></i> 1 baño</li>
-                                <li><i class="fas fa-users"></i> 4 pers.</li>
+                                <li><i class="fas fa-users"></i> 15 pers. (día)</li>
+                                <li><i class="fas fa-bath"></i> 2 baños</li>
+                                <li><i class="fas fa-swimmer"></i> Piscina</li>
                             </ul>
-                            <a href="#" class="btn btn-primary w-100 mt-3">Ver Detalles y Reservar</a>
+                            <a href="detalle-alquiler.html?id=123" class="btn btn-primary w-100 mt-auto">Ver Detalles y Reservar</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card listing-card shadow-sm">
+
+                <!-- Alquiler 2: La Posada del Angel (ID: 456) -->
+                <div class="col-md-6 col-lg-4" data-id="456">
+                    <div class="card listing-card shadow-sm h-100">
                          <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
-                        <img src="img/propiedades/laposadadelangel.jpg" class="card-img-top" alt="Cabaña en Calingasta">
-                        <div class="card-body">
+                        <img src="img/propiedades/laposadadelangel.jpg" class="card-img-top" alt="La Posada del Angel en Zonda">
+                        <div class="card-body d-flex flex-column">
                             <h5 class="card-title">La Posada del Angel</h5>
-                            <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Zonda</p>
-                            <p class="card-text price h4 text-primary">$YY.YYY <span class="fs-6 text-muted">/noche</span></p>
+                            <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Zonda, San Juan</p>
+                            <p class="card-text price h4 text-primary">$35.000 <span class="fs-6 text-muted">/noche</span></p>
                              <ul class="list-inline-item-separated">
                                 <li><i class="fas fa-bed"></i> 3 hab.</li>
                                 <li><i class="fas fa-bath"></i> 2 baños</li>
                                 <li><i class="fas fa-mountain"></i> Vistas</li>
                             </ul>
-                            <a href="#" class="btn btn-primary w-100 mt-3">Ver Detalles y Reservar</a>
+                            <a href="detalle-alquiler.html?id=456" class="btn btn-primary w-100 mt-auto">Ver Detalles y Reservar</a>
                         </div>
                     </div>
                 </div>
-                <!-- Añadir más cards aquí -->
-                 <div class="col-md-6 col-lg-4 d-none d-lg-block">
-                    <div class="card listing-card shadow-sm">
+
+                <!-- Alquiler 3: Casona la Robertita (ID: 789) -->
+                 <div class="col-md-6 col-lg-4 d-none d-lg-block" data-id="789"> <!-- d-none d-lg-block para que solo aparezca en pantallas grandes -->
+                    <div class="card listing-card shadow-sm h-100">
                          <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
-                        <img src="img/propiedades/CasonalaRobertita.jpg" class="card-img-top" alt="Casa con Piscina">
-                        <div class="card-body">
+                        <img src="img/propiedades/CasonalaRobertita.jpg" class="card-img-top" alt="Casona la Robertita en Santa Lucía">
+                        <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Casona la Robertita</h5>
-                            <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i>Santa Lucia</p>
-                            <p class="card-text price h4 text-primary">$ZZ.ZZZ <span class="fs-6 text-muted">/noche</span></p>
+                            <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Santa Lucía, San Juan</p>
+                            <p class="card-text price h4 text-primary">$60.000 <span class="fs-6 text-muted">/noche</span></p>
                              <ul class="list-inline-item-separated">
                                 <li><i class="fas fa-bed"></i> 4 hab.</li>
                                 <li><i class="fas fa-bath"></i> 3 baños</li>
                                 <li><i class="fas fa-swimmer"></i> Piscina</li>
                             </ul>
-                            <a href="#" class="btn btn-primary w-100 mt-3">Ver Detalles y Reservar</a>
+                            <a href="detalle-alquiler.html?id=789" class="btn btn-primary w-100 mt-auto">Ver Detalles y Reservar</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="text-center mt-4">
-                <a href="#" class="btn btn-outline-primary btn-lg">Ver Todos los Alquileres</a>
+                <a href="alquileres.html" class="btn btn-outline-primary btn-lg">Ver Todos los Alquileres</a> <!-- Enlace a alquileres.html -->
             </div>
         </div>
     </section>
 
-    <!-- FIN Sección Alquileres Destacados -->
-
-    <!-- Sección Explorar por Departamento -->
+        <!-- Sección Explorar por Departamento -->
     <section id="departamentos-provincia" class="py-5">
         <div class="container">
             <div class="text-center mb-5">
@@ -188,209 +189,209 @@
                 
                 <!-- Departamento: Albardón -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Albardón" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/albardon.jpg" class="card-img-top department-card-img" alt="Imagen de Albardón">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Albardón</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Albardón">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Angaco -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Angaco" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/angaco.jpg" class="card-img-top department-card-img" alt="Imagen de Angaco">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Angaco</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Angaco">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Calingasta -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Calingasta" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/calingasta.jpg" class="card-img-top department-card-img" alt="Imagen de Calingasta">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Calingasta</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Calingasta">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Capital -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Capital" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/capital.jpg" class="card-img-top department-card-img" alt="Imagen de Capital">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Capital</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Capital">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Caucete -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Caucete" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/caucete.jpg" class="card-img-top department-card-img" alt="Imagen de Caucete">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Caucete</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Caucete">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Chimbas -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Chimbas" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/chimbas.jpg" class="card-img-top department-card-img" alt="Imagen de Chimbas">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Chimbas</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Chimbas">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Iglesia -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Iglesia" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/iglesia.jpg" class="card-img-top department-card-img" alt="Imagen de Iglesia">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Iglesia</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Iglesia">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Jáchal -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Jáchal" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/jachal.jpg" class="card-img-top department-card-img" alt="Imagen de Jáchal">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Jáchal</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Jáchal">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Nueve de Julio -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Nueve de Julio" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/9_de_julio.jpg" class="card-img-top department-card-img" alt="Imagen de Nueve de Julio">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">9 de Julio</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Nueve de Julio">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Pocito -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Pocito" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/pocito.jpg" class="card-img-top department-card-img" alt="Imagen de Pocito">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Pocito</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Pocito">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
                 
                 <!-- Departamento: Rawson -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Rawson" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/rawson.jpg" class="card-img-top department-card-img" alt="Imagen de Rawson">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Rawson</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Rawson">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Rivadavia -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Rivadavia" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/rivadavia.jpg" class="card-img-top department-card-img" alt="Imagen de Rivadavia">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Rivadavia</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Rivadavia">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: San Martín -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=San Martín" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/san_martin.jpg" class="card-img-top department-card-img" alt="Imagen de San Martín">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">San Martín</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="San Martín">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
                 
                 <!-- Departamento: Santa Lucía -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Santa Lucía" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/santa_lucia.jpg" class="card-img-top department-card-img" alt="Imagen de Santa Lucía">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Santa Lucía</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Santa Lucía">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Sarmiento -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Sarmiento" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/sarmiento.JPG" class="card-img-top department-card-img" alt="Imagen de Sarmiento">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Sarmiento</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Sarmiento">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
                 
                 <!-- Departamento: Ullum -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Ullum" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/ullum.jpg" class="card-img-top department-card-img" alt="Imagen de Ullum">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Ullum</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Ullum">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Valle Fértil -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Valle Fértil" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/valle_fertil.jpg" class="card-img-top department-card-img" alt="Imagen de Valle Fértil">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Valle Fértil</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Valle Fértil">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Veinticinco de Mayo -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
+                    <a href="alquileres.html?departamento=Veinticinco de Mayo" class="card department-card text-decoration-none text-dark h-100">
                         <img src="img/departamentos/25_de_mayo.jpg" class="card-img-top department-card-img" alt="Imagen de Veinticinco de Mayo">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">25 de Mayo</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Veinticinco de Mayo">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Departamento: Zonda -->
                 <div class="col">
-                    <a href="#" class="card department-card text-decoration-none text-dark h-100">
-                        <img src="/img/departamentos/zonda.jpg" class="card-img-top department-card-img" alt="Imagen de Zonda">
+                    <a href="alquileres.html?departamento=Zonda" class="card department-card text-decoration-none text-dark h-100">
+                        <img src="img/departamentos/zonda.jpg" class="card-img-top department-card-img" alt="Imagen de Zonda"> <!-- Corregí la ruta de la imagen quitando la barra inicial -->
                         <div class="card-body text-center">
                             <h5 class="card-title mb-2">Zonda</h5>
-                            <span class="badge bg-primary">+0 Ofertas</span>
+                            <span class="badge bg-primary" data-count-depto="Zonda">+0 Ofertas</span>
                         </div>
                     </a>
                 </div>
@@ -408,8 +409,8 @@
                 <h2 class="section-title">Experiencias Únicas y <span class="text-primary">Seguras</span></h2>
                 <p class="lead text-muted">Descubre lo mejor de San Juan con operadores turísticos validados.</p>
             </div>
-            <!-- AQUÍ ES DONDE SE AÑADE EL ROW -->
             <div class="row g-4"> 
+                <!-- Tour Estrellas Leoncito (ID: exp101) -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card listing-card shadow-sm h-100">
                         <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
@@ -418,11 +419,12 @@
                             <h5 class="card-title">Tour de las estrellas en el Parque Nacional El Leoncito</h5>
                             <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Barreal, Calingasta</p>
                             <p class="card-text small">Una noche mágica bajo uno de los cielos más limpios del mundo. Observación astronómica y contacto con la naturaleza.</p>
-                            <a href="#" class="btn btn-primary w-100 mt-auto">Descubrir Experiencia</a>
+                            <a href="detalle-experiencia.html?id=exp101" class="btn btn-primary w-100 mt-auto">Descubrir Experiencia</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Excursión Ischigualasto (ID: exp102) -->
                 <div class="col-md-6 col-lg-4">
                      <div class="card listing-card shadow-sm h-100">
                         <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
@@ -431,11 +433,12 @@
                             <h5 class="card-title">Excursión a Ischigualasto (Valle de la Luna)</h5>
                             <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Valle Fértil</p>
                             <p class="card-text small">Viaja millones de años al pasado en un paisaje de otro planeta, Patrimonio de la Humanidad.</p>
-                            <a href="#" class="btn btn-primary w-100 mt-auto">Descubrir Experiencia</a>
+                            <a href="detalle-experiencia.html?id=exp102" class="btn btn-primary w-100 mt-auto">Descubrir Experiencia</a>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Santuario Difunta Correa (ID: exp103) -->
                 <div class="col-md-6 col-lg-4">
                      <div class="card listing-card shadow-sm h-100">
                         <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
@@ -444,11 +447,12 @@
                             <h5 class="card-title">Santuario Difunta Correa: Fe y Tradición</h5>
                             <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Vallecito, Caucete</p>
                             <p class="card-text small">Conoce uno de los santuarios populares más importantes de Argentina y su conmovedora historia.</p>
-                            <a href="#" class="btn btn-primary w-100 mt-auto">Descubrir Experiencia</a>
+                            <a href="detalle-experiencia.html?id=exp103" class="btn btn-primary w-100 mt-auto">Descubrir Experiencia</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Adrenalina Cuesta del Viento (ID: exp104) -->
                  <div class="col-md-6 col-lg-4">
                      <div class="card listing-card shadow-sm h-100">
                         <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
@@ -457,11 +461,12 @@
                             <h5 class="card-title">Adrenalina en Cuesta del Viento</h5>
                             <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Rodeo, Iglesia</p>
                             <p class="card-text small">Desafía el famoso viento en uno de los mejores spots del mundo para windsurf y kitesurf.</p>
-                            <a href="#" class="btn btn-primary w-100 mt-auto">Descubrir Experiencia</a>
+                            <a href="detalle-experiencia.html?id=exp104" class="btn btn-primary w-100 mt-auto">Descubrir Experiencia</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Carrovelismo Pampa El Leoncito (ID: exp105) -->
                 <div class="col-md-6 col-lg-4">
                      <div class="card listing-card shadow-sm h-100">
                         <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
@@ -470,11 +475,12 @@
                             <h5 class="card-title">Carrovelismo en la Pampa El Leoncito</h5>
                             <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Barreal, Calingasta</p>
                             <p class="card-text small">Siente la velocidad impulsado por el viento en un paisaje imponente al pie de la cordillera.</p>
-                            <a href="#" class="btn btn-primary w-100 mt-auto">Descubrir Experiencia</a>
+                            <a href="detalle-experiencia.html?id=exp105" class="btn btn-primary w-100 mt-auto">Descubrir Experiencia</a>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Relax Diques (ID: exp106) -->
                 <div class="col-md-6 col-lg-4">
                      <div class="card listing-card shadow-sm h-100">
                         <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
@@ -483,13 +489,13 @@
                             <h5 class="card-title">Relax y Aventura en los Diques</h5>
                             <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Ullum, Zonda, Rivadavia</p>
                             <p class="card-text small">Disfruta de deportes acuáticos, paisajes increíbles y momentos de esparcimiento en los embalses sanjuaninos.</p>
-                            <a href="#" class="btn btn-primary w-100 mt-auto">Descubrir Experiencia</a>
+                            <a href="detalle-experiencia.html?id=exp106" class="btn btn-primary w-100 mt-auto">Descubrir Experiencia</a>
                         </div>
                     </div>
                 </div>
-            </div> <!-- CIERRE DEL ROW -->
+            </div>
              <div class="text-center mt-4">
-                <a href="#" class="btn btn-outline-primary btn-lg">Ver Todas las Experiencias</a>
+                <a href="experiencias-listado.html" class="btn btn-outline-primary btn-lg">Ver Todas las Experiencias</a>
             </div>
         </div>
     </section>
