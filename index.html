@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-لومات">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turismo Seguro San Juan - Alquileres y Experiencias Verificadas</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Font Awesome (para iconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts (Ejemplo: Montserrat y Open Sans) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Tu CSS Personalizado -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-shield-alt me-2 text-primary"></i>Turismo Seguro <span class="ts-badge">TS</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#hero">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#alquileres">Alquileres</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#experiencias">Experiencias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#como-funciona">¿Cómo Funciona?</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-lg-2" href="#">Publicar Anuncio</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero" class="hero-section d-flex align-items-center text-center text-white">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4 animated-text">Descubre San Juan con <span class="highlight">Confianza</span></h1>
+                    <p class="lead mb-5 animated-text-delay">Ofertas de alquileres y turismo 100% verificadas in situ. <br class="d-none d-md-block">¡Tu tranquilidad es nuestra prioridad!</p>
+                    <a href="#alquileres" class="btn btn-lg btn-accent me-2">Ver Alquileres Seguros</a>
+                    <a href="#experiencias" class="btn btn-lg btn-outline-light">Explorar Experiencias</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Por Qué Elegirnos / Propuesta de Valor -->
+    <section id="porque-ts" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">¿Por Qué <span class="text-primary">Turismo Seguro</span>?</h2>
+                <p class="lead text-muted">Te ofrecemos más que un simple listado. Te damos paz mental.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 feature-card">
+                        <div class="card-body text-center">
+                            <div class="feature-icon mb-3"><i class="fas fa-check-circle fa-3x text-success"></i></div>
+                            <h5 class="card-title">Verificación In Situ</h5>
+                            <p class="card-text">Cada propiedad y oferta es validada personalmente por nuestro equipo en San Juan. ¡Cero estafas!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 feature-card">
+                        <div class="card-body text-center">
+                            <div class="feature-icon mb-3"><i class="fas fa-lock fa-3x text-primary"></i></div>
+                            <h5 class="card-title">Transacciones Seguras</h5>
+                            <p class="card-text">Asesoramiento para que tus pagos y acuerdos sean transparentes y protegidos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 feature-card">
+                        <div class="card-body text-center">
+                            <div class="feature-icon mb-3"><i class="fas fa-map-marked-alt fa-3x text-info"></i></div>
+                            <h5 class="card-title">Conocimiento Local</h5>
+                            <p class="card-text">Somos de San Juan. Conocemos los mejores lugares y te ayudamos a evitar sorpresas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Alquileres Destacados -->
+    <section id="alquileres" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Alquileres <span class="text-primary">Verificados</span> en San Juan</h2>
+                <p class="lead text-muted">Encuentra tu hogar temporal ideal, con la seguridad que mereces.</p>
+            </div>
+            <div class="row g-4">
+                <!-- Ejemplo de Card de Alquiler (repetir para más) -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card listing-card shadow-sm">
+                        <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
+                        <img src="/img/albardonofert.jpg" class="card-img-top" alt="Departamento Moderno">
+                        <div class="card-body">
+                            <h5 class="card-title">Departamento Moderno en el Centro</h5>
+                            <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Capital, San Juan</p>
+                            <p class="card-text price h4 text-primary">$XX.XXX <span class="fs-6 text-muted">/noche</span></p>
+                            <ul class="list-inline-item-separated">
+                                <li><i class="fas fa-bed"></i> 2 hab.</li>
+                                <li><i class="fas fa-bath"></i> 1 baño</li>
+                                <li><i class="fas fa-users"></i> 4 pers.</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary w-100 mt-3">Ver Detalles y Reservar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card listing-card shadow-sm">
+                         <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
+                        <img src="https://via.placeholder.com/400x250/90EE90/000000?text=Cabaña+en+Calingasta" class="card-img-top" alt="Cabaña en Calingasta">
+                        <div class="card-body">
+                            <h5 class="card-title">Cabaña Tranquila en Calingasta</h5>
+                            <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Calingasta, San Juan</p>
+                            <p class="card-text price h4 text-primary">$YY.YYY <span class="fs-6 text-muted">/noche</span></p>
+                             <ul class="list-inline-item-separated">
+                                <li><i class="fas fa-bed"></i> 3 hab.</li>
+                                <li><i class="fas fa-bath"></i> 2 baños</li>
+                                <li><i class="fas fa-mountain"></i> Vistas</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary w-100 mt-3">Ver Detalles y Reservar</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Añadir más cards aquí -->
+                 <div class="col-md-6 col-lg-4 d-none d-lg-block">
+                    <div class="card listing-card shadow-sm">
+                         <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
+                        <img src="https://via.placeholder.com/400x250/E0BBE4/000000?text=Casa+con+Piscina" class="card-img-top" alt="Casa con Piscina">
+                        <div class="card-body">
+                            <h5 class="card-title">Casa con Piscina en Rivadavia</h5>
+                            <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Rivadavia, San Juan</p>
+                            <p class="card-text price h4 text-primary">$ZZ.ZZZ <span class="fs-6 text-muted">/noche</span></p>
+                             <ul class="list-inline-item-separated">
+                                <li><i class="fas fa-bed"></i> 4 hab.</li>
+                                <li><i class="fas fa-bath"></i> 3 baños</li>
+                                <li><i class="fas fa-swimmer"></i> Piscina</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary w-100 mt-3">Ver Detalles y Reservar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-outline-primary btn-lg">Ver Todos los Alquileres</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Experiencias Turísticas -->
+    <section id="experiencias" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Experiencias Únicas y <span class="text-primary">Seguras</span></h2>
+                <p class="lead text-muted">Descubre lo mejor de San Juan con operadores turísticos validados.</p>
+            </div>
+            <div class="row g-4">
+                <!-- Ejemplo Card Experiencia -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card listing-card shadow-sm">
+                        <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
+                        <img src="https://via.placeholder.com/400x250/FFDAB9/000000?text=Ruta+del+Vino" class="card-img-top" alt="Ruta del Vino">
+                        <div class="card-body">
+                            <h5 class="card-title">Tour Ruta del Vino Sanjuanino</h5>
+                            <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Valles vitivinícolas</p>
+                            <p class="card-text price h4 text-primary">$A.AAA <span class="fs-6 text-muted">/persona</span></p>
+                            <p class="card-text small">Incluye degustaciones y transporte.</p>
+                            <a href="#" class="btn btn-primary w-100 mt-3">Más Información</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                     <div class="card listing-card shadow-sm">
+                        <div class="listing-badge-verified"><i class="fas fa-check-circle"></i> Verificado TS</div>
+                        <img src="https://via.placeholder.com/400x250/87CEEB/000000?text=Ischigualasto" class="card-img-top" alt="Ischigualasto">
+                        <div class="card-body">
+                            <h5 class="card-title">Excursión a Ischigualasto</h5>
+                            <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> Valle de la Luna</p>
+                            <p class="card-text price h4 text-primary">$B.BBB <span class="fs-6 text-muted">/persona</span></p>
+                            <p class="card-text small">Día completo, guía especializado.</p>
+                            <a href="#" class="btn btn-primary w-100 mt-3">Más Información</a>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Añadir más cards aquí -->
+            </div>
+             <div class="text-center mt-4">
+                <a href="#" class="btn btn-outline-primary btn-lg">Ver Todas las Experiencias</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cómo Funciona -->
+    <section id="como-funciona" class="py-5 bg-primary text-white">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title text-white">Nuestro Proceso de <span class="highlight-light">Validación</span></h2>
+                <p class="lead">Así garantizamos tu tranquilidad en cada paso:</p>
+            </div>
+            <div class="row g-4 align-items-center">
+                <div class="col-md-3 text-center process-step">
+                    <div class="process-icon mb-3"><i class="fas fa-search-location fa-3x"></i></div>
+                    <h5>1. Selección</h5>
+                    <p>Identificamos ofertas prometedoras y contactamos a los anfitriones.</p>
+                </div>
+                <div class="col-md-1 d-none d-md-flex align-items-center justify-content-center">
+                    <i class="fas fa-arrow-right fa-2x opacity-50"></i>
+                </div>
+                <div class="col-md-3 text-center process-step">
+                    <div class="process-icon mb-3"><i class="fas fa-clipboard-check fa-3x"></i></div>
+                    <h5>2. Verificación In Situ</h5>
+                    <p>Visitamos personalmente el lugar. Comprobamos todo: fotos, servicios, seguridad.</p>
+                </div>
+                <div class="col-md-1 d-none d-md-flex align-items-center justify-content-center">
+                     <i class="fas fa-arrow-right fa-2x opacity-50"></i>
+                </div>
+                <div class="col-md-3 text-center process-step">
+                    <div class="process-icon mb-3"><i class="fas fa-shield-alt fa-3x"></i></div>
+                    <h5>3. Aprobación TS</h5>
+                    <p>Solo las ofertas que cumplen nuestros estándares son publicadas con el sello "Verificado TS".</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Call to Action / Testimonios (Opcional pero recomendado) -->
+    <section id="testimonios" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Lo Que Dicen Nuestros <span class="text-primary">Viajeros</span></h2>
+            </div>
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="testimonial-card">
+                            <img src="https://via.placeholder.com/80x80/cccccc/000000?text=User1" alt="Usuario 1" class="testimonial-img">
+                            <p class="testimonial-text">"¡Increíble! Alquilé una cabaña a través de Turismo Seguro y todo fue tal cual lo publicado. La tranquilidad de saber que estaba verificado no tiene precio."</p>
+                            <h5 class="testimonial-author">- Laura G.</h5>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                         <div class="testimonial-card">
+                            <img src="https://via.placeholder.com/80x80/cccccc/000000?text=User2" alt="Usuario 2" class="testimonial-img">
+                            <p class="testimonial-text">"Por fin una plataforma confiable en San Juan. El equipo de TS fue súper atento y la excursión que tomamos fue excelente."</p>
+                            <h5 class="testimonial-author">- Carlos M.</h5>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contacto -->
+    <section id="contacto" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">¿Listo para tu Viaje <span class="text-primary">Seguro</span>?</h2>
+                <p class="lead text-muted">Contáctanos si tienes dudas o quieres publicar tu propiedad.</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form id="contactForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="name" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="subject" class="form-label">Asunto</label>
+                                <input type="text" class="form-control" id="subject" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="message" class="form-label">Mensaje</label>
+                                <textarea class="form-control" id="message" rows="5" required></textarea>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">Enviar Mensaje</button>
+                            </div>
+                        </div>
+                    </form>
+                     <div id="formMessage" class="mt-3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white">
+        <div class="container text-center">
+            <div class="mb-3">
+                <a href="#" class="text-white me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
+                <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                <a href="#" class="text-white"><i class="fab fa-whatsapp fa-lg"></i></a>
+            </div>
+            <p class="mb-0">© <span id="currentYear"></span> Turismo Seguro San Juan. Todos los derechos reservados.</p>
+            <p class="small">Diseñado con <i class="fas fa-heart text-danger"></i> para tu tranquilidad.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle (Popper.js included) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- Tu JS Personalizado -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+/* Fuentes Globales */
+body {
+    font-family: 'Open Sans', sans-serif;
+    padding-top: 70px; /* Ajuste para navbar fija */
+    scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+/* Colores (puedes personalizarlos) */
+:root {
+    --primary-color: #0D6EFD; /* Azul Bootstrap por defecto */
+    --secondary-color: #6c757d; /* Gris Bootstrap */
+    --accent-color: #FFC107;   /* Amarillo/Naranja para acentos */
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --success-color: #198754;
+}
+
+/* Navbar */
+.navbar-brand .ts-badge {
+    font-size: 0.7em;
+    padding: 0.2em 0.5em;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 0.25rem;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+.nav-link.btn-primary {
+    padding: 0.5rem 1rem; /* Ajuste para que se vea mejor como botón */
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://via.placeholder.com/1920x1080/6c757d/ffffff?text=Paisaje+de+San+Juan') no-repeat center center;
+    background-size: cover;
+    min-height: 90vh; /* Ocupa casi toda la pantalla inicial */
+    color: white;
+    position: relative;
+}
+.hero-section .highlight {
+    color: var(--accent-color);
+    /* text-shadow: 1px 1px 2px rgba(0,0,0,0.5); */
+}
+.hero-section .btn-accent {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--dark-color);
+    font-weight: 600;
+}
+.hero-section .btn-accent:hover {
+    background-color: #e0a800; /* Un poco más oscuro al hacer hover */
+    border-color: #e0a800;
+}
+
+/* Animación sutil para el texto del hero */
+.animated-text {
+    animation: fadeInDown 1s ease-out;
+}
+.animated-text-delay {
+    animation: fadeInDown 1s ease-out 0.5s; /* Retraso */
+    animation-fill-mode: backwards; /* Mantiene el estado inicial antes de la animación */
+}
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Títulos de Sección */
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+.section-title::after { /* Línea decorativa sutil */
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: 0.5rem auto 0;
+}
+.section-title.text-white::after{
+    background-color: var(--accent-color);
+}
+
+
+/* Cards de Características (Por qué TS) */
+.feature-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+.feature-icon {
+    /* Puedes agregar estilos específicos si es necesario */
+}
+
+/* Cards de Listados (Alquileres, Experiencias) */
+.listing-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 0.5rem; /* Bordes más redondeados */
+    overflow: hidden; /* Para que la imagen no se salga con el borde */
+    position: relative; /* Para el badge */
+}
+.listing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.listing-card .card-img-top {
+    height: 200px; /* Ajusta según tus imágenes */
+    object-fit: cover;
+}
+.listing-card .price {
+    font-weight: bold;
+}
+.list-inline-item-separated:not(:last-child)::after {
+    content: "•";
+    margin-left: 0.5rem;
+    margin-right: 0.25rem;
+    color: var(--secondary-color);
+}
+
+.listing-badge-verified {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(25, 135, 84, 0.9); /* Verde éxito con transparencia */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 0.25rem;
+    font-size: 0.8em;
+    font-weight: 600;
+    z-index: 10;
+}
+.listing-badge-verified i {
+    margin-right: 5px;
+}
+
+
+/* Sección Cómo Funciona */
+#como-funciona .process-step {
+    transition: transform 0.3s ease;
+}
+#como-funciona .process-step:hover {
+    transform: scale(1.05);
+}
+#como-funciona .process-icon i {
+    color: var(--accent-color); /* Iconos en color acento sobre fondo primario */
+}
+#como-funciona .highlight-light{
+    color: var(--accent-color);
+}
+
+/* Testimonios */
+.testimonial-card {
+    background-color: var(--light-color);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin: 0 1rem; /* Espacio para que se vean bien varios en el carrusel */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+.testimonial-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 3px solid var(--primary-color);
+}
+.testimonial-text {
+    font-style: italic;
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+.testimonial-author {
+    color: var(--primary-color);
+}
+/* Controles del carrusel de Bootstrap */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: var(--primary-color); /* Para que se vean bien sobre fondos claros */
+    border-radius: 50%;
+    padding:15px;
+}
+.carousel-control-prev, .carousel-control-next {
+    width: 5%; /* Reduce el ancho para que no cubran tanto */
+}
+
+
+/* Formulario de Contacto */
+#contactForm .form-control {
+    border-radius: 0.25rem; /* Bordes más definidos */
+}
+#formMessage {
+    font-weight: bold;
+}
+#formMessage.success {
+    color: var(--success-color);
+}
+#formMessage.error {
+    color: red;
+}
+
+
+/* Footer */
+footer a:hover i {
+    color: var(--accent-color) !important; /* Para los iconos sociales */
+    transform: scale(1.2);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Utilidades y Pequeños Ajustes */
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+/* Responsive (Bootstrap se encarga de mucho, pero puedes añadir más) */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 70vh;
+    }
+    .section-title {
+        font-size: 2rem;
+    }
+    .process-step {
+        margin-bottom: 1.5rem;
+    }
+    #como-funciona .fa-arrow-right {
+        transform: rotate(90deg);
+        margin: 1rem 0;
+    }
+}
