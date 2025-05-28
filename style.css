@@ -111,6 +111,30 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
     /* Puedes agregar estilos específicos si es necesario */
 }
 
+.department-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border: 1px solid #e9ecef; /* Un borde sutil */
+}
+
+.department-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important; /* Sombra más pronunciada al pasar el mouse */
+}
+
+.department-card-img {
+    height: 120px; /* Altura fija para las imágenes */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
+}
+
+.department-card .card-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.department-card .badge {
+    font-size: 0.85rem;
+}
+
 /* Cards de Listados (Alquileres, Experiencias) */
 .listing-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -134,6 +158,22 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
     margin-left: 0.5rem;
     margin-right: 0.25rem;
     color: var(--secondary-color);
+}
+
+
+.listing-card .card-img-top {
+    height: 200px; /* O la altura que prefieras */
+    object-fit: cover; /* Para que la imagen cubra sin distorsionarse */
+}
+
+/* Para asegurar que todas las tarjetas en una fila tengan la misma altura si el contenido varía */
+.card.h-100 .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.card.h-100 .card-body .btn {
+    margin-top: auto; /* Empuja el botón al final del card-body */
 }
 
 .listing-badge-verified {
@@ -167,7 +207,12 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
     color: var(--accent-color);
 }
 
-/* Testimonios */
+/* Testimonios - activarlo cuando sea necesario */
+
+#testimonios {
+    display: none; /*ACTIVAR SI ES NECESARIO*/
+}
+
 .testimonial-card {
     background-color: var(--light-color);
     padding: 2rem;
