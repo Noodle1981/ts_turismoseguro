@@ -2,18 +2,18 @@
 
 ## 1. Propósito y Modelo de Negocio Privado
 
-**Turismo Seguro San Juan** es una empresa y plataforma digital **privada** concebida para transformar el mercado de alquileres temporales y experiencias turísticas en la provincia de San Juan, Argentina, erradicando las estafas virtuales mediante la **auditoría física *in situ*** y el otorgamiento del sello de calidad **"Verificado TS"**.
+**Turismo Seguro San Juan** es una empresa y plataforma digital **privada** concebida para transformar el mercado de alquileres temporales y experiencias en la provincia de San Juan, Argentina, erradicando las estafas virtuales mediante la **auditoría física *in situ*** y el otorgamiento del sello de calidad **"Verificado TS"**.
 
 ### La Oportunidad y el Negocio de Confianza:
-- **La problemática:** Miles de turistas son defraudados anualmente mediante publicaciones falsas en redes sociales. Al mismo tiempo, los propietarios y anfitriones honestos sufren desconfianza y pierden clientes.
-- **La propuesta económica:** La plataforma ofrece a los anfitriones un **Sello Oficial de Confianza**, difusión preferencial y herramientas de gestión a cambio de una tarifa de verificación inicial y una suscripción mensual accesible.
-- **Regla estricta:** Ningún anfitrión puede publicar en la plataforma sin haber sido auditado y aprobado físicamente. El sello es un certificado real de existencia y titularidad.
+- **La problemática:** Miles de personas son defraudadas anualmente mediante publicaciones falsas en redes sociales. Al mismo tiempo, los propietarios y anfitriones honestos sufren desconfianza y pierden clientes.
+- **La propuesta económica:** La plataforma ofrece a los **clientes oferentes (`client`)** un **Sello Oficial de Confianza**, difusión preferencial y herramientas de gestión a cambio de una tarifa de verificación inicial y una suscripción mensual accesible.
+- **Regla estricta:** Ningún cliente puede publicar en la plataforma sin haber sido auditado y aprobado físicamente. El sello es un certificado real de existencia y titularidad.
 
 ### Fuerza de Ventas y Esquema de Comisiones para Validadores:
 Para romper la inercia del mercado y captar rápidamente a los mejores alojamientos de San Juan (en Calingasta, Barreal, Zonda, Valle Fértil, Ullum, Iglesia, etc.), los validadores actúan como **auditores de campo y promotores comerciales**:
-1. **Comisión de Captación (Mes 1):** El validador recibe entre un **60% y 70%** del primer pago del anfitrión al cerrar la incorporación y completar la inspección.
+1. **Comisión de Captación (Mes 1):** El validador recibe entre un **60% y 70%** del primer pago del cliente oferente al cerrar la incorporación y completar la inspección.
 2. **Comisión Recurrente (Meses posteriores):** El validador mantiene un porcentaje residual mensual (entre **15% y 20%**) por cada cliente que continúe activo en su cartera.
-3. **Margen de la Plataforma:** El remanente cubre el soporte operativo, marketing de atracción turística y el beneficio neto de la empresa.
+3. **Margen de la Plataforma:** El remanente cubre el soporte operativo, marketing de atracción y el beneficio neto de la empresa.
 
 ---
 
@@ -21,7 +21,7 @@ Para romper la inercia del mercado y captar rápidamente a los mejores alojamien
 
 ```mermaid
 journey
-    title Recorrido del Validador Comercial
+    title Recorrido del Validador Comercial (validator)
     section Captación
       Identifica alojamiento en terreno: 5: Validador
       Presenta el Sello TS al propietario: 4: Validador
@@ -35,38 +35,43 @@ journey
 
 ```mermaid
 journey
-    title Recorrido del Supervisor de Calidad
+    title Recorrido del Supervisor de Calidad (supervisor)
     section Revisión Antifraude
       Recibe acta y fotos del validador: 5: Supervisor
       Verifica consistencia de imágenes y titularidad: 5: Supervisor
     section Emisión del Sello
       Aprueba la verificación y da de alta la publicación: 5: Supervisor
-      Avisa al anfitrión que su propiedad ya es pública: 5: Supervisor
+      Avisa al cliente que su propiedad ya es pública: 5: Supervisor
 ```
 
 ```mermaid
 journey
-    title Recorrido del Anfitrión (Cliente)
-    section Registro
-      Se suscribe y acepta la inspección: 5: Anfitrión
-      Recibe la visita del validador y obtiene Sello TS: 5: Anfitrión
+    title Recorrido del Cliente Oferente (client)
+    section Registro y Validación
+      Se suscribe y acepta la inspección física: 5: Cliente Oferente
+      Recibe la visita del validador y obtiene Sello TS: 5: Cliente Oferente
     section Gestión Diaria
-      Ingresa a su panel privado: 5: Anfitrión
-      Bloquea en su calendario fechas ya alquiladas: 5: Anfitrión
-      Recibe consultas sólo para fechas disponibles: 5: Anfitrión
+      Ingresa a su panel privado: 5: Cliente Oferente
+      Bloquea en su calendario fechas ya alquiladas: 5: Cliente Oferente
+      Recibe consultas sólo para fechas disponibles: 5: Cliente Oferente
 ```
 
 ```mermaid
 journey
-    title Recorrido del Turista
-    section Búsqueda y Validación
-      Ingresa a turismoseguro.com.ar: 5: Turista
-      Filtra por departamento y revisa fechas libres: 5: Turista
-      Comprueba el Sello Verificado TS auditado: 5: Turista
+    title Recorrido del Usuario Interesado / Inquilino (rent)
+    section Búsqueda y Procedencia
+      Ingresa a la plataforma y declara su procedencia (local o turista): 5: Usuario Rent
+      Filtra por departamento y revisa fechas libres: 5: Usuario Rent
+      Comprueba el Sello Verificado TS auditado: 5: Usuario Rent
     section Contacto
-      Presiona botón de WhatsApp verificado: 5: Turista
-      Coordina con el dueño legítimo sin intermediarios: 5: Turista
+      Presiona botón de WhatsApp verificado: 5: Usuario Rent
+      Coordina con el dueño legítimo sin intermediarios: 5: Usuario Rent
 ```
+
+### Particularidad del Rol `rent` (Procedencia):
+El usuario del rol `rent` no siempre es un turista de otra provincia o país; con frecuencia es un **residente local de San Juan** que busca alquilar una casa de campo, quinta o cabaña para un fin de semana o evento familiar. Por ello, la plataforma contempla:
+- **Consulta de Procedencia Geográfica:** Registro de origen del usuario (si es habitante local de San Juan —y de qué departamento— o si proviene de otra provincia o del exterior).
+- **Valor para el Negocio:** Permite segmentar analíticas para el Super Admin y para entes de turismo (convenios): qué porcentaje de la demanda es turismo receptivo externo vs turismo interno/escapadas locales.
 
 ---
 

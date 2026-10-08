@@ -1,219 +1,373 @@
-# Guía de Implementación: Turismo Seguro San Juan
+# Plan de Implementación: Turismo Seguro San Juan
 
-Esta guía detalla los pasos exactos para inicializar, configurar y ejecutar el proyecto **Turismo Seguro San Juan** con arquitectura desacoplada en dos carpetas: **`server/`** (Laravel API) y **`client/`** (Vue 3 SPA).
+Plan maestro, fase por fase, de todo el proyecto. Es un **documento vivo**: al terminar cada tarea se marca con `[x]`.
 
----
+**Leyenda:** `[x]` completado · `[ ]` pendiente · `[~]` en curso
 
-## 1. Requisitos Previos
+**Estrategia:** *Vertical Slices*. Cada fase entrega funcionalidad completa (backend + frontend conectados) y verificable. No se construye todo el front con datos falsos ni todo el back sin pantallas.
 
-Asegúrate de contar con las siguientes herramientas en tu entorno:
-- **PHP 8.2 o superior**
-- **Composer** (gestor de paquetes PHP)
-- **Node.js** (v18 o superior) y **npm**
-- **Git**
-- **SQLite** (integrado de forma nativa en PHP)
+**Stack:** Laravel (API, `server/`) + Vue 3 Composition API con Composables (SPA, `client/`) + Tailwind CSS + SQLite (MVP) + Laravel Sanctum.
 
 ---
 
-## 2. Paso 0: Resguardo del Código Histórico (Rama Git `legacy`)
+## Tablero de Progreso General
 
-Antes de crear las carpetas de código y comenzar la implementación limpia, se congela el estado original del prototipo en una rama dedicada:
-
-```bash
-# 1. Crear y cambiarse a la rama legacy
-git checkout -b legacy
-
-# 2. Confirmar que el contenido de legacy/ y la documentación inicial queden registrados
-git add .
-git commit -m "chore: resguardo del prototipo original legacy"
-
-# 3. Regresar a la rama principal para estructurar server/ y client/
-git checkout main
-```
-
----
-
-## 3. Paso 1: Inicialización del Backend API (`server/`)
-
-### 1.1 Crear el proyecto Laravel
-Desde la raíz del proyecto (`ts_turismoseguro/`):
-
-```bash
-# Crear la carpeta server con Laravel
-composer create-project laravel/laravel server
-
-# Ingresar a server
-cd server
-```
-
-### 1.2 Configurar la Base de Datos (SQLite)
-1. Crear el archivo físico de la base de datos:
-   ```bash
-   # En Windows (PowerShell)
-   New-Item -Path "database/database.sqlite" -ItemType "file" -Force
-
-   # En Linux / macOS
-   touch database/database.sqlite
-   ```
-
-2. Configurar el archivo `server/.env`:
-   ```env
-   APP_NAME="Turismo Seguro San Juan API"
-   APP_ENV=local
-   APP_URL=http://localhost:8000
-   FRONTEND_URL=http://localhost:5173
-
-   DB_CONNECTION=sqlite
-   # Comentar o dejar vacías las variables de MySQL:
-   # DB_HOST=127.0.0.1
-   # DB_PORT=3306
-
-   SESSION_DRIVER=cookie
-   SANCTUM_STATEFUL_DOMAINS=localhost:5173,127.0.0.1:5173
-   ```
-
-3. Instalar soporte de API y Sanctum:
-   ```bash
-   php artisan install:api
-   ```
-
-4. Configurar CORS (`server/config/cors.php`):
-   Asegurar que `allowed_origins` admita el cliente de desarrollo y el dominio privado de producción:
-   ```php
-   'paths' => ['api/*', 'sanctum/csrf-cookie'],
-   'allowed_methods' => ['*'],
-   'allowed_origins' => [
-       'http://localhost:5173',
-       'http://127.0.0.1:5173',
-       'https://turismoseguro.com.ar',
-   ],
-   'supports_credentials' => true,
-   ```
-
-### 1.3 Generar Modelos, Migraciones y Seeders
-```bash
-php artisan make:model Department -m
-php artisan make:model Property -m
-php artisan make:model PropertyImage -m
-php artisan make:model PropertyAmenity -m
-php artisan make:model PropertyRule -m
-php artisan make:model PropertyAvailability -m
-php artisan make:model HostSubscription -m
-php artisan make:model ValidatorCommission -m
-php artisan make:model Experience -m
-php artisan make:model ExperienceImage -m
-php artisan make:model ExperienceInclude -m
-php artisan make:model ExperienceRecommendation -m
-php artisan make:model VerificationRequest -m
-
-# Crear controladores API y Form Requests
-php artisan make:controller Api/Public/PropertyCatalogController
-php artisan make:controller Api/Public/ExperienceCatalogController
-php artisan make:controller Api/Public/DepartmentController
-php artisan make:controller Api/Auth/AuthController
-php artisan make:controller Api/Auth/GoogleAuthController
-php artisan make:controller Api/Host/HostPropertyController
-php artisan make:controller Api/Host/HostAvailabilityController
-php artisan make:controller Api/Validator/ValidatorAuditController
-php artisan make:controller Api/Validator/ValidatorCommissionController
-php artisan make:controller Api/Supervisor/SupervisorReviewController
-php artisan make:controller Api/Admin/AdminDashboardController
-php artisan make:controller Api/Admin/AdminCommissionController
-```
+| Fase | Nombre | Estado |
+| :--- | :--- | :---: |
+| 0 | Fundaciones: documentación, skills y resguardo legacy | `[x]` Completada |
+| 1 | Setup del esqueleto (`server/` y `client/`) | `[ ]` Pendiente |
+| 2 | Modelo de datos, migraciones y seeders desde legacy | `[ ]` Pendiente |
+| 3 | Autenticación, roles (5) y procedencia geográfica | `[ ]` Pendiente |
+| 4 | Catálogo público (turistas y residentes locales - rol `rent`) | `[ ]` Pendiente |
+| 5 | Panel del Cliente Oferente (`client`): ofertas, disponibilidad y validación | `[ ]` Pendiente |
+| 6 | App del Validador: captación, auditoría in situ y comisiones | `[ ]` Pendiente |
+| 7 | Panel del Supervisor: control de calidad y emisión del sello | `[ ]` Pendiente |
+| 8 | Panel Super Admin: métricas, procedencia, usuarios y liquidación | `[ ]` Pendiente |
+| 9 | Suscripciones y facturación del cliente oferente | `[ ]` Pendiente |
+| 10 | Google OAuth, SEO y pulido UX | `[ ]` Pendiente |
+| 11 | Testing, seguridad y hardening | `[ ]` Pendiente |
+| 12 | Despliegue a producción | `[ ]` Pendiente |
 
 ---
 
-## 4. Paso 2: Inicialización del Frontend (`client/`)
+## Requisitos Previos del Entorno
 
-### 2.1 Crear el proyecto Vue 3 con Vite y TypeScript
-Desde la raíz del proyecto (`ts_turismoseguro/`):
+- [x] Git instalado
+- [x] Node.js 18+ y npm
+- [x] Python (requerido por el skill `ui-ux-pro-max`)
+- [ ] PHP 8.2+ (verificar la versión mínima que exija la versión de Laravel elegida)
+- [ ] Composer
+- [ ] SQLite habilitado en PHP (`pdo_sqlite`)
 
-```bash
-# Crear la carpeta client con plantilla Vue + TypeScript
-npm create vite@latest client -- --template vue-ts
-
-# Ingresar a client e instalar dependencias
-cd client
-npm install
-```
-
-### 2.2 Instalar Librerías Clave (Tailwind, Router, Pinia, Axios)
-```bash
-# Tailwind CSS y utilidades
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
-
-# Enrutador, estado global y cliente HTTP
-npm install vue-router pinia axios
-```
-
-### 2.3 Configurar Variables de Entorno (`client/.env`)
-Crear el archivo `client/.env`:
-```env
-VITE_API_BASE_URL=http://localhost:8000/api/v1
-VITE_APP_NAME="Turismo Seguro San Juan"
-```
-
-### 2.4 Configurar Tailwind CSS (`client/tailwind.config.js`)
-Configurar rutas y colores institucionales definidos en `doc/visual.md`:
-```javascript
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {
-      colors: {
-        brand: {
-          900: '#1e3a8a',
-          800: '#1e40af',
-        },
-        safe: {
-          600: '#059669',
-        },
-        warm: {
-          600: '#ea580c',
-        }
-      },
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Montserrat', 'sans-serif'],
-      }
-    },
-  },
-  plugins: [],
-}
-```
+> Verificar con: `php -v`, `composer -V`, `node -v`, `php -m | findstr sqlite`
 
 ---
 
-## 5. Paso 3: Ejecución en Entorno de Desarrollo
+## FASE 0 — Fundaciones `[x]`
 
-Para trabajar en el proyecto se inician ambos servicios en terminales independientes:
+Objetivo: dejar definido el *qué* y el *cómo* antes de escribir código.
 
-### Terminal 1 — Backend API (Laravel):
-```bash
-cd server
-php artisan serve
-# Escuchando en http://localhost:8000
-```
-
-### Terminal 2 — Frontend SPA (Vue 3 + Vite):
-```bash
-cd client
-npm run dev
-# Disponible en http://localhost:5173
-```
+- [x] Prototipo estático original resguardado en la rama `legacy`
+- [x] Rama `main` con la documentación base
+- [x] Documentación unificada en `doc/` (`PRD.md`, `context.md`, `arquitectura.md`, `visual.md`, `implementacion.md`, `README.md`)
+- [x] Modelo de negocio definido: comisiones del validador (mes 1 alto, meses siguientes residual), regla de "no publicar sin validar"
+- [x] **5 roles definidos:** `super_admin`, `supervisor`, `validator`, `client`, `rent`
+- [x] **Dato de procedencia en rol `rent`:** captura de origen (turista exterior/nacional o habitante local de San Juan)
+- [x] Módulo de disponibilidad del cliente oferente (`client`) incluido en el diseño
+- [x] Dominios privados definidos (sin referencias gubernamentales)
+- [x] Skills instaladas en `.agents/skills/`: `laravel-best-practices`, `laravel-security`, `laravel-tdd`, `api-design`, `database-migrations`, `vue-best-practices`, `ui-ux-pro-max`, `seo`
+- [x] Sistema de diseño maestro generado en `design-system/turismo-seguro-san-juan/MASTER.md`
+- [x] Carpeta `.agent` eliminada; unificado exclusivamente en `.agents/`
 
 ---
 
-## 6. Verificación de Seguridad y Salud del Entorno
+## FASE 1 — Setup del Esqueleto `[ ]`
 
-1. **Prueba de Endpoint CSRF:**  
-   Verificar en el navegador que `http://localhost:8000/sanctum/csrf-cookie` devuelva estado HTTP 204 y asigne la cookie `XSRF-TOKEN`.
-2. **Prueba de Catálogo Público:**  
-   Verificar que `GET http://localhost:8000/api/v1/properties` responda un JSON estructurado con la lista de propiedades certificadas.
-3. **Persistencia SQLite:**  
-   Confirmar que las migraciones corran correctamente ejecutando `php artisan migrate --status` en la carpeta `server/`.
+Objetivo: dos proyectos arrancando y comunicándose entre sí.
+
+### 1.1 Backend (`server/`)
+- [ ] Crear proyecto Laravel: `composer create-project laravel/laravel server`
+- [ ] Configurar `.env`: `DB_CONNECTION=sqlite`, `APP_URL`, `FRONTEND_URL`, `SANCTUM_STATEFUL_DOMAINS`
+- [ ] Crear `database/database.sqlite`
+- [ ] Instalar API + Sanctum: `php artisan install:api`
+- [ ] Configurar CORS (`config/cors.php`) con `supports_credentials => true` y orígenes permitidos
+- [ ] Crear prefijo de rutas `/api/v1` y endpoint de salud `GET /api/v1/health`
+- [ ] Definir formato estándar de respuestas y errores (skill `api-design`)
+- [ ] Verificar: `php artisan serve` responde en `http://localhost:8000`
+
+### 1.2 Frontend (`client/`)
+- [ ] Crear proyecto: `npm create vite@latest client -- --template vue-ts`
+- [ ] Instalar dependencias: `vue-router`, `pinia`, `axios`, `tailwindcss`
+- [ ] Configurar Tailwind con los tokens de `doc/visual.md` (colores `brand`, `safe`, `accent`; fuentes Montserrat e Inter)
+- [ ] Crear estructura: `composables/`, `components/`, `views/`, `stores/`, `router/`, `types/`
+- [ ] Crear `composables/useApi.ts` (cliente HTTP con cookies, CSRF de Sanctum e interceptor de errores)
+- [ ] Configurar `VITE_API_BASE_URL` en `client/.env`
+- [ ] Crear layout base (Navbar + Footer) y `router/index.ts` con vista de inicio
+- [ ] Verificar: `npm run dev` y llamada exitosa a `/api/v1/health` desde el cliente
+
+### 1.3 Calidad desde el día uno
+- [ ] Configurar Pest/PHPUnit en `server/` (skill `laravel-tdd`)
+- [ ] Configurar ESLint, Prettier y `vue-tsc` en `client/`
+- [ ] Crear `.gitignore` raíz (`server/vendor`, `client/node_modules`, `.env`, `database.sqlite`)
+- [ ] Crear `README.md` raíz con instrucciones de arranque
+- [ ] Commit: `feat: esqueleto server/ y client/`
+
+---
+
+## FASE 2 — Modelo de Datos y Seeders `[ ]`
+
+Objetivo: base de datos completa y poblada con los datos reales del prototipo legacy.
+
+### 2.1 Migraciones (skill `database-migrations`)
+- [ ] `users` (con `role` enum: `super_admin`, `supervisor`, `validator`, `client`, `rent`; campos de procedencia para `rent`: `origin_country`, `origin_province`, `origin_city`, `is_local_resident`)
+- [ ] `departments`
+- [ ] `properties` (con `validator_id`, `publication_status`, `verification_status`)
+- [ ] `property_images`, `property_amenities`, `property_rules`
+- [ ] `property_availability`
+- [ ] `experiences`, `experience_images`, `experience_includes`, `experience_recommendations`
+- [ ] `verification_requests`
+- [ ] `client_subscriptions` (vinculado a `client_id`)
+- [ ] `validator_commissions`
+- [ ] Índices en `slug`, `department_id`, `verification_status`, `publication_status`, procedencia y `(property_id, start_date, end_date)`
+- [ ] Claves foráneas con `onDelete` definido y *soft deletes* donde corresponda
+
+### 2.2 Modelos Eloquent
+- [ ] Modelos con `$fillable`, `casts` y enums PHP para estados y roles
+- [ ] Relaciones entre todos los modelos
+- [ ] *Global Scope* `Published`: solo propiedades verificadas y publicadas son visibles al público
+- [ ] Factories para todos los modelos
+
+### 2.3 Seeders
+- [ ] `DepartmentSeeder` con los 19 departamentos de San Juan
+- [ ] `UserSeeder`: usuarios de cada uno de los 5 roles para desarrollo (incluyendo perfiles `rent` con procedencia local y foránea)
+- [ ] `LegacyPropertySeeder` (datos de `legacy/alquileres.js`)
+- [ ] `LegacyExperienceSeeder` (datos de `legacy/experiencias.js`)
+- [ ] Copiar imágenes de `legacy/img/` a `server/storage/app/public/` y ejecutar `php artisan storage:link`
+- [ ] Verificar: `php artisan migrate:fresh --seed` sin errores
+
+### 2.4 Tests de la fase
+- [ ] Test del *Global Scope* (una propiedad no verificada no aparece en consultas públicas)
+
+---
+
+## FASE 3 — Autenticación, Roles y Procedencia Geográfica `[ ]`
+
+Objetivo: login funcional, registro con captura de procedencia para `rent`, y rutas protegidas por rol.
+
+### 3.1 Backend
+- [ ] `POST /auth/login`, `POST /auth/logout`, `GET /auth/me`
+- [ ] `POST /auth/register/rent`: registro de usuario interesado con **procedencia geográfica obligatoria u opcional asistida** (`origin_country`, `origin_province`, `origin_city`, `is_local_resident`)
+- [ ] `POST /auth/register/client`: registro del cliente oferente (anfitrión)
+- [ ] Middleware `CheckRole` y alias `role:` en el router para los 5 roles
+- [ ] Policies por recurso (propiedades, auditorías, comisiones)
+- [ ] *Rate limiting* en login y registro
+- [ ] Tests: login válido/inválido, validación de procedencia en `rent`, acceso denegado por rol (skill `laravel-security`)
+
+### 3.2 Frontend
+- [ ] `composables/useAuth.ts` (login, logout, registro con procedencia, usuario actual)
+- [ ] `composables/usePermissions.ts` (`hasRole`, `isSuperAdmin`, `isSupervisor`, `isValidator`, `isClient`, `isRent`)
+- [ ] `stores/auth.ts` (Pinia)
+- [ ] Guards en Vue Router con `meta.roles` y redirección según rol
+- [ ] `LoginView.vue`, `RegisterRentView.vue` (con selector de país/provincia y toggle "¿Vives en San Juan?") y `RegisterClientView.vue`
+- [ ] Redirección post-login al panel que corresponde a cada rol
+- [ ] Vista 403 y vista 404
+
+### 3.3 Mapa de rutas del frontend
+
+| Zona | Prefijo | Roles permitidos |
+| :--- | :--- | :--- |
+| Público / Consulta | `/` , `/alquileres`, `/experiencias`, `/departamentos/:slug` | Todos |
+| Autenticación | `/login`, `/registro/alquilar`, `/registro/anfitrion` | Invitados |
+| Cliente Oferente | `/panel/cliente/*` | `client` |
+| Validador | `/panel/validador/*` | `validator` |
+| Supervisor | `/panel/supervisor/*` | `supervisor` |
+| Administración | `/panel/admin/*` | `super_admin` |
+
+---
+
+## FASE 4 — Catálogo Público (Turistas y Habitantes Locales - Rol `rent`) `[ ]`
+
+Objetivo: el usuario interesado navega, filtra, ve disponibilidad y contacta. Primer gran hito visible.
+
+### 4.1 Backend
+- [ ] `GET /properties` con filtros (departamento, precio, capacidad, comodidades, búsqueda de texto) y paginación
+- [ ] `GET /properties/{slug}` con imágenes, comodidades y reglas
+- [ ] `GET /properties/{id}/availability` (fechas ocupadas por rango)
+- [ ] `GET /experiences` y `GET /experiences/{slug}`
+- [ ] `GET /departments` con contador de ofertas verificadas
+- [ ] API Resources para todas las respuestas
+- [ ] Tests: solo aparecen propiedades verificadas y publicadas
+
+### 4.2 Frontend — Composables
+- [ ] `useProperties.ts` (listado, filtros reactivos sincronizados con la URL, paginación)
+- [ ] `useExperiences.ts`
+- [ ] `useDepartments.ts`
+- [ ] `useAvailability.ts` (modo consulta pública para usuario `rent`)
+
+### 4.3 Frontend — Componentes (guía `doc/visual.md` y `design-system/`)
+- [ ] `BadgeVerified.vue` (sello con halo de resplandor y punto de pulso activo)
+- [ ] `PropertyCard.vue` y `ExperienceCard.vue` (elevación 3D hover)
+- [ ] `DepartmentCard.vue`
+- [ ] `FilterSidebar.vue` (drawer táctil en móvil)
+- [ ] `PropertyGallery.vue` (mosaico editorial + visualizador)
+- [ ] `AvailabilityPicker.vue` (calendario visual de fechas libres/ocupadas)
+- [ ] `ContactButtons.vue` (WhatsApp con mensaje preformateado antifraude + llamada)
+- [ ] Skeletons de carga y estados vacíos / de error
+
+### 4.4 Frontend — Vistas
+- [ ] `HomeView.vue` (hero con buscador, departamentos de San Juan, destacados, garantía del sello)
+- [ ] `PropertiesView.vue` y `PropertyDetailView.vue`
+- [ ] `ExperiencesView.vue` y `ExperienceDetailView.vue`
+- [ ] `DepartmentView.vue`
+- [ ] Transiciones de página y respeto de `prefers-reduced-motion`
+- [ ] Revisión responsive: 375, 768, 1024 y 1440 px
+
+---
+
+## FASE 5 — Panel del Cliente Oferente (`client`) `[ ]`
+
+Objetivo: el anfitrión/cliente gestiona su oferta y su disponibilidad, y solicita la validación.
+
+### 5.1 Backend
+- [ ] CRUD de propiedades propias (estado inicial `draft`)
+- [ ] Carga de imágenes con validación de tipo y tamaño y redimensionado
+- [ ] `POST /client/verifications/request` (pasa a `pending_review`; no se publica)
+- [ ] `GET/POST /client/properties/{id}/availability` y bloqueo/desbloqueo de rangos
+- [ ] `AvailabilityService`: validación de rangos, solapamientos y fechas pasadas
+- [ ] Policy: el cliente oferente solo accede a sus propias propiedades
+- [ ] Tests: solapamiento de fechas, acceso a recursos ajenos, imposibilidad de auto-publicar
+
+### 5.2 Frontend
+- [ ] `useClientProperties.ts` y ampliación de `useAvailability.ts` (modo edición de calendario)
+- [ ] `ClientDashboardView.vue` (estado de sello, membresía y consultas recibidas)
+- [ ] `MyPropertiesView.vue` y `PropertyFormView.vue` (alta/edición de alojamiento)
+- [ ] `AvailabilityCalendar.vue` (bloquear/liberar días y rangos interactivos)
+- [ ] `VerificationStatusTimeline.vue` (estado: solicitado → en visita → en revisión → verificado)
+- [ ] Botón "Solicitar validación física in situ"
+
+---
+
+## FASE 6 — App del Validador (Móvil) `[ ]`
+
+Objetivo: el validador capta clientes en la calle, audita en terreno y ve sus comisiones.
+
+### 6.1 Backend
+- [ ] Alta de prospecto por el validador (cliente + propiedad) vinculando `validator_id` (base de la comisión)
+- [ ] `GET /validator/tasks` (visitas asignadas)
+- [ ] `POST /validator/audits/{id}/photos` (carga con validación)
+- [ ] `POST /validator/audits/{id}/submit` (checklist, notas, GPS; estado `under_supervision`)
+- [ ] `CommissionService`: tasas configurables (mes 1 = 70%, recurrente = 15%), con tests unitarios
+- [ ] `GET /validator/commissions` (cartera de clientes, devengado, pendiente y pagado)
+- [ ] Tests: un validador solo ve sus auditorías; la comisión del mes 1 y la recurrente se calculan bien
+
+### 6.2 Frontend
+- [ ] `useInspection.ts` (checklist, geolocalización, cola de fotos)
+- [ ] `useCommissions.ts`
+- [ ] `ValidatorHomeView.vue` (tareas y accesos rápidos, enfoque *mobile-first*)
+- [ ] `ProspectFormView.vue` (alta rápida de clientes en calle)
+- [ ] `InspectionView.vue` con `InspectionChecklist.vue` y `PhotoUploader.vue` (`capture="environment"`)
+- [ ] `MyCommissionsView.vue` y `CommissionCard.vue`
+- [ ] Objetivos táctiles ≥ 48 px y alto contraste para uso al aire libre
+- [ ] Evaluar PWA instalable y modo offline para fotos en zonas sin señal
+
+---
+
+## FASE 7 — Panel del Supervisor `[ ]`
+
+Objetivo: filtro antifraude interno y emisión del sello.
+
+### 7.1 Backend
+- [ ] `GET /supervisor/audits/pending`
+- [ ] `POST /supervisor/audits/{id}/approve` (estado `verified` + `published`, registra `verified_at`)
+- [ ] `POST /supervisor/audits/{id}/reject` (motivo obligatorio)
+- [ ] `PATCH /supervisor/properties/{id}/toggle-status` (baja/alta de publicación)
+- [ ] Registro de auditoría (quién aprobó, cuándo y qué)
+- [ ] Regla: un supervisor no puede aprobar una auditoría propia
+- [ ] Tests: aprobación publica la propiedad, rechazo no, y no se puede saltar el flujo
+
+### 7.2 Frontend
+- [ ] `QualityControlView.vue` (bandeja de pendientes)
+- [ ] `AuditReviewDetailView.vue` (fotos, checklist, GPS y datos del validador)
+- [ ] `AuditReviewCard.vue` y `PhotoCompareModal.vue`
+- [ ] Acciones de aprobar / rechazar con motivo
+- [ ] Notificación al cliente del resultado
+
+---
+
+## FASE 8 — Panel Super Admin `[ ]`
+
+Objetivo: control total del negocio, análisis de demanda y pago de comisiones.
+
+### 8.1 Backend
+- [ ] `GET /admin/metrics` (propiedades activas, solicitudes, ingresos, comisiones, conversión)
+- [ ] `GET /admin/metrics/provenance` (**Analítica de Procedencia**: distribución de usuarios `rent` por origen: San Juan local, otras provincias argentinas, países extranjeros)
+- [ ] CRUD de usuarios internos y asignación de roles
+- [ ] Activación y desactivación de cuentas
+- [ ] Asignación de validadores a solicitudes
+- [ ] `GET /admin/commissions/payouts` y `POST .../mark-paid`
+- [ ] Parámetros de negocio editables (porcentajes de comisión y precio de planes)
+- [ ] Exportación de reportes (CSV/PDF)
+- [ ] Tests: solo `super_admin` accede y la liquidación es idempotente
+
+### 8.2 Frontend
+- [ ] `SuperAdminDashboardView.vue` con gráficos
+- [ ] `ProvenanceStatsView.vue` (mapa/gráfico de procedencia de los usuarios que buscan alquileres)
+- [ ] `UsersManagementView.vue`
+- [ ] `CommissionsPayoutView.vue`
+- [ ] `BusinessSettingsView.vue`
+- [ ] Botones de exportación de reportes
+
+---
+
+## FASE 9 — Suscripciones y Facturación `[ ]`
+
+Objetivo: cobrar al cliente oferente y generar las comisiones de forma automática.
+
+- [ ] Definir con el negocio: precio de validación inicial, cuota mensual, periodicidad y política de mora
+- [ ] Definir método de cobro (MVP: registro manual por el Super Admin; luego pasarela de pagos)
+- [ ] `client_subscriptions`: estados `active`, `past_due`, `cancelled`
+- [ ] Al registrarse un pago: generar la comisión del validador (mes 1 o recurrente) automáticamente
+- [ ] Tarea programada que marca mora y suspende la publicación si corresponde
+- [ ] Vista de estado de suscripción para el cliente oferente
+- [ ] Tests del ciclo completo: pago → comisión → liquidación
+- [ ] (Opcional) Integración con pasarela de pagos
+
+---
+
+## FASE 10 — Google OAuth, SEO y Pulido UX `[ ]`
+
+- [ ] Laravel Socialite + Google: `redirect` y `callback`
+- [ ] Vincular cuenta Google a usuario existente por email
+- [ ] Botón "Continuar con Google" en `LoginView` y modal de procedencia inicial para usuarios `rent`
+- [ ] SEO (skill `seo`): metadatos dinámicos por ficha, OpenGraph para tarjetas de WhatsApp, `sitemap.xml`, `robots.txt`, JSON-LD `LodgingBusiness`
+- [ ] Evaluar prerender o Nuxt si el SEO lo exige
+- [ ] Auditoría de accesibilidad (WCAG AA) y de rendimiento (Lighthouse)
+- [ ] Optimización de imágenes (WebP y *lazy loading*)
+- [ ] Revisión final de UX con el sistema de diseño
+
+---
+
+## FASE 11 — Testing, Seguridad y Hardening `[ ]`
+
+- [ ] Cobertura de tests backend ≥ 80% en lógica crítica (sello, comisiones, disponibilidad, roles)
+- [ ] Tests de componentes y composables clave en el frontend
+- [ ] Prueba E2E de los flujos críticos (captación → auditoría → aprobación → publicación)
+- [ ] Revisión con checklist de `laravel-security`: CSRF, XSS, *mass assignment*, validación de archivos, cabeceras de seguridad
+- [ ] Revisión de políticas de acceso de cada endpoint
+- [ ] Revisión de logs y manejo de errores sin filtrar datos sensibles
+- [ ] Backups de base de datos y de imágenes
+
+---
+
+## FASE 12 — Despliegue `[ ]`
+
+- [ ] Registro de dominio comercial privado y DNS (`turismoseguro.com.ar`, `api.turismoseguro.com.ar`)
+- [ ] Hosting para `server/` (PHP + HTTPS) y para `client/` (estático/CDN)
+- [ ] Migración de SQLite a MySQL o PostgreSQL si la carga lo requiere
+- [ ] Variables de entorno de producción (`APP_DEBUG=false`, cookies `Secure`, dominios de Sanctum)
+- [ ] Almacenamiento de imágenes en disco persistente o en la nube
+- [ ] Cola de trabajos y *scheduler* (cron)
+- [ ] Pipeline de CI/CD
+- [ ] Monitoreo y alertas
+- [ ] Puesta en marcha controlada con un grupo piloto de clientes oferentes
+
+---
+
+## Decisiones Abiertas (requieren definición del negocio)
+
+- [ ] Porcentajes definitivos de comisión (mes 1 y recurrente)
+- [ ] Precio de la validación inicial y de la cuota mensual del cliente oferente
+- [ ] Quién administra la fuerza de validadores (RR. HH. / relación comisionista independiente) y qué implica fiscal y legalmente
+- [ ] Periodicidad de las re-verificaciones de propiedades ya aprobadas
+- [ ] Alcance del convenio con Turismo y qué datos de procedencia o reportes se comparten
+- [ ] Política ante validadores que abandonan: ¿quién hereda su cartera y su comisión recurrente?
+- [ ] Versión exacta de Laravel a utilizar
+
+---
+
+## Cómo se actualiza este documento
+
+1. Al terminar una tarea, cambiar `[ ]` por `[x]`.
+2. Mientras una fase esté en curso, marcarla `[~]` en el tablero.
+3. Al cerrar todas las tareas de una fase, marcarla `[x] Completada` en el tablero.
+4. Cualquier cambio de alcance se refleja primero en `PRD.md` / `arquitectura.md` y luego aquí.

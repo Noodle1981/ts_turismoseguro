@@ -2,19 +2,19 @@
 
 ## 1. Visión y Principios de Diseño
 
-**Turismo Seguro San Juan** es una plataforma digital desacoplada de origen **privado**, concebida para brindar certeza y confianza en el mercado turístico de la provincia mediante la auditoría física *in situ* y el otorgamiento del sello oficial **"Verificado TS"**.
+**Turismo Seguro San Juan** es una plataforma digital desacoplada de origen **privado**, concebida para brindar certeza y confianza en el mercado turístico y de alquileres temporales mediante la auditoría física *in situ* y el otorgamiento del sello oficial **"Verificado TS"**.
 
 ### Principios Fundamentales:
 1. **Arquitectura Desacoplada (`server/` y `client/`):**
    - **Backend API (`server/`):** Desarrollado en **Laravel** configurado como API REST pura. Gestiona modelos relacionales, reglas de verificación, cálculo de comisiones, liquidaciones y seguridad de acceso.
    - **Frontend Reactivo (`client/`):** Desarrollado en **Vue 3** con Composition API (`<script setup>`), TypeScript, **Tailwind CSS**, **Pinia** y **Vite**.
-   - **Composables First en el Frontend:** La lógica de negocio, llamadas a la API y estado reactivo no se mezclan en las vistas; se encapsulan en **Composables reutilizables** (`useAuth`, `useProperties`, `useAvailability`, `useInspection`, `useCommissions`, `usePermissions`).
+   - **Composables First en el Frontend:** La lógica de negocio, llamadas a la API y estado reactivo se encapsulan en **Composables reutilizables** (`useAuth`, `useProperties`, `useAvailability`, `useInspection`, `useCommissions`, `usePermissions`).
 2. **Jerarquía de Roles de Seguridad (5 Roles):**
-   - `super_admin`: Administración general, balances financieros y liquidación de comisiones a validadores.
+   - `super_admin`: Administración general, balances financieros, analíticas de procedencia y liquidación de comisiones a validadores.
    - `supervisor`: Control de calidad y filtro antifraude. Audita las actas y fotos subidas por los validadores; aprueba o rechaza el Sello TS y da de alta o baja las publicaciones.
    - `validator`: Captador y auditor en terreno. Inspecciona propiedades, sube fotos in situ y monitorea sus comisiones devengadas.
-   - `host`: Anfitrión cliente pago. Solicita verificación, edita fichas y administra su **calendario de disponibilidad** (bloqueo de fechas ocupadas).
-   - `tourist`: Turista que navega, consulta disponibilidad y contacta por WhatsApp verificado.
+   - `client`: Cliente oferente / anfitrión. Solicita verificación, edita fichas y administra su **calendario de disponibilidad** (bloqueo de fechas ocupadas).
+   - `rent`: Usuario interesado en alquilar o contratar (turista nacional/internacional o habitante local sanjuanino). Se registra su **procedencia geográfica** para enriquecer las estadísticas del sistema.
 3. **Dominios Privados y Autenticación:**
    - Dominio comercial (`turismoseguro.com.ar` y `api.turismoseguro.com.ar`).
    - Autenticación segura SPA con cookies `HttpOnly` y protección CSRF con **Laravel Sanctum**.
@@ -32,7 +32,7 @@ graph TD
     subgraph Cliente_Vue ["Frontend Client (client/ - Vue 3 + Composables)"]
         Router[Vue Router: Guards por Rol]
         Composables[Composables: useAuth, useProperties, useAvailability, useInspection, useCommissions]
-        Views[Vistas: Public, Host Panel, Validator App, Supervisor Board, Admin Dashboard]
+        Views[Vistas: Public, Client Panel, Validator App, Supervisor Board, Admin Dashboard]
         PiniaStore[Pinia Stores: auth, properties, availability]
     end
 
@@ -40,21 +40,21 @@ graph TD
         subgraph Capa_API ["Rutas y Middleware (routes/api.php)"]
             APIRouter[Laravel API Router: v1]
             SanctumMid[Middleware: Sanctum SPA Auth & CSRF]
-            RoleMid[Middleware: CheckRole: super_admin, supervisor, validator, host, tourist]
+            RoleMid[Middleware: CheckRole: super_admin, supervisor, validator, client, rent]
             ThrottleMid[Middleware: Rate Limiting / Throttle]
         end
 
         subgraph Capa_Controladores ["Controladores API"]
             PublicCtrl[Public: Properties, Experiences, Departments]
-            HostCtrl[Host: Listings & Availability Calendar]
+            ClientCtrl[Client: Listings & Availability Calendar]
             ValCtrl[Validator: Field Audits & In-Situ Photos]
             SupervCtrl[Supervisor: Quality Review & Sello Approvals]
-            AdminCtrl[SuperAdmin: Metrics, Users & Commissions Payouts]
+            AdminCtrl[SuperAdmin: Metrics, Users, Provenance & Commissions Payouts]
         end
 
         subgraph Capa_Dominio ["Servicios y Lógica de Negocio"]
             Services[Services: CommissionService, VerificationService, AvailabilityService]
-            FormRequests[Form Requests: Validación estricta de entrada]
+            FormRequests[Form Requests: Validación estricta con procedencia para rent]
             Resources[API Resources: DTOs JSON estándar]
         end
 
@@ -78,11 +78,11 @@ graph TD
 
 ```mermaid
 erDiagram
-    USERS ||--o{ PROPERTIES : "administra como anfitrión"
+    USERS ||--o{ PROPERTIES : "administra como cliente oferente"
     USERS ||--o{ EXPERIENCES : "ofrece como operador"
     USERS ||--o{ VERIFICATION_REQUESTS : "audita como validador / supervisa"
     USERS ||--o{ VALIDATOR_COMMISSIONS : "percibe comisiones"
-    USERS ||--o{ HOST_SUBSCRIPTIONS : "abona membresía"
+    USERS ||--o{ CLIENT_SUBSCRIPTIONS : "abona membresía"
 
     DEPARTMENTS ||--o{ PROPERTIES : "contiene"
     DEPARTMENTS ||--o{ EXPERIENCES : "alberga"
@@ -92,23 +92,27 @@ erDiagram
     PROPERTIES ||--o{ PROPERTY_RULES : "establece"
     PROPERTIES ||--o{ PROPERTY_AVAILABILITY : "registra disponibilidad"
     PROPERTIES ||--o{ VERIFICATION_REQUESTS : "recibe solicitudes"
-    PROPERTIES ||--o{ HOST_SUBSCRIPTIONS : "mantiene membresía"
+    PROPERTIES ||--o{ CLIENT_SUBSCRIPTIONS : "mantiene membresía"
 
     EXPERIENCES ||--o{ EXPERIENCE_IMAGES : "tiene"
     EXPERIENCES ||--o{ EXPERIENCE_INCLUDES : "incluye"
     EXPERIENCES ||--o{ EXPERIENCE_RECOMMENDATIONS : "sugiere"
 
-    HOST_SUBSCRIPTIONS ||--o{ VALIDATOR_COMMISSIONS : "genera comisión mensual"
+    CLIENT_SUBSCRIPTIONS ||--o{ VALIDATOR_COMMISSIONS : "genera comisión mensual"
 
     USERS {
         bigint id PK
         string name
         string email UK
         string password
-        enum role "super_admin | supervisor | validator | host | tourist"
+        enum role "super_admin | supervisor | validator | client | rent"
         string phone
         string whatsapp
         string google_id "nullable"
+        string origin_country "nullable: procedencia pais"
+        string origin_province "nullable: procedencia provincia"
+        string origin_city "nullable: procedencia ciudad o departamento"
+        boolean is_local_resident "procedencia: true si reside en San Juan"
         boolean is_active
         timestamps created_at
     }
@@ -125,7 +129,7 @@ erDiagram
 
     PROPERTIES {
         bigint id PK
-        bigint user_id FK
+        bigint user_id FK "cliente oferente (client)"
         bigint department_id FK
         bigint validator_id FK "validador comercial asignado"
         string title
@@ -153,9 +157,9 @@ erDiagram
         timestamps created_at
     }
 
-    HOST_SUBSCRIPTIONS {
+    CLIENT_SUBSCRIPTIONS {
         bigint id PK
-        bigint host_id FK
+        bigint client_id FK "usuario client"
         bigint property_id FK
         decimal plan_amount
         enum status "active | past_due | cancelled"
@@ -167,7 +171,7 @@ erDiagram
     VALIDATOR_COMMISSIONS {
         bigint id PK
         bigint validator_id FK
-        bigint host_subscription_id FK
+        bigint client_subscription_id FK
         bigint property_id FK
         int month_number "1 para captación, 2+ para recurrente"
         decimal commission_rate "ej. 0.70 mes 1, 0.15 mes 2+"
@@ -179,7 +183,7 @@ erDiagram
 
     VERIFICATION_REQUESTS {
         bigint id PK
-        bigint requester_id FK
+        bigint requester_id FK "cliente client"
         string verifiable_type "Property | Experience"
         bigint verifiable_id
         bigint validator_id FK "validador de campo"
@@ -198,7 +202,7 @@ erDiagram
 
 ## 4. Estructura de Directorios del Proyecto
 
-Con la consolidación en **`.agents/`**, la estructura queda unificada y limpia:
+Con la consolidación en **`.agents/`**, la estructura queda unificada:
 
 ```text
 ts_turismoseguro/
@@ -229,15 +233,17 @@ ts_turismoseguro/
 │   ├── app/
 │   │   ├── Http/
 │   │   │   ├── Controllers/Api/
-│   │   │   │   ├── Admin/              (Super Admin: Métricas y Liquidación de Comisiones)
+│   │   │   │   ├── Admin/              (Super Admin: Métricas, Procedencia y Liquidaciones)
 │   │   │   │   ├── Supervisor/         (Control de Calidad: Aprobación de Actas y Sellos)
 │   │   │   │   ├── Validator/          (Actas In Situ, Fotos y Consulta de Comisiones)
-│   │   │   │   ├── Host/               (Mis Alojamientos y Calendario de Disponibilidad)
+│   │   │   │   ├── Client/             (Cliente Oferente: Mis Alojamientos y Calendario)
 │   │   │   │   ├── Public/             (Catálogo, Fichas, Búsqueda y Disponibilidad Pública)
-│   │   │   │   └── Auth/               (Login, Registro, Me, Google OAuth)
+│   │   │   │   └── Auth/               (Login, Registro con Procedencia, Google OAuth)
 │   │   │   ├── Middleware/
 │   │   │   │   └── CheckRole.php
 │   │   │   ├── Requests/
+│   │   │   │   ├── RegisterRentRequest.php   (Valida datos de procedencia)
+│   │   │   │   └── RegisterClientRequest.php
 │   │   │   └── Resources/
 │   │   ├── Models/
 │   │   └── Services/
@@ -250,25 +256,25 @@ ts_turismoseguro/
 └── client/                             # Frontend SPA en Vue 3 + Tailwind + Vite
     ├── src/
     │   ├── composables/                # LÓGICA DE NEGOCIO Y API (Composables First)
-    │   │   ├── useAuth.ts              # Login, Logout, Google OAuth, Usuario actual
-    │   │   ├── usePermissions.ts       # Guards reactivos: isSuperAdmin, isSupervisor, isValidator, isHost
+    │   │   ├── useAuth.ts              # Login, Logout, Registro con Procedencia, Google OAuth
+    │   │   ├── usePermissions.ts       # Guards reactivos: isSuperAdmin, isSupervisor, isValidator, isClient, isRent
     │   │   ├── useProperties.ts        # Catálogo, filtros por departamento, paginación
-    │   │   ├── useAvailability.ts      # Calendario de anfitrión y consulta pública de fechas
+    │   │   ├── useAvailability.ts      # Calendario de cliente y consulta pública de fechas
     │   │   ├── useInspection.ts        # Checklist in situ móvil, geolocalización, fotos
     │   │   └── useCommissions.ts       # Dashboard de ganancias del validador y liquidaciones
     │   ├── components/
     │   │   ├── common/                 # BadgeVerified, Navbar, Footer, ContactButtons
     │   │   ├── properties/             # PropertyCard, PropertyGallery, FilterSidebar, AvailabilityPicker
-    │   │   ├── host/                   # AvailabilityCalendar, PropertyForm
+    │   │   ├── client/                 # AvailabilityCalendar, PropertyForm (panel de cliente oferente)
     │   │   ├── validator/              # InspectionChecklist, PhotoUploader, CommissionCard
     │   │   └── supervisor/             # AuditReviewCard, PhotoCompareModal
     │   ├── views/
     │   │   ├── public/                 # HomeView, PropertiesView, PropertyDetailView, ExperiencesView
-    │   │   ├── auth/                   # LoginView, RegisterView, GoogleCallbackView
-    │   │   ├── host/                   # HostDashboardView, HostCalendarView, MyPropertiesView
+    │   │   ├── auth/                   # LoginView, RegisterRentView, RegisterClientView, GoogleCallbackView
+    │   │   ├── client/                 # ClientDashboardView, ClientCalendarView, MyPropertiesView
     │   │   ├── validator/              # ValidatorMobileAppView, MyCommissionsView
     │   │   ├── supervisor/             # QualityControlView, AuditReviewDetailView
-    │   │   └── admin/                  # SuperAdminDashboardView, CommissionsPayoutView
+    │   │   └── admin/                  # SuperAdminDashboardView, ProvenanceStatsView, CommissionsPayoutView
     │   ├── stores/                     # Pinia stores
     │   ├── router/                     # Rutas con navegación tipada y guards por rol
     │   ├── types/
@@ -280,12 +286,10 @@ ts_turismoseguro/
 
 ## 5. Arquitectura de Composables en Vue 3 (`client/src/composables/`)
 
-Para asegurar mantenibilidad, separación estricta de responsabilidades y testeabilidad, aplicamos el patrón **Composables First**:
-
 | Composable | Responsabilidad y Métodos Clave |
 | :--- | :--- |
-| `useAuth()` | `login()`, `logout()`, `loginWithGoogle()`, `user`, `isAuthenticated`. Conexión a Sanctum. |
-| `usePermissions()` | `hasRole(role)`, `isSuperAdmin`, `isSupervisor`, `isValidator`, `isHost`. Usado en Vue Router y botones condicionales. |
+| `useAuth()` | `login()`, `registerRent(userData, provenanceData)`, `registerClient()`, `loginWithGoogle()`, `user`, `isAuthenticated`. |
+| `usePermissions()` | `hasRole(role)`, `isSuperAdmin`, `isSupervisor`, `isValidator`, `isClient`, `isRent`. Utilizado en Vue Router y botones condicionales. |
 | `useProperties()` | `properties`, `loading`, `fetchProperties(filters)`, `getPropertyBySlug(slug)`, `applyFilter()`. |
 | `useAvailability(propertyId)` | `calendarDates`, `fetchAvailability(month, year)`, `blockDates(range)`, `unblockDates(range)`, `isDateAvailable(date)`. |
 | `useInspection()` | `currentAudit`, `checklistItems`, `uploadPhoto(file)`, `submitAudit()`, `captureGeoLocation()`. |
@@ -298,7 +302,7 @@ Para asegurar mantenibilidad, separación estricta de responsabilidades y testea
 ```php
 // Prefijo global /api/v1
 
-// --- PÚBLICO (Turistas y Navegación) ---
+// --- PÚBLICO (Navegación y Consulta) ---
 Route::prefix('v1')->group(function () {
     Route::get('/properties', [PropertyCatalogController::class, 'index']);
     Route::get('/properties/{slug}', [PropertyCatalogController::class, 'show']);
@@ -308,7 +312,8 @@ Route::prefix('v1')->group(function () {
 
     // --- AUTENTICACIÓN (Sanctum SPA + Google OAuth) ---
     Route::post('/auth/login', [AuthController::class, 'login']);
-    Route::post('/auth/register', [AuthController::class, 'register']);
+    Route::post('/auth/register/rent', [AuthController::class, 'registerRent']);     // Incluye procedencia geográfica
+    Route::post('/auth/register/client', [AuthController::class, 'registerClient']);
     Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect']);
     Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 
@@ -316,14 +321,14 @@ Route::prefix('v1')->group(function () {
         Route::post('/auth/logout', [AuthController::class, 'logout']);
         Route::get('/auth/me', [AuthController::class, 'me']);
 
-        // --- PANEL ANFITRIÓN (host) ---
-        Route::middleware('role:host')->prefix('host')->group(function () {
-            Route::get('/properties', [HostPropertyController::class, 'index']);
-            Route::post('/properties', [HostPropertyController::class, 'store']);
-            Route::put('/properties/{id}', [HostPropertyController::class, 'update']);
-            Route::get('/properties/{id}/availability', [HostAvailabilityController::class, 'index']);
-            Route::post('/properties/{id}/availability/block', [HostAvailabilityController::class, 'blockDates']);
-            Route::post('/verifications/request', [HostPropertyController::class, 'requestAudit']);
+        // --- PANEL CLIENTE OFERENTE (client) ---
+        Route::middleware('role:client')->prefix('client')->group(function () {
+            Route::get('/properties', [ClientPropertyController::class, 'index']);
+            Route::post('/properties', [ClientPropertyController::class, 'store']);
+            Route::put('/properties/{id}', [ClientPropertyController::class, 'update']);
+            Route::get('/properties/{id}/availability', [ClientAvailabilityController::class, 'index']);
+            Route::post('/properties/{id}/availability/block', [ClientAvailabilityController::class, 'blockDates']);
+            Route::post('/verifications/request', [ClientPropertyController::class, 'requestAudit']);
         });
 
         // --- PANEL VALIDADOR EN TERRENO (validator) ---
@@ -345,6 +350,7 @@ Route::prefix('v1')->group(function () {
         // --- PANEL SUPER ADMIN (super_admin) ---
         Route::middleware('role:super_admin')->prefix('admin')->group(function () {
             Route::get('/metrics', [AdminDashboardController::class, 'metrics']);
+            Route::get('/metrics/provenance', [AdminDashboardController::class, 'provenanceAnalytics']);
             Route::get('/users', [AdminUserController::class, 'index']);
             Route::get('/commissions/payouts', [AdminCommissionController::class, 'payoutsSummary']);
             Route::post('/commissions/payouts/{id}/mark-paid', [AdminCommissionController::class, 'markPaid']);
@@ -360,9 +366,10 @@ Route::prefix('v1')->group(function () {
 1. **Regla de No Publicación:**
    - Una propiedad con `verification_status != 'verified'` o `publication_status != 'published'` es filtrada automáticamente por un *Global Scope* en Eloquent, impidiendo su exposición en endpoints públicos.
 2. **Protección de Calendario de Disponibilidad:**
-   - Solo el anfitrión dueño de la propiedad o un super admin pueden modificar las fechas bloqueadas.
-3. **Cálculo Determinista de Comisiones:**
+   - Solo el usuario `client` dueño de la propiedad o un `super_admin` pueden modificar las fechas bloqueadas.
+3. **Tratamiento del Dato de Procedencia (`rent`):**
+   - El origen declarado (país, provincia, localidad) se almacena para fines analíticos agregados y no se expone públicamente a terceros.
+4. **Cálculo Determinista de Comisiones:**
    - La clase `CommissionService` encapsula las tasas según el número de mes:
      $$\text{Mes 1: } \text{Comisión} = \text{Monto} \times 0.70$$
      $$\text{Mes 2+: } \text{Comisión} = \text{Monto} \times 0.15$$
-   - Las liquidaciones quedan registradas con firma de timestamp y usuario aprobador.
