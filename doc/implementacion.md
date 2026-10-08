@@ -97,6 +97,9 @@ php artisan make:model Property -m
 php artisan make:model PropertyImage -m
 php artisan make:model PropertyAmenity -m
 php artisan make:model PropertyRule -m
+php artisan make:model PropertyAvailability -m
+php artisan make:model HostSubscription -m
+php artisan make:model ValidatorCommission -m
 php artisan make:model Experience -m
 php artisan make:model ExperienceImage -m
 php artisan make:model ExperienceInclude -m
@@ -108,8 +111,14 @@ php artisan make:controller Api/Public/PropertyCatalogController
 php artisan make:controller Api/Public/ExperienceCatalogController
 php artisan make:controller Api/Public/DepartmentController
 php artisan make:controller Api/Auth/AuthController
-php artisan make:controller Api/Validator/InspectionAuditController
-php artisan make:controller Api/Admin/DashboardController
+php artisan make:controller Api/Auth/GoogleAuthController
+php artisan make:controller Api/Host/HostPropertyController
+php artisan make:controller Api/Host/HostAvailabilityController
+php artisan make:controller Api/Validator/ValidatorAuditController
+php artisan make:controller Api/Validator/ValidatorCommissionController
+php artisan make:controller Api/Supervisor/SupervisorReviewController
+php artisan make:controller Api/Admin/AdminDashboardController
+php artisan make:controller Api/Admin/AdminCommissionController
 ```
 
 ---

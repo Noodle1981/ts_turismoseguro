@@ -2,22 +2,26 @@
 
 ## 1. Visión y Principios de Diseño
 
-**Turismo Seguro San Juan** es una plataforma digital de certificación y catálogo de confianza de origen **privado**, concebida para erradicar las estafas en alquileres temporales y experiencias turísticas mediante la auditoría física *in situ* y el otorgamiento del sello de calidad **"Verificado TS"**.
+**Turismo Seguro San Juan** es una plataforma digital desacoplada de origen **privado**, concebida para brindar certeza y confianza en el mercado turístico de la provincia mediante la auditoría física *in situ* y el otorgamiento del sello oficial **"Verificado TS"**.
 
 ### Principios Fundamentales:
 1. **Arquitectura Desacoplada (`server/` y `client/`):**
-   - **Backend API (`server/`):** Desarrollado en **Laravel** configurado como API REST pura. Gestiona la lógica de negocio, persistencia, validaciones de auditoría y seguridad.
-   - **Frontend Reactivo (`client/`):** Desarrollado en **Vue 3** con Composition API (`<script setup>`), TypeScript, **Tailwind CSS**, **Pinia** para estado global y **Vite** como empaquetador ultrarrápido.
-   - **Preparado para Web y Mobile:** La separación física permite servir la Web pública y el panel operativo, mientras que la misma API servirá a futuras aplicaciones móviles nativas (vía Capacitor/Ionic o Flutter) sin tener que reescribir el backend.
-2. **Dominios Privados y Seguridad:**
-   - La plataforma opera bajo dominios comerciales privados (ej. `turismoseguro.com.ar` para el frontend y `api.turismoseguro.com.ar` para la API).
-   - Autenticación SPA segura mediante **Laravel Sanctum** con cookies `HttpOnly` y `SameSite=Lax` para la web (protección contra XSS) y tokens Bearer para dispositivos móviles.
-   - Articulación con entes oficiales (Secretaría de Turismo de San Juan, municipios y cámaras) bajo **convenios de colaboración institucional**, manteniendo la independencia operativa y tecnológica.
-3. **Persistencia y Base de Datos:**
-   - **SQLite** como motor predeterminado para el MVP y desarrollo local (portabilidad completa sin necesidad de configurar servicios de base de datos dedicados).
-   - Abstracción mediante **Eloquent ORM** y migraciones declarativas estándar, garantizando una transición inmediata a PostgreSQL o MySQL cuando la escala privada del servicio lo requiera.
-4. **Componentización y DRY (Don't Repeat Yourself):**
-   - Reemplazo total de la duplicación del prototipo legacy mediante componentes reutilizables de Vue 3 (`PropertyCard`, `ExperienceCard`, `BadgeVerified`, `ContactButtons`, etc.).
+   - **Backend API (`server/`):** Desarrollado en **Laravel** configurado como API REST pura. Gestiona modelos relacionales, reglas de verificación, cálculo de comisiones, liquidaciones y seguridad de acceso.
+   - **Frontend Reactivo (`client/`):** Desarrollado en **Vue 3** con Composition API (`<script setup>`), TypeScript, **Tailwind CSS**, **Pinia** y **Vite**.
+   - **Composables First en el Frontend:** La lógica de negocio, llamadas a la API y estado reactivo no se mezclan en las vistas; se encapsulan en **Composables reutilizables** (`useAuth`, `useProperties`, `useAvailability`, `useInspection`, `useCommissions`, `usePermissions`).
+2. **Jerarquía de Roles de Seguridad (5 Roles):**
+   - `super_admin`: Administración general, balances financieros y liquidación de comisiones a validadores.
+   - `supervisor`: Control de calidad y filtro antifraude. Audita las actas y fotos subidas por los validadores; aprueba o rechaza el Sello TS y da de alta o baja las publicaciones.
+   - `validator`: Captador y auditor en terreno. Inspecciona propiedades, sube fotos in situ y monitorea sus comisiones devengadas.
+   - `host`: Anfitrión cliente pago. Solicita verificación, edita fichas y administra su **calendario de disponibilidad** (bloqueo de fechas ocupadas).
+   - `tourist`: Turista que navega, consulta disponibilidad y contacta por WhatsApp verificado.
+3. **Dominios Privados y Autenticación:**
+   - Dominio comercial (`turismoseguro.com.ar` y `api.turismoseguro.com.ar`).
+   - Autenticación segura SPA con cookies `HttpOnly` y protección CSRF con **Laravel Sanctum**.
+   - Preparado para integración con **Google Sign-In (OAuth 2.0)** vía Laravel Socialite.
+4. **Persistencia y Base de Datos:**
+   - **SQLite** como motor predeterminado para el MVP y desarrollo local en un solo archivo físico.
+   - Abstracción mediante **Eloquent ORM** para migrar de forma transparente a PostgreSQL o MySQL cuando la escala comercial lo demande.
 
 ---
 
@@ -25,32 +29,33 @@
 
 ```mermaid
 graph TD
-    subgraph Cliente_Vue ["Frontend Client (client/ - Vue 3 + Vite)"]
-        SPA[Vue 3 SPA: Vue Router + Pinia]
-        UI_Components[Componentes UI: Tailwind CSS + Iconos]
-        Mobile_PWA[Web Responsive / PWA / Capacitor Ready]
+    subgraph Cliente_Vue ["Frontend Client (client/ - Vue 3 + Composables)"]
+        Router[Vue Router: Guards por Rol]
+        Composables[Composables: useAuth, useProperties, useAvailability, useInspection, useCommissions]
+        Views[Vistas: Public, Host Panel, Validator App, Supervisor Board, Admin Dashboard]
+        PiniaStore[Pinia Stores: auth, properties, availability]
     end
 
     subgraph Servidor_Laravel ["Backend Server (server/ - Laravel API)"]
-        subgraph Capa_API ["Enrutamiento y Middleware (routes/api.php)"]
-            Router[Laravel API Router]
+        subgraph Capa_API ["Rutas y Middleware (routes/api.php)"]
+            APIRouter[Laravel API Router: v1]
             SanctumMid[Middleware: Sanctum SPA Auth & CSRF]
-            RoleMid[Middleware: Role & Permission (admin, validator, host)]
+            RoleMid[Middleware: CheckRole: super_admin, supervisor, validator, host, tourist]
             ThrottleMid[Middleware: Rate Limiting / Throttle]
         end
 
         subgraph Capa_Controladores ["Controladores API"]
             PublicCtrl[Public: Properties, Experiences, Departments]
-            HostCtrl[Host: Verification Requests & Listings]
-            ValCtrl[Validator: In-Situ Inspection & Audits]
-            AdminCtrl[Admin: Management, Metrics & Users]
+            HostCtrl[Host: Listings & Availability Calendar]
+            ValCtrl[Validator: Field Audits & In-Situ Photos]
+            SupervCtrl[Supervisor: Quality Review & Sello Approvals]
+            AdminCtrl[SuperAdmin: Metrics, Users & Commissions Payouts]
         end
 
-        subgraph Capa_Dominio ["Servicios y Modelos Eloquent"]
-            Models[Models: Property, Experience, VerificationRequest, User]
-            Services[Services: VerificationService, MediaStorageService]
+        subgraph Capa_Dominio ["Servicios y Lógica de Negocio"]
+            Services[Services: CommissionService, VerificationService, AvailabilityService]
             FormRequests[Form Requests: Validación estricta de entrada]
-            Resources[API Resources: Transformación JSON estándar]
+            Resources[API Resources: DTOs JSON estándar]
         end
 
         subgraph Capa_Datos ["Persistencia y Archivos"]
@@ -60,43 +65,50 @@ graph TD
     end
 
     Cliente_Vue <-->|HTTPS REST JSON (CORS restringido + Cookies Sanctum)| Capa_API
-    Router --> ThrottleMid --> SanctumMid --> RoleMid --> Capa_Controladores
+    APIRouter --> ThrottleMid --> SanctumMid --> RoleMid --> Capa_Controladores
     Capa_Controladores --> FormRequests
-    Capa_Controladores --> Capa_Dominio
-    Capa_Dominio --> Resources
-    Capa_Dominio --> Capa_Datos
+    Capa_Controladores --> Services
+    Services --> Resources
+    Services --> Capa_Datos
 ```
 
 ---
 
-## 3. Modelo de Datos y Esquema Relacional
+## 3. Modelo de Datos y Esquema Relacional (ER Diagram)
 
 ```mermaid
 erDiagram
+    USERS ||--o{ PROPERTIES : "administra como anfitrión"
+    USERS ||--o{ EXPERIENCES : "ofrece como operador"
+    USERS ||--o{ VERIFICATION_REQUESTS : "audita como validador / supervisa"
+    USERS ||--o{ VALIDATOR_COMMISSIONS : "percibe comisiones"
+    USERS ||--o{ HOST_SUBSCRIPTIONS : "abona membresía"
+
     DEPARTMENTS ||--o{ PROPERTIES : "contiene"
     DEPARTMENTS ||--o{ EXPERIENCES : "alberga"
-    USERS ||--o{ PROPERTIES : "publica como anfitrión"
-    USERS ||--o{ EXPERIENCES : "ofrece como operador"
-    USERS ||--o{ VERIFICATION_REQUESTS : "crea / atiende como validador"
 
     PROPERTIES ||--o{ PROPERTY_IMAGES : "tiene"
     PROPERTIES ||--o{ PROPERTY_AMENITIES : "posee"
     PROPERTIES ||--o{ PROPERTY_RULES : "establece"
+    PROPERTIES ||--o{ PROPERTY_AVAILABILITY : "registra disponibilidad"
     PROPERTIES ||--o{ VERIFICATION_REQUESTS : "recibe solicitudes"
+    PROPERTIES ||--o{ HOST_SUBSCRIPTIONS : "mantiene membresía"
 
     EXPERIENCES ||--o{ EXPERIENCE_IMAGES : "tiene"
-    EXPERIENCES ||--o{ EXPERIENCE_INCLUDES : "incluye / excluye"
+    EXPERIENCES ||--o{ EXPERIENCE_INCLUDES : "incluye"
     EXPERIENCES ||--o{ EXPERIENCE_RECOMMENDATIONS : "sugiere"
-    EXPERIENCES ||--o{ VERIFICATION_REQUESTS : "recibe solicitudes"
+
+    HOST_SUBSCRIPTIONS ||--o{ VALIDATOR_COMMISSIONS : "genera comisión mensual"
 
     USERS {
         bigint id PK
         string name
         string email UK
         string password
-        enum role "admin | validator | host | tourist"
+        enum role "super_admin | supervisor | validator | host | tourist"
         string phone
         string whatsapp
+        string google_id "nullable"
         boolean is_active
         timestamps created_at
     }
@@ -115,6 +127,7 @@ erDiagram
         bigint id PK
         bigint user_id FK
         bigint department_id FK
+        bigint validator_id FK "validador comercial asignado"
         string title
         string slug UK
         text description
@@ -124,70 +137,44 @@ erDiagram
         int capacity
         int bedrooms
         int bathrooms
-        enum verification_status "pending | assigned | verified | rejected"
+        enum publication_status "draft | pending_review | published | suspended"
+        enum verification_status "unverified | in_situ_audit | verified | rejected"
         timestamp verified_at
         timestamps created_at
     }
 
-    PROPERTY_IMAGES {
+    PROPERTY_AVAILABILITY {
         bigint id PK
         bigint property_id FK
-        string image_path
-        boolean is_primary
-        int sort_order
-    }
-
-    PROPERTY_AMENITIES {
-        bigint id PK
-        bigint property_id FK
-        string name
-        string icon_identifier
-    }
-
-    PROPERTY_RULES {
-        bigint id PK
-        bigint property_id FK
-        string rule
-    }
-
-    EXPERIENCES {
-        bigint id PK
-        bigint user_id FK
-        bigint department_id FK
-        string title
-        string slug UK
-        text short_description
-        longtext long_description
-        string location_summary
-        decimal price_per_person
-        string duration
-        enum verification_status "pending | assigned | verified | rejected"
-        string operator_name
-        string operator_whatsapp
-        string operator_email
-        timestamp verified_at
+        date start_date
+        date end_date
+        enum status "available | blocked | booked"
+        string notes
         timestamps created_at
     }
 
-    EXPERIENCE_IMAGES {
+    HOST_SUBSCRIPTIONS {
         bigint id PK
-        bigint experience_id FK
-        string image_path
-        boolean is_primary
-        int sort_order
+        bigint host_id FK
+        bigint property_id FK
+        decimal plan_amount
+        enum status "active | past_due | cancelled"
+        int consecutive_months_paid
+        date next_billing_date
+        timestamps created_at
     }
 
-    EXPERIENCE_INCLUDES {
+    VALIDATOR_COMMISSIONS {
         bigint id PK
-        bigint experience_id FK
-        string item
-        boolean is_included
-    }
-
-    EXPERIENCE_RECOMMENDATIONS {
-        bigint id PK
-        bigint experience_id FK
-        string text
+        bigint validator_id FK
+        bigint host_subscription_id FK
+        bigint property_id FK
+        int month_number "1 para captación, 2+ para recurrente"
+        decimal commission_rate "ej. 0.70 mes 1, 0.15 mes 2+"
+        decimal amount_earned
+        enum payment_status "pending | approved | paid"
+        timestamp paid_at
+        timestamps created_at
     }
 
     VERIFICATION_REQUESTS {
@@ -195,13 +182,14 @@ erDiagram
         bigint requester_id FK
         string verifiable_type "Property | Experience"
         bigint verifiable_id
-        bigint validator_id FK "nullable"
-        enum status "pending | in_progress | approved | rejected"
+        bigint validator_id FK "validador de campo"
+        bigint supervisor_id FK "supervisor de calidad"
+        enum status "pending | in_progress | under_supervision | approved | rejected"
         datetime scheduled_visit_date
         datetime completed_visit_date
         text in_situ_notes
         json control_photos_checklist
-        text rejection_reason
+        text supervisor_notes
         timestamps created_at
     }
 ```
@@ -210,212 +198,171 @@ erDiagram
 
 ## 4. Estructura de Directorios del Proyecto
 
-La solución se estructura en dos carpetas principales independientes (`server/` y `client/`), más la carpeta de documentación (`doc/`) y el código histórico (`legacy/`):
+Con la consolidación en **`.agents/`**, la estructura queda unificada y limpia:
 
 ```text
 ts_turismoseguro/
-├── doc/                                # Documentación del proyecto
+├── .agents/                            # Skills del asistente y workflows
+│   ├── skills/
+│   │   ├── api-design/
+│   │   ├── database-migrations/
+│   │   ├── laravel-best-practices/
+│   │   ├── laravel-security/
+│   │   ├── laravel-tdd/
+│   │   ├── seo/
+│   │   ├── ui-ux-pro-max/
+│   │   └── vue-best-practices/
+│   └── workflows/
+│       └── promt.md
+├── design-system/                      # Master Design System (UI/UX Pro Max)
+│   └── turismo-seguro-san-juan/
+│       └── MASTER.md
+├── doc/                                # Documentación completa del proyecto
 │   ├── PRD.md
 │   ├── context.md
 │   ├── arquitectura.md
 │   ├── visual.md
 │   ├── implementacion.md
 │   └── README.md
-├── legacy/                             # Prototipo original estático (resguardado en rama legacy)
+├── legacy/                             # Prototipo original (resguardado en rama legacy)
 ├── server/                             # Backend API en Laravel
 │   ├── app/
 │   │   ├── Http/
 │   │   │   ├── Controllers/Api/
-│   │   │   │   ├── Admin/
-│   │   │   │   │   ├── DashboardController.php
-│   │   │   │   │   ├── VerificationManagementController.php
-│   │   │   │   │   └── ReportController.php
-│   │   │   │   ├── Auth/
-│   │   │   │   │   ├── AuthController.php
-│   │   │   │   │   └── RegisterController.php
-│   │   │   │   ├── Host/
-│   │   │   │   │   ├── HostListingController.php
-│   │   │   │   │   └── HostVerificationController.php
-│   │   │   │   ├── Public/
-│   │   │   │   │   ├── PropertyCatalogController.php
-│   │   │   │   │   ├── ExperienceCatalogController.php
-│   │   │   │   │   ├── DepartmentController.php
-│   │   │   │   │   └── ContactController.php
-│   │   │   │   └── Validator/
-│   │   │   │       ├── ValidatorTaskController.php
-│   │   │   │       └── InspectionAuditController.php
+│   │   │   │   ├── Admin/              (Super Admin: Métricas y Liquidación de Comisiones)
+│   │   │   │   ├── Supervisor/         (Control de Calidad: Aprobación de Actas y Sellos)
+│   │   │   │   ├── Validator/          (Actas In Situ, Fotos y Consulta de Comisiones)
+│   │   │   │   ├── Host/               (Mis Alojamientos y Calendario de Disponibilidad)
+│   │   │   │   ├── Public/             (Catálogo, Fichas, Búsqueda y Disponibilidad Pública)
+│   │   │   │   └── Auth/               (Login, Registro, Me, Google OAuth)
 │   │   │   ├── Middleware/
 │   │   │   │   └── CheckRole.php
 │   │   │   ├── Requests/
-│   │   │   │   ├── StoreVerificationRequest.php
-│   │   │   │   ├── FilterPropertiesRequest.php
-│   │   │   │   └── SubmitInspectionRequest.php
 │   │   │   └── Resources/
-│   │   │       ├── PropertyResource.php
-│   │   │       ├── ExperienceResource.php
-│   │   │       ├── DepartmentResource.php
-│   │   │       └── VerificationRequestResource.php
 │   │   ├── Models/
 │   │   └── Services/
-│   │       ├── VerificationService.php
-│   │       └── MediaUploadService.php
-│   ├── config/
-│   │   ├── cors.php                    # Orígenes permitidos (turismoseguro.com.ar, localhost)
-│   │   └── sanctum.php                 # Dominios de estado de sesión SPA
-│   ├── database/
-│   │   ├── database.sqlite
-│   │   ├── migrations/
-│   │   └── seeders/
-│   │       ├── DatabaseSeeder.php
-│   │       ├── DepartmentSeeder.php     (19 departamentos de San Juan)
-│   │       ├── LegacyPropertySeeder.php (Importación desde datos de legacy/)
-│   │       └── UserSeeder.php           (Cuentas iniciales: admin, validador, anfitriones)
+│   │       ├── CommissionService.php   (Lógica de cálculo: Mes 1 = 70%, Meses 2+ = 15%)
+│   │       ├── AvailabilityService.php (Validación de rangos y fechas bloqueadas)
+│   │       └── VerificationService.php (Flujo de aprobación Validador -> Supervisor)
 │   ├── routes/
-│   │   └── api.php                     # Endpoints REST de la API
-│   ├── composer.json
-│   └── .env
+│   │   └── api.php
+│   └── database/
 └── client/                             # Frontend SPA en Vue 3 + Tailwind + Vite
     ├── src/
-    │   ├── assets/                     # Estilos globales y logotipos
-    │   ├── components/                 # Componentes Vue reutilizables
-    │   │   ├── common/
-    │   │   │   ├── BadgeVerified.vue
-    │   │   │   ├── ContactButtons.vue
-    │   │   │   ├── Navbar.vue
-    │   │   │   └── Footer.vue
-    │   │   ├── properties/
-    │   │   │   ├── PropertyCard.vue
-    │   │   │   ├── PropertyGallery.vue
-    │   │   │   └── FilterSidebar.vue
-    │   │   ├── experiences/
-    │   │   │   └── ExperienceCard.vue
-    │   │   ├── departments/
-    │   │   │   └── DepartmentCard.vue
-    │   │   └── validator/
-    │   │       ├── InspectionChecklist.vue
-    │   │       └── PhotoUploader.vue
-    │   ├── views/                      # Páginas del sistema
-    │   │   ├── public/
-    │   │   │   ├── HomeView.vue
-    │   │   │   ├── PropertiesView.vue
-    │   │   │   ├── PropertyDetailView.vue
-    │   │   │   ├── ExperiencesView.vue
-    │   │   │   ├── ExperienceDetailView.vue
-    │   │   │   └── RequestVerificationView.vue
-    │   │   ├── auth/
-    │   │   │   └── LoginView.vue
-    │   │   ├── validator/
-    │   │   │   ├── ValidatorDashboardView.vue
-    │   │   │   └── InspectionAuditView.vue
-    │   │   └── admin/
-    │   │       ├── AdminDashboardView.vue
-    │   │       └── RequestsManagementView.vue
-    │   ├── stores/                     # Gestión de estado Pinia
-    │   │   ├── auth.ts
-    │   │   ├── properties.ts
-    │   │   └── verification.ts
-    │   ├── services/                   # Cliente HTTP Axios / Fetch tipado
-    │   │   └── api.ts
-    │   ├── types/                      # Interfaces TypeScript
-    │   │   ├── property.ts
-    │   │   ├── experience.ts
-    │   │   └── user.ts
-    │   ├── router/
-    │   │   └── index.ts                # Enrutador Vue Router con guards de rol
-    │   ├── App.vue
-    │   └── main.ts
-    ├── index.html
-    ├── vite.config.ts
-    ├── tailwind.config.js
+    │   ├── composables/                # LÓGICA DE NEGOCIO Y API (Composables First)
+    │   │   ├── useAuth.ts              # Login, Logout, Google OAuth, Usuario actual
+    │   │   ├── usePermissions.ts       # Guards reactivos: isSuperAdmin, isSupervisor, isValidator, isHost
+    │   │   ├── useProperties.ts        # Catálogo, filtros por departamento, paginación
+    │   │   ├── useAvailability.ts      # Calendario de anfitrión y consulta pública de fechas
+    │   │   ├── useInspection.ts        # Checklist in situ móvil, geolocalización, fotos
+    │   │   └── useCommissions.ts       # Dashboard de ganancias del validador y liquidaciones
+    │   ├── components/
+    │   │   ├── common/                 # BadgeVerified, Navbar, Footer, ContactButtons
+    │   │   ├── properties/             # PropertyCard, PropertyGallery, FilterSidebar, AvailabilityPicker
+    │   │   ├── host/                   # AvailabilityCalendar, PropertyForm
+    │   │   ├── validator/              # InspectionChecklist, PhotoUploader, CommissionCard
+    │   │   └── supervisor/             # AuditReviewCard, PhotoCompareModal
+    │   ├── views/
+    │   │   ├── public/                 # HomeView, PropertiesView, PropertyDetailView, ExperiencesView
+    │   │   ├── auth/                   # LoginView, RegisterView, GoogleCallbackView
+    │   │   ├── host/                   # HostDashboardView, HostCalendarView, MyPropertiesView
+    │   │   ├── validator/              # ValidatorMobileAppView, MyCommissionsView
+    │   │   ├── supervisor/             # QualityControlView, AuditReviewDetailView
+    │   │   └── admin/                  # SuperAdminDashboardView, CommissionsPayoutView
+    │   ├── stores/                     # Pinia stores
+    │   ├── router/                     # Rutas con navegación tipada y guards por rol
+    │   ├── types/
+    │   └── App.vue
     └── package.json
 ```
 
 ---
 
-## 5. Estrategia de Componentes Vue 3 (`client/`)
+## 5. Arquitectura de Composables en Vue 3 (`client/src/composables/`)
 
-En el prototipo `legacy/` existía alta duplicación de código HTML y JavaScript. Con Vue 3 se abstrae mediante componentes reutilizables con **Composition API** y `<script setup>`:
+Para asegurar mantenibilidad, separación estricta de responsabilidades y testeabilidad, aplicamos el patrón **Composables First**:
 
-| Componente Vue | Archivo Legacy Reemplazado | Responsabilidad |
-| :--- | :--- | :--- |
-| `<BadgeVerified :size="'sm' \| 'md' \| 'lg'" :verifiedAt="date" />` | Clases manuales dispersas | Muestra el escudo oficial TS con tooltip informativo de la auditoría física realizada. |
-| `<PropertyCard :property="property" />` | Bloques repetidos en `index.html` y `alquileres.html` | Tarjeta con imagen, precio, capacidad, amenities y botón de detalle. |
-| `<ExperienceCard :experience="experience" />` | Bloques repetidos en `experiencias-listado.html` | Tarjeta con duración, precio por persona, operador verificado y botón de contacto. |
-| `<DepartmentCard :department="department" />` | 19 bloques duplicados en `index.html` | Visualiza foto del departamento sanjuanino, contador de inmuebles verificados y filtro directo. |
-| `<FilterSidebar :departments="departments" @filter="onFilter" />` | Sidebar duplicado en `alquileres.html` | Panel interactivo de filtrado reactivo sin recarga de página. |
-| `<ContactButtons :whatsapp="wa" :phone="tel" :title="title" />` | Código JS en `detalle-alquiler.js` | Botón a WhatsApp con texto de seguridad preconfigurado y llamada directa. |
-| `<InspectionChecklist v-model="checklist" />` | Sin equivalente (nuevo) | Formulario móvil para que el validador marque ítems verificados en terreno. |
-| `<PhotoUploader @upload="onPhotoUpload" />` | Sin equivalente (nuevo) | Carga y previsualización de fotografías de inspección física antes del envío. |
+| Composable | Responsabilidad y Métodos Clave |
+| :--- | :--- |
+| `useAuth()` | `login()`, `logout()`, `loginWithGoogle()`, `user`, `isAuthenticated`. Conexión a Sanctum. |
+| `usePermissions()` | `hasRole(role)`, `isSuperAdmin`, `isSupervisor`, `isValidator`, `isHost`. Usado en Vue Router y botones condicionales. |
+| `useProperties()` | `properties`, `loading`, `fetchProperties(filters)`, `getPropertyBySlug(slug)`, `applyFilter()`. |
+| `useAvailability(propertyId)` | `calendarDates`, `fetchAvailability(month, year)`, `blockDates(range)`, `unblockDates(range)`, `isDateAvailable(date)`. |
+| `useInspection()` | `currentAudit`, `checklistItems`, `uploadPhoto(file)`, `submitAudit()`, `captureGeoLocation()`. |
+| `useCommissions()` | `commissionsSummary`, `fetchMyEarnings()`, `month1Commissions`, `recurringCommissions`, `payoutHistory`. |
 
 ---
 
 ## 6. Mapeo de Endpoints de la API (`server/routes/api.php`)
 
 ```php
-use App\Http\Controllers\Api\Public\PropertyCatalogController;
-use App\Http\Controllers\Api\Public\ExperienceCatalogController;
-use App\Http\Controllers\Api\Public\DepartmentController;
-use App\Http\Controllers\Api\Public\ContactController;
-use App\Http\Controllers\Api\Auth\AuthController;
-use App\Http\Controllers\Api\Host\HostVerificationController;
-use App\Http\Controllers\Api\Validator\ValidatorTaskController;
-use App\Http\Controllers\Api\Validator\InspectionAuditController;
-use App\Http\Controllers\Api\Admin\DashboardController;
-use App\Http\Controllers\Api\Admin\VerificationManagementController;
+// Prefijo global /api/v1
 
-// --- Rutas Públicas (Catálogo y Consulta) ---
+// --- PÚBLICO (Turistas y Navegación) ---
 Route::prefix('v1')->group(function () {
     Route::get('/properties', [PropertyCatalogController::class, 'index']);
     Route::get('/properties/{slug}', [PropertyCatalogController::class, 'show']);
+    Route::get('/properties/{id}/availability', [PropertyCatalogController::class, 'checkAvailability']);
     Route::get('/experiences', [ExperienceCatalogController::class, 'index']);
-    Route::get('/experiences/{slug}', [ExperienceCatalogController::class, 'show']);
     Route::get('/departments', [DepartmentController::class, 'index']);
-    Route::get('/departments/{slug}', [DepartmentController::class, 'show']);
-    Route::post('/contact', [ContactController::class, 'send']);
 
-    // --- Autenticación (Sanctum SPA Session) ---
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-    Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+    // --- AUTENTICACIÓN (Sanctum SPA + Google OAuth) ---
+    Route::post('/auth/login', [AuthController::class, 'login']);
+    Route::post('/auth/register', [AuthController::class, 'register']);
+    Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect']);
+    Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 
-    // --- Solicitud de Certificación para Anfitriones ---
-    Route::post('/verifications/request', [HostVerificationController::class, 'store']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/auth/logout', [AuthController::class, 'logout']);
+        Route::get('/auth/me', [AuthController::class, 'me']);
 
-    // --- Portal del Validador Técnico (Rol: validator) ---
-    Route::middleware(['auth:sanctum', 'role:validator'])->prefix('validator')->group(function () {
-        Route::get('/tasks', [ValidatorTaskController::class, 'index']);
-        Route::get('/inspections/{id}', [InspectionAuditController::class, 'show']);
-        Route::post('/inspections/{id}/submit', [InspectionAuditController::class, 'submitAudit']);
-        Route::post('/inspections/{id}/upload-photo', [InspectionAuditController::class, 'uploadControlPhoto']);
-    });
+        // --- PANEL ANFITRIÓN (host) ---
+        Route::middleware('role:host')->prefix('host')->group(function () {
+            Route::get('/properties', [HostPropertyController::class, 'index']);
+            Route::post('/properties', [HostPropertyController::class, 'store']);
+            Route::put('/properties/{id}', [HostPropertyController::class, 'update']);
+            Route::get('/properties/{id}/availability', [HostAvailabilityController::class, 'index']);
+            Route::post('/properties/{id}/availability/block', [HostAvailabilityController::class, 'blockDates']);
+            Route::post('/verifications/request', [HostPropertyController::class, 'requestAudit']);
+        });
 
-    // --- Panel de Administración Privada (Rol: admin) ---
-    Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
-        Route::get('/metrics', [DashboardController::class, 'metrics']);
-        Route::apiResource('/verifications', VerificationManagementController::class);
-        Route::post('/verifications/{id}/assign', [VerificationManagementController::class, 'assignValidator']);
-        Route::get('/reports/audit-export', [DashboardController::class, 'exportAuditReport']);
+        // --- PANEL VALIDADOR EN TERRENO (validator) ---
+        Route::middleware('role:validator')->prefix('validator')->group(function () {
+            Route::get('/tasks', [ValidatorAuditController::class, 'assignedTasks']);
+            Route::post('/audits/{id}/submit', [ValidatorAuditController::class, 'submitAudit']);
+            Route::post('/audits/{id}/photos', [ValidatorAuditController::class, 'uploadInSituPhoto']);
+            Route::get('/commissions', [ValidatorCommissionController::class, 'myCommissions']);
+        });
+
+        // --- PANEL SUPERVISOR / CONTROL DE CALIDAD (supervisor) ---
+        Route::middleware('role:supervisor')->prefix('supervisor')->group(function () {
+            Route::get('/audits/pending', [SupervisorReviewController::class, 'pendingAudits']);
+            Route::post('/audits/{id}/approve', [SupervisorReviewController::class, 'approveSeal']);
+            Route::post('/audits/{id}/reject', [SupervisorReviewController::class, 'rejectAudit']);
+            Route::patch('/properties/{id}/toggle-status', [SupervisorReviewController::class, 'togglePublication']);
+        });
+
+        // --- PANEL SUPER ADMIN (super_admin) ---
+        Route::middleware('role:super_admin')->prefix('admin')->group(function () {
+            Route::get('/metrics', [AdminDashboardController::class, 'metrics']);
+            Route::get('/users', [AdminUserController::class, 'index']);
+            Route::get('/commissions/payouts', [AdminCommissionController::class, 'payoutsSummary']);
+            Route::post('/commissions/payouts/{id}/mark-paid', [AdminCommissionController::class, 'markPaid']);
+        });
     });
 });
 ```
 
 ---
 
-## 7. Políticas de Seguridad y Buenas Prácticas
+## 7. Políticas de Seguridad y Reglas de Negocio
 
-Siguiendo las directrices de `laravel-security` y `laravel-best-practices`:
-
-1. **Autenticación SPA con Cookies `HttpOnly`:**
-   - La comunicación entre `client/` y `server/` emplea cookies de sesión gestionadas por Laravel Sanctum.
-   - No se almacenan tokens sensibles en `localStorage`, evitando exposición frente a vectores XSS.
-2. **CORS Restringido a Dominios de la Empresa:**
-   - En `config/cors.php`, únicamente se autorizan los orígenes del frontend (`turismoseguro.com.ar` y puertos de desarrollo local).
-3. **Control de Frecuencia (Rate Limiting):**
-   - Endpoints públicos como `/properties` y `/contact` cuentan con límites de peticiones (`throttle:60,1`) para prevenir extracción automatizada (scraping) de teléfonos o ataques de denegación de servicio.
-4. **Validación Estricta con Form Requests:**
-   - Ningún controlador valida en línea; cada endpoint cuenta con su clase de validación (`StoreVerificationRequest`, `SubmitInspectionRequest`) que comprueba tipos de datos y desinfecta la entrada.
-5. **Políticas de Autorización (Policies):**
-   - Un validador solo puede acceder a las actas de inspección que tiene explícitamente asignadas.
-   - Solo administradores pueden dictaminar el cambio de estado de un sello verificado.
-6. **Protección de Datos de Contacto:**
-   - La plataforma no intermedia pagos bancarios ni solicita CBU/tarjetas en el MVP, eliminando el riesgo de estafa financiera en la plataforma y concentrándose en certificar la identidad y existencia física del prestador.
+1. **Regla de No Publicación:**
+   - Una propiedad con `verification_status != 'verified'` o `publication_status != 'published'` es filtrada automáticamente por un *Global Scope* en Eloquent, impidiendo su exposición en endpoints públicos.
+2. **Protección de Calendario de Disponibilidad:**
+   - Solo el anfitrión dueño de la propiedad o un super admin pueden modificar las fechas bloqueadas.
+3. **Cálculo Determinista de Comisiones:**
+   - La clase `CommissionService` encapsula las tasas según el número de mes:
+     $$\text{Mes 1: } \text{Comisión} = \text{Monto} \times 0.70$$
+     $$\text{Mes 2+: } \text{Comisión} = \text{Monto} \times 0.15$$
+   - Las liquidaciones quedan registradas con firma de timestamp y usuario aprobador.

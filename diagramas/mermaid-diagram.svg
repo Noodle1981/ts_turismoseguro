@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 734.8049166666667 576.5" width="734.8049166666667" height="576.5" style="--bg:#1F1F1F;--fg:#CCCCCC;--line:#CCCCCC;--accent:#0078D4;--muted:#CCCCCCCC;--surface:#181818;--border:#CCCCCC;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<polyline class="edge" data-from="Turista" data-to="Anfitrion" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="Consulta disponibilidad y contacta" points="124.50000000000001,230.10000000000002 124.5,334.40000000000003 176.22133333333335,334.40000000000003 176.22133333333335,346.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Validador" data-to="Anfitrion" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="Capta en terreno y audita in situ" points="326.67225,230.10000000000002 326.67225,266.1 307.0084166666667,266.1 307.0084166666667,334.40000000000003 246.0266666666667,334.40000000000003 246.0266666666667,346.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Validador" data-to="Supervisor" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="Sube acta y fotos" points="420.93058333333335,230.10000000000002 420.93058333333335,266.1 440.5944166666667,266.1 440.5944166666667,334.40000000000003 502.22741666666667,334.40000000000003 502.22741666666667,346.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Supervisor" data-to="Plataforma" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="Aprueba / Da de alta definitiva el Sello" points="539.7235833333334,383.3 539.7235833333334,499.6000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="SuperAdmin" data-to="Validador" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="Liquida comisiones y controla todo" points="454.8,76.9 454.8,112.9 373.8014166666667,112.9 373.8014166666667,193.2" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="SuperAdmin" data-to="Supervisor" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="Gestiona plataforma y métricas" points="538.1903333333332,76.9 538.1903333333332,266.1 619.1889166666667,266.1 619.1889166666667,334.40000000000003 577.21975,334.40000000000003 577.21975,346.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="Turista" data-to="Anfitrion" data-label="Consulta disponibilidad y contacta">
+  <rect x="36" y="273.1" width="176.24800000000005" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="124.12400000000002" y="288.25" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Consulta disponibilidad y contacta</text>
+</g>
+<g class="edge-label" data-from="Validador" data-to="Anfitrion" data-label="Capta en terreno y audita in situ">
+  <rect x="225.50841666666668" y="273.1" width="162.586" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="306.8014166666667" y="288.25" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Capta en terreno y audita in situ</text>
+</g>
+<g class="edge-label" data-from="Validador" data-to="Supervisor" data-label="Sube acta y fotos">
+  <rect x="392.0944166666667" y="273.1" width="96.65200000000003" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="440.4204166666667" y="288.25" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Sube acta y fotos</text>
+</g>
+<g class="edge-label" data-from="Supervisor" data-to="Plataforma" data-label="Aprueba / Da de alta definitiva el Sello">
+  <rect x="444.72358333333335" y="426.30000000000007" width="189.90999999999997" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="539.6785833333333" y="441.45000000000005" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Aprueba / Da de alta definitiva el Sello</text>
+</g>
+<g class="edge-label" data-from="SuperAdmin" data-to="Validador" data-label="Liquida comisiones y controla todo">
+  <rect x="283.8014166666667" y="119.9" width="179.21800000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="373.4104166666667" y="135.05" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Liquida comisiones y controla todo</text>
+</g>
+<g class="edge-label" data-from="SuperAdmin" data-to="Supervisor" data-label="Gestiona plataforma y métricas">
+  <rect x="539.1889166666666" y="273.1" width="159.61600000000004" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="618.9969166666666" y="288.25" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Gestiona plataforma y métricas</text>
+</g>
+<g class="node" data-id="Turista" data-label="Turista (Público)" data-shape="rectangle">
+  <rect x="54.98950000000001" y="193.2" width="139.02100000000002" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="124.50000000000001" y="211.64999999999998" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Turista (Público)</text>
+</g>
+<g class="node" data-id="Anfitrion" data-label="Anfitrión / Prestador (Cliente)" data-shape="rectangle">
+  <rect x="106.41600000000004" y="346.40000000000003" width="209.41599999999994" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="211.12400000000002" y="364.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Anfitrión / Prestador (Cliente)</text>
+</g>
+<g class="node" data-id="Validador" data-label="Validador de Campo (Comercial + Auditor)" data-shape="rectangle">
+  <rect x="232.41391666666675" y="193.2" width="282.77499999999986" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="373.8014166666667" y="211.64999999999998" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Validador de Campo (Comercial + Auditor)</text>
+</g>
+<g class="node" data-id="Supervisor" data-label="Supervisor / Control de Calidad" data-shape="rectangle">
+  <rect x="427.23508333333336" y="346.40000000000003" width="224.97699999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="539.7235833333333" y="364.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Supervisor / Control de Calidad</text>
+</g>
+<g class="node" data-id="Plataforma" data-label="Plataforma TS" data-shape="rectangle">
+  <rect x="477.62308333333334" y="499.6000000000001" width="124.20099999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="539.7235833333333" y="518.0500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Plataforma TS</text>
+</g>
+<g class="node" data-id="SuperAdmin" data-label="Super Admin (Dueño de la Empresa)" data-shape="rectangle">
+  <rect x="371.4096666666667" y="40" width="250.17099999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="496.49516666666665" y="58.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Super Admin (Dueño de la Empresa)</text>
+</g>
+</svg>

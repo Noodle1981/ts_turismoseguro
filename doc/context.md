@@ -2,95 +2,94 @@
 
 ## 1. Propósito y Modelo de Negocio Privado
 
-**Turismo Seguro San Juan** es una iniciativa y plataforma digital **privada** nacida para dar solución a una problemática crítica que afecta al mercado turístico y a los visitantes de la provincia de San Juan: **las estafas en alquileres temporales y experiencias informales no verificadas**.
+**Turismo Seguro San Juan** es una empresa y plataforma digital **privada** concebida para transformar el mercado de alquileres temporales y experiencias turísticas en la provincia de San Juan, Argentina, erradicando las estafas virtuales mediante la **auditoría física *in situ*** y el otorgamiento del sello de calidad **"Verificado TS"**.
 
-### El Problema en el Mercado:
-- Cuentas y perfiles apócrifos en redes sociales (Facebook Marketplace, grupos abiertos de alquileres, anuncios clasificados libres) publican fotografías de cabañas o casas que no existen o de las cuales no son propietarios.
-- Los turistas transfieren señas bancarias o pagos totales anticipados y, al arribar a San Juan, constatan el engaño sin posibilidad de respuesta.
-- Los anfitriones y prestadores turísticos honestos pierden reservas, y la percepción de seguridad del destino se deteriora.
+### La Oportunidad y el Negocio de Confianza:
+- **La problemática:** Miles de turistas son defraudados anualmente mediante publicaciones falsas en redes sociales. Al mismo tiempo, los propietarios y anfitriones honestos sufren desconfianza y pierden clientes.
+- **La propuesta económica:** La plataforma ofrece a los anfitriones un **Sello Oficial de Confianza**, difusión preferencial y herramientas de gestión a cambio de una tarifa de verificación inicial y una suscripción mensual accesible.
+- **Regla estricta:** Ningún anfitrión puede publicar en la plataforma sin haber sido auditado y aprobado físicamente. El sello es un certificado real de existencia y titularidad.
 
-### La Solución de Certificación Privada:
-Construir una plataforma de confianza y certificación privada independiente donde **cada alojamiento o experiencia turística cuenta con una auditoría física *in situ*** realizada por un cuerpo de validadores e inspectores técnicos de la empresa. El otorgamiento del **Sello "Verificado TS"** garantiza que el inmueble existe, que las instalaciones son reales y que los canales de contacto directo (WhatsApp y teléfono) pertenecen legítimamente al anfitrión verificado.
-
-### Articulación Institucional (Convenios de Colaboración):
-Aunque la titularidad, operación y dominios son de carácter **privado e independiente**, la plataforma prevé la formalización de **convenios marco de colaboración público-privada** con la Secretaría / Ministerio de Turismo de San Juan, municipios y cámaras de turismo locales para promover la transparencia, la formalización de la oferta y la promoción del destino seguro.
-
----
-
-## 2. Diagnóstico del Estado Actual (Código Legacy)
-
-El proyecto cuenta con un prototipo estático inicial ubicado en el directorio `legacy/`:
-
-### Archivos Existentes:
-1. `index.html`: Landing page principal con Hero, sección informativa de valor, alquileres destacados, departamentos de San Juan, experiencias turísticas y formulario de contacto.
-2. `alquileres.html` + `alquileres.js` + `alquileres.css`: Catálogo de propiedades con filtros básicos.
-3. `detalle-alquiler.html` + `detalle-alquiler.js` + `detalle-alquiler.css`: Ficha técnica de propiedad con galería, comodidades y botones de contacto directo a WhatsApp y llamada.
-4. `experiencias-listado.html` + `experiencias.js` + `experiencias.css`: Listado de experiencias turísticas (astroturismo en El Leoncito, Ischigualasto, diques, etc.).
-5. `detalle-experiencia.html` + `detalle-experiencia.js` + `detalle-experiencia.css`: Detalle de experiencia con recomendaciones y contacto del operador.
-6. `img/`: Activos visuales estáticos organizados por departamentos, experiencias y propiedades.
-
-### Limitaciones del Prototipo Legacy:
-- **Datos "Hardcodeados":** Información incrustada en objetos JS locales (`alquileresDB`, `experienciasDB`) duplicados entre archivos, sin base de datos ni persistencia relacional.
-- **Sin Panel Administrativo ni de Campo:** No existe interfaz para que los validadores carguen actas de inspección in situ ni para que la administración gestione solicitudes y métricas.
-- **Duplicación de Código y Estilos:** Múltiples copias de cabeceras, pies de página y tarjetas sin componentización modular.
+### Fuerza de Ventas y Esquema de Comisiones para Validadores:
+Para romper la inercia del mercado y captar rápidamente a los mejores alojamientos de San Juan (en Calingasta, Barreal, Zonda, Valle Fértil, Ullum, Iglesia, etc.), los validadores actúan como **auditores de campo y promotores comerciales**:
+1. **Comisión de Captación (Mes 1):** El validador recibe entre un **60% y 70%** del primer pago del anfitrión al cerrar la incorporación y completar la inspección.
+2. **Comisión Recurrente (Meses posteriores):** El validador mantiene un porcentaje residual mensual (entre **15% y 20%**) por cada cliente que continúe activo en su cartera.
+3. **Margen de la Plataforma:** El remanente cubre el soporte operativo, marketing de atracción turística y el beneficio neto de la empresa.
 
 ---
 
-## 3. Actores y Flujos de Valor
+## 2. Los 5 Actores y sus Flujos de Valor (User Journeys)
 
 ```mermaid
 journey
-    title Recorrido del Turista Seguro
-    section Descubrimiento
-      Ingresa a turismoseguro.com.ar: 5: Turista
-      Filtra por departamento o comodidades en Vue: 5: Turista
-    section Verificación
-      Identifica el Sello Verificado TS auditado: 5: Turista
-      Revisa fotos reales, capacidad y normas: 5: Turista
-    section Contacto Directo
-      Presiona botón de WhatsApp verificado: 5: Turista
-      Coordina reserva con el anfitrión legal sin comisiones: 5: Turista
+    title Recorrido del Validador Comercial
+    section Captación
+      Identifica alojamiento en terreno: 5: Validador
+      Presenta el Sello TS al propietario: 4: Validador
+    section Auditoría In Situ
+      Verifica DNI, servicios y pileta: 5: Validador
+      Toma fotografías de control con el celular: 5: Validador
+    section Rendición y Comisión
+      Sube el acta técnica al sistema: 5: Validador
+      Visualiza su comisión del Mes 1 acreditada: 5: Validador
 ```
 
 ```mermaid
 journey
-    title Recorrido del Validador Técnico en Terreno
-    section Asignación
-      Recibe asignación de visita en panel móvil: 4: Validador
-      Se traslada físicamente a la propiedad: 4: Validador
-    section Inspección In Situ
-      Verifica identidad del titular y servicios reales: 5: Validador
-      Toma fotografías de control (pileta, habitaciones): 5: Validador
+    title Recorrido del Supervisor de Calidad
+    section Revisión Antifraude
+      Recibe acta y fotos del validador: 5: Supervisor
+      Verifica consistencia de imágenes y titularidad: 5: Supervisor
     section Emisión del Sello
-      Carga acta digital y dictamen en la API: 5: Validador
-      Plataforma publica automáticamente el Sello Verificado TS: 5: Validador
+      Aprueba la verificación y da de alta la publicación: 5: Supervisor
+      Avisa al anfitrión que su propiedad ya es pública: 5: Supervisor
+```
+
+```mermaid
+journey
+    title Recorrido del Anfitrión (Cliente)
+    section Registro
+      Se suscribe y acepta la inspección: 5: Anfitrión
+      Recibe la visita del validador y obtiene Sello TS: 5: Anfitrión
+    section Gestión Diaria
+      Ingresa a su panel privado: 5: Anfitrión
+      Bloquea en su calendario fechas ya alquiladas: 5: Anfitrión
+      Recibe consultas sólo para fechas disponibles: 5: Anfitrión
+```
+
+```mermaid
+journey
+    title Recorrido del Turista
+    section Búsqueda y Validación
+      Ingresa a turismoseguro.com.ar: 5: Turista
+      Filtra por departamento y revisa fechas libres: 5: Turista
+      Comprueba el Sello Verificado TS auditado: 5: Turista
+    section Contacto
+      Presiona botón de WhatsApp verificado: 5: Turista
+      Coordina con el dueño legítimo sin intermediarios: 5: Turista
 ```
 
 ---
 
-## 4. Definición de Alcance del MVP
+## 3. Diagnóstico del Estado Actual (Código Legacy)
 
-### Incluido en el MVP:
-- **Portal Público Web / Móvil (`client/` en Vue 3):** Búsqueda y filtrado reactivo de propiedades y experiencias, fichas de detalle, navegación por departamentos y contacto directo verificado vía WhatsApp.
-- **Sello "Verificado TS":** Identificador visual de auditoría in situ con información de fecha de inspección.
-- **Portal de Anfitriones:** Solicitud de certificación y carga de datos del inmueble.
-- **Panel Operativo para Validadores y Administradores:** Gestión de visitas técnicas, acta de inspección con carga de fotos de control y aprobación/rechazo del sello.
-- **Backend API REST (`server/` en Laravel):** Gestión de persistencia, reglas de negocio, endpoints seguros y autenticación vía Sanctum.
-
-### Fuera de Alcance del MVP (Fases Futuras):
-- Pasarela de cobro o pagos en línea de reservas dentro del sistema.
-- Aplicación nativa móvil publicada en App Store / Play Store (en MVP se opera vía Web Responsive / PWA).
-- Sistema abierto de valoraciones o comentarios no auditados.
+El proyecto cuenta con un prototipo estático inicial en `legacy/`:
+- **Puntos valiosos a preservar:** Banco inicial de fotografías de departamentos sanjuaninos (`img/departamentos/`), ejemplos de cabañas y experiencias turísticas representativas.
+- **Limitaciones a superar:**
+  - Código duplicado en 5 archivos HTML y scripts dispersos.
+  - Datos hardcodeados en variables JS locales sin base de datos.
+  - Ausencia de roles, autenticación, módulo de actas de inspección, liquidación de comisiones y calendario de disponibilidad.
 
 ---
 
-## 5. Decisiones Técnicas y de Infraestructura
+## 4. Decisiones Técnicas y de Arquitectura
 
 1. **Arquitectura Desacoplada (`server/` y `client/`):**
-   - Backend API en Laravel y Frontend SPA en Vue 3 con Vite y Tailwind CSS en directorios independientes.
-   - Prepara el sistema para incorporar aplicaciones móviles nativas futuras (Capacitor/Ionic) consumiendo la misma API sin duplicar lógica.
-2. **Dominios Privados y Seguridad:**
-   - Dominio comercial de primer nivel (ej. `turismoseguro.com.ar` y subdominio API `api.turismoseguro.com.ar`).
-   - Autenticación SPA segura mediante cookies `HttpOnly` y protección CSRF con Laravel Sanctum.
-3. **Persistencia Ligera y Escalable:**
-   - Base de datos en SQLite para máxima agilidad en el MVP y pruebas, abstraída completamente mediante Eloquent ORM para migrar a PostgreSQL o MySQL según el crecimiento del servicio.
+   - Backend en **Laravel API** (rutas `routes/api.php`, Sanctum SPA, Form Requests, Resources).
+   - Frontend en **Vue 3** (Composition API con `<script setup>`, Pinia, Tailwind CSS y Vite).
+2. **Enfoque de Composables en Vue 3:**
+   - La lógica de negocio del cliente se modulariza estrictamente en Composables reutilizables (`useAuth`, `useProperties`, `useAvailability`, `useInspection`, `useCommissions`).
+3. **Persistencia y Base de Datos:**
+   - Base de datos en SQLite para máxima agilidad en desarrollo y MVP, abstraída con Eloquent ORM para migrar a PostgreSQL o MySQL en producción.
+4. **Seguridad y Dominios Privados:**
+   - Frontend en `turismoseguro.com.ar` y API en `api.turismoseguro.com.ar`.
+   - Autenticación segura mediante cookies `HttpOnly` y protección CSRF con Laravel Sanctum en el MVP, con proyección inmediata a Google OAuth (Socialite).
