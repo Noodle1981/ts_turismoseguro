@@ -130,25 +130,31 @@ Objetivo: base de datos completa y poblada con los datos reales del prototipo le
 
 ---
 
-## FASE 3 — Autenticación, Roles y Procedencia Geográfica `[ ]`
+## FASE 3 — Autenticación, Roles, Procedencia y Recuperación de Contraseña `[ ]`
 
-Objetivo: login funcional, registro con captura de procedencia para `rent`, y rutas protegidas por rol.
+Objetivo: suite completa de autenticación tradicional (registro por rol, login con credenciales, recuperación y reseteo de contraseña por email) y rutas protegidas por rol.
 
 ### 3.1 Backend
 - [ ] `POST /auth/login`, `POST /auth/logout`, `GET /auth/me`
-- [ ] `POST /auth/register/rent`: registro de usuario interesado con **procedencia geográfica obligatoria u opcional asistida** (`origin_country`, `origin_province`, `origin_city`, `is_local_resident`)
+- [ ] `POST /auth/register/rent`: registro de usuario interesado con **procedencia geográfica** (`origin_country`, `origin_province`, `origin_city`, `is_local_resident`)
 - [ ] `POST /auth/register/client`: registro del cliente oferente (anfitrión)
+- [ ] `POST /auth/forgot-password`: solicitud de recuperación de contraseña con envío de correo y token seguro firmado
+- [ ] `POST /auth/reset-password`: restablecimiento de contraseña mediante token validado
+- [ ] `PUT /auth/password`: actualización de contraseña desde perfil autenticado
 - [ ] Middleware `CheckRole` y alias `role:` en el router para los 5 roles
 - [ ] Policies por recurso (propiedades, auditorías, comisiones)
-- [ ] *Rate limiting* en login y registro
-- [ ] Tests: login válido/inválido, validación de procedencia en `rent`, acceso denegado por rol (skill `laravel-security`)
+- [ ] *Rate limiting* estricto en login, registro y recuperación de contraseña (skill `laravel-security`)
+- [ ] Tests: login válido/inválido, flujo de olvido/reseteo de contraseña, validación de procedencia en `rent`, acceso denegado por rol
 
 ### 3.2 Frontend
-- [ ] `composables/useAuth.ts` (login, logout, registro con procedencia, usuario actual)
+- [ ] `composables/useAuth.ts` (`login`, `logout`, `registerRent`, `registerClient`, `forgotPassword`, `resetPassword`, `user`, `isAuthenticated`)
 - [ ] `composables/usePermissions.ts` (`hasRole`, `isSuperAdmin`, `isSupervisor`, `isValidator`, `isClient`, `isRent`)
 - [ ] `stores/auth.ts` (Pinia)
 - [ ] Guards en Vue Router con `meta.roles` y redirección según rol
-- [ ] `LoginView.vue`, `RegisterRentView.vue` (con selector de país/provincia y toggle "¿Vives en San Juan?") y `RegisterClientView.vue`
+- [ ] `LoginView.vue` (login común con enlace a "¿Olvidaste tu contraseña?")
+- [ ] `RegisterRentView.vue` (registro común con selector de procedencia) y `RegisterClientView.vue`
+- [ ] `ForgotPasswordView.vue` (formulario para ingresar email de recuperación)
+- [ ] `ResetPasswordView.vue` (formulario para definir nueva contraseña con token de URL)
 - [ ] Redirección post-login al panel que corresponde a cada rol
 - [ ] Vista 403 y vista 404
 
@@ -157,7 +163,7 @@ Objetivo: login funcional, registro con captura de procedencia para `rent`, y ru
 | Zona | Prefijo | Roles permitidos |
 | :--- | :--- | :--- |
 | Público / Consulta | `/` , `/alquileres`, `/experiencias`, `/departamentos/:slug` | Todos |
-| Autenticación | `/login`, `/registro/alquilar`, `/registro/anfitrion` | Invitados |
+| Autenticación Común | `/login`, `/registro/alquilar`, `/registro/anfitrion`, `/recuperar-password`, `/restablecer-password` | Invitados |
 | Cliente Oferente | `/panel/cliente/*` | `client` |
 | Validador | `/panel/validador/*` | `validator` |
 | Supervisor | `/panel/supervisor/*` | `supervisor` |
@@ -257,20 +263,23 @@ Objetivo: el validador capta clientes en la calle, audita en terreno y ve sus co
 Objetivo: filtro antifraude interno y emisión del sello.
 
 ### 7.1 Backend
-- [ ] `GET /supervisor/audits/pending`
-- [ ] `POST /supervisor/audits/{id}/approve` (estado `verified` + `published`, registra `verified_at`)
-- [ ] `POST /supervisor/audits/{id}/reject` (motivo obligatorio)
-- [ ] `PATCH /supervisor/properties/{id}/toggle-status` (baja/alta de publicación)
-- [ ] Registro de auditoría (quién aprobó, cuándo y qué)
-- [ ] Regla: un supervisor no puede aprobar una auditoría propia
-- [ ] Tests: aprobación publica la propiedad, rechazo no, y no se puede saltar el flujo
+- [ ] `GET /supervisor/requests` (tabla de peticiones con filtros por departamento/zona, estado y ordenamiento por fecha)
+- [ ] `POST /supervisor/requests/{id}/assign` (asignación de la petición a un validador zonal específico)
+- [ ] `GET /supervisor/audits/pending` (bandeja de actas in situ terminadas listas para dictamen)
+- [ ] `POST /supervisor/audits/{id}/approve` (emite Sello TS: estado `verified` + `published`, registra `verified_at`)
+- [ ] `POST /supervisor/audits/{id}/reject` (motivo obligatorio de rechazo técnico)
+- [ ] `PATCH /supervisor/properties/{id}/toggle-status` (baja/alta temporal de publicación)
+- [ ] Registro de auditoría (quién asignó, quién aprobó, cuándo y qué)
+- [ ] Regla de integridad: un supervisor no puede auditar como validador y aprobarse a sí mismo
+- [ ] Tests: asignación zonal, aprobación publica la propiedad, rechazo no, y no se puede saltar el flujo
 
 ### 7.2 Frontend
-- [ ] `QualityControlView.vue` (bandeja de pendientes)
-- [ ] `AuditReviewDetailView.vue` (fotos, checklist, GPS y datos del validador)
+- [ ] `RequestsTableView.vue` (tabla interactiva de peticiones agrupada por departamentos/zonas de San Juan, fechas y selector modal de validador)
+- [ ] `QualityControlView.vue` (bandeja de actas in situ enviadas por validadores pendientes de revisión)
+- [ ] `AuditReviewDetailView.vue` (muro de fotos de control, checklist técnico, GPS y datos del validador)
 - [ ] `AuditReviewCard.vue` y `PhotoCompareModal.vue`
-- [ ] Acciones de aprobar / rechazar con motivo
-- [ ] Notificación al cliente del resultado
+- [ ] Acciones de aprobar / rechazar con motivo fundamentado
+- [ ] Notificación automática al cliente del resultado del sello TS
 
 ---
 
@@ -314,16 +323,29 @@ Objetivo: cobrar al cliente oferente y generar las comisiones de forma automáti
 
 ---
 
-## FASE 10 — Google OAuth, SEO y Pulido UX `[ ]`
+## FASE 10 — Google OAuth (Autenticación Social Complementaria), SEO y Pulido UX `[ ]`
 
-- [ ] Laravel Socialite + Google: `redirect` y `callback`
-- [ ] Vincular cuenta Google a usuario existente por email
-- [ ] Botón "Continuar con Google" en `LoginView` y modal de procedencia inicial para usuarios `rent`
-- [ ] SEO (skill `seo`): metadatos dinámicos por ficha, OpenGraph para tarjetas de WhatsApp, `sitemap.xml`, `robots.txt`, JSON-LD `LodgingBusiness`
-- [ ] Evaluar prerender o Nuxt si el SEO lo exige
-- [ ] Auditoría de accesibilidad (WCAG AA) y de rendimiento (Lighthouse)
-- [ ] Optimización de imágenes (WebP y *lazy loading*)
-- [ ] Revisión final de UX con el sistema de diseño
+Objetivo: sumar inicio rápido con Google conviviendo con el login común tradicional, optimizar SEO para WhatsApp y motores de búsqueda, y aplicar el acabado de diseño final.
+
+### 10.1 Autenticación Dual (Google OAuth + Login Común Tradicional)
+- [ ] Laravel Socialite + Google API: configuración de `client_id` y `client_secret`
+- [ ] Endpoints backend: `GET /auth/google/redirect` y `GET /auth/google/callback`
+- [ ] Lógica de vinculación: si el correo de Google ya existe en un usuario con login común, asociar cuenta de forma transparente
+- [ ] Para usuarios nuevos que ingresan vía Google como `rent`: modal/flujo rápido de captura de procedencia (país, provincia, localidad)
+- [ ] Interfaz frontend: botón "Continuar con Google" integrado en `LoginView.vue`, `RegisterRentView.vue` y `RegisterClientView.vue`, manteniendo 100% operativos los formularios comunes con email y contraseña, así como el flujo de recuperación de contraseña olvidada.
+
+### 10.2 SEO y OpenGraph (skill `seo`)
+- [ ] Metadatos dinámicos por ficha de alojamiento y experiencia
+- [ ] Tarjetas OpenGraph (OG Title, OG Image con Sello TS, OG Description) optimizadas para enlaces compartidos en WhatsApp
+- [ ] Generación automática de `sitemap.xml` y archivo `robots.txt`
+- [ ] Microdatos estructurados Schema.org (`LodgingBusiness`)
+- [ ] Evaluación de prerendering o Nuxt si los requerimientos de SEO en buscadores así lo exigen
+
+### 10.3 Pulido Visual y Accesibilidad (skill `ui-ux-pro-max`)
+- [ ] Auditoría de accesibilidad (cumplimiento WCAG AA)
+- [ ] Medición de rendimiento Lighthouse (Performance, A11y, Best Practices, SEO)
+- [ ] Optimización de imágenes en formato WebP con *lazy loading*
+- [ ] Revisión de consistencia con `design-system/turismo-seguro-san-juan/MASTER.md`
 
 ---
 

@@ -71,11 +71,11 @@ Los validadores cumplen un doble rol: **auditores técnicos y captadores comerci
 - Carga de fotos de control directamente desde la cámara del celular.
 - **Dashboard de Comisiones:** Visualización transparente de clientes activos en cartera y comisiones acumuladas (mes 1 vs recurrentes).
 
-### 4.4 Panel de Supervisión y Calidad
-- Bandeja de actas de inspección pendientes de revisión.
-- Verificación cruzada de fotos y datos de titularidad para evitar fraudes internos.
-- Dictamen de aprobación o rechazo fundamentado del Sello TS.
-- Alta o baja de publicaciones en el catálogo público.
+### 4.4 Panel de Supervisión y Calidad (Torre de Control)
+- **Tabla interactiva de peticiones:** Matriz dinámica con filtros para agrupar por departamentos/zonas de San Juan (Zonda, Calingasta, Ullum, Iglesia, etc.), estado de trámite y ordenamiento por fecha de solicitud.
+- **Asignación a validadores zonales:** Capacidad de despachar peticiones pendientes asignándolas al validador comercial activo asignado a esa zona específica.
+- **Bandeja de actas de inspección:** Verificación cruzada de fotos in situ, checklist técnico y datos de titularidad para evitar fraudes internos.
+- **Dictamen de Sello TS:** Emisión formal del sello verificado y alta o baja de publicaciones en el catálogo público.
 
 ### 4.5 Panel de Super Administración
 - Dashboard de métricas: propiedades activas, solicitudes en proceso, facturación estimada.
@@ -85,14 +85,17 @@ Los validadores cumplen un doble rol: **auditores técnicos y captadores comerci
 
 ---
 
-## 5. Estrategia de Autenticación
+## 5. Estrategia de Autenticación (Dual: Tradicional + Social)
 
-1. **Fase Actual (MVP):**
-   - Autenticación tradicional mediante correo electrónico y contraseña.
-   - Sesiones seguras mediante cookies `HttpOnly` y protección CSRF con **Laravel Sanctum**.
-   - En el registro de usuarios `rent`: formulario con campo de procedencia (país, provincia, localidad/departamento).
-2. **Fase Inmediata (Roadmap):**
-   - **Google Sign-In (OAuth 2.0):** Integración con Google Identity Services y Laravel Socialite para facilitar el inicio de sesión con un solo clic tanto a clientes oferentes como a usuarios interesados.
+1. **Autenticación Común Tradicional (Base Permanente):**
+   - **Registro por Rol:** Formularios específicos para clientes oferentes (`client`) y usuarios interesados (`rent`, solicitando país, provincia, localidad y residencia local).
+   - **Inicio de Sesión:** Correo electrónico y contraseña segura.
+   - **Recuperación de Contraseña:** Flujo completo de "¿Olvidaste tu contraseña?" con envío de token seguro al correo y pantalla de restablecimiento de contraseña.
+   - **Sesiones Seguras:** Cookies `HttpOnly` y protección CSRF nativa con **Laravel Sanctum**.
+2. **Autenticación Social (Google OAuth 2.0 - Complementaria):**
+   - Acceso ágil con un solo clic mediante **Google Sign-In** (Laravel Socialite).
+   - Convive con la autenticación tradicional (el usuario puede elegir registrarse/iniciar sesión con Google o con correo y contraseña).
+   - Vinculación automática si el correo de Google coincide con una cuenta existente.
 
 ---
 

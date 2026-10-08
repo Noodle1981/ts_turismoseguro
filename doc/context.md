@@ -73,6 +73,18 @@ El usuario del rol `rent` no siempre es un turista de otra provincia o país; co
 - **Consulta de Procedencia Geográfica:** Registro de origen del usuario (si es habitante local de San Juan —y de qué departamento— o si proviene de otra provincia o del exterior).
 - **Valor para el Negocio:** Permite segmentar analíticas para el Super Admin y para entes de turismo (convenios): qué porcentaje de la demanda es turismo receptivo externo vs turismo interno/escapadas locales.
 
+### Transición Segura de Roles: De `rent` a `client`
+Un usuario registrado originalmente para buscar alquileres (`rent`) puede querer ofrecer su propio inmueble:
+1. **Promoción Asistida (Self-Service):** Desde el menú principal hace clic en *"Quiero publicar mi alojamiento"*. Completa los datos iniciales y solicita la verificación. Su usuario adquiere la capacidad de `client` para acceder a `/panel/cliente`, pero su propiedad se crea en estado **Borrador (`draft`)** y **No verificada (`unverified`)**.
+2. **Alta por Validador (Captación en Calle):** Si el propietario contacta por fuera o es captado en terreno, el validador lo da de alta o lo vincula con su email existente desde la app móvil.
+3. **Cero Riesgo de Auto-Publicación:** El rol `client` solo permite editar borradores. Una propiedad es 100% invisible para el público hasta que el Supervisor audita el acta física y emite el Sello TS formal.
+
+### Despacho y Auditoría del Supervisor:
+El panel del Supervisor actúa como una **torre de control de solicitudes**:
+- **Tabla interactiva de peticiones:** Agrupación y filtrado por zonas territoriales (departamentos de San Juan: Calingasta, Barreal, Zonda, Valle Fértil, etc.) y por fechas de solicitud.
+- **Asignación inteligente:** Asignar la visita al validador comercial asociado a esa zona geográfica específica.
+- **Mesa de revisión:** Comparación de fotografías in situ, validación de coordenadas GPS y dictamen de aprobación/rechazo.
+
 ---
 
 ## 3. Diagnóstico del Estado Actual (Código Legacy)

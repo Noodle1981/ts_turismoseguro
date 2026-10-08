@@ -270,7 +270,7 @@ ts_turismoseguro/
     │   │   └── supervisor/             # AuditReviewCard, PhotoCompareModal
     │   ├── views/
     │   │   ├── public/                 # HomeView, PropertiesView, PropertyDetailView, ExperiencesView
-    │   │   ├── auth/                   # LoginView, RegisterRentView, RegisterClientView, GoogleCallbackView
+    │   │   ├── auth/                   # LoginView, RegisterRentView, RegisterClientView, ForgotPasswordView, ResetPasswordView, GoogleCallbackView
     │   │   ├── client/                 # ClientDashboardView, ClientCalendarView, MyPropertiesView
     │   │   ├── validator/              # ValidatorMobileAppView, MyCommissionsView
     │   │   ├── supervisor/             # QualityControlView, AuditReviewDetailView
@@ -310,10 +310,12 @@ Route::prefix('v1')->group(function () {
     Route::get('/experiences', [ExperienceCatalogController::class, 'index']);
     Route::get('/departments', [DepartmentController::class, 'index']);
 
-    // --- AUTENTICACIÓN (Sanctum SPA + Google OAuth) ---
+    // --- AUTENTICACIÓN COMÚN (Sanctum SPA) Y GOOGLE OAUTH ---
     Route::post('/auth/login', [AuthController::class, 'login']);
     Route::post('/auth/register/rent', [AuthController::class, 'registerRent']);     // Incluye procedencia geográfica
     Route::post('/auth/register/client', [AuthController::class, 'registerClient']);
+    Route::post('/auth/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail']);
+    Route::post('/auth/reset-password', [PasswordResetController::class, 'resetPassword']);
     Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect']);
     Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 
