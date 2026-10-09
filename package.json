@@ -1,0 +1,27 @@
+{
+  "name": "turismo-seguro-san-juan",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Plataforma de Alquileres Verificados y Turismo Seguro San Juan - Monorepo Contract-First",
+  "scripts": {
+    "docs": "scalar document serve -p 5054 -w ./contracts/openapi.yaml",
+    "docs:preview": "npx @redocly/cli preview-docs ./contracts/openapi.yaml",
+    "contract:lint": "npx @stoplight/spectral-cli lint ./contracts/openapi.yaml",
+    "api:types": "npx openapi-typescript ./contracts/openapi.yaml -o ./client/src/types/schema.d.ts",
+    "dev:client": "npm --prefix client run dev",
+    "dev:server": "cd server && php artisan serve",
+    "dev": "concurrently -n CLIENT,SERVER -c blue,green \"npm run dev:client\" \"npm run dev:server\""
+  },
+  "devDependencies": {
+    "@scalar/cli": "^1.2.9",
+    "concurrently": "^9.1.0"
+  },
+  "keywords": [
+    "contract-first",
+    "openapi",
+    "vue3",
+    "laravel",
+    "scalar",
+    "san-juan"
+  ]
+}
