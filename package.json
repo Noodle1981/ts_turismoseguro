@@ -5,12 +5,12 @@
   "description": "Plataforma de Alquileres Verificados y Turismo Seguro San Juan - Monorepo Contract-First",
   "scripts": {
     "docs": "scalar document serve -p 5054 -w ./contracts/openapi.yaml",
-    "docs:preview": "npx @redocly/cli preview-docs ./contracts/openapi.yaml",
-    "contract:lint": "npx @stoplight/spectral-cli lint ./contracts/openapi.yaml",
-    "api:types": "npx openapi-typescript ./contracts/openapi.yaml -o ./client/src/types/schema.d.ts",
-    "dev:client": "npm --prefix client run dev",
+    "docs:preview": "pnpm dlx @redocly/cli preview-docs ./contracts/openapi.yaml",
+    "contract:lint": "pnpm dlx @stoplight/spectral-cli lint ./contracts/openapi.yaml",
+    "api:types": "pnpm dlx openapi-typescript ./contracts/openapi.yaml -o ./client/src/types/schema.d.ts",
+    "dev:client": "pnpm --prefix client dev",
     "dev:server": "cd server && php artisan serve",
-    "dev": "concurrently -n CLIENT,SERVER -c blue,green \"npm run dev:client\" \"npm run dev:server\""
+    "dev": "concurrently -n CLIENT,SERVER -c blue,green \"pnpm run dev:client\" \"pnpm run dev:server\""
   },
   "devDependencies": {
     "@scalar/cli": "^1.2.9",
@@ -22,6 +22,7 @@
     "vue3",
     "laravel",
     "scalar",
+    "pnpm",
     "san-juan"
   ]
 }

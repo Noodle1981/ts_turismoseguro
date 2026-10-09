@@ -81,15 +81,15 @@ Objetivo: dos proyectos arrancando y comunicándose entre sí, gobernados por el
 - [ ] Verificar: `php artisan serve` responde en `http://localhost:8000`
 
 ### 1.2 Frontend (`client/`)
-- [ ] Crear proyecto: `npm create vite@latest client -- --template vue-ts`
-- [ ] Instalar dependencias: `vue-router`, `pinia`, `axios`, `tailwindcss`
+- [ ] Crear proyecto: `pnpm create vite@latest client --template vue-ts`
+- [ ] Instalar dependencias con pnpm: `vue-router`, `pinia`, `axios`, `tailwindcss`
 - [ ] Configurar Tailwind con los tokens de `doc/visual.md` y skill `visual` (colores `brand`, `safe`, `accent`; fuentes Montserrat e Inter)
 - [ ] Crear estructura: `composables/`, `components/`, `views/`, `stores/`, `router/`, `types/`
-- [ ] Crear `types/health.ts` derivado del contrato `contracts/openapi.yaml`
+- [ ] Crear `types/health.ts` derivado del contrato `contracts/openapi.yaml` (o `pnpm run api:types`)
 - [ ] Crear `composables/useApi.ts` (cliente HTTP con cookies, CSRF de Sanctum e interceptor de errores)
 - [ ] Configurar `VITE_API_BASE_URL` en `client/.env`
 - [ ] Crear layout base (Navbar + Footer) y `router/index.ts` con vista de inicio
-- [ ] Verificar: `npm run dev` y llamada exitosa a `/api/v1/health` tipada desde el cliente
+- [ ] Verificar: `pnpm run dev` y llamada exitosa a `/api/v1/health` tipada desde el cliente
 
 ### 1.3 Calidad desde el día uno
 - [ ] Configurar Pest/PHPUnit en `server/` (skill `laravel-tdd`)
