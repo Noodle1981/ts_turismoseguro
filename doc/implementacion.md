@@ -55,15 +55,20 @@ Objetivo: dejar definido el *qué* y el *cómo* antes de escribir código.
 - [x] **Dato de procedencia en rol `rent`:** captura de origen (turista exterior/nacional o habitante local de San Juan)
 - [x] Módulo de disponibilidad del cliente oferente (`client`) incluido en el diseño
 - [x] Dominios privados definidos (sin referencias gubernamentales)
-- [x] Skills instaladas en `.agents/skills/`: `laravel-best-practices`, `laravel-security`, `laravel-tdd`, `api-design`, `database-migrations`, `vue-best-practices`, `ui-ux-pro-max`, `seo`
+- [x] Skills instaladas en `.agents/skills/`: `laravel-best-practices`, `laravel-security`, `laravel-tdd`, `api-design`, `database-migrations`, `vue-best-practices`, `ui-ux-pro-max`, `seo`, `visual`, `api-contract-spec`
 - [x] Sistema de diseño maestro generado en `design-system/turismo-seguro-san-juan/MASTER.md`
 - [x] Carpeta `.agent` eliminada; unificado exclusivamente en `.agents/`
 
 ---
 
-## FASE 1 — Setup del Esqueleto `[ ]`
+## FASE 1 — Setup del Esqueleto y Contrato Base `[ ]`
 
-Objetivo: dos proyectos arrancando y comunicándose entre sí.
+Objetivo: dos proyectos arrancando y comunicándose entre sí, gobernados por el contrato OpenAPI.
+
+### 1.0 Contrato Inicial OpenAPI 3.1 (skill `api-contract-spec`)
+- [ ] Crear carpeta `contracts/` y archivo maestro `contracts/openapi.yaml` (versión 3.1.0)
+- [ ] Definir metadatos de la API, servidores local/producción y tags principales
+- [ ] Especificar endpoint `GET /api/v1/health` y schema `HealthCheckResponse`
 
 ### 1.1 Backend (`server/`)
 - [ ] Crear proyecto Laravel: `composer create-project laravel/laravel server`
@@ -71,26 +76,27 @@ Objetivo: dos proyectos arrancando y comunicándose entre sí.
 - [ ] Crear `database/database.sqlite`
 - [ ] Instalar API + Sanctum: `php artisan install:api`
 - [ ] Configurar CORS (`config/cors.php`) con `supports_credentials => true` y orígenes permitidos
-- [ ] Crear prefijo de rutas `/api/v1` y endpoint de salud `GET /api/v1/health`
-- [ ] Definir formato estándar de respuestas y errores (skill `api-design`)
+- [ ] Crear prefijo de rutas `/api/v1` y endpoint de salud `GET /api/v1/health` (alineado a `contracts/openapi.yaml`)
+- [ ] Definir formato estándar de respuestas y errores (skill `api-design` y `api-contract-spec`)
 - [ ] Verificar: `php artisan serve` responde en `http://localhost:8000`
 
 ### 1.2 Frontend (`client/`)
 - [ ] Crear proyecto: `npm create vite@latest client -- --template vue-ts`
 - [ ] Instalar dependencias: `vue-router`, `pinia`, `axios`, `tailwindcss`
-- [ ] Configurar Tailwind con los tokens de `doc/visual.md` (colores `brand`, `safe`, `accent`; fuentes Montserrat e Inter)
+- [ ] Configurar Tailwind con los tokens de `doc/visual.md` y skill `visual` (colores `brand`, `safe`, `accent`; fuentes Montserrat e Inter)
 - [ ] Crear estructura: `composables/`, `components/`, `views/`, `stores/`, `router/`, `types/`
+- [ ] Crear `types/health.ts` derivado del contrato `contracts/openapi.yaml`
 - [ ] Crear `composables/useApi.ts` (cliente HTTP con cookies, CSRF de Sanctum e interceptor de errores)
 - [ ] Configurar `VITE_API_BASE_URL` en `client/.env`
 - [ ] Crear layout base (Navbar + Footer) y `router/index.ts` con vista de inicio
-- [ ] Verificar: `npm run dev` y llamada exitosa a `/api/v1/health` desde el cliente
+- [ ] Verificar: `npm run dev` y llamada exitosa a `/api/v1/health` tipada desde el cliente
 
 ### 1.3 Calidad desde el día uno
 - [ ] Configurar Pest/PHPUnit en `server/` (skill `laravel-tdd`)
 - [ ] Configurar ESLint, Prettier y `vue-tsc` en `client/`
 - [ ] Crear `.gitignore` raíz (`server/vendor`, `client/node_modules`, `.env`, `database.sqlite`)
 - [ ] Crear `README.md` raíz con instrucciones de arranque
-- [ ] Commit: `feat: esqueleto server/ y client/`
+- [ ] Commit: `feat: esqueleto server/ y client/ con contrato openapi inicial`
 
 ---
 
