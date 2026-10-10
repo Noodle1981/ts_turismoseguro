@@ -211,26 +211,26 @@ Objetivo: el usuario interesado navega, filtra, ve disponibilidad y contacta. Pr
 
 ---
 
-## FASE 5 — Panel del Cliente Oferente (`client`) `[ ]`
+## FASE 5 — Panel del Cliente Oferente (`client`) `[x]`
 
 Objetivo: el anfitrión/cliente gestiona su oferta y su disponibilidad, y solicita la validación.
 
 ### 5.1 Backend
-- [ ] CRUD de propiedades propias (estado inicial `draft`)
-- [ ] Carga de imágenes con validación de tipo y tamaño y redimensionado
-- [ ] `POST /client/verifications/request` (pasa a `pending_review`; no se publica)
-- [ ] `GET/POST /client/properties/{id}/availability` y bloqueo/desbloqueo de rangos
-- [ ] `AvailabilityService`: validación de rangos, solapamientos y fechas pasadas
-- [ ] Policy: el cliente oferente solo accede a sus propias propiedades
-- [ ] Tests: solapamiento de fechas, acceso a recursos ajenos, imposibilidad de auto-publicar
+- [x] CRUD de propiedades propias (estado inicial `draft`)
+- [x] Carga de imágenes con validación de tipo y tamaño y redimensionado
+- [x] `POST /client/verifications/request` (pasa a `pending_review`; no se publica)
+- [x] `GET/POST /client/properties/{id}/availability` y bloqueo/desbloqueo de rangos
+- [x] `AvailabilityService`: validación de rangos, solapamientos y fechas pasadas
+- [x] Policy: el cliente oferente solo accede a sus propias propiedades
+- [x] Tests: solapamiento de fechas, acceso a recursos ajenos, imposibilidad de auto-publicar (26 tests en verde)
 
 ### 5.2 Frontend
-- [ ] `useClientProperties.ts` y ampliación de `useAvailability.ts` (modo edición de calendario)
-- [ ] `ClientDashboardView.vue` (estado de sello, membresía y consultas recibidas)
-- [ ] `MyPropertiesView.vue` y `PropertyFormView.vue` (alta/edición de alojamiento)
-- [ ] `AvailabilityCalendar.vue` (bloquear/liberar días y rangos interactivos)
-- [ ] `VerificationStatusTimeline.vue` (estado: solicitado → en visita → en revisión → verificado)
-- [ ] Botón "Solicitar validación física in situ"
+- [x] `useClientProperties.ts` y ampliación de disponibilidad (modo edición de calendario)
+- [x] `ClientDashboardView.vue` (estado de sello, membresía y consultas recibidas)
+- [x] `PropertyFormView.vue` (alta/edición de alojamiento en borrador)
+- [x] `ClientAvailabilityView.vue` (bloquear/liberar días y rangos interactivos)
+- [x] `VerificationStatusTimeline.vue` (estado: solicitado → en visita → en revisión → verificado)
+- [x] Botón "Solicitar validación física in situ"
 
 ---
 

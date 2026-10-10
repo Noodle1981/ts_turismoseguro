@@ -114,6 +114,15 @@ const roleNames: Record<string, string> = {
                 <p class="font-bold text-surface-800 truncate">{{ user?.email }}</p>
               </div>
 
+              <RouterLink
+                v-if="user?.role === 'client' || user?.role === 'super_admin'"
+                to="/panel/cliente"
+                class="block px-3 py-2 text-xs font-semibold text-surface-700 hover:bg-surface-50 transition-colors"
+                @click="isUserMenuOpen = false"
+              >
+                Panel del Anfitrión
+              </RouterLink>
+
               <button
                 type="button"
                 class="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 transition-colors text-left cursor-pointer"

@@ -41,6 +41,37 @@ const routes = [
       title: 'Experiencias y Excursiones — Turismo Seguro San Juan',
     },
   },
+  // Host / Client Routes (Protected by role)
+  {
+    path: '/panel/cliente',
+    name: 'client-dashboard',
+    component: () => import('../views/client/ClientDashboardView.vue'),
+    meta: {
+      title: 'Panel del Anfitrión — Turismo Seguro San Juan',
+      requiresAuth: true,
+      roles: ['client', 'super_admin'],
+    },
+  },
+  {
+    path: '/panel/cliente/propiedades/nueva',
+    name: 'client-property-new',
+    component: () => import('../views/client/PropertyFormView.vue'),
+    meta: {
+      title: 'Publicar Alojamiento — Turismo Seguro San Juan',
+      requiresAuth: true,
+      roles: ['client', 'super_admin'],
+    },
+  },
+  {
+    path: '/panel/cliente/propiedades/:id/disponibilidad',
+    name: 'client-property-availability',
+    component: () => import('../views/client/ClientAvailabilityView.vue'),
+    meta: {
+      title: 'Gestionar Disponibilidad — Turismo Seguro San Juan',
+      requiresAuth: true,
+      roles: ['client', 'super_admin'],
+    },
+  },
   // Auth Routes
   {
     path: '/login',

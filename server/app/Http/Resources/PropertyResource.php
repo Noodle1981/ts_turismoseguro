@@ -41,8 +41,8 @@ class PropertyResource extends JsonResource
             'featured' => (bool) $this->featured,
             'department' => new DepartmentResource($this->whenLoaded('department')),
             'images' => PropertyImageResource::collection($this->whenLoaded('images')),
-            'amenities' => $this->whenLoaded('amenities', fn () => $this->amenities->pluck('name')->values()->all()),
-            'rules' => $this->whenLoaded('rules', fn () => $this->rules->pluck('rule_text')->values()->all()),
+            'amenities' => $this->whenLoaded('amenities', fn () => $this->amenities->pluck('amenity')->values()->all()),
+            'rules' => $this->whenLoaded('rules', fn () => $this->rules->pluck('rule')->values()->all()),
         ];
     }
 }

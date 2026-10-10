@@ -458,6 +458,301 @@ paths:
         '404':
           description: Experiencia no encontrada
 
+  /client/properties:
+    get:
+      tags:
+        - Anfitrión
+      summary: Listado de propiedades pertenecientes al cliente autenticado
+      operationId: getClientProperties
+      security:
+        - sanctumCookie: []
+      responses:
+        '200':
+          description: Lista de alojamientos propios
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property'
+    post:
+      tags:
+        - Anfitrión
+      summary: Crear nuevo alojamiento propio (inicia en estado borrador 'draft')
+      operationId: createClientProperty
+      security:
+        - sanctumCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - department_id
+                - property_type
+                - location
+                - price
+                - price_type
+                - capacity
+              properties:
+                title:
+                  type: string
+                department_id:
+                  type: integer
+                property_type:
+                  type: string
+                location:
+                  type: string
+                address:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: integer
+                price_type:
+                  type: string
+                capacity:
+                  type: integer
+                bedrooms:
+                  type: integer
+                bathrooms:
+                  type: integer
+                host_whatsapp:
+                  type: string
+                host_phone:
+                  type: string
+                amenities:
+                  type: array
+                  items:
+                    type: string
+                rules:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '201':
+          description: Alojamiento creado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Property'
+
+  /client/properties/{id}:
+    get:
+      tags:
+        - Anfitrión
+      summary: Obtener alojamiento propio por ID
+      operationId: getClientPropertyById
+      security:
+        - sanctumCookie: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Detalle del alojamiento propio
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Property'
+    put:
+      tags:
+        - Anfitrión
+      summary: Actualizar datos de alojamiento propio
+      operationId: updateClientProperty
+      security:
+        - sanctumCookie: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                department_id:
+                  type: integer
+                property_type:
+                  type: string
+                location:
+                  type: string
+                address:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: integer
+                price_type:
+                  type: string
+                capacity:
+                  type: integer
+                bedrooms:
+                  type: integer
+                bathrooms:
+                  type: integer
+                host_whatsapp:
+                  type: string
+                host_phone:
+                  type: string
+                amenities:
+                  type: array
+                  items:
+                    type: string
+                rules:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Propiedad actualizada
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Property'
+
+  /client/properties/{id}/availability:
+    get:
+      tags:
+        - Anfitrión
+      summary: Consultar calendario de disponibilidad de propiedad propia
+      operationId: getClientPropertyAvailability
+      security:
+        - sanctumCookie: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Fechas ocupadas/bloqueadas
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          format: date
+                        status:
+                          type: string
+    post:
+      tags:
+        - Anfitrión
+      summary: Bloquear o desbloquear rango de fechas en calendario propio
+      operationId: updateClientPropertyAvailability
+      security:
+        - sanctumCookie: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - start_date
+                - end_date
+                - action
+              properties:
+                start_date:
+                  type: string
+                  format: date
+                end_date:
+                  type: string
+                  format: date
+                action:
+                  type: string
+                  enum: [block, free]
+      responses:
+        '200':
+          description: Calendario actualizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /client/verifications/request:
+    post:
+      tags:
+        - Anfitrión
+      summary: Solicitar inspección y validación física in situ para una propiedad
+      operationId: requestVerification
+      security:
+        - sanctumCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - property_id
+              properties:
+                property_id:
+                  type: integer
+                notes:
+                  type: string
+      responses:
+        '200':
+          description: Solicitud de validación enviada al supervisor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  verification_status:
+                    type: string
 
 components:
   securitySchemes:

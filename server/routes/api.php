@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CatalogController;
+use App\Http\Controllers\Api\V1\ClientPropertyController;
 use App\Http\Controllers\Api\V1\ExperienceController;
 use App\Http\Controllers\Api\V1\HealthController;
 use Illuminate\Support\Facades\Route;
@@ -32,4 +33,15 @@ Route::prefix('v1')->group(function () {
     Route::get('/properties/{id}/availability', [CatalogController::class, 'propertyAvailability'])->name('properties.availability');
     Route::get('/experiences', [ExperienceController::class, 'index'])->name('experiences.index');
     Route::get('/experiences/{slug}', [ExperienceController::class, 'show'])->name('experiences.show');
+
+    // Panel del Anfitrión (Rol: client o super_admin)
+    Route::middleware(['auth:sanctum', 'role:client,super_admin'])->prefix('client')->group(function () {
+        Route::get('/properties', [ClientPropertyController::class, 'index'])->name('client.properties.index');
+        Route::post('/properties', [ClientPropertyController::class, 'store'])->name('client.properties.store');
+        Route::get('/properties/{id}', [ClientPropertyController::class, 'show'])->name('client.properties.show');
+        Route::put('/properties/{id}', [ClientPropertyController::class, 'update'])->name('client.properties.update');
+        Route::get('/properties/{id}/availability', [ClientPropertyController::class, 'availability'])->name('client.properties.availability');
+        Route::post('/properties/{id}/availability', [ClientPropertyController::class, 'updateAvailability'])->name('client.properties.update-availability');
+        Route::post('/verifications/request', [ClientPropertyController::class, 'requestVerification'])->name('client.verifications.request');
+    });
 });
