@@ -143,6 +143,108 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/departments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listado de departamentos con contador de ofertas verificadas */
+        get: operations["getDepartments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/properties": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listado público de propiedades verificadas con filtros y paginación */
+        get: operations["getProperties"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/properties/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Detalle completo de una propiedad verificada por slug */
+        get: operations["getPropertyBySlug"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/properties/{id}/availability": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Calendario de disponibilidad y fechas ocupadas de una propiedad */
+        get: operations["getPropertyAvailability"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/experiences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listado público de experiencias y excursiones verificadas */
+        get: operations["getExperiences"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/experiences/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Detalle completo de una experiencia por slug */
+        get: operations["getExperienceBySlug"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -653,6 +755,193 @@ export interface operations {
             };
             /** @description Token inválido o campos incorrectos */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getDepartments: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lista de departamentos de San Juan */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Department"][];
+                    };
+                };
+            };
+        };
+    };
+    getProperties: {
+        parameters: {
+            query?: {
+                /** @description Slug o nombre del departamento */
+                department?: string;
+                /** @description Tipo de alojamiento (Cabaña, Quinta con Piscina, etc.) */
+                property_type?: string;
+                /** @description Capacidad mínima de huéspedes */
+                capacity?: number;
+                /** @description Precio máximo por noche/día */
+                max_price?: number;
+                /** @description Búsqueda por texto en título o descripción */
+                search?: string;
+                /** @description Comodidades separadas por comas (WiFi, Piscina, etc.) */
+                amenities?: string;
+                /** @description Criterio de orden (price_asc, price_desc, recent) */
+                sort?: "default" | "price_asc" | "price_desc" | "recent";
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Catálogo paginado de propiedades verificadas */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Property"][];
+                        meta: {
+                            current_page?: number;
+                            last_page?: number;
+                            per_page?: number;
+                            total?: number;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    getPropertyBySlug: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Ficha de la propiedad */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Property"];
+                    };
+                };
+            };
+            /** @description Propiedad no encontrada o no verificada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getPropertyAvailability: {
+        parameters: {
+            query?: {
+                /** @description Fecha inicio formato YYYY-MM-DD */
+                start_date?: string;
+                /** @description Fecha fin formato YYYY-MM-DD */
+                end_date?: string;
+            };
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lista de rangos o días ocupados */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            /** Format: date */
+                            date: string;
+                            /** @enum {string} */
+                            status: "occupied" | "blocked" | "reserved";
+                        }[];
+                    };
+                };
+            };
+        };
+    };
+    getExperiences: {
+        parameters: {
+            query?: {
+                department?: string;
+                category?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lista de experiencias */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Experience"][];
+                    };
+                };
+            };
+        };
+    };
+    getExperienceBySlug: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Ficha de la experiencia */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Experience"];
+                    };
+                };
+            };
+            /** @description Experiencia no encontrada */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

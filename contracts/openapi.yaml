@@ -229,6 +229,236 @@ paths:
         '422':
           description: Token inválido o campos incorrectos
 
+  /departments:
+    get:
+      tags:
+        - Catálogo
+      summary: Listado de departamentos con contador de ofertas verificadas
+      operationId: getDepartments
+      responses:
+        '200':
+          description: Lista de departamentos de San Juan
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Department'
+
+  /properties:
+    get:
+      tags:
+        - Catálogo
+      summary: Listado público de propiedades verificadas con filtros y paginación
+      operationId: getProperties
+      parameters:
+        - name: department
+          in: query
+          description: Slug o nombre del departamento
+          schema:
+            type: string
+        - name: property_type
+          in: query
+          description: Tipo de alojamiento (Cabaña, Quinta con Piscina, etc.)
+          schema:
+            type: string
+        - name: capacity
+          in: query
+          description: Capacidad mínima de huéspedes
+          schema:
+            type: integer
+        - name: max_price
+          in: query
+          description: Precio máximo por noche/día
+          schema:
+            type: integer
+        - name: search
+          in: query
+          description: Búsqueda por texto en título o descripción
+          schema:
+            type: string
+        - name: amenities
+          in: query
+          description: Comodidades separadas por comas (WiFi, Piscina, etc.)
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: Criterio de orden (price_asc, price_desc, recent)
+          schema:
+            type: string
+            enum: [default, price_asc, price_desc, recent]
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: Catálogo paginado de propiedades verificadas
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                  - meta
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property'
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                      last_page:
+                        type: integer
+                      per_page:
+                        type: integer
+                      total:
+                        type: integer
+
+  /properties/{slug}:
+    get:
+      tags:
+        - Catálogo
+      summary: Detalle completo de una propiedad verificada por slug
+      operationId: getPropertyBySlug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ficha de la propiedad
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Property'
+        '404':
+          description: Propiedad no encontrada o no verificada
+
+  /properties/{id}/availability:
+    get:
+      tags:
+        - Catálogo
+      summary: Calendario de disponibilidad y fechas ocupadas de una propiedad
+      operationId: getPropertyAvailability
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: start_date
+          in: query
+          description: Fecha inicio formato YYYY-MM-DD
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          description: Fecha fin formato YYYY-MM-DD
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Lista de rangos o días ocupados
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - date
+                        - status
+                      properties:
+                        date:
+                          type: string
+                          format: date
+                        status:
+                          type: string
+                          enum: [occupied, blocked, reserved]
+
+  /experiences:
+    get:
+      tags:
+        - Catálogo
+      summary: Listado público de experiencias y excursiones verificadas
+      operationId: getExperiences
+      parameters:
+        - name: department
+          in: query
+          schema:
+            type: string
+        - name: category
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de experiencias
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Experience'
+
+  /experiences/{slug}:
+    get:
+      tags:
+        - Catálogo
+      summary: Detalle completo de una experiencia por slug
+      operationId: getExperienceBySlug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ficha de la experiencia
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Experience'
+        '404':
+          description: Experiencia no encontrada
+
+
 components:
   securitySchemes:
     sanctumCookie:

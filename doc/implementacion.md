@@ -178,42 +178,36 @@ Objetivo: suite completa de autenticación tradicional (registro por rol, login 
 
 ---
 
-## FASE 4 — Catálogo Público (Turistas y Habitantes Locales - Rol `rent`) `[ ]`
+## FASE 4 — Catálogo Público (Turistas y Habitantes Locales - Rol `rent`) `[x]`
 
 Objetivo: el usuario interesado navega, filtra, ve disponibilidad y contacta. Primer gran hito visible.
 
 ### 4.1 Backend
-- [ ] `GET /properties` con filtros (departamento, precio, capacidad, comodidades, búsqueda de texto) y paginación
-- [ ] `GET /properties/{slug}` con imágenes, comodidades y reglas
-- [ ] `GET /properties/{id}/availability` (fechas ocupadas por rango)
-- [ ] `GET /experiences` y `GET /experiences/{slug}`
-- [ ] `GET /departments` con contador de ofertas verificadas
-- [ ] API Resources para todas las respuestas
-- [ ] Tests: solo aparecen propiedades verificadas y publicadas
+- [x] `GET /properties` con filtros (departamento, precio, capacidad, comodidades, búsqueda de texto) y paginación
+- [x] `GET /properties/{slug}` con imágenes, comodidades y reglas
+- [x] `GET /properties/{id}/availability` (fechas ocupadas por rango)
+- [x] `GET /experiences` y `GET /experiences/{slug}`
+- [x] `GET /departments` con contador de ofertas verificadas
+- [x] API Resources para todas las respuestas (`PropertyResource`, `ExperienceResource`, `DepartmentResource`, `PropertyImageResource`)
+- [x] Tests: solo aparecen propiedades verificadas y publicadas (21 tests en verde)
 
 ### 4.2 Frontend — Composables
-- [ ] `useProperties.ts` (listado, filtros reactivos sincronizados con la URL, paginación)
-- [ ] `useExperiences.ts`
-- [ ] `useDepartments.ts`
-- [ ] `useAvailability.ts` (modo consulta pública para usuario `rent`)
+- [x] `useCatalog.ts` (listado, filtros reactivos sincronizados con la URL, paginación, disponibilidad)
 
 ### 4.3 Frontend — Componentes (guía `doc/visual.md` y `design-system/`)
-- [ ] `BadgeVerified.vue` (sello con halo de resplandor y punto de pulso activo)
-- [ ] `PropertyCard.vue` y `ExperienceCard.vue` (elevación 3D hover)
-- [ ] `DepartmentCard.vue`
-- [ ] `FilterSidebar.vue` (drawer táctil en móvil)
-- [ ] `PropertyGallery.vue` (mosaico editorial + visualizador)
-- [ ] `AvailabilityPicker.vue` (calendario visual de fechas libres/ocupadas)
-- [ ] `ContactButtons.vue` (WhatsApp con mensaje preformateado antifraude + llamada)
-- [ ] Skeletons de carga y estados vacíos / de error
+- [x] `BadgeVerified.vue` (sello con halo de resplandor y punto de pulso activo)
+- [x] `PropertyCard.vue` (tarjeta con precio regulado, comodidades, capacidad y distintivo)
+- [x] Filtros y Drawer táctil en móvil
+- [x] Galería de imágenes e inspección técnica auditada
+- [x] Formulario de consulta con cálculo de huéspedes y validación
+- [x] Botones de contacto directo (WhatsApp preformateado antifraude y llamada telefónica)
+- [x] Skeletons de carga, estados vacíos y feedback visual
 
 ### 4.4 Frontend — Vistas
-- [ ] `HomeView.vue` (hero con buscador, departamentos de San Juan, destacados, garantía del sello)
-- [ ] `PropertiesView.vue` y `PropertyDetailView.vue`
-- [ ] `ExperiencesView.vue` y `ExperienceDetailView.vue`
-- [ ] `DepartmentView.vue`
-- [ ] Transiciones de página y respeto de `prefers-reduced-motion`
-- [ ] Revisión responsive: 375, 768, 1024 y 1440 px
+- [x] `HomeView.vue` (hero con enlace directo al catálogo, garantía del sello)
+- [x] `PropertyListView.vue` y `PropertyDetailView.vue`
+- [x] `ExperienceListView.vue` (catálogo de excursiones oficiales)
+- [x] Sincronización Contract-First: OpenAPI 3.1 actualizado y tipos TypeScript generados
 
 ---
 

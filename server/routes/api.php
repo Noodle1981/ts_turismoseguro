@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\CatalogController;
+use App\Http\Controllers\Api\V1\ExperienceController;
 use App\Http\Controllers\Api\V1\HealthController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +24,12 @@ Route::prefix('v1')->group(function () {
             Route::get('/me', [AuthController::class, 'me'])->name('auth.me');
         });
     });
+
+    // Catálogo Público (Turistas y Habitantes Locales)
+    Route::get('/departments', [CatalogController::class, 'departments'])->name('departments.index');
+    Route::get('/properties', [CatalogController::class, 'properties'])->name('properties.index');
+    Route::get('/properties/{slug}', [CatalogController::class, 'propertyDetail'])->name('properties.show');
+    Route::get('/properties/{id}/availability', [CatalogController::class, 'propertyAvailability'])->name('properties.availability');
+    Route::get('/experiences', [ExperienceController::class, 'index'])->name('experiences.index');
+    Route::get('/experiences/{slug}', [ExperienceController::class, 'show'])->name('experiences.show');
 });

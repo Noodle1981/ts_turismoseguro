@@ -57,9 +57,9 @@ const roleNames: Record<string, string> = {
         <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-surface-700">
           <RouterLink to="/" class="hover:text-brand-700 transition-colors py-1">Inicio</RouterLink>
           <span class="text-surface-300">/</span>
-          <span class="text-surface-400 cursor-not-allowed">Alquileres</span>
+          <RouterLink to="/alquileres" class="hover:text-brand-700 transition-colors py-1">Alquileres</RouterLink>
           <span class="text-surface-300">/</span>
-          <span class="text-surface-400 cursor-not-allowed">Experiencias</span>
+          <RouterLink to="/experiencias" class="hover:text-brand-700 transition-colors py-1">Experiencias</RouterLink>
         </nav>
 
         <!-- Right Action Button / User Session -->

@@ -16,6 +16,31 @@ const routes = [
       title: 'Inicio — Turismo Seguro San Juan',
     },
   },
+  // Public Catalog Routes
+  {
+    path: '/alquileres',
+    name: 'properties',
+    component: () => import('../views/catalog/PropertyListView.vue'),
+    meta: {
+      title: 'Alquileres Verificados — Turismo Seguro San Juan',
+    },
+  },
+  {
+    path: '/alquileres/:slug',
+    name: 'property-detail',
+    component: () => import('../views/catalog/PropertyDetailView.vue'),
+    meta: {
+      title: 'Detalle del Alquiler — Turismo Seguro San Juan',
+    },
+  },
+  {
+    path: '/experiencias',
+    name: 'experiences',
+    component: () => import('../views/catalog/ExperienceListView.vue'),
+    meta: {
+      title: 'Experiencias y Excursiones — Turismo Seguro San Juan',
+    },
+  },
   // Auth Routes
   {
     path: '/login',

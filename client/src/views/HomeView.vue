@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { RouterLink } from 'vue-router'
 import { useApi } from '../composables/useApi'
 import type { HealthCheckResponse } from '../types/health'
 import BadgeVerified from '../components/common/BadgeVerified.vue'
@@ -64,13 +65,13 @@ onMounted(() => {
               <span class="text-sm font-medium text-surface-800">¿Cuántas personas?</span>
             </div>
             <div>
-              <button
-                type="button"
+              <RouterLink
+                to="/alquileres"
                 class="w-full flex items-center justify-center gap-2 px-5 py-3 text-sm font-bold text-white bg-accent-500 hover:bg-accent-600 active:scale-95 rounded-xl shadow-md transition-all duration-200 cursor-pointer"
               >
                 <Search class="w-4 h-4" />
-                <span>Buscar Seguro</span>
-              </button>
+                <span>Explorar Alquileres</span>
+              </RouterLink>
             </div>
           </div>
         </div>
