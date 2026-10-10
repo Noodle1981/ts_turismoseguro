@@ -17,16 +17,17 @@ Plan maestro, fase por fase, de todo el proyecto. Es un **documento vivo**: al t
 | 0 | Fundaciones: documentación, skills y resguardo legacy | `[x]` Completada |
 | 1 | Setup del esqueleto (`server/` y `client/`) | `[x]` Completada |
 | 2 | Modelo de datos, migraciones y seeders desde legacy | `[x]` Completada |
-| 3 | Autenticación, roles (5) y procedencia geográfica | `[ ]` Pendiente |
-| 4 | Catálogo público (turistas y residentes locales - rol `rent`) | `[ ]` Pendiente |
-| 5 | Panel del Cliente Oferente (`client`): ofertas, disponibilidad y validación | `[ ]` Pendiente |
-| 6 | App del Validador: captación, auditoría in situ y comisiones | `[ ]` Pendiente |
-| 7 | Panel del Supervisor: control de calidad y emisión del sello | `[ ]` Pendiente |
-| 8 | Panel Super Admin: métricas, procedencia, usuarios y liquidación | `[ ]` Pendiente |
-| 9 | Suscripciones y facturación del cliente oferente | `[ ]` Pendiente |
-| 10 | Google OAuth, SEO y pulido UX | `[ ]` Pendiente |
-| 11 | Testing, seguridad y hardening | `[ ]` Pendiente |
-| 12 | Despliegue a producción | `[ ]` Pendiente |
+| 3 | Autenticación, roles (5) y procedencia geográfica | `[x]` Completada |
+| 4 | Catálogo público (turistas y residentes locales - rol `rent`) | `[x]` Completada |
+| 5 | Panel del Cliente Oferente (`client`): ofertas, disponibilidad y validación | `[x]` Completada |
+| - | **HITO: PAUSA PARA REDISEÑO VISUAL COMPLETO (BOMBA MUNDIAL)** | `[~]` En preparación |
+| 6 | App del Validador: captación, auditoría in situ y comisiones | `[ ]` Agendada para después del rediseño |
+| 7 | Panel del Supervisor: control de calidad y emisión del sello | `[ ]` Agendada |
+| 8 | Panel Super Admin: métricas, procedencia, usuarios y liquidación | `[ ]` Agendada |
+| 9 | Suscripciones y facturación del cliente oferente | `[ ]` Agendada |
+| 10 | Google OAuth, SEO y pulido UX | `[ ]` Agendada |
+| 11 | Testing, seguridad y hardening | `[ ]` Agendada |
+| 12 | Despliegue a producción | `[ ]` Agendada |
 
 ---
 
