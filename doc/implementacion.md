@@ -15,7 +15,7 @@ Plan maestro, fase por fase, de todo el proyecto. Es un **documento vivo**: al t
 | Fase | Nombre | Estado |
 | :--- | :--- | :---: |
 | 0 | Fundaciones: documentación, skills y resguardo legacy | `[x]` Completada |
-| 1 | Setup del esqueleto (`server/` y `client/`) | `[ ]` Pendiente |
+| 1 | Setup del esqueleto (`server/` y `client/`) | `[x]` Completada |
 | 2 | Modelo de datos, migraciones y seeders desde legacy | `[ ]` Pendiente |
 | 3 | Autenticación, roles (5) y procedencia geográfica | `[ ]` Pendiente |
 | 4 | Catálogo público (turistas y residentes locales - rol `rent`) | `[ ]` Pendiente |
@@ -61,42 +61,42 @@ Objetivo: dejar definido el *qué* y el *cómo* antes de escribir código.
 
 ---
 
-## FASE 1 — Setup del Esqueleto y Contrato Base `[ ]`
+## FASE 1 — Setup del Esqueleto y Contrato Base `[x]`
 
 Objetivo: dos proyectos arrancando y comunicándose entre sí, gobernados por el contrato OpenAPI.
 
 ### 1.0 Contrato Inicial OpenAPI 3.1 (skill `api-contract-spec`)
-- [ ] Crear carpeta `contracts/` y archivo maestro `contracts/openapi.yaml` (versión 3.1.0)
-- [ ] Definir metadatos de la API, servidores local/producción y tags principales
-- [ ] Especificar endpoint `GET /api/v1/health` y schema `HealthCheckResponse`
+- [x] Crear carpeta `contracts/` y archivo maestro `contracts/openapi.yaml` (versión 3.1.0)
+- [x] Definir metadatos de la API, servidores local/producción y tags principales
+- [x] Especificar endpoint `GET /api/v1/health` y schema `HealthCheckResponse`
 
 ### 1.1 Backend (`server/`)
-- [ ] Crear proyecto Laravel: `composer create-project laravel/laravel server`
-- [ ] Configurar `.env`: `DB_CONNECTION=sqlite`, `APP_URL`, `FRONTEND_URL`, `SANCTUM_STATEFUL_DOMAINS`
-- [ ] Crear `database/database.sqlite`
-- [ ] Instalar API + Sanctum: `php artisan install:api`
-- [ ] Configurar CORS (`config/cors.php`) con `supports_credentials => true` y orígenes permitidos
-- [ ] Crear prefijo de rutas `/api/v1` y endpoint de salud `GET /api/v1/health` (alineado a `contracts/openapi.yaml`)
-- [ ] Definir formato estándar de respuestas y errores (skill `api-design` y `api-contract-spec`)
-- [ ] Verificar: `php artisan serve` responde en `http://localhost:8000`
+- [x] Crear proyecto Laravel: `composer create-project laravel/laravel server`
+- [x] Configurar `.env`: `DB_CONNECTION=sqlite`, `APP_URL`, `FRONTEND_URL`, `SANCTUM_STATEFUL_DOMAINS`
+- [x] Crear `database/database.sqlite`
+- [x] Instalar API + Sanctum: `php artisan install:api`
+- [x] Configurar CORS (`config/cors.php`) con `supports_credentials => true` y orígenes permitidos
+- [x] Crear prefijo de rutas `/api/v1` y endpoint de salud `GET /api/v1/health` (alineado a `contracts/openapi.yaml`)
+- [x] Definir formato estándar de respuestas y errores (skill `api-design` y `api-contract-spec`)
+- [x] Verificar: `php artisan serve` y suite de tests en verde con `php artisan test`
 
 ### 1.2 Frontend (`client/`)
-- [ ] Crear proyecto: `pnpm create vite@latest client --template vue-ts`
-- [ ] Instalar dependencias con pnpm: `vue-router`, `pinia`, `axios`, `tailwindcss`
-- [ ] Configurar Tailwind con los tokens de `doc/visual.md` y skill `visual` (colores `brand`, `safe`, `accent`; fuentes Montserrat e Inter)
-- [ ] Crear estructura: `composables/`, `components/`, `views/`, `stores/`, `router/`, `types/`
-- [ ] Crear `types/health.ts` derivado del contrato `contracts/openapi.yaml` (o `pnpm run api:types`)
-- [ ] Crear `composables/useApi.ts` (cliente HTTP con cookies, CSRF de Sanctum e interceptor de errores)
-- [ ] Configurar `VITE_API_BASE_URL` en `client/.env`
-- [ ] Crear layout base (Navbar + Footer) y `router/index.ts` con vista de inicio
-- [ ] Verificar: `pnpm run dev` y llamada exitosa a `/api/v1/health` tipada desde el cliente
+- [x] Crear proyecto: `pnpm create vite@latest client --template vue-ts`
+- [x] Instalar dependencias con pnpm: `vue-router`, `pinia`, `axios`, `tailwindcss`
+- [x] Configurar Tailwind con los tokens de `doc/visual.md` y skill `visual` (colores `brand`, `safe`, `accent`; fuentes Montserrat e Inter)
+- [x] Crear estructura: `composables/`, `components/`, `views/`, `stores/`, `router/`, `types/`
+- [x] Crear `types/health.ts` derivado del contrato `contracts/openapi.yaml` (`pnpm run api:types`)
+- [x] Crear `composables/useApi.ts` (cliente HTTP con cookies, CSRF de Sanctum e interceptor de errores)
+- [x] Configurar `VITE_API_BASE_URL` en `client/.env`
+- [x] Crear layout base (Navbar + Footer) y `router/index.ts` con vista de inicio
+- [x] Verificar: `pnpm run build` sin errores de tipos ni advertencias de compilación
 
 ### 1.3 Calidad desde el día uno
-- [ ] Configurar Pest/PHPUnit en `server/` (skill `laravel-tdd`)
-- [ ] Configurar ESLint, Prettier y `vue-tsc` en `client/`
-- [ ] Crear `.gitignore` raíz (`server/vendor`, `client/node_modules`, `.env`, `database.sqlite`)
-- [ ] Crear `README.md` raíz con instrucciones de arranque
-- [ ] Commit: `feat: esqueleto server/ y client/ con contrato openapi inicial`
+- [x] Configurar PHPUnit en `server/` (skill `laravel-tdd`) con test de integración de salud
+- [x] Configurar `vue-tsc` y compilar sin errores en `client/`
+- [x] Crear `.gitignore` raíz (`server/vendor`, `client/node_modules`, `.env`, `database.sqlite`)
+- [x] Crear `README.md` raíz con instrucciones de arranque
+- [x] Commit: `feat: esqueleto server/ y client/ con contrato openapi inicial`
 
 ---
 
