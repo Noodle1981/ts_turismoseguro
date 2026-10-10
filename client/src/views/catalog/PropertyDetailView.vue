@@ -4,23 +4,6 @@ import { useRoute, RouterLink } from 'vue-router'
 import { useCatalog } from '../../composables/useCatalog'
 import type { Property, AvailabilityItem } from '../../types/catalog'
 import BadgeVerified from '../../components/common/BadgeVerified.vue'
-import {
-  MapPin,
-  Users,
-  Bed,
-  Bath,
-  ShieldCheck,
-  Calendar,
-  MessageCircle,
-  Phone,
-  Check,
-  AlertCircle,
-  Loader2,
-  ChevronLeft,
-  Share2,
-  CheckCircle2,
-  FileText,
-} from 'lucide-vue-next'
 
 const route = useRoute()
 const { getPropertyBySlug, getPropertyAvailability, isLoading, errorMessage } = useCatalog()
@@ -28,23 +11,79 @@ const { getPropertyBySlug, getPropertyAvailability, isLoading, errorMessage } = 
 const property = ref<Property | null>(null)
 const availabilities = ref<AvailabilityItem[]>([])
 const activeImageIndex = ref(0)
+const isCopied = ref(false)
 
-// Formulario de consulta
-const bookingForm = ref({
-  checkinDate: '',
-  checkoutDate: '',
-  guests: 2,
+// Calculador interactivo de presupuesto diurno (Stitch 2.0)
+const rentDate = ref(new Date().toISOString().slice(0, 10))
+const selectedShift = ref<'full_day' | 'evening'>('full_day')
+const guestCount = ref(20)
+
+const shiftPrices = computed(() => {
+  const base = property.value?.price || 45000
+  return {
+    full_day: base,
+    evening: Math.round(base * 1.1),
+  }
 })
-const bookingSuccessMessage = ref<string | null>(null)
+
+const extraGuestFee = 1500
+const baseGuestsIncluded = 20
+
+const extraGuestsCount = computed(() => {
+  return Math.max(0, guestCount.value - baseGuestsIncluded)
+})
+
+const extraGuestsTotal = computed(() => {
+  return extraGuestsCount.value * extraGuestFee
+})
+
+const currentShiftPrice = computed(() => {
+  return shiftPrices.value[selectedShift.value]
+})
+
+const totalCalculated = computed(() => {
+  return currentShiftPrice.value + extraGuestsTotal.value
+})
+
+const formattedTotal = computed(() => {
+  return new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    maximumFractionDigits: 0,
+  }).format(totalCalculated.value)
+})
+
+const incrementGuests = () => {
+  const max = property.value?.capacity || 30
+  if (guestCount.value < max) {
+    guestCount.value++
+  }
+}
+
+const decrementGuests = () => {
+  if (guestCount.value > 1) {
+    guestCount.value--
+  }
+}
+
+const galleryImages = computed(() => {
+  if (property.value?.images && property.value.images.length > 0) {
+    return property.value.images.map(img => img.image_path)
+  }
+  return [
+    'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80',
+  ]
+})
 
 const activeImage = computed(() => {
-  if (property.value?.images && property.value.images.length > 0) {
-    return property.value.images[activeImageIndex.value]?.image_path || property.value.images[0].image_path
-  }
-  return '/img/propiedades/placeholder.jpg'
+  return galleryImages.value[activeImageIndex.value] || galleryImages.value[0]
 })
 
-const formattedPrice = computed(() => {
+const formattedBasePrice = computed(() => {
   if (!property.value) return '$0'
   return new Intl.NumberFormat('es-AR', {
     style: 'currency',
@@ -53,16 +92,14 @@ const formattedPrice = computed(() => {
   }).format(property.value.price)
 })
 
-const whatsappUrl = computed(() => {
-  if (!property.value?.host_whatsapp) return null
+const whatsappBookingUrl = computed(() => {
+  if (!property.value?.host_whatsapp) return '#'
   const cleanPhone = property.value.host_whatsapp.replace(/[^0-9]/g, '')
-  const text = encodeURIComponent(
-    `Hola! Vi tu propiedad "${property.value.title}" verificada en Turismo Seguro San Juan y quería consultar disponibilidad.`
-  )
-  return `https://wa.me/${cleanPhone}?text=${text}`
+  const shiftText = selectedShift.value === 'full_day' ? 'Día Completo (10:00 a 20:30)' : 'Tarde / Noche (18:00 a 02:00)'
+  const message = `¡Hola! Me comunico a través del portal oficial *Turismo Seguro San Juan* para reservar tu quinta *${property.value.title}* (ID: ${property.value.id}).\n\n📅 Fecha: ${rentDate.value}\n⏰ Turno: ${shiftText}\n👥 Cantidad de Personas: ${guestCount.value}\n💵 Presupuesto de Referencia: ${formattedTotal.value}\n\n¿Tienen disponibilidad para coordinar la seña oficial? Muchas gracias!`
+  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`
 })
 
-const isCopied = ref(false)
 const copyLink = () => {
   if (typeof window !== 'undefined' && navigator.clipboard) {
     navigator.clipboard.writeText(window.location.href)
@@ -73,297 +110,468 @@ const copyLink = () => {
   }
 }
 
-const handleBookingSubmit = () => {
-  bookingSuccessMessage.value = `¡Tu solicitud para ${bookingForm.value.guests} persona(s) ha sido enviada al anfitrión! Te contactarán a la brevedad.`
-}
-
 onMounted(async () => {
   const slug = String(route.params.slug)
   try {
     property.value = await getPropertyBySlug(slug)
     if (property.value?.id) {
       availabilities.value = await getPropertyAvailability(property.value.id)
+      if (property.value.capacity) {
+        guestCount.value = Math.min(20, property.value.capacity)
+      }
     }
   } catch (err) {
-    // Handled
+    console.error('Error al cargar la propiedad:', err)
   }
 })
 </script>
 
 <template>
-  <div class="min-h-screen bg-surface-50 py-8">
+  <div class="min-h-screen bg-surface py-6 sm:py-8">
     <!-- Loading State -->
     <div v-if="isLoading" class="min-h-[60vh] flex flex-col items-center justify-center space-y-3">
-      <Loader2 class="w-8 h-8 text-brand-600 animate-spin" />
-      <p class="text-sm text-surface-500 font-medium">Cargando detalles de la propiedad oficial...</p>
+      <span class="material-symbols-outlined text-[40px] text-secondary animate-spin">progress_activity</span>
+      <p class="text-xs sm:text-sm text-on-surface-variant font-medium">Cargando detalles auditados de la quinta...</p>
     </div>
 
     <!-- Error State -->
     <div v-else-if="errorMessage || !property" class="max-w-3xl mx-auto px-4 py-16 text-center space-y-4">
       <div class="w-16 h-16 rounded-2xl bg-red-50 text-red-600 mx-auto flex items-center justify-center">
-        <AlertCircle class="w-8 h-8" />
+        <span class="material-symbols-outlined text-[32px]">warning</span>
       </div>
-      <h2 class="text-2xl font-bold text-surface-900 font-display">Alojamiento no encontrado</h2>
-      <p class="text-sm text-surface-500">
-        {{ errorMessage || 'La propiedad solicitada no existe o no cuenta con certificación vigente.' }}
+      <h2 class="text-2xl font-bold text-primary font-headline-sm">Quinta no encontrada</h2>
+      <p class="text-sm text-on-surface-variant">
+        {{ errorMessage || 'La propiedad solicitada no existe o no cuenta con certificación vigente in situ.' }}
       </p>
       <RouterLink
         to="/alquileres"
-        class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-xl transition shadow-xs"
+        class="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-on-primary bg-primary hover:bg-primary-container rounded-xl transition shadow-xs"
       >
-        <ChevronLeft class="w-4 h-4" />
-        <span>Ver todos los alquileres</span>
+        <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+        <span>Ver todas las quintas</span>
       </RouterLink>
     </div>
 
-    <!-- Main Content -->
-    <div v-else class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-      <!-- Breadcrumb Navigation -->
-      <nav class="flex items-center gap-2 text-xs text-surface-500">
-        <RouterLink to="/" class="hover:text-brand-600">Inicio</RouterLink>
-        <span>/</span>
-        <RouterLink to="/alquileres" class="hover:text-brand-600">Alquileres</RouterLink>
-        <span>/</span>
-        <span class="text-surface-800 font-medium truncate max-w-xs">{{ property.title }}</span>
+    <!-- Main Content: Stitch 2.0 Layout -->
+    <div v-else class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-6">
+      <!-- 1. Breadcrumbs -->
+      <nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-xs text-on-surface-variant font-medium">
+        <RouterLink to="/" class="hover:text-primary transition-colors flex items-center gap-1">
+          <span class="material-symbols-outlined text-[15px]">home</span>
+          <span>Inicio</span>
+        </RouterLink>
+        <span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span>
+        <RouterLink to="/alquileres" class="hover:text-primary transition-colors">
+          {{ property.department?.name || 'San Juan' }}
+        </RouterLink>
+        <span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span>
+        <span class="text-on-surface font-bold truncate max-w-xs">{{ property.title }}</span>
       </nav>
 
-      <!-- Property Header: Title, Badges, Location -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2">
+      <!-- 2. Property Header -->
+      <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 pb-2">
         <div class="space-y-2">
           <div class="flex flex-wrap items-center gap-2">
-            <BadgeVerified size="md" />
+            <!-- Official In Situ Badge -->
+            <BadgeVerified size="md" :verified-at="property.verified_at ? property.verified_at.slice(0, 10) : '2026'" />
+
+            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-surface-container text-on-surface-variant text-[11px] font-bold">
+              <span class="material-symbols-outlined text-[15px] text-amber-500">wb_sunny</span>
+              <span>Alquiler Diurno Exclusivo (Sin pernocte)</span>
+            </span>
+
             <span
               v-if="property.verification_certificate_number"
-              class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-safe-50 text-safe-700 border border-safe-200"
+              class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-fixed/40 text-on-secondary-fixed text-[11px] font-mono font-bold"
             >
-              Certificado Nº {{ property.verification_certificate_number }}
+              <span class="material-symbols-outlined text-[14px]">pin_drop</span>
+              <span>Certificado Nº {{ property.verification_certificate_number }}</span>
             </span>
           </div>
 
-          <h1 class="text-2xl sm:text-4xl font-extrabold text-surface-900 font-display tracking-tight">
+          <h1 class="font-headline-xl text-2xl sm:text-4xl font-extrabold text-primary tracking-tight">
             {{ property.title }}
           </h1>
 
-          <div class="flex items-center gap-2 text-sm text-surface-600">
-            <MapPin class="w-4 h-4 text-brand-600 flex-shrink-0" />
-            <span>{{ property.location }}</span>
-            <span class="text-surface-300">·</span>
-            <span class="font-semibold text-brand-800">{{ property.property_type }}</span>
-          </div>
+          <p class="text-xs sm:text-sm text-on-surface-variant flex items-center gap-1.5 font-medium">
+            <span class="material-symbols-outlined text-[18px] text-secondary">location_on</span>
+            <span>{{ property.location }} — <em>{{ property.department?.name || 'San Juan' }}</em></span>
+          </p>
         </div>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-3">
           <button
             type="button"
-            class="px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-surface-700 hover:bg-surface-50 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer"
+            class="px-3.5 py-2 rounded-xl border border-surface-container hover:border-outline bg-surface-container-lowest text-on-surface text-xs font-bold flex items-center gap-1.5 transition cursor-pointer"
             @click="copyLink"
           >
-            <Share2 class="w-3.5 h-3.5" />
+            <span class="material-symbols-outlined text-[16px]">share</span>
             <span>{{ isCopied ? '¡Enlace copiado!' : 'Compartir' }}</span>
           </button>
         </div>
       </div>
 
-      <!-- Gallery Grid -->
-      <div class="space-y-3">
-        <!-- Main Highlight Image -->
-        <div class="relative aspect-16/9 md:aspect-21/9 rounded-3xl overflow-hidden bg-surface-100 shadow-md">
+      <!-- 3. Photo Gallery Bento Grid (Stitch 5-Photo Mosaic) -->
+      <section class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 rounded-2xl overflow-hidden shadow-card-stitch bg-surface-container-lowest border border-surface-container">
+        <!-- Main Large Photo (4 cols desktop) -->
+        <div class="relative md:col-span-4 lg:col-span-4 h-72 sm:h-96 lg:h-[460px] group overflow-hidden bg-surface-container">
           <img
             :src="activeImage"
             :alt="property.title"
-            class="w-full h-full object-cover transition-opacity duration-300"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
-          <div class="absolute bottom-4 left-4 bg-brand-950/70 backdrop-blur-md px-3 py-1.5 rounded-xl text-xs text-white font-medium flex items-center gap-2">
-            <ShieldCheck class="w-4 h-4 text-safe-400" />
-            <span>Fotografía auditada por inspección técnica</span>
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/75 via-transparent to-transparent pointer-events-none"></div>
+
+          <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+            <div class="space-y-1">
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-secondary text-on-secondary text-[11px] font-bold shadow-md">
+                <span class="material-symbols-outlined text-[15px]">fence</span>
+                <span>Pileta con Cerco de Seguridad Homologado</span>
+              </span>
+              <p class="text-sm sm:text-base font-bold text-white drop-shadow-md">
+                {{ property.address || 'Predio privado arbolado en San Juan' }}
+              </p>
+            </div>
+            <span class="bg-surface-container-lowest/90 text-primary px-3 py-1 rounded-lg text-xs font-bold shadow-md">
+              {{ galleryImages.length }} fotos
+            </span>
           </div>
         </div>
 
-        <!-- Thumbnails carousel -->
-        <div v-if="property.images && property.images.length > 1" class="flex gap-3 overflow-x-auto pb-2">
+        <!-- Right 4-Thumbnail Mosaic (2 cols desktop) -->
+        <div class="md:col-span-4 lg:col-span-2 grid grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-3 h-full">
           <button
-            v-for="(img, idx) in property.images"
-            :key="img.id"
+            v-for="(imgUrl, idx) in galleryImages.slice(1, 5)"
+            :key="idx"
             type="button"
             :class="[
-              'relative w-24 h-16 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all cursor-pointer',
-              activeImageIndex === idx ? 'border-brand-600 ring-2 ring-brand-500/30' : 'border-transparent opacity-70 hover:opacity-100'
+              'relative h-28 sm:h-36 lg:h-[105px] group overflow-hidden rounded-lg transition-all cursor-pointer',
+              activeImageIndex === idx + 1 ? 'ring-2 ring-secondary' : 'opacity-85 hover:opacity-100',
             ]"
-            @click="activeImageIndex = idx"
+            @click="activeImageIndex = idx + 1"
           >
-            <img :src="img.image_path" :alt="img.caption || ''" class="w-full h-full object-cover" />
+            <img :src="imgUrl" :alt="property.title" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors"></div>
           </button>
         </div>
-      </div>
+      </section>
 
-      <!-- Main Layout: Content + Booking Sidebar -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start pt-4">
-        <!-- Left 2 Cols: Details -->
-        <div class="lg:col-span-2 space-y-8">
-          <!-- Overview Badges -->
-          <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs grid grid-cols-3 gap-4 text-center">
-            <div class="border-r border-slate-100 pr-2">
-              <Users class="w-5 h-5 text-brand-600 mx-auto mb-1" />
-              <p class="text-xs text-surface-400">Capacidad</p>
-              <p class="text-sm sm:text-base font-bold text-surface-900">{{ property.capacity }} Personas</p>
+      <!-- 4. Content Split (65% Main / 35% Reservation Sticky Card) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-2">
+        <!-- LEFT COLUMN (8 cols desktop) -->
+        <div class="lg:col-span-7 xl:col-span-8 space-y-6">
+          <!-- Ficha Técnica Rápida de Uso Diurno -->
+          <div class="bg-surface-container-lowest p-6 rounded-2xl shadow-card-stitch border border-surface-container space-y-4">
+            <div class="flex items-center justify-between pb-3 bg-surface-container-low px-4 py-3 rounded-xl border border-surface-container">
+              <h2 class="font-headline-sm text-base sm:text-lg font-bold text-primary flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-[22px]">assignment</span>
+                <span>Ficha Técnica de Uso Diurno</span>
+              </h2>
+              <span class="text-[11px] text-secondary bg-surface-container-lowest px-2.5 py-1 rounded-full uppercase tracking-wider font-extrabold border border-secondary/30">
+                Protocolo TS San Juan
+              </span>
             </div>
-            <div class="border-r border-slate-100 pr-2">
-              <Bed class="w-5 h-5 text-brand-600 mx-auto mb-1" />
-              <p class="text-xs text-surface-400">Habitaciones</p>
-              <p class="text-sm sm:text-base font-bold text-surface-900">{{ property.bedrooms }} Dormitorios</p>
-            </div>
-            <div>
-              <Bath class="w-5 h-5 text-brand-600 mx-auto mb-1" />
-              <p class="text-xs text-surface-400">Baños</p>
-              <p class="text-sm sm:text-base font-bold text-surface-900">{{ property.bathrooms }} Baños</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="p-3.5 bg-surface-container-low rounded-xl flex items-start gap-3 border border-surface-container">
+                <div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-primary shadow-xs">
+                  <span class="material-symbols-outlined text-[22px]">groups</span>
+                </div>
+                <div>
+                  <span class="text-[11px] text-on-surface-variant block font-medium">Capacidad Diurna</span>
+                  <span class="text-base font-extrabold text-on-surface">Hasta {{ property.capacity }} pers.</span>
+                  <span class="text-[10px] text-on-surface-variant block">Exclusivo familiar</span>
+                </div>
+              </div>
+
+              <div class="p-3.5 bg-surface-container-low rounded-xl flex items-start gap-3 border border-surface-container">
+                <div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-primary shadow-xs">
+                  <span class="material-symbols-outlined text-[22px]">schedule</span>
+                </div>
+                <div>
+                  <span class="text-[11px] text-on-surface-variant block font-medium">Horario de Turnos</span>
+                  <span class="text-base font-extrabold text-on-surface">10:00 a 20:30</span>
+                  <span class="text-[10px] text-on-surface-variant block">Turno Día Completo</span>
+                </div>
+              </div>
+
+              <div class="p-3.5 bg-surface-container-low rounded-xl flex items-start gap-3 border border-surface-container">
+                <div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-secondary shadow-xs">
+                  <span class="material-symbols-outlined text-[22px]">pool</span>
+                </div>
+                <div>
+                  <span class="text-[11px] text-on-surface-variant block font-medium">Seguridad de Pileta</span>
+                  <span class="text-base font-extrabold text-on-surface">Cerca de niños</span>
+                  <span class="text-[10px] text-on-surface-variant block">Filtrado diario</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Description Section -->
-          <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-xs space-y-4">
-            <h2 class="text-xl font-bold text-surface-900 font-display">Descripción del Alojamiento</h2>
-            <p class="text-sm text-surface-600 leading-relaxed whitespace-pre-line">
+          <!-- Descripción y Equipamiento para Asados -->
+          <div class="bg-surface-container-lowest p-6 rounded-2xl shadow-card-stitch border border-surface-container space-y-4">
+            <h2 class="font-headline-sm text-base sm:text-lg font-bold text-primary flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary text-[22px]">outdoor_grill</span>
+              <span>Descripción y Equipamiento para Asados</span>
+            </h2>
+            <p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed font-medium whitespace-pre-line">
               {{ property.description }}
             </p>
-          </div>
 
-          <!-- Amenities Section -->
-          <div v-if="property.amenities && property.amenities.length > 0" class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-xs space-y-4">
-            <h2 class="text-xl font-bold text-surface-900 font-display">Comodidades y Servicios</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <div
-                v-for="amenity in property.amenities"
-                :key="amenity"
-                class="flex items-center gap-2.5 p-3 rounded-xl bg-surface-50 border border-slate-100 text-xs font-semibold text-surface-800"
-              >
-                <div class="w-5 h-5 rounded-full bg-safe-100 text-safe-700 flex items-center justify-center flex-shrink-0">
-                  <Check class="w-3.5 h-3.5" />
-                </div>
-                <span>{{ amenity }}</span>
+            <!-- Amenities Chips -->
+            <div v-if="property.amenities && property.amenities.length > 0" class="pt-4 border-t border-surface-container space-y-2">
+              <span class="text-xs font-bold text-primary uppercase tracking-wider block">
+                Comodidades Auditadas en el Predio:
+              </span>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  v-for="amenity in property.amenities"
+                  :key="amenity"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface text-xs font-semibold border border-surface-container"
+                >
+                  <span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+                  <span>{{ amenity }}</span>
+                </span>
               </div>
             </div>
           </div>
 
-          <!-- House Rules Section -->
-          <div v-if="property.rules && property.rules.length > 0" class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-xs space-y-4">
-            <h2 class="text-xl font-bold text-surface-900 font-display flex items-center gap-2">
-              <FileText class="w-5 h-5 text-brand-600" />
-              <span>Reglas de Convivencia y Uso</span>
-            </h2>
-            <ul class="space-y-2 text-xs text-surface-600">
-              <li v-for="rule in property.rules" :key="rule" class="flex items-start gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-brand-500 mt-1.5 flex-shrink-0"></span>
-                <span>{{ rule }}</span>
-              </li>
-            </ul>
-          </div>
+          <!-- INFORME DEL AUDITOR DE TURISMO SEGURO (Anti-Estafas Transparencia) -->
+          <div class="bg-primary text-on-primary p-6 sm:p-8 rounded-2xl shadow-xl relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 opacity-10 pointer-events-none">
+              <span class="material-symbols-outlined text-[180px]">verified</span>
+            </div>
 
-          <!-- Official Security Guarantee Box -->
-          <div class="bg-gradient-to-br from-emerald-50 via-safe-50/50 to-brand-50 p-6 rounded-2xl border border-safe-200 space-y-3">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-safe-600 text-white flex items-center justify-center flex-shrink-0">
-                <ShieldCheck class="w-6 h-6" />
+            <div class="relative z-10 space-y-4">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-white shadow-md">
+                    <span class="material-symbols-outlined text-[28px]">policy</span>
+                  </div>
+                  <div>
+                    <span class="text-[11px] text-secondary-fixed uppercase tracking-wider block font-bold">Auditoría Presencial Oficial</span>
+                    <h3 class="font-headline-sm text-lg font-bold text-on-primary">Informe del Validador Técnico TS</h3>
+                  </div>
+                </div>
+                <div class="bg-primary-container px-3 py-1.5 rounded-lg">
+                  <span class="text-[10px] text-on-primary-container block">Validador Matriculado</span>
+                  <span class="text-xs text-on-primary font-bold">Equipo Técnico Turismo Seguro (#TS-SJ)</span>
+                </div>
               </div>
-              <div>
-                <h3 class="text-sm font-bold text-surface-900">Garantía Turismo Seguro San Juan</h3>
-                <p class="text-xs text-surface-600">
-                  Alojamiento inspeccionado física y documentalmente. Tu reserva cuenta con respaldo ministerial.
-                </p>
+
+              <p class="text-xs text-on-primary/80 leading-relaxed font-medium">
+                Esta quinta fue inspeccionada físicamente en el departamento. Se cotejó la titularidad real de la tierra, la veracidad del cerco perimetral, estado del agua de pileta y los datos bancarios del anfitrión oficial.
+              </p>
+
+              <!-- Checklist -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div class="flex items-start gap-2.5 p-3 rounded-xl bg-primary-container/60 backdrop-blur-xs">
+                  <span class="material-symbols-outlined text-secondary-fixed text-[18px] mt-0.5">check_circle</span>
+                  <div>
+                    <span class="text-xs font-bold text-on-primary block">Agua de Pileta Inspeccionada</span>
+                    <span class="text-[11px] text-on-primary/70">Clorado correcto, filtros funcionando.</span>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-2.5 p-3 rounded-xl bg-primary-container/60 backdrop-blur-xs">
+                  <span class="material-symbols-outlined text-secondary-fixed text-[18px] mt-0.5">check_circle</span>
+                  <div>
+                    <span class="text-xs font-bold text-on-primary block">Perímetro Cerrado y Seguro</span>
+                    <span class="text-[11px] text-on-primary/70">Cerco perimetral para niños homologado.</span>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-2.5 p-3 rounded-xl bg-primary-container/60 backdrop-blur-xs">
+                  <span class="material-symbols-outlined text-secondary-fixed text-[18px] mt-0.5">check_circle</span>
+                  <div>
+                    <span class="text-xs font-bold text-on-primary block">CBU y Alias Auditados</span>
+                    <span class="text-[11px] text-on-primary/70">Cuenta bancaria cotejada contra DNI real.</span>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-2.5 p-3 rounded-xl bg-primary-container/60 backdrop-blur-xs">
+                  <span class="material-symbols-outlined text-secondary-fixed text-[18px] mt-0.5">check_circle</span>
+                  <div>
+                    <span class="text-xs font-bold text-on-primary block">Trato Directo sin Comisión</span>
+                    <span class="text-[11px] text-on-primary/70">0% de recargo por reserva a inquilinos.</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Right Col: Booking & Host Contact Sidebar (Sticky) -->
-        <aside class="space-y-6 sticky top-24">
-          <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-lg space-y-6">
-            <!-- Price Display -->
-            <div class="border-b border-slate-100 pb-4">
-              <span class="text-xs text-surface-400 block font-medium">Tarifa por jornada</span>
-              <p class="font-display font-extrabold text-brand-900 text-3xl leading-tight">
-                {{ formattedPrice }}
-                <span class="text-xs font-normal text-surface-500">/ {{ property.price_type }}</span>
-              </p>
-              <p class="text-[11px] text-surface-400 mt-1">Precio regulado y sin comisiones ocultas.</p>
+        <!-- RIGHT COLUMN: Sticky Reservation & Live Day Quotation Card (Stitch 2.0) -->
+        <aside class="lg:col-span-5 xl:col-span-4 sticky top-24 space-y-4">
+          <div class="bg-surface-container-lowest p-6 rounded-2xl shadow-modal-stitch border border-surface-container space-y-5">
+            <!-- Price Header -->
+            <div class="flex items-start justify-between pb-3 border-b border-surface-container">
+              <div>
+                <span class="text-[11px] text-on-surface-variant uppercase tracking-wider block font-bold">Valor Base Diurno</span>
+                <div class="flex items-baseline gap-1">
+                  <span class="font-headline-xl text-3xl font-extrabold text-primary">{{ formattedBasePrice }}</span>
+                  <span class="text-xs text-on-surface-variant font-medium">/ jornada</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-fixed/40 text-on-secondary-fixed text-[11px] font-bold">
+                  <span class="material-symbols-outlined text-[13px]">handshake</span>
+                  <span>Trato Directo</span>
+                </span>
+                <span class="block text-[10px] text-secondary font-bold mt-1">0% Comisión</span>
+              </div>
             </div>
 
-            <!-- Booking Inquiry Form -->
-            <form class="space-y-4" @submit.prevent="handleBookingSubmit">
-              <h3 class="text-xs font-bold text-surface-900 uppercase tracking-wider flex items-center gap-1.5">
-                <Calendar class="w-4 h-4 text-brand-600" />
-                <span>Consultar Disponibilidad</span>
-              </h3>
+            <!-- 1. Date Selector -->
+            <div>
+              <label class="block text-xs font-bold text-primary mb-1">
+                Fecha del Día de Campo:
+              </label>
+              <input
+                v-model="rentDate"
+                type="date"
+                class="w-full bg-surface-container-low text-on-surface text-xs font-semibold px-3.5 py-2.5 rounded-xl border border-surface-container focus:outline-none focus:border-primary"
+              />
+            </div>
 
-              <div class="grid grid-cols-2 gap-2">
-                <div>
-                  <label class="block text-[11px] font-semibold text-surface-600 mb-1">Llegada</label>
-                  <input
-                    v-model="bookingForm.checkinDate"
-                    type="date"
-                    required
-                    class="w-full px-2.5 py-2 bg-surface-50 border border-slate-200 rounded-xl text-surface-900 text-xs focus:ring-2 focus:ring-brand-500 focus:outline-none"
-                  />
+            <!-- 2. Shift Selector (Turno) -->
+            <div>
+              <label class="block text-xs font-bold text-primary mb-1.5">
+                Seleccioná la Franja Horaria:
+              </label>
+              <div class="space-y-2">
+                <!-- Option 1: Día Completo -->
+                <label
+                  :class="[
+                    'flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-all',
+                    selectedShift === 'full_day'
+                      ? 'bg-surface-container-low border-primary/40 shadow-xs'
+                      : 'bg-surface-container-lowest border-surface-container hover:bg-surface-container-low',
+                  ]"
+                >
+                  <div class="flex items-center gap-2.5">
+                    <input
+                      v-model="selectedShift"
+                      type="radio"
+                      value="full_day"
+                      class="text-secondary accent-secondary"
+                    />
+                    <div>
+                      <div class="flex items-center gap-1 text-xs font-bold text-primary">
+                        <span class="material-symbols-outlined text-[15px] text-amber-500">sunny</span>
+                        <span>Día Completo Familiar</span>
+                      </div>
+                      <span class="text-[10px] text-on-surface-variant">10:00 a 20:30 hs</span>
+                    </div>
+                  </div>
+                  <span class="text-xs font-bold text-primary">${{ shiftPrices.full_day.toLocaleString('es-AR') }}</span>
+                </label>
+
+                <!-- Option 2: Tarde / Noche -->
+                <label
+                  :class="[
+                    'flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-all',
+                    selectedShift === 'evening'
+                      ? 'bg-surface-container-low border-primary/40 shadow-xs'
+                      : 'bg-surface-container-lowest border-surface-container hover:bg-surface-container-low',
+                  ]"
+                >
+                  <div class="flex items-center gap-2.5">
+                    <input
+                      v-model="selectedShift"
+                      type="radio"
+                      value="evening"
+                      class="text-secondary accent-secondary"
+                    />
+                    <div>
+                      <div class="flex items-center gap-1 text-xs font-bold text-primary">
+                        <span class="material-symbols-outlined text-[15px] text-primary">bedtime</span>
+                        <span>Turno Tarde / Cena</span>
+                      </div>
+                      <span class="text-[10px] text-on-surface-variant">18:00 a 02:00 hs</span>
+                    </div>
+                  </div>
+                  <span class="text-xs font-bold text-primary">${{ shiftPrices.evening.toLocaleString('es-AR') }}</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 3. Guest Count Stepper -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-xs font-bold text-primary">
+                  Cantidad Total de Personas:
+                </label>
+                <span class="text-[10px] text-on-surface-variant">Base: hasta {{ baseGuestsIncluded }}</span>
+              </div>
+              <div class="flex items-center justify-between bg-surface-container-low p-2 rounded-xl border border-surface-container">
+                <button
+                  type="button"
+                  aria-label="Restar una persona"
+                  class="w-9 h-9 rounded-lg bg-surface-container-lowest text-primary flex items-center justify-center font-bold hover:bg-surface-container transition-all shadow-xs cursor-pointer"
+                  @click="decrementGuests"
+                >
+                  <span class="material-symbols-outlined text-[18px]">remove</span>
+                </button>
+                <div class="text-center">
+                  <span class="text-xl font-extrabold text-primary">{{ guestCount }}</span>
+                  <span class="text-[10px] text-on-surface-variant block">invitados (máx. {{ property.capacity }})</span>
                 </div>
-                <div>
-                  <label class="block text-[11px] font-semibold text-surface-600 mb-1">Salida</label>
-                  <input
-                    v-model="bookingForm.checkoutDate"
-                    type="date"
-                    required
-                    class="w-full px-2.5 py-2 bg-surface-50 border border-slate-200 rounded-xl text-surface-900 text-xs focus:ring-2 focus:ring-brand-500 focus:outline-none"
-                  />
-                </div>
+                <button
+                  type="button"
+                  aria-label="Sumar una persona"
+                  class="w-9 h-9 rounded-lg bg-surface-container-lowest text-primary flex items-center justify-center font-bold hover:bg-surface-container transition-all shadow-xs cursor-pointer"
+                  @click="incrementGuests"
+                >
+                  <span class="material-symbols-outlined text-[18px]">add</span>
+                </button>
               </div>
+            </div>
 
-              <div>
-                <label class="block text-[11px] font-semibold text-surface-600 mb-1">Cantidad de Huéspedes</label>
-                <input
-                  v-model.number="bookingForm.guests"
-                  type="number"
-                  min="1"
-                  :max="property.capacity"
-                  required
-                  class="w-full px-3 py-2 bg-surface-50 border border-slate-200 rounded-xl text-surface-900 text-xs focus:ring-2 focus:ring-brand-500 focus:outline-none"
-                />
+            <!-- 4. Quotation Breakdown -->
+            <div class="bg-surface-container-low p-3.5 rounded-xl space-y-2 text-xs border border-surface-container">
+              <div class="flex justify-between text-on-surface-variant">
+                <span>Valor del turno:</span>
+                <span class="font-bold text-primary">${{ currentShiftPrice.toLocaleString('es-AR') }}</span>
               </div>
-
-              <div v-if="bookingSuccessMessage" class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 flex items-start gap-2">
-                <CheckCircle2 class="w-4 h-4 text-safe-600 mt-0.5 flex-shrink-0" />
-                <span>{{ bookingSuccessMessage }}</span>
+              <div v-if="extraGuestsCount > 0" class="flex justify-between text-on-surface-variant">
+                <span>Invitados adicionales (+{{ extraGuestsCount }}):</span>
+                <span class="font-bold text-primary">${{ extraGuestsTotal.toLocaleString('es-AR') }}</span>
               </div>
+              <div class="pt-2 border-t border-surface-container-highest flex justify-between items-baseline font-bold">
+                <span class="text-primary">Presupuesto Referencia:</span>
+                <span class="text-lg font-extrabold text-secondary">{{ formattedTotal }}</span>
+              </div>
+            </div>
 
-              <button
-                type="submit"
-                class="w-full py-3 px-4 bg-brand-600 hover:bg-brand-700 active:scale-95 text-white font-semibold rounded-xl text-xs shadow-md shadow-brand-500/20 transition cursor-pointer"
-              >
-                Enviar Solicitud al Anfitrión
-              </button>
-            </form>
-
-            <!-- Direct Host Contact Buttons -->
-            <div class="border-t border-slate-100 pt-4 space-y-2">
-              <p class="text-[11px] text-surface-500 text-center font-medium">O comunicate de manera directa:</p>
-
+            <!-- 5. High-Conversion WhatsApp CTA -->
+            <div class="space-y-2">
               <a
-                v-if="whatsappUrl"
-                :href="whatsappUrl"
+                :href="whatsappBookingUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-xs transition shadow-xs cursor-pointer"
+                class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-secondary text-on-secondary font-bold text-xs shadow-safe-glow hover:bg-secondary/90 transition-all text-center cursor-pointer"
               >
-                <MessageCircle class="w-4 h-4" />
-                <span>Contactar por WhatsApp</span>
+                <span class="material-symbols-outlined text-[20px]">chat</span>
+                <div class="flex flex-col items-start text-left leading-tight">
+                  <span>Reservar vía WhatsApp Verificado</span>
+                  <span class="text-[10px] font-normal opacity-90">Trato directo con el anfitrión auditado</span>
+                </div>
               </a>
 
               <a
                 v-if="property.host_phone"
                 :href="`tel:${property.host_phone}`"
-                class="w-full flex items-center justify-center gap-2 py-2.5 px-4 border border-slate-200 hover:bg-surface-50 text-surface-700 font-semibold rounded-xl text-xs transition cursor-pointer"
+                class="w-full flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl border border-surface-container hover:bg-surface-container-low text-on-surface text-xs font-bold transition text-center"
               >
-                <Phone class="w-4 h-4" />
+                <span class="material-symbols-outlined text-[16px] text-primary">phone</span>
                 <span>Llamar al Anfitrión</span>
               </a>
             </div>
+
+            <p class="text-[10px] text-on-surface-variant text-center font-medium leading-tight">
+              Sin comisiones por servicio. Contactás de forma transparente al dueño legítimo.
+            </p>
           </div>
         </aside>
       </div>
