@@ -137,33 +137,33 @@ Objetivo: base de datos completa y poblada con los datos reales del prototipo le
 
 ---
 
-## FASE 3 — Autenticación, Roles, Procedencia y Recuperación de Contraseña `[ ]`
+## FASE 3 — Autenticación, Roles, Procedencia y Recuperación de Contraseña `[x]`
 
 Objetivo: suite completa de autenticación tradicional (registro por rol, login con credenciales, recuperación y reseteo de contraseña por email) y rutas protegidas por rol.
 
 ### 3.1 Backend
-- [ ] `POST /auth/login`, `POST /auth/logout`, `GET /auth/me`
-- [ ] `POST /auth/register/rent`: registro de usuario interesado con **procedencia geográfica** (`origin_country`, `origin_province`, `origin_city`, `is_local_resident`)
-- [ ] `POST /auth/register/client`: registro del cliente oferente (anfitrión)
-- [ ] `POST /auth/forgot-password`: solicitud de recuperación de contraseña con envío de correo y token seguro firmado
-- [ ] `POST /auth/reset-password`: restablecimiento de contraseña mediante token validado
-- [ ] `PUT /auth/password`: actualización de contraseña desde perfil autenticado
-- [ ] Middleware `CheckRole` y alias `role:` en el router para los 5 roles
-- [ ] Policies por recurso (propiedades, auditorías, comisiones)
-- [ ] *Rate limiting* estricto en login, registro y recuperación de contraseña (skill `laravel-security`)
-- [ ] Tests: login válido/inválido, flujo de olvido/reseteo de contraseña, validación de procedencia en `rent`, acceso denegado por rol
+- [x] `POST /auth/login`, `POST /auth/logout`, `GET /auth/me`
+- [x] `POST /auth/register/rent`: registro de usuario interesado con **procedencia geográfica** (`origin_country`, `origin_province`, `origin_city`, `is_local_resident`)
+- [x] `POST /auth/register/client`: registro del cliente oferente (anfitrión)
+- [x] `POST /auth/forgot-password`: solicitud de recuperación de contraseña con envío de correo y token seguro firmado
+- [x] `POST /auth/reset-password`: restablecimiento de contraseña mediante token validado
+- [x] `PUT /auth/password`: actualización de contraseña desde perfil autenticado
+- [x] Middleware `CheckRole` y alias `role:` en el router para los 5 roles
+- [x] Policies por recurso (propiedades, auditorías, comisiones)
+- [x] *Rate limiting* estricto en login, registro y recuperación de contraseña (skill `laravel-security`)
+- [x] Tests: login válido/inválido, flujo de olvido/reseteo de contraseña, validación de procedencia en `rent`, acceso denegado por rol
 
 ### 3.2 Frontend
-- [ ] `composables/useAuth.ts` (`login`, `logout`, `registerRent`, `registerClient`, `forgotPassword`, `resetPassword`, `user`, `isAuthenticated`)
-- [ ] `composables/usePermissions.ts` (`hasRole`, `isSuperAdmin`, `isSupervisor`, `isValidator`, `isClient`, `isRent`)
-- [ ] `stores/auth.ts` (Pinia)
-- [ ] Guards en Vue Router con `meta.roles` y redirección según rol
-- [ ] `LoginView.vue` (login común con enlace a "¿Olvidaste tu contraseña?")
-- [ ] `RegisterRentView.vue` (registro común con selector de procedencia) y `RegisterClientView.vue`
-- [ ] `ForgotPasswordView.vue` (formulario para ingresar email de recuperación)
-- [ ] `ResetPasswordView.vue` (formulario para definir nueva contraseña con token de URL)
-- [ ] Redirección post-login al panel que corresponde a cada rol
-- [ ] Vista 403 y vista 404
+- [x] `composables/useAuth.ts` (`login`, `logout`, `registerRent`, `registerClient`, `forgotPassword`, `resetPassword`, `user`, `isAuthenticated`)
+- [x] `composables/usePermissions.ts` (`hasRole`, `isSuperAdmin`, `isSupervisor`, `isValidator`, `isClient`, `isRent`)
+- [x] `stores/auth.ts` (Pinia)
+- [x] Guards en Vue Router con `meta.roles` y redirección según rol
+- [x] `LoginView.vue` (login común con enlace a "¿Olvidaste tu contraseña?")
+- [x] `RegisterRentView.vue` (registro común con selector de procedencia) y `RegisterClientView.vue`
+- [x] `ForgotPasswordView.vue` (formulario para ingresar email de recuperación)
+- [x] `ResetPasswordView.vue` (formulario para definir nueva contraseña con token de URL)
+- [x] Redirección post-login al panel que corresponde a cada rol
+- [x] Vista 403 y vista 404
 
 ### 3.3 Mapa de rutas del frontend
 

@@ -24,6 +24,125 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Iniciar sesión con email y contraseña */
+        post: operations["login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cerrar sesión activa */
+        post: operations["logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener perfil del usuario autenticado */
+        get: operations["getAuthenticatedUser"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/register/rent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registro de usuario interesado / turista con procedencia geográfica */
+        post: operations["registerRent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/register/client": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registro de cliente oferente (propietario o anfitrión) */
+        post: operations["registerClient"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/forgot-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Solicitar enlace o token de recuperación de contraseña */
+        post: operations["forgotPassword"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/reset-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Restablecer contraseña mediante token */
+        post: operations["resetPassword"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -47,6 +166,122 @@ export interface components {
                 /** @example connected */
                 cache?: string;
             };
+        };
+        UserResource: {
+            /** @example 1 */
+            id: number;
+            /** @example Omar Olivera */
+            name: string;
+            /**
+             * Format: email
+             * @example admin@turismoseguro.com.ar
+             */
+            email: string;
+            /**
+             * @example super_admin
+             * @enum {string}
+             */
+            role: "super_admin" | "supervisor" | "validator" | "client" | "rent";
+            /** @example +54 9 264 400-0001 */
+            phone?: string | null;
+            /** @example Argentina */
+            origin_country?: string | null;
+            /** @example San Juan */
+            origin_province?: string | null;
+            /** @example Capital */
+            origin_city?: string | null;
+            /** @example true */
+            is_local_resident: boolean;
+            /**
+             * Format: date-time
+             * @example 2026-10-09T20:00:00Z
+             */
+            created_at?: string;
+        };
+        LoginPayload: {
+            /**
+             * Format: email
+             * @example anfitrion@turismoseguro.com.ar
+             */
+            email: string;
+            /**
+             * Format: password
+             * @example password123
+             */
+            password: string;
+        };
+        RegisterRentPayload: {
+            /** @example Carlos Benítez */
+            name: string;
+            /**
+             * Format: email
+             * @example carlos.sanjuanino@gmail.com
+             */
+            email: string;
+            /**
+             * Format: password
+             * @example password123
+             */
+            password: string;
+            /**
+             * Format: password
+             * @example password123
+             */
+            password_confirmation: string;
+            /** @example +54 9 264 400-0005 */
+            phone?: string | null;
+            /** @example true */
+            is_local_resident: boolean;
+            /** @example Argentina */
+            origin_country?: string | null;
+            /** @example San Juan */
+            origin_province?: string | null;
+            /** @example Rivadavia */
+            origin_city?: string | null;
+        };
+        RegisterClientPayload: {
+            /** @example Elena Morales */
+            name: string;
+            /**
+             * Format: email
+             * @example elena.anfitriona@gmail.com
+             */
+            email: string;
+            /**
+             * Format: password
+             * @example password123
+             */
+            password: string;
+            /**
+             * Format: password
+             * @example password123
+             */
+            password_confirmation: string;
+            /** @example +54 9 264 400-0004 */
+            phone: string;
+        };
+        ForgotPasswordPayload: {
+            /**
+             * Format: email
+             * @example usuario@ejemplo.com
+             */
+            email: string;
+        };
+        ResetPasswordPayload: {
+            /** Format: email */
+            email: string;
+            token: string;
+            /** Format: password */
+            password: string;
+            /** Format: password */
+            password_confirmation: string;
+        };
+        AuthResponse: {
+            /** @example Autenticación exitosa. */
+            message: string;
+            /** @example 1|abcdef123456... */
+            token: string;
+            user: components["schemas"]["UserResource"];
         };
         Department: {
             /** @example 1 */
@@ -196,6 +431,232 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
+            };
+        };
+    };
+    login: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginPayload"];
+            };
+        };
+        responses: {
+            /** @description Credenciales válidas y sesión iniciada */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResponse"];
+                };
+            };
+            /** @description Error de validación o credenciales incorrectas */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sesión cerrada exitosamente */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Sesión cerrada correctamente. */
+                        message?: string;
+                    };
+                };
+            };
+            /** @description No autenticado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getAuthenticatedUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Datos del usuario autenticado */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["UserResource"];
+                    };
+                };
+            };
+            /** @description No autenticado */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    registerRent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterRentPayload"];
+            };
+        };
+        responses: {
+            /** @description Usuario registrado exitosamente */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResponse"];
+                };
+            };
+            /** @description Error de validación de campos */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    registerClient: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterClientPayload"];
+            };
+        };
+        responses: {
+            /** @description Anfitrión registrado exitosamente */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResponse"];
+                };
+            };
+            /** @description Error de validación */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    forgotPassword: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ForgotPasswordPayload"];
+            };
+        };
+        responses: {
+            /** @description Instrucciones de recuperación enviadas */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Se ha enviado un enlace de recuperación a tu correo. */
+                        message?: string;
+                    };
+                };
+            };
+            /** @description Error de validación */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    resetPassword: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResetPasswordPayload"];
+            };
+        };
+        responses: {
+            /** @description Contraseña actualizada con éxito */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Tu contraseña ha sido restablecida exitosamente. */
+                        message?: string;
+                    };
+                };
+            };
+            /** @description Token inválido o campos incorrectos */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

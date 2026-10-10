@@ -1,13 +1,37 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
+import { useAuth } from '../../composables/useAuth'
 import BadgeVerified from '../common/BadgeVerified.vue'
-import { Menu, X, ShieldCheck } from 'lucide-vue-next'
+import { Menu, X, ShieldCheck, LogOut, ChevronDown } from 'lucide-vue-next'
+
+const router = useRouter()
+const { user, isAuthenticated, logout } = useAuth()
 
 const isMobileMenuOpen = ref(false)
+const isUserMenuOpen = ref(false)
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
+
+const toggleUserMenu = () => {
+  isUserMenuOpen.value = !isUserMenuOpen.value
+}
+
+const handleLogout = async () => {
+  isUserMenuOpen.value = false
+  isMobileMenuOpen.value = false
+  await logout()
+  router.push('/login')
+}
+
+const roleNames: Record<string, string> = {
+  super_admin: 'Super Admin',
+  supervisor: 'Supervisor',
+  validator: 'Validador',
+  client: 'Anfitrión',
+  rent: 'Huésped',
 }
 </script>
 
@@ -38,14 +62,68 @@ const toggleMobileMenu = () => {
           <span class="text-surface-400 cursor-not-allowed">Experiencias</span>
         </nav>
 
-        <!-- Right Action Button -->
+        <!-- Right Action Button / User Session -->
         <div class="hidden md:flex items-center gap-3">
-          <button
-            type="button"
-            class="px-4 py-2 text-sm font-semibold text-white bg-accent-500 hover:bg-accent-600 active:scale-95 rounded-xl shadow-xs transition-all duration-200 cursor-pointer"
-          >
-            Publicar Propiedad
-          </button>
+          <template v-if="!isAuthenticated">
+            <RouterLink
+              to="/login"
+              class="px-3.5 py-2 text-sm font-semibold text-surface-700 hover:text-brand-700 transition-colors"
+            >
+              Iniciar Sesión
+            </RouterLink>
+            <RouterLink
+              to="/register-rent"
+              class="px-4 py-2 text-sm font-semibold text-brand-700 bg-brand-50 hover:bg-brand-100 rounded-xl transition-all"
+            >
+              Registrarse
+            </RouterLink>
+            <RouterLink
+              to="/register-client"
+              class="px-4 py-2 text-sm font-semibold text-white bg-accent-500 hover:bg-accent-600 active:scale-95 rounded-xl shadow-xs transition-all duration-200"
+            >
+              Publicar Propiedad
+            </RouterLink>
+          </template>
+
+          <!-- Authenticated User Menu -->
+          <div v-else class="relative">
+            <button
+              type="button"
+              class="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-surface-50 hover:bg-surface-100 transition-all text-left cursor-pointer"
+              @click="toggleUserMenu"
+            >
+              <div class="w-8 h-8 rounded-lg bg-brand-600 text-white flex items-center justify-center font-bold text-xs uppercase">
+                {{ user?.name?.charAt(0) || 'U' }}
+              </div>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-surface-900 leading-tight">{{ user?.name }}</span>
+                <span class="text-[10px] text-surface-500 font-medium">
+                  {{ user?.role ? roleNames[user.role] : '' }}
+                </span>
+              </div>
+              <ChevronDown class="w-3.5 h-3.5 text-surface-400 ml-1" />
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div
+              v-if="isUserMenuOpen"
+              class="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-slate-100 py-1.5 z-50 animate-in fade-in slide-in-from-top-1"
+            >
+              <div class="px-3 py-2 border-b border-slate-100 text-xs">
+                <p class="font-medium text-surface-500">Sesión iniciada como</p>
+                <p class="font-bold text-surface-800 truncate">{{ user?.email }}</p>
+              </div>
+
+              <button
+                type="button"
+                class="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 transition-colors text-left cursor-pointer"
+                @click="handleLogout"
+              >
+                <LogOut class="w-4 h-4" />
+                <span>Cerrar Sesión</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         <!-- Mobile menu button -->
@@ -64,7 +142,7 @@ const toggleMobileMenu = () => {
     </div>
 
     <!-- Mobile menu modal/drawer -->
-    <div v-if="isMobileMenuOpen" class="md:hidden border-t border-slate-200/80 bg-white px-4 pt-2 pb-4 space-y-2">
+    <div v-if="isMobileMenuOpen" class="md:hidden border-t border-slate-200/80 bg-white px-4 pt-2 pb-4 space-y-3">
       <RouterLink
         to="/"
         class="block px-3 py-2 rounded-lg text-base font-medium text-surface-700 hover:bg-surface-100"
@@ -72,14 +150,50 @@ const toggleMobileMenu = () => {
       >
         Inicio
       </RouterLink>
-      <div class="pt-2">
+
+      <template v-if="!isAuthenticated">
+        <RouterLink
+          to="/login"
+          class="block px-3 py-2 rounded-lg text-base font-medium text-surface-700 hover:bg-surface-100"
+          @click="isMobileMenuOpen = false"
+        >
+          Iniciar Sesión
+        </RouterLink>
+        <RouterLink
+          to="/register-rent"
+          class="block px-3 py-2 rounded-lg text-base font-medium text-brand-700 bg-brand-50 hover:bg-brand-100"
+          @click="isMobileMenuOpen = false"
+        >
+          Registrarse como Huésped
+        </RouterLink>
+        <RouterLink
+          to="/register-client"
+          class="block w-full text-center px-4 py-2.5 text-sm font-semibold text-white bg-accent-500 rounded-xl shadow-xs"
+          @click="isMobileMenuOpen = false"
+        >
+          Publicar Propiedad (Anfitriones)
+        </RouterLink>
+      </template>
+
+      <template v-else>
+        <div class="px-3 py-2 bg-surface-50 rounded-xl flex items-center justify-between">
+          <div>
+            <p class="text-sm font-bold text-surface-900">{{ user?.name }}</p>
+            <p class="text-xs text-surface-500">{{ user?.email }}</p>
+          </div>
+          <span class="text-xs px-2 py-0.5 rounded-full bg-brand-100 text-brand-800 font-semibold">
+            {{ user?.role ? roleNames[user.role] : '' }}
+          </span>
+        </div>
         <button
           type="button"
-          class="w-full text-center px-4 py-2.5 text-sm font-semibold text-white bg-accent-500 rounded-xl shadow-xs"
+          class="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-semibold text-red-600 bg-red-50 rounded-xl"
+          @click="handleLogout"
         >
-          Publicar Propiedad
+          <LogOut class="w-4 h-4" />
+          <span>Cerrar Sesión</span>
         </button>
-      </div>
+      </template>
     </div>
   </header>
 </template>

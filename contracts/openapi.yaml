@@ -52,6 +52,183 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Iniciar sesión con email y contraseña
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginPayload'
+      responses:
+        '200':
+          description: Credenciales válidas y sesión iniciada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '422':
+          description: Error de validación o credenciales incorrectas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: Cerrar sesión activa
+      operationId: logout
+      security:
+        - sanctumCookie: []
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Sesión cerrada exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Sesión cerrada correctamente."
+        '401':
+          description: No autenticado
+
+  /auth/me:
+    get:
+      tags:
+        - Auth
+      summary: Obtener perfil del usuario autenticado
+      operationId: getAuthenticatedUser
+      security:
+        - sanctumCookie: []
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Datos del usuario autenticado
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/UserResource'
+        '401':
+          description: No autenticado
+
+  /auth/register/rent:
+    post:
+      tags:
+        - Auth
+      summary: Registro de usuario interesado / turista con procedencia geográfica
+      operationId: registerRent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRentPayload'
+      responses:
+        '201':
+          description: Usuario registrado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '422':
+          description: Error de validación de campos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/register/client:
+    post:
+      tags:
+        - Auth
+      summary: Registro de cliente oferente (propietario o anfitrión)
+      operationId: registerClient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterClientPayload'
+      responses:
+        '201':
+          description: Anfitrión registrado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '422':
+          description: Error de validación
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/forgot-password:
+    post:
+      tags:
+        - Auth
+      summary: Solicitar enlace o token de recuperación de contraseña
+      operationId: forgotPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPasswordPayload'
+      responses:
+        '200':
+          description: Instrucciones de recuperación enviadas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Se ha enviado un enlace de recuperación a tu correo."
+        '422':
+          description: Error de validación
+
+  /auth/reset-password:
+    post:
+      tags:
+        - Auth
+      summary: Restablecer contraseña mediante token
+      operationId: resetPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordPayload'
+      responses:
+        '200':
+          description: Contraseña actualizada con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Tu contraseña ha sido restablecida exitosamente."
+        '422':
+          description: Token inválido o campos incorrectos
+
 components:
   securitySchemes:
     sanctumCookie:
@@ -96,6 +273,191 @@ components:
             cache:
               type: string
               example: "connected"
+
+    UserResource:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - role
+        - is_local_resident
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Omar Olivera"
+        email:
+          type: string
+          format: email
+          example: "admin@turismoseguro.com.ar"
+        role:
+          type: string
+          example: "super_admin"
+          enum:
+            - super_admin
+            - supervisor
+            - validator
+            - client
+            - rent
+        phone:
+          type: string
+          nullable: true
+          example: "+54 9 264 400-0001"
+        origin_country:
+          type: string
+          nullable: true
+          example: "Argentina"
+        origin_province:
+          type: string
+          nullable: true
+          example: "San Juan"
+        origin_city:
+          type: string
+          nullable: true
+          example: "Capital"
+        is_local_resident:
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          format: date-time
+          example: "2026-10-09T20:00:00Z"
+
+    LoginPayload:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: "anfitrion@turismoseguro.com.ar"
+        password:
+          type: string
+          format: password
+          example: "password123"
+
+    RegisterRentPayload:
+      type: object
+      required:
+        - name
+        - email
+        - password
+        - password_confirmation
+        - is_local_resident
+      properties:
+        name:
+          type: string
+          example: "Carlos Benítez"
+        email:
+          type: string
+          format: email
+          example: "carlos.sanjuanino@gmail.com"
+        password:
+          type: string
+          format: password
+          example: "password123"
+        password_confirmation:
+          type: string
+          format: password
+          example: "password123"
+        phone:
+          type: string
+          nullable: true
+          example: "+54 9 264 400-0005"
+        is_local_resident:
+          type: boolean
+          example: true
+        origin_country:
+          type: string
+          nullable: true
+          example: "Argentina"
+        origin_province:
+          type: string
+          nullable: true
+          example: "San Juan"
+        origin_city:
+          type: string
+          nullable: true
+          example: "Rivadavia"
+
+    RegisterClientPayload:
+      type: object
+      required:
+        - name
+        - email
+        - password
+        - password_confirmation
+        - phone
+      properties:
+        name:
+          type: string
+          example: "Elena Morales"
+        email:
+          type: string
+          format: email
+          example: "elena.anfitriona@gmail.com"
+        password:
+          type: string
+          format: password
+          example: "password123"
+        password_confirmation:
+          type: string
+          format: password
+          example: "password123"
+        phone:
+          type: string
+          example: "+54 9 264 400-0004"
+
+    ForgotPasswordPayload:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          example: "usuario@ejemplo.com"
+
+    ResetPasswordPayload:
+      type: object
+      required:
+        - email
+        - token
+        - password
+        - password_confirmation
+      properties:
+        email:
+          type: string
+          format: email
+        token:
+          type: string
+        password:
+          type: string
+          format: password
+        password_confirmation:
+          type: string
+          format: password
+
+    AuthResponse:
+      type: object
+      required:
+        - message
+        - token
+        - user
+      properties:
+        message:
+          type: string
+          example: "Autenticación exitosa."
+        token:
+          type: string
+          example: "1|abcdef123456..."
+        user:
+          $ref: '#/components/schemas/UserResource'
 
     Department:
       type: object
