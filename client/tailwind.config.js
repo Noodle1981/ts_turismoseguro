@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Stitch 2.0 Official Tokens: San Juan Verificado
+        // Stitch Canonical Theme: San Juan Verificado
         primary: {
           DEFAULT: '#001428',
           container: '#0f2942',
@@ -22,7 +22,7 @@ export default {
         },
         'inverse-primary': '#b0c9e8',
 
-        // Emerald Assurance (Seguridad y Verificación In Situ)
+        // Secondary: Emerald Assurance
         secondary: {
           DEFAULT: '#006c4a',
           container: '#82f5c1',
@@ -36,7 +36,7 @@ export default {
           'fixed-variant': '#005137',
         },
 
-        // San Juan Amber & Daylight
+        // Tertiary: San Juan Amber & Daylight
         tertiary: {
           DEFAULT: '#1f1000',
           container: '#3b2200',
@@ -51,6 +51,8 @@ export default {
         },
 
         // Canvas & Surfaces
+        background: '#f8f9ff',
+        'on-background': '#0b1c30',
         surface: {
           DEFAULT: '#f8f9ff',
           dim: '#cbdbf5',
@@ -61,14 +63,6 @@ export default {
           container: '#e5eeff',
           'container-high': '#dce9ff',
           'container-highest': '#d3e4fe',
-          // Compatibilidad numérica con componentes previos
-          50: '#f8f9ff',
-          100: '#eff4ff',
-          200: '#e5eeff',
-          300: '#cbd5e1',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0b1c30',
         },
         'on-surface': {
           DEFAULT: '#0b1c30',
@@ -83,50 +77,61 @@ export default {
         },
         'surface-tint': '#49607c',
 
-        // Backward compatibility mappings
-        brand: {
-          50: '#eff4ff',
-          100: '#d1e4ff',
-          200: '#b0c9e8',
-          500: '#0f2942',
-          700: '#001428',
-          800: '#001428',
-          900: '#001428',
-          950: '#000c19',
+        error: {
+          DEFAULT: '#ba1a1a',
+          container: '#ffdad6',
         },
-        safe: {
-          50: '#e6fbf2',
-          100: '#82f5c1',
-          500: '#006c4a',
-          600: '#005a3d',
-          700: '#004831',
+        'on-error': {
+          DEFAULT: '#ffffff',
+          container: '#93000a',
         },
-        accent: {
-          50: '#fff8f0',
-          100: '#ffddb8',
-          500: '#f59e0b',
-          600: '#d97706',
-          700: '#b45309',
-        },
+      },
+      spacing: {
+        'space-xs': '0.25rem',
+        'space-sm': '0.5rem',
+        'space-md': '1rem',
+        'space-lg': '1.5rem',
+        'space-xl': '2.5rem',
+        gutter: '1.5rem',
+        'gutter-mobile': '1rem',
+        margin: '2rem',
+        'margin-mobile': '1rem',
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-        display: ['"Plus Jakarta Sans"', 'sans-serif'],
+        'headline-xl': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'headline-lg': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'headline-md': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'headline-sm': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'body-lg': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'body-md': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'body-sm': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'label-lg': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'label-md': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'label-sm': ['"Plus Jakarta Sans"', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
-      borderRadius: {
-        sm: '0.25rem',
-        DEFAULT: '0.5rem',
-        md: '0.75rem',
-        lg: '1rem',
-        xl: '1.5rem',
-        full: '9999px',
+      fontSize: {
+        'headline-xl': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '800' }],
+        'headline-xl-mobile': ['32px', { lineHeight: '40px', letterSpacing: '-0.02em', fontWeight: '800' }],
+        'headline-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.015em', fontWeight: '700' }],
+        'headline-lg-mobile': ['26px', { lineHeight: '34px', letterSpacing: '-0.015em', fontWeight: '700' }],
+        'headline-md': ['24px', { lineHeight: '32px', letterSpacing: '-0.01em', fontWeight: '700' }],
+        'headline-sm': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+        'body-lg': ['18px', { lineHeight: '28px', fontWeight: '400' }],
+        'body-md': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+        'body-sm': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+        'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0.01em', fontWeight: '600' }],
+        'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.02em', fontWeight: '600' }],
+        'label-sm': ['11px', { lineHeight: '14px', letterSpacing: '0.04em', fontWeight: '700' }],
       },
-      boxShadow: {
-        'card-stitch': '0 1px 3px 0 rgba(15, 41, 66, 0.04), 0 1px 2px -1px rgba(15, 41, 66, 0.02)',
-        'hover-stitch': '0 10px 15px -3px rgba(15, 41, 66, 0.08), 0 4px 6px -4px rgba(15, 41, 66, 0.04)',
-        'modal-stitch': '0 20px 25px -5px rgba(15, 41, 66, 0.12), 0 8px 10px -6px rgba(15, 41, 66, 0.06)',
-        'safe-glow': '0 4px 14px 0 rgba(0, 108, 74, 0.35)',
+      borderRadius: {
+        DEFAULT: '0.25rem',
+        lg: '0.5rem',
+        xl: '0.75rem',
+        '2xl': '1rem',
+        '3xl': '1.5rem',
+        full: '9999px',
       },
     },
   },
