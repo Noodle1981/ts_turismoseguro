@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 export interface QuintaItem {
   id: number | string
   title: string
@@ -74,15 +75,13 @@ defineProps<{
     </div>
 
     <div class="px-space-lg pb-space-lg pt-0 flex items-center gap-space-sm">
-      <a
-        :href="`https://wa.me/${quinta.whatsappPhone}?text=Hola,%20vi%20tu%20quinta%20${encodeURIComponent(quinta.title)}%20en%20Turismo%20Seguro%20San%20Juan%20y%20quiero%20consultar%20disponibilidad`"
-        target="_blank"
-        rel="noopener noreferrer"
+      <RouterLink
+        :to="`/quintas/${quinta.id}`"
         class="w-full inline-flex items-center justify-center gap-space-xs py-3 px-space-md rounded-xl bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors font-bold"
       >
         <span class="material-symbols-outlined text-[18px]">info</span>
-        Ver Detalles y WhatsApp
-      </a>
+        Ver Detalles y Cotizar
+      </RouterLink>
       <a
         :href="`https://wa.me/${quinta.whatsappPhone}?text=Hola,%20vi%20tu%20quinta%20${encodeURIComponent(quinta.title)}%20en%20Turismo%20Seguro`"
         target="_blank"

@@ -71,9 +71,17 @@ import { RouterLink } from 'vue-router'
         <nav class="hidden lg:flex items-center gap-space-md">
           <RouterLink
             to="/"
-            class="px-space-sm py-2 transition-colors font-label-lg text-label-lg rounded-lg bg-primary text-on-primary font-bold"
+            class="px-space-sm py-2 transition-colors font-label-lg text-label-lg rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-semibold"
+            active-class="bg-primary text-on-primary font-bold"
           >
             Explorar Quintas
+          </RouterLink>
+          <RouterLink
+            to="/eventos"
+            class="px-space-sm py-2 transition-colors font-label-lg text-label-lg rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-semibold"
+            active-class="bg-primary text-on-primary font-bold"
+          >
+            Eventos &amp; Experiencias
           </RouterLink>
           <a
             href="#protocolo"
