@@ -39,7 +39,7 @@ const eventsData: Record<string, any> = {
   diques: {
     title: 'Diques Ullum & Punta Negra (Ruta Interlagos)',
     badge: 'Náutica & Sunset',
-    description: 'Quintas con bajada a dique, paseos en kayak y solárium panorámico sobre los espejos de agua sanjuaninos.',
+    description: 'Quintas y cabañas con bajada a dique, paseos en kayak y solárium panorámico sobre los espejos de agua sanjuaninos.',
     quintas: [
       {
         id: 4,
@@ -71,7 +71,7 @@ const eventsData: Record<string, any> = {
   villicum: {
     title: 'Autódromo El Villicum (Superbike & TC)',
     badge: 'Deporte Motor',
-    description: 'Quintas en Albardón y Santa Lucía con rápido acceso por Ruta Nacional 40 hacia el circuito.',
+    description: 'Quintas y cabañas en Albardón y Santa Lucía con rápido acceso por Ruta Nacional 40 hacia el circuito.',
     quintas: [
       {
         id: 1,
@@ -137,7 +137,7 @@ const selectTab = (tab: string) => {
             <span class="text-secondary">Experiencias, Grandes Eventos</span> y Estadías Verificadas
           </h1>
           <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mb-space-lg">
-            Conectá el turismo activo de montaña y los festivales emblemáticos con quintas, quinchos y casas de campo inspeccionadas físicamente en los departamentos aledaños. Cero perfiles falsos, trato directo y seña asegurada.
+            Conectá el turismo activo de montaña y los festivales emblemáticos con quintas, cabañas, quinchos y casas de campo inspeccionadas físicamente en los departamentos aledaños. Cero perfiles falsos, trato directo y seña asegurada.
           </p>
         </div>
 
@@ -369,7 +369,7 @@ const selectTab = (tab: string) => {
                 <span class="material-symbols-outlined text-[18px]">info</span> Ver Disponibilidad
               </RouterLink>
               <a
-                :href="`https://wa.me/${q.whatsapp}?text=Hola,%20vi%20tu%20quinta%20para%20el%20evento%20en%20Turismo%20Seguro`"
+                :href="`https://wa.me/${q.whatsapp}?text=Hola,%20vi%20tu%20quinta%20o%20caba%C3%B1a%20para%20el%20evento%20en%20Turismo%20Seguro`"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-12 h-12 shrink-0 rounded-xl bg-secondary text-on-secondary flex items-center justify-center hover:bg-on-secondary-container transition-colors shadow-sm cursor-pointer"

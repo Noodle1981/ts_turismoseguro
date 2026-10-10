@@ -57,7 +57,7 @@ const handleFormSubmit = () => {
           </span>
           <span>Portal Oficial de Autenticación</span>
           <span class="text-outline-variant">•</span>
-          <span class="text-secondary font-label-md text-label-md font-bold">Red de Quintas Seguras San Juan</span>
+          <span class="text-secondary font-label-md text-label-md font-bold">Red de Quintas y Cabañas Seguras San Juan</span>
         </div>
         <div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full shadow-sm">
           <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
@@ -86,7 +86,7 @@ const handleFormSubmit = () => {
                   <span class="font-label-sm text-label-sm text-surface-tint font-bold">Faltan 14/50</span>
                 </div>
                 <h2 class="font-headline-sm text-headline-sm text-on-primary leading-snug font-bold">
-                  Beneficio Lanzamiento: Primeras 50 quintas bonificadas
+                  Beneficio Lanzamiento: Primeras 50 quintas y cabañas bonificadas
                 </h2>
                 <p class="font-body-sm text-body-sm text-primary-fixed mt-1 font-medium">
                   6 meses de suscripción 100% gratis con <strong>inspección técnica presencial in situ</strong> sin costo de traslado.
@@ -148,7 +148,7 @@ const handleFormSubmit = () => {
                       Soy Propietario
                       <span v-if="selectedRole === 'owner'" class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
                     </div>
-                    <p class="font-body-sm text-body-sm text-on-surface-variant leading-tight mt-0.5">Quiero publicar mi quinta o quincho</p>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant leading-tight mt-0.5">Quiero publicar mi quinta, cabaña o quincho</p>
                   </div>
                 </button>
 

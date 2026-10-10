@@ -4,7 +4,7 @@
 <template>
   <footer class="w-full bg-surface-container-low mt-space-xl border-t border-surface-container">
     <div class="max-w-7xl mx-auto px-6 lg:px-12 py-space-xl">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-xl mb-space-xl">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-space-xl mb-space-xl">
         <!-- Col 1: Brand & Certification -->
         <div>
           <div class="flex items-center gap-space-xs mb-space-sm">
@@ -14,24 +14,12 @@
             <span class="font-headline-sm text-headline-sm text-primary font-bold">Turismo Seguro San Juan</span>
           </div>
           <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
-            Plataforma sanjuanina de alquiler temporal para pasar el día. Eliminamos las estafas virtuales mediante auditoría física in situ en cada propiedad.
+            Plataforma sanjuanina de alquiler temporal para pasar el día. Eliminamos las estafas virtuales mediante auditoría física in situ en quintas, cabañas y quinchos.
           </p>
           <div class="inline-flex items-center gap-space-xs bg-surface-container-lowest px-space-sm py-1.5 rounded-full shadow-sm">
             <span class="material-symbols-outlined text-secondary text-[18px]">gpp_good</span>
             <span class="font-label-sm text-label-sm text-on-surface font-bold">Garantía de Seña Segura</span>
           </div>
-        </div>
-
-        <!-- Col 2: Zonas -->
-        <div id="zonas">
-          <div class="font-headline-sm text-headline-sm text-primary font-bold mb-space-sm">Zonas de Alquiler</div>
-          <ul class="space-y-2 text-sm">
-            <li class="font-body-sm text-body-sm text-on-surface-variant">Pocito (Calle 11 a Calle 14, Quinto Cuartel)</li>
-            <li class="font-body-sm text-body-sm text-on-surface-variant">Zonda (Calle Las Moras, Villa Basilio Nievas)</li>
-            <li class="font-body-sm text-body-sm text-on-surface-variant">Ullum (Calle Hermógenes Ruiz, Dique)</li>
-            <li class="font-body-sm text-body-sm text-on-surface-variant">Rawson (Médano de Oro, Calle Ramón Franco)</li>
-            <li class="font-body-sm text-body-sm text-on-surface-variant">Rivadavia &amp; Santa Lucía (Zonas suburbanas)</li>
-          </ul>
         </div>
 
         <!-- Col 3: Seguridad y Legal -->

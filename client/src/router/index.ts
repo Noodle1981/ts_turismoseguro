@@ -4,6 +4,7 @@ import DetalleQuintaView from '../views/DetalleQuintaView.vue'
 import AuthView from '../views/AuthView.vue'
 import ValidadorActaView from '../views/ValidadorActaView.vue'
 import EventosCercanosView from '../views/EventosCercanosView.vue'
+import ExplorarQuintasView from '../views/ExplorarQuintasView.vue'
 
 const routes = [
   {
@@ -12,6 +13,14 @@ const routes = [
     component: HomeView,
     meta: {
       title: 'Turismo Seguro San Juan — Alquileres Diurnos Verificados',
+    },
+  },
+  {
+    path: '/explorar',
+    name: 'explorar',
+    component: ExplorarQuintasView,
+    meta: {
+      title: 'Catálogo de Filtros y Quintas Verificadas — Turismo Seguro San Juan',
     },
   },
   {

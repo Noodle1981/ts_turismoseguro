@@ -1,18 +1,33 @@
 <script setup lang="ts">
+const props = defineProps<{
+  zone: string
+  occasion: string
+  capacity: string
+  shift: string
+  pills?: string[]
+}>()
+
 const emit = defineEmits<{
   (e: 'update:zone', value: string): void
   (e: 'update:occasion', value: string): void
   (e: 'update:capacity', value: string): void
   (e: 'update:shift', value: string): void
+  (e: 'update:pills', value: string[]): void
   (e: 'search'): void
 }>()
 
-defineProps<{
-  zone: string
-  occasion: string
-  capacity: string
-  shift: string
-}>()
+const togglePill = (id: string) => {
+  const current = props.pills || []
+  if (current.includes(id)) {
+    emit('update:pills', current.filter(p => p !== id))
+  } else {
+    emit('update:pills', [...current, id])
+  }
+}
+
+const resetPills = () => {
+  emit('update:pills', [])
+}
 </script>
 
 <template>
@@ -117,11 +132,91 @@ defineProps<{
       </div>
     </form>
 
+    <!-- Quick-Filter Pills Integrados -->
+    <div class="mt-space-md pt-space-sm border-t border-surface-container">
+      <div class="flex items-center justify-between mb-space-xs">
+        <div class="flex items-center gap-space-xs">
+          <span class="material-symbols-outlined text-secondary text-[18px]">filter_list</span>
+          <span class="font-label-sm text-label-sm text-primary font-bold uppercase tracking-wider">Filtros rápidos por comodidades</span>
+        </div>
+        <button
+          v-if="(pills || []).length > 0"
+          type="button"
+          class="font-label-sm text-label-sm text-secondary hover:underline cursor-pointer font-bold"
+          @click="resetPills"
+        >
+          Restablecer filtros
+        </button>
+      </div>
+
+      <div class="flex items-center gap-space-sm overflow-x-auto pb-1 scrollbar-none">
+        <button
+          type="button"
+          :class="[
+            'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
+            (pills || []).includes('fence') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
+          ]"
+          @click="togglePill('fence')"
+        >
+          <span class="material-symbols-outlined text-[15px]" :class="(pills || []).includes('fence') ? 'text-secondary-fixed' : 'text-secondary'">fence</span>
+          Piscina con cerca de seguridad (niños)
+        </button>
+
+        <button
+          type="button"
+          :class="[
+            'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
+            (pills || []).includes('grill') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
+          ]"
+          @click="togglePill('grill')"
+        >
+          <span class="material-symbols-outlined text-[15px]" :class="(pills || []).includes('grill') ? 'text-secondary-fixed' : 'text-secondary'">outdoor_grill</span>
+          Parrilla techada con mesada
+        </button>
+
+        <button
+          type="button"
+          :class="[
+            'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
+            (pills || []).includes('kitchen') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
+          ]"
+          @click="togglePill('kitchen')"
+        >
+          <span class="material-symbols-outlined text-[15px]" :class="(pills || []).includes('kitchen') ? 'text-secondary-fixed' : 'text-secondary'">kitchen</span>
+          Freezer / Heladera amplia
+        </button>
+
+        <button
+          type="button"
+          :class="[
+            'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
+            (pills || []).includes('park') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
+          ]"
+          @click="togglePill('park')"
+        >
+          <span class="material-symbols-outlined text-[15px]" :class="(pills || []).includes('park') ? 'text-secondary-fixed' : 'text-secondary'">park</span>
+          Parque con sombra natural
+        </button>
+
+        <button
+          type="button"
+          :class="[
+            'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
+            (pills || []).includes('car') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
+          ]"
+          @click="togglePill('car')"
+        >
+          <span class="material-symbols-outlined text-[15px]" :class="(pills || []).includes('car') ? 'text-secondary-fixed' : 'text-secondary'">directions_car</span>
+          Cochera para +5 autos
+        </button>
+      </div>
+    </div>
+
     <!-- Search Submit Row -->
-    <div class="mt-space-md pt-space-sm flex flex-col sm:flex-row items-center justify-between gap-space-md">
+    <div class="mt-space-md pt-space-sm flex flex-col sm:flex-row items-center justify-between gap-space-md border-t border-surface-container">
       <div class="flex items-center gap-space-xs text-on-surface-variant">
         <span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
-        <span class="font-body-sm text-body-sm">48 quintas auditadas disponibles para el próximo fin de semana</span>
+        <span class="font-body-sm text-body-sm">48 quintas y cabañas auditadas disponibles para el próximo fin de semana</span>
       </div>
       <button
         type="button"
@@ -129,7 +224,7 @@ defineProps<{
         @click="emit('search')"
       >
         <span class="material-symbols-outlined text-[20px]">search</span>
-        Buscar Quintas Verificadas
+        Buscar Quintas y Cabañas Verificadas
       </button>
     </div>
   </div>
