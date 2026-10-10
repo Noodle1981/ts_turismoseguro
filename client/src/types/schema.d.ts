@@ -48,6 +48,105 @@ export interface components {
                 cache?: string;
             };
         };
+        Department: {
+            /** @example 1 */
+            id: number;
+            /** @example Calingasta */
+            name: string;
+            /** @example calingasta */
+            slug: string;
+            /** @example Tierra de la Cordillera de los Andes, Barreal y astronomía. */
+            description?: string | null;
+            /** @example storage/img/departamentos/calingasta.jpg */
+            hero_image?: string | null;
+            /** @example true */
+            is_active?: boolean;
+        };
+        PropertyImage: {
+            /** @example 1 */
+            id: number;
+            /** @example storage/img/propiedades/medanopileta.jpg */
+            image_path: string;
+            /** @example Piscina y solarium */
+            caption?: string | null;
+            /** @example true */
+            is_primary?: boolean;
+        };
+        Property: {
+            /** @example 123 */
+            id: number;
+            /** @example Refréscate en el Medanito de Rawson */
+            title: string;
+            /** @example refrescate-en-el-medanito-de-rawson */
+            slug: string;
+            /** @example Quinta con Piscina */
+            property_type: string;
+            /** @example Rawson, San Juan */
+            location: string;
+            address?: string | null;
+            /** @example Disfruta de un día de pileta y relax... */
+            description?: string;
+            /** @example 25000 */
+            price: number;
+            /** @example por día */
+            price_type: string;
+            /** @example 15 */
+            capacity: number;
+            /** @example 0 */
+            bedrooms?: number;
+            /** @example 2 */
+            bathrooms?: number;
+            /** @example +54 9 264 456-7890 */
+            host_whatsapp?: string | null;
+            /**
+             * @example verified
+             * @enum {string}
+             */
+            verification_status: "pending" | "assigned" | "in_review" | "verified" | "rejected";
+            /**
+             * @example published
+             * @enum {string}
+             */
+            publication_status: "draft" | "published" | "archived" | "paused";
+            /** Format: date-time */
+            verified_at?: string | null;
+            /** @example TS-RAW-2026-081 */
+            verification_certificate_number?: string | null;
+            verified_facade_image?: string | null;
+            /** @example true */
+            featured?: boolean;
+            department?: components["schemas"]["Department"];
+            images?: components["schemas"]["PropertyImage"][];
+            amenities?: string[];
+        };
+        Experience: {
+            /** @example 101 */
+            id: number;
+            /** @example Tour de las Estrellas en El Leoncito */
+            title: string;
+            /** @example tour-de-las-estrellas-en-el-leoncito */
+            slug: string;
+            /** @example Astronomía */
+            category: string;
+            /** @example Barreal, Calingasta */
+            main_location: string;
+            /** @example 12000 */
+            price_per_person: number;
+            /** @example 3-4 horas (nocturno) */
+            duration: string;
+            /** @example Una noche mágica bajo uno de los cielos más limpios... */
+            short_description?: string;
+            long_description?: string;
+            /** @example AstroTours San Juan */
+            operator_name: string;
+            /** @example +54 9 264 123-4567 */
+            operator_whatsapp?: string;
+            operator_email?: string | null;
+            /** @example true */
+            is_verified: boolean;
+            /** @example true */
+            featured?: boolean;
+        };
         ErrorResponse: {
             /** @example Ocurrió un error inesperado al procesar la solicitud. */
             message: string;

@@ -97,6 +97,197 @@ components:
               type: string
               example: "connected"
 
+    Department:
+      type: object
+      required:
+        - id
+        - name
+        - slug
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Calingasta"
+        slug:
+          type: string
+          example: "calingasta"
+        description:
+          type: string
+          nullable: true
+          example: "Tierra de la Cordillera de los Andes, Barreal y astronomía."
+        hero_image:
+          type: string
+          nullable: true
+          example: "storage/img/departamentos/calingasta.jpg"
+        is_active:
+          type: boolean
+          example: true
+
+    PropertyImage:
+      type: object
+      required:
+        - id
+        - image_path
+      properties:
+        id:
+          type: integer
+          example: 1
+        image_path:
+          type: string
+          example: "storage/img/propiedades/medanopileta.jpg"
+        caption:
+          type: string
+          nullable: true
+          example: "Piscina y solarium"
+        is_primary:
+          type: boolean
+          example: true
+
+    Property:
+      type: object
+      required:
+        - id
+        - title
+        - slug
+        - property_type
+        - location
+        - price
+        - price_type
+        - capacity
+        - verification_status
+        - publication_status
+      properties:
+        id:
+          type: integer
+          example: 123
+        title:
+          type: string
+          example: "Refréscate en el Medanito de Rawson"
+        slug:
+          type: string
+          example: "refrescate-en-el-medanito-de-rawson"
+        property_type:
+          type: string
+          example: "Quinta con Piscina"
+        location:
+          type: string
+          example: "Rawson, San Juan"
+        address:
+          type: string
+          nullable: true
+        description:
+          type: string
+          example: "Disfruta de un día de pileta y relax..."
+        price:
+          type: integer
+          example: 25000
+        price_type:
+          type: string
+          example: "por día"
+        capacity:
+          type: integer
+          example: 15
+        bedrooms:
+          type: integer
+          example: 0
+        bathrooms:
+          type: integer
+          example: 2
+        host_whatsapp:
+          type: string
+          nullable: true
+          example: "+54 9 264 456-7890"
+        verification_status:
+          type: string
+          example: "verified"
+          enum: [pending, assigned, in_review, verified, rejected]
+        publication_status:
+          type: string
+          example: "published"
+          enum: [draft, published, archived, paused]
+        verified_at:
+          type: string
+          format: date-time
+          nullable: true
+        verification_certificate_number:
+          type: string
+          nullable: true
+          example: "TS-RAW-2026-081"
+        verified_facade_image:
+          type: string
+          nullable: true
+        featured:
+          type: boolean
+          example: true
+        department:
+          $ref: '#/components/schemas/Department'
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyImage'
+        amenities:
+          type: array
+          items:
+            type: string
+            example: "Piscina"
+
+    Experience:
+      type: object
+      required:
+        - id
+        - title
+        - slug
+        - category
+        - main_location
+        - price_per_person
+        - duration
+        - operator_name
+        - is_verified
+      properties:
+        id:
+          type: integer
+          example: 101
+        title:
+          type: string
+          example: "Tour de las Estrellas en El Leoncito"
+        slug:
+          type: string
+          example: "tour-de-las-estrellas-en-el-leoncito"
+        category:
+          type: string
+          example: "Astronomía"
+        main_location:
+          type: string
+          example: "Barreal, Calingasta"
+        price_per_person:
+          type: integer
+          example: 12000
+        duration:
+          type: string
+          example: "3-4 horas (nocturno)"
+        short_description:
+          type: string
+          example: "Una noche mágica bajo uno de los cielos más limpios..."
+        long_description:
+          type: string
+        operator_name:
+          type: string
+          example: "AstroTours San Juan"
+        operator_whatsapp:
+          type: string
+          example: "+54 9 264 123-4567"
+        operator_email:
+          type: string
+          nullable: true
+        is_verified:
+          type: boolean
+          example: true
+        featured:
+          type: boolean
+          example: true
+
     ErrorResponse:
       type: object
       required:

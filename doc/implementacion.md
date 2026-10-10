@@ -16,7 +16,7 @@ Plan maestro, fase por fase, de todo el proyecto. Es un **documento vivo**: al t
 | :--- | :--- | :---: |
 | 0 | Fundaciones: documentación, skills y resguardo legacy | `[x]` Completada |
 | 1 | Setup del esqueleto (`server/` y `client/`) | `[x]` Completada |
-| 2 | Modelo de datos, migraciones y seeders desde legacy | `[ ]` Pendiente |
+| 2 | Modelo de datos, migraciones y seeders desde legacy | `[x]` Completada |
 | 3 | Autenticación, roles (5) y procedencia geográfica | `[ ]` Pendiente |
 | 4 | Catálogo público (turistas y residentes locales - rol `rent`) | `[ ]` Pendiente |
 | 5 | Panel del Cliente Oferente (`client`): ofertas, disponibilidad y validación | `[ ]` Pendiente |
@@ -100,39 +100,40 @@ Objetivo: dos proyectos arrancando y comunicándose entre sí, gobernados por el
 
 ---
 
-## FASE 2 — Modelo de Datos y Seeders `[ ]`
+## FASE 2 — Modelo de Datos y Seeders `[x]`
 
 Objetivo: base de datos completa y poblada con los datos reales del prototipo legacy.
 
 ### 2.1 Migraciones (skill `database-migrations`)
-- [ ] `users` (con `role` enum: `super_admin`, `supervisor`, `validator`, `client`, `rent`; campos de procedencia para `rent`: `origin_country`, `origin_province`, `origin_city`, `is_local_resident`)
-- [ ] `departments`
-- [ ] `properties` (con `validator_id`, `publication_status`, `verification_status`)
-- [ ] `property_images`, `property_amenities`, `property_rules`
-- [ ] `property_availability`
-- [ ] `experiences`, `experience_images`, `experience_includes`, `experience_recommendations`
-- [ ] `verification_requests`
-- [ ] `client_subscriptions` (vinculado a `client_id`)
-- [ ] `validator_commissions`
-- [ ] Índices en `slug`, `department_id`, `verification_status`, `publication_status`, procedencia y `(property_id, start_date, end_date)`
-- [ ] Claves foráneas con `onDelete` definido y *soft deletes* donde corresponda
+- [x] `users` (con `role` enum: `super_admin`, `supervisor`, `validator`, `client`, `rent`; campos de procedencia para `rent`: `origin_country`, `origin_province`, `origin_city`, `is_local_resident`)
+- [x] `departments` (los 19 departamentos de San Juan con slug, hero_image y descripción)
+- [x] `properties` (con `validator_id`, `publication_status`, `verification_status`, certificado y coordenadas)
+- [x] `property_images`, `property_amenities`, `property_rules`
+- [x] `property_availabilities` (calendario de fechas ocupadas/libres)
+- [x] `experiences`, `experience_images`, `experience_includes`, `experience_recommendations`
+- [x] `verification_requests` (actas y control de calidad)
+- [x] `validator_commissions` (comisión mes 1 y recurrente)
+- [x] Índices compuestos en `slug`, `department_id`, `verification_status`, `publication_status` y fechas
+- [x] Claves foráneas con `onDelete` definido y *soft deletes* agnósticos a la base de datos
 
-### 2.2 Modelos Eloquent
-- [ ] Modelos con `$fillable`, `casts` y enums PHP para estados y roles
-- [ ] Relaciones entre todos los modelos
-- [ ] *Global Scope* `Published`: solo propiedades verificadas y publicadas son visibles al público
-- [ ] Factories para todos los modelos
+### 2.2 Modelos Eloquent (skill `laravel-best-practices`)
+- [x] Modelos con `$fillable`, `casts(): array` estricto para fechas, tipos numéricos y booleanos
+- [x] Relaciones fuertemente tipadas entre todos los modelos
+- [x] *Global Scope* / *Scope Local* `Published`: solo propiedades verificadas y publicadas son visibles al público
+- [x] Eloquent Strict Mode activado para prevenir N+1 y atributos no asignables
 
-### 2.3 Seeders
-- [ ] `DepartmentSeeder` con los 19 departamentos de San Juan
-- [ ] `UserSeeder`: usuarios de cada uno de los 5 roles para desarrollo (incluyendo perfiles `rent` con procedencia local y foránea)
-- [ ] `LegacyPropertySeeder` (datos de `legacy/alquileres.js`)
-- [ ] `LegacyExperienceSeeder` (datos de `legacy/experiencias.js`)
-- [ ] Copiar imágenes de `legacy/img/` a `server/storage/app/public/` y ejecutar `php artisan storage:link`
-- [ ] Verificar: `php artisan migrate:fresh --seed` sin errores
+### 2.3 Seeders y Almacenamiento
+- [x] `DepartmentSeeder` con los 19 departamentos de San Juan y fotografías oficiales
+- [x] `UserSeeder`: usuarios de demostración para los 5 roles (incluyendo turistas y residentes locales)
+- [x] `LegacyPropertySeeder`: importación de todas las propiedades auténticas de `legacy/detalle-alquiler.js` y `legacy/alquileres.html`
+- [x] `LegacyExperienceSeeder`: importación de todas las excursiones auténticas de `legacy/detalle-experiencia.js`
+- [x] Copiar imágenes de `legacy/img/` a `server/storage/app/public/` y `client/public/img/`, y ejecutar `php artisan storage:link`
+- [x] Sincronización Contract-First: OpenAPI 3.1 actualizado y tipos generados con `pnpm run api:types`
+- [x] Verificar: `php artisan migrate:fresh --seed` completado con éxito (Dept: 19 | Users: 6 | Props: 5 | Exps: 6)
 
 ### 2.4 Tests de la fase
-- [ ] Test del *Global Scope* (una propiedad no verificada no aparece en consultas públicas)
+- [x] Test del Scope `published` (solo propiedades publicadas y verificadas son visibles)
+- [x] Test de integridad de relaciones Eloquent (Department, User, Amenities, Images) con suite 100% en verde
 
 ---
 

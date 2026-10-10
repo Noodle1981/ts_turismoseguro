@@ -13,10 +13,18 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('name', 150);
+            $table->string('email', 191)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('role', 30)->default('rent')->index(); // super_admin, supervisor, validator, client, rent
+            $table->string('phone', 30)->nullable();
+            // Procedencia geográfica (rol rent: turistas o locales de San Juan)
+            $table->string('origin_country', 100)->nullable();
+            $table->string('origin_province', 100)->nullable();
+            $table->string('origin_city', 100)->nullable();
+            $table->boolean('is_local_resident')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });
