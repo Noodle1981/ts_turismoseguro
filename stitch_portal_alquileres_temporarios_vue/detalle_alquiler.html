@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- El título se cargará dinámicamente con JS -->
+    <title>Detalle del Alquiler - Turismo Seguro San Juan</title> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="detalle-alquiler.css"> <!-- CSS específico para esta página -->
+</head>
+<body>
+
+    <!-- Navbar (Igual que en otras páginas, ajusta enlaces activos si es necesario) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+        <!-- ... tu navbar ... -->
+    </nav>
+
+    <main class="container mt-5 pt-5">
+        <div class="row">
+            <div class="col-lg-8" id="property-details-main">
+                <!-- Título del Alquiler -->
+                <h1 class="mb-3" id="propertyTitle">Cargando nombre del alquiler...</h1>
+                <p class="text-muted mb-4"><i class="fas fa-map-marker-alt me-1"></i> <span id="propertyLocation">Cargando ubicación...</span></p>
+
+                <!-- Galería de Imágenes (Carrusel Bootstrap) -->
+                <div id="propertyImageCarousel" class="carousel slide shadow-sm mb-4" data-bs-ride="carousel">
+                    <div class="carousel-indicators" id="carouselIndicators">
+                        <!-- Indicadores se cargarán con JS -->
+                    </div>
+                    <div class="carousel-inner" id="carouselInner">
+                        <!-- Imágenes se cargarán con JS -->
+                        <div class="carousel-item active">
+                            <img src="https://via.placeholder.com/800x500/cccccc/000000?text=Cargando+Imagen+1" class="d-block w-100 rounded" alt="Imagen 1 del alquiler">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#propertyImageCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#propertyImageCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+                
+                <!-- Descripción -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Descripción</h4>
+                        <p id="propertyDescription">Cargando descripción detallada...</p>
+                    </div>
+                </div>
+
+                <!-- Características y Comodidades -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Características y Comodidades</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-bed fa-fw me-2 text-primary"></i> Habitaciones: <span id="propertyBedrooms">...</span></li>
+                                    <li><i class="fas fa-bath fa-fw me-2 text-primary"></i> Baños: <span id="propertyBathrooms">...</span></li>
+                                    <li><i class="fas fa-users fa-fw me-2 text-primary"></i> Capacidad: <span id="propertyCapacity">...</span> personas</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <strong class="d-block mb-2">Comodidades Incluidas:</strong>
+                                <ul class="list-unstyled" id="propertyAmenities">
+                                    <!-- Comodidades se cargarán con JS, ej: <li><i class="fas fa-wifi"></i> WiFi</li> -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mapa (Placeholder) -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Ubicación</h4>
+                        <div id="propertyMap" style="height: 300px; background-color: #e9ecef;" class="text-center d-flex align-items-center justify-content-center rounded">
+                            <p class="text-muted">Mapa de la ubicación se mostrará aquí.</p>
+                            <!-- A futuro: <iframe src="URL_GOOGLE_MAPS_EMBED"></iframe> -->
+                        </div>
+                    </div>
+                </div>
+                 <!-- Reglas de la Casa (Opcional) -->
+                <div class="card shadow-sm mb-4" id="propertyRulesCard" style="display:none;">
+                    <div class="card-body">
+                        <h4 class="card-title">Reglas de la Casa</h4>
+                        <ul id="propertyRulesList">
+                            <!-- Reglas se cargarán con JS -->
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Columna Lateral (Precio, Reserva/Contacto) -->
+            <aside class="col-lg-4" id="property-sidebar">
+                <div class="card shadow-sm sticky-top" style="top: 100px;">
+                    <div class="card-body">
+                        <h3 class="card-title price text-primary mb-1" id="propertyPrice">$0 <span class="fs-6 text-muted">/noche</span></h3>
+                        <p class="text-muted small mb-3">Impuestos y tasas pueden aplicar.</p>
+                        
+                        <div class="alert alert-success d-flex align-items-center" role="alert">
+                           <i class="fas fa-shield-alt fa-2x me-3"></i>
+                           <div>
+                               <strong>Verificado por Turismo Seguro</strong><br>
+                               Esta propiedad y su anfitrión han sido validados por nuestro equipo.
+                           </div>
+                        </div>
+
+                        <h5 class="mt-4">Consultar Disponibilidad</h5>
+                        <form id="bookingForm">
+                            <div class="mb-3">
+                                <label for="checkinDate" class="form-label">Fecha de Llegada</label>
+                                <input type="date" class="form-control" id="checkinDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="checkoutDate" class="form-label">Fecha de Salida</label>
+                                <input type="date" class="form-control" id="checkoutDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="guestCount" class="form-label">Huéspedes</label>
+                                <input type="number" class="form-control" id="guestCount" min="1" value="1" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 btn-lg">Enviar Consulta</button>
+                            <div id="formBookingMessage" class="mt-3"></div>
+                        </form>
+                        <hr>
+                        <p class="text-center">¿Prefieres contacto directo?</p>
+                        <a href="#" id="contactHostWhatsapp" class="btn btn-success w-100 mb-2" target="_blank" style="display:none;"><i class="fab fa-whatsapp me-2"></i> Contactar por WhatsApp</a>
+                        <a href="#" id="contactHostPhone" class="btn btn-outline-secondary w-100" style="display:none;"><i class="fas fa-phone me-2"></i> Llamar al Anfitrión</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer (Igual que en otras páginas) -->
+    <footer class="py-4 bg-dark text-white mt-5">
+        <!-- ... tu footer ... -->
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="detalle-alquiler.js"></script> <!-- JS específico para esta página -->
+</body>
+</html>

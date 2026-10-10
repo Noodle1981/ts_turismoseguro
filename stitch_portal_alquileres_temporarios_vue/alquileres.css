@@ -1,0 +1,76 @@
+/* alquileres.css */
+
+body {
+    background-color: #f8f9fa; /* Un fondo ligeramente diferente para la página de listados */
+}
+
+#filters-sidebar .filters-card {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    position: sticky; /* Para que los filtros queden fijos al hacer scroll en la lista */
+    top: 100px;      /* Ajusta este valor según la altura de tu navbar + padding */
+    max-height: calc(100vh - 120px); /* Evita que sea más alto que la ventana */
+    overflow-y: auto; /* Scroll si los filtros son muchos */
+}
+
+#listings-area .card.listing-card {
+    /* Puedes mantener los mismos estilos de listing-card de tu style.css 
+       o añadir especificidades si es necesario */
+}
+
+/* Pequeños ajustes para el responsive de la sidebar */
+@media (max-width: 767.98px) { /* Para md y sm */
+    #filters-sidebar .filters-card {
+        position: static; /* En móvil, la sidebar no es sticky */
+        margin-bottom: 2rem;
+    }
+}
+
+/* Para las tarjetas de alquiler (puedes usar los de style.css o definirlos aquí si quieres aislarlos) */
+.listing-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+}
+.listing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.listing-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+.listing-card .price {
+    font-weight: bold;
+}
+.list-inline-item-separated:not(:last-child)::after {
+    content: "•";
+    margin-left: 0.5rem;
+    margin-right: 0.25rem;
+    color: var(--secondary-color);
+}
+.listing-badge-verified {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(25, 135, 84, 0.9);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 0.25rem;
+    font-size: 0.8em;
+    font-weight: 600;
+    z-index: 10;
+}
+.listing-badge-verified i {
+    margin-right: 5px;
+}
+
+.card.h-100 .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.card.h-100 .card-body .btn {
+    margin-top: auto;
+}

@@ -1,8 +1,13 @@
 ---
 name: ui-ux-pro-max
-description: UI/UX design intelligence. 50 styles, 21 palettes, 50 font pairings, 20 charts, 9 stacks.
+description: CONSULTA Y ASESORÍA UI/UX BAJO DEMANDA EXCLUSIVA. Esta skill SOLO debe activarse cuando el usuario lo solicite expresamente para realizar consultas específicas. Tiene ESTRICTAMENTE PROHIBIDO tomar decisiones de diseño o alterar la versión de diseño oficial definida por la skill 'visual' (San Juan Verificado / Stitch).
 ---
-# ui-ux-pro-max
+# ui-ux-pro-max (MODO ASESOR BAJO DEMANDA)
+
+> ⚠️ **REGLA DE ORO DE GOBERNANZA:**
+> Esta skill NO DECIDE NADA sobre la versión ni el sistema de diseño oficial del proyecto.
+> El sistema de diseño canónico está 100% definido y gobernado por la skill `visual` (`.agents/skills/visual/SKILL.md`) y el design system de Stitch (`san_juan_verificado/DESIGN.md`).
+> Esta skill actúa ÚNICAMENTE como catálogo de referencia y asistente de consulta cuando el usuario pida expresamente una recomendación puntual. NUNCA debe alterar la paleta, tipografías (Plus Jakarta Sans) ni los tokens oficiales.
 
 Comprehensive design guide for web and mobile applications. Contains 67 styles, 96 color palettes, 57 font pairings, 99 UX guidelines, and 25 chart types across 13 technology stacks. Searchable database with priority-based recommendations.
 
