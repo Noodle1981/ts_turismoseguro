@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import TheNavbar from './components/layout/TheNavbar.vue'
-import TheFooter from './components/layout/TheFooter.vue'
+import AppHeader from './components/layout/AppHeader.vue'
+import AppFooter from './components/layout/AppFooter.vue'
 </script>
 
 <template>
   <div class="min-h-screen flex flex-col bg-background text-on-surface antialiased">
-    <TheNavbar />
+    <AppHeader />
     <RouterView />
-    <TheFooter />
+    <AppFooter />
   </div>
 </template>

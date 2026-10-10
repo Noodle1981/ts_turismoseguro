@@ -1,20 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
-import { useAuth } from '../../composables/useAuth'
-
-const router = useRouter()
-const { user, isAuthenticated, logout } = useAuth()
-
-const isUserMenuOpen = ref(false)
-const isMobileMenuOpen = ref(false)
-
-const handleLogout = async () => {
-  isUserMenuOpen.value = false
-  isMobileMenuOpen.value = false
-  await logout()
-  router.push('/login')
-}
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
@@ -52,13 +37,13 @@ const handleLogout = async () => {
           </span>
         </div>
         <div class="hidden md:flex items-center gap-space-sm mx-auto md:mx-0">
-          <RouterLink
-            to="/register-client"
+          <a
+            href="#anfitriones"
             class="inline-flex items-center gap-1 text-label-sm font-label-sm bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1 rounded-full font-bold hover:bg-surface-bright transition-colors"
           >
             <span class="material-symbols-outlined text-[15px]">bolt</span>
             Aprovechar Cupo
-          </RouterLink>
+          </a>
         </div>
       </div>
     </div>
@@ -86,25 +71,28 @@ const handleLogout = async () => {
         <nav class="hidden lg:flex items-center gap-space-md">
           <RouterLink
             to="/"
-            class="px-space-sm py-2 transition-colors font-label-lg text-label-lg rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container"
-            active-class="bg-primary text-on-primary hover:bg-primary-container hover:text-on-primary"
+            class="px-space-sm py-2 transition-colors font-label-lg text-label-lg rounded-lg bg-primary text-on-primary font-bold"
           >
             Explorar Quintas
           </RouterLink>
-          <RouterLink
-            to="/alquileres"
-            class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container px-space-sm py-2 rounded-lg transition-colors"
-            active-class="bg-primary text-on-primary hover:bg-primary-container hover:text-on-primary"
+          <a
+            href="#protocolo"
+            class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container px-space-sm py-2 rounded-lg transition-colors font-semibold"
           >
-            Zonas y Quintas
-          </RouterLink>
-          <RouterLink
-            to="/experiencias"
-            class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container px-space-sm py-2 rounded-lg transition-colors"
-            active-class="bg-primary text-on-primary hover:bg-primary-container hover:text-on-primary"
+            Cómo Validamos
+          </a>
+          <a
+            href="#zonas"
+            class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container px-space-sm py-2 rounded-lg transition-colors font-semibold"
           >
-            Experiencias &amp; FNS
-          </RouterLink>
+            Zonas
+          </a>
+          <a
+            href="#anfitriones"
+            class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container px-space-sm py-2 rounded-lg transition-colors font-semibold"
+          >
+            Solicitar Inspección
+          </a>
           <a
             href="https://wa.me/5492644000000?text=Hola,%20deseo%20contactar%20a%20un%20validador"
             target="_blank"
@@ -118,63 +106,21 @@ const handleLogout = async () => {
 
         <!-- Right Buttons -->
         <div class="flex items-center gap-space-sm">
-          <RouterLink
-            to="/register-client"
+          <a
+            href="#anfitriones"
             class="hidden sm:inline-flex items-center justify-center font-label-md text-label-md px-space-md py-2.5 rounded-lg bg-primary text-on-primary hover:bg-primary-container transition-colors font-bold shadow-xs"
           >
             Publicar Quinta
-          </RouterLink>
-
-          <template v-if="!isAuthenticated">
-            <RouterLink
-              to="/login"
-              class="inline-flex items-center gap-1.5 font-label-md text-label-md px-space-md py-2.5 rounded-lg bg-surface-container hover:bg-surface-dim text-on-surface transition-colors shadow-xs font-bold"
-            >
-              <span class="material-symbols-outlined text-[18px] text-secondary">login</span>
-              <span>Iniciar Sesión</span>
-            </RouterLink>
-          </template>
-
-          <template v-else>
-            <div class="relative">
-              <button
-                type="button"
-                class="flex items-center gap-2 px-3 py-2 rounded-xl bg-surface-container hover:bg-surface-dim text-on-surface font-label-md text-label-md font-bold cursor-pointer transition-colors"
-                @click="isUserMenuOpen = !isUserMenuOpen"
-              >
-                <div class="w-7 h-7 rounded-lg bg-primary text-secondary-fixed flex items-center justify-center font-bold text-xs uppercase">
-                  {{ user?.name?.charAt(0) || 'U' }}
-                </div>
-                <span>{{ user?.name }}</span>
-                <span class="material-symbols-outlined text-[18px]">expand_more</span>
-              </button>
-
-              <div
-                v-if="isUserMenuOpen"
-                class="absolute right-0 mt-2 w-52 bg-surface-container-lowest rounded-xl shadow-xl border border-surface-container py-2 z-50 text-xs"
-              >
-                <div class="px-3 py-1.5 border-b border-surface-container">
-                  <p class="font-bold text-on-surface truncate">{{ user?.email }}</p>
-                </div>
-                <RouterLink
-                  v-if="user?.role === 'client' || user?.role === 'super_admin'"
-                  to="/panel/cliente"
-                  class="block px-3 py-2 font-bold text-on-surface hover:bg-surface-container"
-                  @click="isUserMenuOpen = false"
-                >
-                  Panel del Anfitrión
-                </RouterLink>
-                <button
-                  type="button"
-                  class="w-full text-left px-3 py-2 font-bold text-red-600 hover:bg-red-50 flex items-center gap-1.5 cursor-pointer"
-                  @click="handleLogout"
-                >
-                  <span class="material-symbols-outlined text-[16px]">logout</span>
-                  Cerrar Sesión
-                </button>
-              </div>
-            </div>
-          </template>
+          </a>
+          <a
+            href="https://wa.me/5492644000000?text=Hola,%20deseo%20validar%20mi%20quinta"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 font-label-md text-label-md px-space-md py-2.5 rounded-lg bg-surface-container hover:bg-surface-dim text-on-surface transition-colors shadow-xs font-bold"
+          >
+            <span class="material-symbols-outlined text-[18px] text-secondary">verified</span>
+            <span>Validar</span>
+          </a>
         </div>
       </div>
     </header>

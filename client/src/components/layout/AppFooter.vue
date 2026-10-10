@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
 </script>
 
 <template>
@@ -24,7 +23,7 @@ import { RouterLink } from 'vue-router'
         </div>
 
         <!-- Col 2: Zonas -->
-        <div>
+        <div id="zonas">
           <div class="font-headline-sm text-headline-sm text-primary font-bold mb-space-sm">Zonas de Alquiler</div>
           <ul class="space-y-2 text-sm">
             <li class="font-body-sm text-body-sm text-on-surface-variant">Pocito (Calle 11 a Calle 14, Quinto Cuartel)</li>
@@ -36,7 +35,7 @@ import { RouterLink } from 'vue-router'
         </div>
 
         <!-- Col 3: Seguridad y Legal -->
-        <div>
+        <div id="protocolo">
           <div class="font-headline-sm text-headline-sm text-primary font-bold mb-space-sm">Seguridad y Legal</div>
           <ul class="space-y-2 text-sm">
             <li>
@@ -55,9 +54,9 @@ import { RouterLink } from 'vue-router'
               </a>
             </li>
             <li>
-              <RouterLink to="/register-client" class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors">
+              <a href="#anfitriones" class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors">
                 Registro Oficial de Propietarios
-              </RouterLink>
+              </a>
             </li>
           </ul>
         </div>

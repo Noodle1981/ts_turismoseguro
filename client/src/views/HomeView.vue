@@ -1,21 +1,16 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
-import { useCatalog } from '../composables/useCatalog'
-import type { Property, Department } from '../types/catalog'
+import { ref, computed } from 'vue'
+import FiltroDepartamentos from '../components/quintas/FiltroDepartamentos.vue'
+import CardQuintaDiurna from '../components/quintas/CardQuintaDiurna.vue'
+import type { QuintaItem } from '../components/quintas/CardQuintaDiurna.vue'
 
-const { getProperties, getDepartments } = useCatalog()
-
-const properties = ref<Property[]>([])
-const departments = ref<Department[]>([])
-
-// Buscador Stitch
+// Estado del buscador extraído
 const searchZone = ref('todos')
 const searchOccasion = ref('quinta-pileta')
 const searchCapacity = ref('20-40')
 const searchShift = ref('dia-completo')
 
-// Calculador Estimativo Stitch
+// Calculadora de asistentes
 const guestCount = ref(25)
 const baseDailyRate = 45000
 
@@ -31,7 +26,7 @@ const decrementGuests = () => {
   if (guestCount.value > 10) guestCount.value -= 5
 }
 
-// Filtros rápidos activos
+// Filtros rápidos
 const activePills = ref<string[]>(['fence'])
 const togglePill = (id: string) => {
   if (activePills.value.includes(id)) {
@@ -45,25 +40,68 @@ const resetPills = () => {
   activePills.value = []
 }
 
-onMounted(async () => {
-  try {
-    const [propsRes, deptsRes] = await Promise.all([
-      getProperties({ page: 1 }),
-      getDepartments(),
-    ])
-    properties.value = propsRes.data
-    departments.value = deptsRes
-  } catch (err) {
-    console.error('Error al cargar datos:', err)
-  }
-})
+// Quintas oficiales de Stitch
+const quintas: QuintaItem[] = [
+  {
+    id: 1,
+    title: 'Quinta Los Olivos',
+    location: 'El Medanito, Rawson',
+    price: 45000,
+    priceFormatted: '$45.000',
+    shift: 'día (10:00 a 20:00 hs)',
+    capacity: 25,
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCFE8VNKwk6C-6laXIn64SOPW1ZYffatwwjHBr2RNecI7Gf49w0OyzheH8aK9DIobLdIn4W35_NN33g4fMHjlQ0QcL7uHBmf4uRFRViMuNahLbAe9SepGVFsLndtDM7a7mQ2gshqkerWImCWWnyzz1T5kCGwtJDYRmRM5pHS9i1AWfMh8i_IrGmOHfC__cUP2bFmIZnCi_rwLs_2280LksARH0G4JmNHrcIRoIzScDnaGiBEsiZZOmk',
+    amenities: ['Pileta 8x4m cercada', 'Quincho cerrado 60m²', '2 Freezers grandes', 'Parrilla doble'],
+    whatsappPhone: '5492644111222',
+  },
+  {
+    id: 2,
+    title: 'La Posada del Valle',
+    location: 'Valle de Zonda',
+    price: 55000,
+    priceFormatted: '$55.000',
+    shift: 'día (11:00 a 21:00 hs)',
+    capacity: 30,
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDRpm0tRCyFxkTL09ItJSDkIOwkwNPf2S4StWzAOhZtrO9PX-w3GysmFiXgOZYKLIw4_baYSO4EJvtHq0OUXD_u-FCo0krxmFwI1dedCnKXMAdYwxUB8YfNuimCzZMg2WZkDj9GZ6elPAWN-bLYu7y2UPeGlnETL4y94IdPWDKEhD3EwPzDyVoFS7qHRL9wAYpkujJUcq9qtghigFGsuJxtjzNI8VCzOc6XadX6c1-u8JmT5MBco4HV',
+    amenities: ['Pileta con solárium', 'Galería techada', 'Vistas a la sierra', 'Horno de barro'],
+    whatsappPhone: '5492644222333',
+  },
+  {
+    id: 3,
+    title: 'Quincho & Parque Don Antonio',
+    location: 'Pocito Sur (Calle 12)',
+    price: 38000,
+    priceFormatted: '$38.000',
+    shift: 'día (10:00 a 20:00 hs)',
+    capacity: 40,
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDy9PLSFQrRBslTy_bvrA-1TCT9yqpH3AOaIgMErqcdnTNQIurXvbPz7rgzvuqQygWTMNM3lWQl1YdQxlP_uKXm1OEN5W99s8w2qShVbdnAQUHMTaBGvIVDuE7F1IoBk_Dse-4TnvUcYoCTEqytxmZA4zJ0l2d0E2d6cFrc6xaRLIQT_JKgzZuhQCKdbJFlKOjHdx7pe3M-3Myd19vWSDUrTna7yHad2MKpYNtg7DdvqkMl3Bt1DVxq',
+    amenities: ['Gran arboleda con sombra', 'Piscina con cascada', 'Sector asador iluminado'],
+    whatsappPhone: '5492644333444',
+  },
+  {
+    id: 4,
+    title: 'Rincón de la Sierra',
+    location: 'Dique de Ullum',
+    price: 65000,
+    priceFormatted: '$65.000',
+    shift: 'día (10:00 a 20:00 hs)',
+    capacity: 20,
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAd2EiOfveL3i9TOsDt_6jA0bkXgBOha_sUJ_2PXl84NszF67_xG-0qf9N1k0ywlm8O1rvG0uARNxvVxBZWdJPGIYgvzMOn7YEjGUdSknqiEQbNYhkgnxvrVimvoylJD9JyRit-6mvV0f7IrJR2DPMtXtu568sf1ykKlTTf7OPG8a3b8Ma8OZZqNR3kbQY9dMAxs_CNhkwnDJVKPCjQmovW3_Fr4ZFEotLw6jrrPLDjYGcRMsRlyHEd',
+    amenities: ['Deck panorámico sobre el agua', 'Bajada privada para kayaks', 'Parrillero móvil'],
+    whatsappPhone: '5492644444555',
+  },
+]
+
+const handleSearch = () => {
+  const el = document.getElementById('catalogo-quintas')
+  if (el) el.scrollIntoView({ behavior: 'smooth' })
+}
 </script>
 
 <template>
   <main class="w-full bg-background">
     <!-- Hero Section with Sun-Drenched Background Image & Scrim -->
     <section class="relative w-full overflow-hidden bg-primary-container text-on-primary">
-      <!-- Background Image with Scrim -->
       <div
         class="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-30"
         style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB11JFOZvrQLcqebSEofwWj9PIt2LF7QfrCg6BljouhOUVMUMr_8DOvxhWBLHZ-qQwfwXH5hQKem79Q-ND3SJidfcrMpJeGUoVSkhidl7F75iE-O7V5iB0_GwLlNPxpYeE8ks1ccjb1Yywy3Ik2UIhxAc8K7MMRJJzGcc7wCzhN9v9vpLmYUzDdbVhHkDvm5I_0_XjADL8pZUG2j0c17qtXh-IyLyUSr-QBPaOxSfryqvwKVwfTvtj0')"
@@ -163,120 +201,15 @@ onMounted(async () => {
       </div>
     </section>
 
-    <!-- Interactive Day-Rental Search Bar Component -->
+    <!-- Componente Extraído: Buscador / Filtro de Departamentos -->
     <section class="max-w-7xl mx-auto px-6 lg:px-12 w-full -mt-8 relative z-20">
-      <div class="bg-surface-container-lowest rounded-2xl p-space-lg shadow-xl">
-        <div class="flex items-center justify-between pb-space-md mb-space-md">
-          <div class="flex items-center gap-space-xs">
-            <span class="material-symbols-outlined text-secondary text-[24px]">wb_sunny</span>
-            <span class="font-headline-sm text-headline-sm text-primary">Buscador para pasar el día en San Juan</span>
-          </div>
-          <span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-space-sm py-1 rounded-full hidden sm:inline-block font-semibold">
-            Precios fijados en pesos sanjuaninos
-          </span>
-        </div>
-
-        <!-- Search Fields Grid -->
-        <form class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md" @submit.prevent>
-          <!-- Field 1: Zona / Departamento -->
-          <div class="flex flex-col gap-1.5">
-            <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-1 font-bold">
-              <span class="material-symbols-outlined text-secondary text-[16px]">pin_drop</span>
-              Zona / Departamento
-            </label>
-            <div class="relative">
-              <select
-                v-model="searchZone"
-                class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:bg-surface-container transition-colors cursor-pointer"
-              >
-                <option value="todos">Todos los Departamentos</option>
-                <option value="pocito">Pocito (Calle 11 a 14 / Quinto Cuartel)</option>
-                <option value="rawson">Rawson / El Medanito</option>
-                <option value="zonda">Zonda (Calle Las Moras / Valle)</option>
-                <option value="rivadavia">Rivadavia / La Bebida</option>
-                <option value="santa-lucia">Santa Lucía (Zona Este)</option>
-                <option value="albardon">Albardón</option>
-                <option value="ullum">Ullum (Dique y Bahía)</option>
-              </select>
-              <span class="material-symbols-outlined absolute right-3 top-3 pointer-events-none text-on-surface-variant text-[20px]">expand_more</span>
-            </div>
-          </div>
-
-          <!-- Field 2: Tipo de Ocasión -->
-          <div class="flex flex-col gap-1.5">
-            <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-1 font-bold">
-              <span class="material-symbols-outlined text-secondary text-[16px]">celebration</span>
-              Tipo de Ocasión
-            </label>
-            <div class="relative">
-              <select
-                v-model="searchOccasion"
-                class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:bg-surface-container transition-colors cursor-pointer"
-              >
-                <option value="quinta-pileta">Quinta con Pileta</option>
-                <option value="quincho-asados">Quincho Familiar / Asados</option>
-                <option value="cumpleanos-evento">Festejo de Cumpleaños / Evento diurno</option>
-                <option value="cabana-descanso">Cabaña descanso de día</option>
-              </select>
-              <span class="material-symbols-outlined absolute right-3 top-3 pointer-events-none text-on-surface-variant text-[20px]">expand_more</span>
-            </div>
-          </div>
-
-          <!-- Field 3: Capacidad Diurna -->
-          <div class="flex flex-col gap-1.5">
-            <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-1 font-bold">
-              <span class="material-symbols-outlined text-secondary text-[16px]">groups</span>
-              Capacidad Diurna
-            </label>
-            <div class="relative">
-              <select
-                v-model="searchCapacity"
-                class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:bg-surface-container transition-colors cursor-pointer"
-              >
-                <option value="10-20">10 a 20 personas (Grupos chicos)</option>
-                <option value="20-40">20 a 40 personas (Ideal cumpleaños)</option>
-                <option value="40-60">40 a 60 personas (Familias grandes)</option>
-                <option value="60-plus">+60 personas (Eventos y bautismos)</option>
-              </select>
-              <span class="material-symbols-outlined absolute right-3 top-3 pointer-events-none text-on-surface-variant text-[20px]">expand_more</span>
-            </div>
-          </div>
-
-          <!-- Field 4: Horario / Turno -->
-          <div class="flex flex-col gap-1.5">
-            <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-1 font-bold">
-              <span class="material-symbols-outlined text-secondary text-[16px]">schedule</span>
-              Horario / Turno
-            </label>
-            <div class="relative">
-              <select
-                v-model="searchShift"
-                class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:bg-surface-container transition-colors cursor-pointer"
-              >
-                <option value="dia-completo">Día Completo (10:00 a 20:00 hs)</option>
-                <option value="tarde-noche">Turno Tarde / Noche (14:00 a 02:00 hs)</option>
-                <option value="finde-completo">Todo el fin de semana</option>
-              </select>
-              <span class="material-symbols-outlined absolute right-3 top-3 pointer-events-none text-on-surface-variant text-[20px]">expand_more</span>
-            </div>
-          </div>
-        </form>
-
-        <!-- Search Submit Row -->
-        <div class="mt-space-md pt-space-sm flex flex-col sm:flex-row items-center justify-between gap-space-md">
-          <div class="flex items-center gap-space-xs text-on-surface-variant">
-            <span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
-            <span class="font-body-sm text-body-sm">48 quintas auditadas disponibles para el próximo fin de semana</span>
-          </div>
-          <RouterLink
-            :to="{ path: '/alquileres', query: searchZone !== 'todos' ? { department: searchZone } : {} }"
-            class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-lg py-3.5 rounded-xl bg-secondary text-on-secondary font-label-lg text-label-lg hover:bg-on-secondary-container transition-all shadow-md hover:shadow-lg font-bold"
-          >
-            <span class="material-symbols-outlined text-[20px]">search</span>
-            Buscar Quintas Verificadas
-          </RouterLink>
-        </div>
-      </div>
+      <FiltroDepartamentos
+        v-model:zone="searchZone"
+        v-model:occasion="searchOccasion"
+        v-model:capacity="searchCapacity"
+        v-model:shift="searchShift"
+        @search="handleSearch"
+      />
     </section>
 
     <!-- Value Proposition: ¿Por qué reservar a través de Turismo Seguro? -->
@@ -295,7 +228,7 @@ onMounted(async () => {
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
-        <!-- Tarjeta 1 -->
+        <!-- 4 Pilares -->
         <div class="bg-surface-container-lowest p-space-lg rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary mb-space-md">
@@ -311,7 +244,6 @@ onMounted(async () => {
           </div>
         </div>
 
-        <!-- Tarjeta 2 -->
         <div class="bg-surface-container-lowest p-space-lg rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary mb-space-md">
@@ -327,7 +259,6 @@ onMounted(async () => {
           </div>
         </div>
 
-        <!-- Tarjeta 3 -->
         <div class="bg-surface-container-lowest p-space-lg rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary mb-space-md">
@@ -343,7 +274,6 @@ onMounted(async () => {
           </div>
         </div>
 
-        <!-- Tarjeta 4 -->
         <div class="bg-surface-container-lowest p-space-lg rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary mb-space-md">
@@ -361,7 +291,7 @@ onMounted(async () => {
       </div>
     </section>
 
-    <!-- Interactive Quick-Filter Pills -->
+    <!-- Quick-Filter Pills -->
     <section class="max-w-7xl mx-auto px-6 lg:px-12 w-full pt-space-sm pb-space-md">
       <div class="flex items-center justify-between mb-space-sm">
         <div class="flex items-center gap-space-xs">
@@ -377,7 +307,6 @@ onMounted(async () => {
         </button>
       </div>
 
-      <!-- Pills Carousel -->
       <div class="flex items-center gap-space-sm overflow-x-auto pb-2 scrollbar-none">
         <button
           type="button"
@@ -441,290 +370,21 @@ onMounted(async () => {
       </div>
     </section>
 
-    <!-- Featured Day-Rental Property Grid (Direct Stitch Cards) -->
-    <section class="max-w-7xl mx-auto px-6 lg:px-12 py-space-md w-full">
+    <!-- Catálogo de Quintas Diurnas: Componente Extraído CardQuintaDiurna -->
+    <section id="catalogo-quintas" class="max-w-7xl mx-auto px-6 lg:px-12 py-space-md w-full">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
-        <!-- Quinta 1: Los Olivos -->
-        <article class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
-          <div>
-            <div class="relative h-64 overflow-hidden">
-              <img
-                class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                alt="Quinta Los Olivos Rawson"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFE8VNKwk6C-6laXIn64SOPW1ZYffatwwjHBr2RNecI7Gf49w0OyzheH8aK9DIobLdIn4W35_NN33g4fMHjlQ0QcL7uHBmf4uRFRViMuNahLbAe9SepGVFsLndtDM7a7mQ2gshqkerWImCWWnyzz1T5kCGwtJDYRmRM5pHS9i1AWfMh8i_IrGmOHfC__cUP2bFmIZnCi_rwLs_2280LksARH0G4JmNHrcIRoIzScDnaGiBEsiZZOmk"
-              />
-              <div class="absolute top-3 left-3 bg-surface-container-lowest/95 backdrop-blur-md px-space-sm py-1.5 rounded-full flex items-center gap-1.5 text-secondary shadow-md">
-                <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
-                <span class="font-label-sm text-label-sm font-semibold">Sello Verificado In Situ</span>
-              </div>
-              <div class="absolute top-3 right-3 bg-secondary text-on-secondary px-space-sm py-1 rounded-full text-label-sm font-label-sm shadow-md flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">bolt</span>
-                <span>Trato directo • 0% comisión</span>
-              </div>
-              <div class="absolute bottom-3 left-3 bg-primary/80 backdrop-blur-md px-space-sm py-1 rounded-md text-on-primary font-label-sm text-label-sm flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">location_on</span> El Medanito, Rawson
-              </div>
-            </div>
-
-            <div class="p-space-lg">
-              <div class="flex items-start justify-between gap-space-sm mb-space-xs">
-                <h3 class="font-headline-md text-headline-md text-primary font-bold">Quinta Los Olivos</h3>
-                <div class="text-right">
-                  <div class="font-headline-md text-headline-md text-secondary font-bold">$45.000</div>
-                  <div class="font-label-sm text-label-sm text-on-surface-variant">/ día (10:00 a 20:00 hs)</div>
-                </div>
-              </div>
-              <div class="flex items-center gap-space-xs text-on-surface-variant mb-space-md">
-                <span class="material-symbols-outlined text-secondary text-[18px]">groups</span>
-                <span class="font-label-md text-label-md font-semibold text-on-surface">Capacidad: Hasta 25 personas (diurno)</span>
-              </div>
-              <div class="flex flex-wrap gap-1.5 mb-space-md">
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> Pileta 8x4m cercada
-                </span>
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> Quincho cerrado 60m²
-                </span>
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> 2 Freezers grandes
-                </span>
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> Parrilla doble
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="px-space-lg pb-space-lg pt-0 flex items-center gap-space-sm">
-            <RouterLink
-              to="/alquileres/quinta-los-olivos-rawson"
-              class="w-full inline-flex items-center justify-center gap-space-xs py-3 px-space-md rounded-xl bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors font-bold"
-            >
-              <span class="material-symbols-outlined text-[18px]">info</span> Ver Detalles y Reservar
-            </RouterLink>
-            <a
-              href="https://wa.me/5492644111222?text=Hola,%20vi%20Quinta%20Los%20Olivos%20en%20Turismo%20Seguro"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-12 h-12 shrink-0 rounded-xl bg-secondary text-on-secondary flex items-center justify-center hover:bg-on-secondary-container transition-colors shadow-sm"
-              title="Abrir WhatsApp Directo con el Dueño"
-            >
-              <span class="material-symbols-outlined text-[20px]">chat</span>
-            </a>
-          </div>
-        </article>
-
-        <!-- Quinta 2: La Posada del Valle -->
-        <article class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
-          <div>
-            <div class="relative h-64 overflow-hidden">
-              <img
-                class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                alt="La Posada del Valle Zonda"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRpm0tRCyFxkTL09ItJSDkIOwkwNPf2S4StWzAOhZtrO9PX-w3GysmFiXgOZYKLIw4_baYSO4EJvtHq0OUXD_u-FCo0krxmFwI1dedCnKXMAdYwxUB8YfNuimCzZMg2WZkDj9GZ6elPAWN-bLYu7y2UPeGlnETL4y94IdPWDKEhD3EwPzDyVoFS7qHRL9wAYpkujJUcq9qtghigFGsuJxtjzNI8VCzOc6XadX6c1-u8JmT5MBco4HV"
-              />
-              <div class="absolute top-3 left-3 bg-surface-container-lowest/95 backdrop-blur-md px-space-sm py-1.5 rounded-full flex items-center gap-1.5 text-secondary shadow-md">
-                <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
-                <span class="font-label-sm text-label-sm font-semibold">Sello Verificado In Situ</span>
-              </div>
-              <div class="absolute top-3 right-3 bg-secondary text-on-secondary px-space-sm py-1 rounded-full text-label-sm font-label-sm shadow-md flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">bolt</span>
-                <span>Trato directo • 0% comisión</span>
-              </div>
-              <div class="absolute bottom-3 left-3 bg-primary/80 backdrop-blur-md px-space-sm py-1 rounded-md text-on-primary font-label-sm text-label-sm flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">location_on</span> Valle de Zonda
-              </div>
-            </div>
-
-            <div class="p-space-lg">
-              <div class="flex items-start justify-between gap-space-sm mb-space-xs">
-                <h3 class="font-headline-md text-headline-md text-primary font-bold">La Posada del Valle</h3>
-                <div class="text-right">
-                  <div class="font-headline-md text-headline-md text-secondary font-bold">$55.000</div>
-                  <div class="font-label-sm text-label-sm text-on-surface-variant">/ día (11:00 a 21:00 hs)</div>
-                </div>
-              </div>
-              <div class="flex items-center gap-space-xs text-on-surface-variant mb-space-md">
-                <span class="material-symbols-outlined text-secondary text-[18px]">groups</span>
-                <span class="font-label-md text-label-md font-semibold text-on-surface">Capacidad: Hasta 30 personas</span>
-              </div>
-              <div class="flex flex-wrap gap-1.5 mb-space-md">
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> Pileta con solárium
-                </span>
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> Galería techada
-                </span>
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> Vistas a la sierra
-                </span>
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> Horno de barro
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="px-space-lg pb-space-lg pt-0 flex items-center gap-space-sm">
-            <RouterLink
-              to="/alquileres"
-              class="w-full inline-flex items-center justify-center gap-space-xs py-3 px-space-md rounded-xl bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors font-bold"
-            >
-              <span class="material-symbols-outlined text-[18px]">info</span> Ver Detalles y Reservar
-            </RouterLink>
-            <a
-              href="https://wa.me/5492644222333?text=Hola,%20vi%20La%20Posada%20del%20Valle%20en%20Turismo%20Seguro"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-12 h-12 shrink-0 rounded-xl bg-secondary text-on-secondary flex items-center justify-center hover:bg-on-secondary-container transition-colors shadow-sm"
-              title="Abrir WhatsApp Directo con el Dueño"
-            >
-              <span class="material-symbols-outlined text-[20px]">chat</span>
-            </a>
-          </div>
-        </article>
-
-        <!-- Quinta 3: Don Antonio Pocito -->
-        <article class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
-          <div>
-            <div class="relative h-64 overflow-hidden">
-              <img
-                class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                alt="Quincho Don Antonio Pocito"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDy9PLSFQrRBslTy_bvrA-1TCT9yqpH3AOaIgMErqcdnTNQIurXvbPz7rgzvuqQygWTMNM3lWQl1YdQxlP_uKXm1OEN5W99s8w2qShVbdnAQUHMTaBGvIVDuE7F1IoBk_Dse-4TnvUcYoCTEqytxmZA4zJ0l2d0E2d6cFrc6xaRLIQT_JKgzZuhQCKdbJFlKOjHdx7pe3M-3Myd19vWSDUrTna7yHad2MKpYNtg7DdvqkMl3Bt1DVxq"
-              />
-              <div class="absolute top-3 left-3 bg-surface-container-lowest/95 backdrop-blur-md px-space-sm py-1.5 rounded-full flex items-center gap-1.5 text-secondary shadow-md">
-                <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
-                <span class="font-label-sm text-label-sm font-semibold">Sello Verificado In Situ</span>
-              </div>
-              <div class="absolute top-3 right-3 bg-secondary text-on-secondary px-space-sm py-1 rounded-full text-label-sm font-label-sm shadow-md flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">bolt</span>
-                <span>Trato directo • 0% comisión</span>
-              </div>
-              <div class="absolute bottom-3 left-3 bg-primary/80 backdrop-blur-md px-space-sm py-1 rounded-md text-on-primary font-label-sm text-label-sm flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">location_on</span> Pocito Sur (Calle 12)
-              </div>
-            </div>
-
-            <div class="p-space-lg">
-              <div class="flex items-start justify-between gap-space-sm mb-space-xs">
-                <h3 class="font-headline-md text-headline-md text-primary font-bold">Quincho &amp; Parque Don Antonio</h3>
-                <div class="text-right">
-                  <div class="font-headline-md text-headline-md text-secondary font-bold">$38.000</div>
-                  <div class="font-label-sm text-label-sm text-on-surface-variant">/ día (10:00 a 20:00 hs)</div>
-                </div>
-              </div>
-              <div class="flex items-center gap-space-xs text-on-surface-variant mb-space-md">
-                <span class="material-symbols-outlined text-secondary text-[18px]">groups</span>
-                <span class="font-label-md text-label-md font-semibold text-on-surface">Capacidad: Hasta 40 personas</span>
-              </div>
-              <div class="flex flex-wrap gap-1.5 mb-space-md">
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> Gran arboleda con sombra
-                </span>
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> Piscina con cascada
-                </span>
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> Sector asador iluminado
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="px-space-lg pb-space-lg pt-0 flex items-center gap-space-sm">
-            <RouterLink
-              to="/alquileres"
-              class="w-full inline-flex items-center justify-center gap-space-xs py-3 px-space-md rounded-xl bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors font-bold"
-            >
-              <span class="material-symbols-outlined text-[18px]">info</span> Ver Detalles y Reservar
-            </RouterLink>
-            <a
-              href="https://wa.me/5492644333444?text=Hola,%20vi%20Quincho%20Don%20Antonio%20en%20Turismo%20Seguro"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-12 h-12 shrink-0 rounded-xl bg-secondary text-on-secondary flex items-center justify-center hover:bg-on-secondary-container transition-colors shadow-sm"
-              title="Abrir WhatsApp Directo con el Dueño"
-            >
-              <span class="material-symbols-outlined text-[20px]">chat</span>
-            </a>
-          </div>
-        </article>
-
-        <!-- Quinta 4: Rincón de la Sierra Ullum -->
-        <article class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
-          <div>
-            <div class="relative h-64 overflow-hidden">
-              <img
-                class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                alt="Rincón de la Sierra Dique de Ullum"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd2EiOfveL3i9TOsDt_6jA0bkXgBOha_sUJ_2PXl84NszF67_xG-0qf9N1k0ywlm8O1rvG0uARNxvVxBZWdJPGIYgvzMOn7YEjGUdSknqiEQbNYhkgnxvrVimvoylJD9JyRit-6mvV0f7IrJR2DPMtXtu568sf1ykKlTTf7OPG8a3b8Ma8OZZqNR3kbQY9dMAxs_CNhkwnDJVKPCjQmovW3_Fr4ZFEotLw6jrrPLDjYGcRMsRlyHEd"
-              />
-              <div class="absolute top-3 left-3 bg-surface-container-lowest/95 backdrop-blur-md px-space-sm py-1.5 rounded-full flex items-center gap-1.5 text-secondary shadow-md">
-                <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
-                <span class="font-label-sm text-label-sm font-semibold">Sello Verificado In Situ</span>
-              </div>
-              <div class="absolute top-3 right-3 bg-secondary text-on-secondary px-space-sm py-1 rounded-full text-label-sm font-label-sm shadow-md flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">bolt</span>
-                <span>Trato directo • 0% comisión</span>
-              </div>
-              <div class="absolute bottom-3 left-3 bg-primary/80 backdrop-blur-md px-space-sm py-1 rounded-md text-on-primary font-label-sm text-label-sm flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">location_on</span> Dique de Ullum
-              </div>
-            </div>
-
-            <div class="p-space-lg">
-              <div class="flex items-start justify-between gap-space-sm mb-space-xs">
-                <h3 class="font-headline-md text-headline-md text-primary font-bold">Rincón de la Sierra</h3>
-                <div class="text-right">
-                  <div class="font-headline-md text-headline-md text-secondary font-bold">$65.000</div>
-                  <div class="font-label-sm text-label-sm text-on-surface-variant">/ día (10:00 a 20:00 hs)</div>
-                </div>
-              </div>
-              <div class="flex items-center gap-space-xs text-on-surface-variant mb-space-md">
-                <span class="material-symbols-outlined text-secondary text-[18px]">groups</span>
-                <span class="font-label-md text-label-md font-semibold text-on-surface">Capacidad: Hasta 20 personas</span>
-              </div>
-              <div class="flex flex-wrap gap-1.5 mb-space-md">
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> Deck panorámico sobre el agua
-                </span>
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> Bajada privada para kayaks
-                </span>
-                <span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
-                  <span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span> Parrillero móvil
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="px-space-lg pb-space-lg pt-0 flex items-center gap-space-sm">
-            <RouterLink
-              to="/alquileres"
-              class="w-full inline-flex items-center justify-center gap-space-xs py-3 px-space-md rounded-xl bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors font-bold"
-            >
-              <span class="material-symbols-outlined text-[18px]">info</span> Ver Detalles y Reservar
-            </RouterLink>
-            <a
-              href="https://wa.me/5492644444555?text=Hola,%20vi%20Rincon%20de%20la%20Sierra%20en%20Turismo%20Seguro"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-12 h-12 shrink-0 rounded-xl bg-secondary text-on-secondary flex items-center justify-center hover:bg-on-secondary-container transition-colors shadow-sm"
-              title="Abrir WhatsApp Directo con el Dueño"
-            >
-              <span class="material-symbols-outlined text-[20px]">chat</span>
-            </a>
-          </div>
-        </article>
+        <CardQuintaDiurna
+          v-for="quinta in quintas"
+          :key="quinta.id"
+          :quinta="quinta"
+        />
       </div>
     </section>
 
-    <!-- Interactive Day Cost Calculator & Security Protocol Box -->
+    <!-- Calculador Estimativo por Persona -->
     <section class="max-w-7xl mx-auto px-6 lg:px-12 py-space-xl w-full">
       <div class="bg-surface-container-high rounded-3xl p-space-lg lg:p-space-xl overflow-hidden relative">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
-          <!-- Interactive Guest Volume Calculator -->
           <div class="lg:col-span-7 flex flex-col gap-space-md">
             <div class="inline-flex items-center gap-space-xs text-secondary font-label-sm text-label-sm font-semibold uppercase tracking-wider">
               <span class="material-symbols-outlined text-[18px]">calculate</span>
@@ -737,7 +397,6 @@ onMounted(async () => {
               Alquilar una quinta para pasar el día en grupo es más económico y seguro que un salón tradicional. Ajustá la cantidad de invitados:
             </p>
 
-            <!-- Interactive Counter Widget -->
             <div class="bg-surface-container-lowest p-space-md rounded-2xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-space-md">
               <div>
                 <span class="font-label-sm text-label-sm text-on-surface-variant block font-bold">Cantidad de Asistentes</span>
@@ -780,7 +439,6 @@ onMounted(async () => {
             </div>
           </div>
 
-          <!-- Shift & Payment Verification Badge Widget -->
           <div class="lg:col-span-5 bg-surface-container-lowest p-space-lg rounded-2xl shadow-md">
             <h4 class="font-headline-sm text-headline-sm text-primary mb-space-sm flex items-center gap-2 font-bold">
               <span class="material-symbols-outlined text-secondary text-[22px]">policy</span>
@@ -831,8 +489,8 @@ onMounted(async () => {
       </div>
     </section>
 
-    <!-- Interactive Section for Property Owners (Host Call to Action) -->
-    <section class="max-w-7xl mx-auto px-6 lg:px-12 py-space-xl w-full">
+    <!-- Sección de Propietarios / Anfitriones -->
+    <section id="anfitriones" class="max-w-7xl mx-auto px-6 lg:px-12 py-space-xl w-full">
       <div class="bg-primary text-on-primary rounded-3xl p-space-lg lg:p-space-xl relative overflow-hidden shadow-2xl">
         <div class="absolute -right-16 -top-16 w-96 h-96 bg-secondary/20 rounded-full blur-3xl pointer-events-none"></div>
         <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
@@ -878,20 +536,15 @@ onMounted(async () => {
                 </span>
               </div>
               <div class="flex flex-col gap-space-xs w-full">
-                <RouterLink
-                  to="/register-client"
-                  class="inline-flex items-center justify-center gap-space-xs py-3.5 px-space-md rounded-xl bg-secondary text-on-secondary font-headline-sm text-headline-sm hover:bg-on-secondary-container transition-all shadow-lg hover:shadow-xl font-bold"
+                <a
+                  href="https://wa.me/5492644000000?text=Hola,%20deseo%20sumar%20mi%20quinta%20a%20Turismo%20Seguro"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center justify-center gap-space-xs py-3.5 px-space-md rounded-xl bg-secondary text-on-secondary font-headline-sm text-headline-sm hover:bg-on-secondary-container transition-all shadow-lg hover:shadow-xl font-bold cursor-pointer"
                 >
                   <span class="material-symbols-outlined text-[22px]">support_agent</span>
                   Contactar Validador
-                </RouterLink>
-                <RouterLink
-                  to="/register-client"
-                  class="inline-flex items-center justify-center gap-space-xs py-2.5 px-space-md rounded-xl bg-surface-container-lowest/15 hover:bg-surface-container-lowest/25 text-surface-bright font-label-md text-label-md transition-colors border border-surface-container-lowest/20 font-bold"
-                >
-                  <span class="material-symbols-outlined text-[18px]">loyalty</span>
-                  Ver Planes de Suscripción
-                </RouterLink>
+                </a>
               </div>
               <span class="font-label-sm text-label-sm text-on-primary-container text-center">
                 Atención directa a propietarios: Calle Mitre 345 Este, San Juan
