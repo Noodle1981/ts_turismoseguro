@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-bright": "#f8f9ff", "on-tertiary-container": "#c77f00", "on-secondary-fixed-variant": "#005137", "on-primary-container": "#7991af", "on-surface-variant": "#43474d", "on-primary": "#ffffff", "tertiary-fixed": "#ffddb8", "secondary": "#006c4a", "tertiary-fixed-dim": "#ffb95f", "on-error-container": "#93000a", "surface-dim": "#cbdbf5", "on-primary-fixed": "#011d35", "on-secondary": "#ffffff", "on-tertiary-fixed": "#2a1700", "tertiary": "#1f1000", "primary-fixed-dim": "#b0c9e8", "surface-container-lowest": "#ffffff", "inverse-primary": "#b0c9e8", "secondary-fixed": "#85f8c4", "inverse-on-surface": "#eaf1ff", "outline": "#74777e", "surface-container-highest": "#d3e4fe", "inverse-surface": "#213145", "surface-container-high": "#dce9ff", "on-tertiary": "#ffffff", "on-error": "#ffffff", "on-secondary-container": "#00714e", "tertiary-container": "#3b2200", "surface-variant": "#d3e4fe", "outline-variant": "#c3c6ce", "on-background": "#0b1c30", "primary": "#001428", "secondary-fixed-dim": "#68dba9", "primary-fixed": "#d1e4ff", "on-primary-fixed-variant": "#314863", "primary-container": "#0f2942", "surface-container-low": "#eff4ff", "on-secondary-fixed": "#002114", "on-tertiary-fixed-variant": "#653e00", "surface": "#f8f9ff", "error": "#ba1a1a", "surface-tint": "#49607c", "on-surface": "#0b1c30", "background": "#f8f9ff", "secondary-container": "#82f5c1", "surface-container": "#e5eeff", "error-container": "#ffdad6" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "margin-mobile": "1rem", "space-xs": "0.25rem", "space-lg": "1.5rem", "margin": "2rem", "gutter": "1.5rem", "space-xl": "2.5rem", "space-md": "1rem", "space-sm": "0.5rem", "gutter-mobile": "1rem" }, "fontFamily": { "headline-md": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "headline-xl": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"] }, "fontSize": { "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "headline-xl-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-20 px-space-lg flex items-center gap-space-sm bg-surface-container-low"><div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-on-primary"><span class="material-symbols-outlined text-[24px]">verified_user</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">Turismo Seguro</span><span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider mt-1">San Juan Oficial</span></div></div><div class="px-space-lg py-space-sm bg-surface-container-high/50"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[16px]">account_balance</span><span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wide">Administración &amp; Tesorería</span></div></div><nav class="flex flex-col gap-space-xs px-space-md py-space-lg" data-active-classes="bg-primary-container text-on-primary font-label-lg font-bold rounded-lg shadow-sm"><a class="flex items-center px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-label-lg text-label-lg" data-path="conciliacion-y-pagos" href="#"><span class="material-symbols-outlined mr-space-sm text-[20px]">payments</span>Conciliación y Pagos</a><a class="flex items-center px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-label-lg text-label-lg" data-path="mesa-de-dictamenes" href="#"><span class="material-symbols-outlined mr-space-sm text-[20px]">gavel</span>Mesa de Dictámenes</a><a class="flex items-center px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-label-lg text-label-lg" data-path="suscripciones-propietarios" href="#"><span class="material-symbols-outlined mr-space-sm text-[20px]">loyalty</span>Suscripciones Propietarios</a><a class="flex items-center px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-label-lg text-label-lg" data-path="reportes-afip-dgr" href="#"><span class="material-symbols-outlined mr-space-sm text-[20px]">receipt_long</span>Reportes AFIP/DGR</a><a class="flex items-center px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors font-label-lg text-label-lg" data-path="auditoria-transacciones" href="#"><span class="material-symbols-outlined mr-space-sm text-[20px]">history_edu</span>Auditoría Operativa</a></nav></div><div class="p-space-md m-space-md rounded-xl bg-surface-container-low flex flex-col gap-space-xs"><div class="flex items-center gap-space-xs text-secondary"><span class="material-symbols-outlined text-[16px]">lock</span><span class="font-label-sm text-label-sm font-bold">Caja Provincial Activa</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-tight">Expediente N° 4022-2025. Ley Provincial de Hospedaje y Quinquenios Seguros.</p></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-20 bg-surface-container-lowest/90 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><div class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-secondary-container/40"><span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-on-secondary-container font-bold tracking-wide">Banco San Juan Online - API Sincronizada</span></div><div class="hidden xl:flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">sync</span><span>Último cierre: Hoy 14:30 hs</span></div></div><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span></button><button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button></div><div class="flex items-center gap-space-sm pl-space-md"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-primary font-bold leading-tight">Lic. Valeria Albarracín</span><span class="font-label-sm text-label-sm text-on-surface-variant">Administrador Tesorero General</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-20 bg-background min-h-[calc(100vh-80px)]"><div class="flex flex-col w-full">
+<div class="p-space-lg space-y-space-lg max-w-[1560px] mx-auto w-full">
+<!-- 1. Encabezado de Gestión Financiera -->
+<header class="flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
+<div class="space-y-space-xs max-w-3xl">
+<div class="inline-flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-secondary">verified</span>
+<span>Tesorería Gubernamental • Circuito Certificado Ley 4022-J</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">
+          Conciliación Bancaria y Cobranzas de Suscripción
+        </h1>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Cotejo automatizado de extractos de Banco San Juan, acreditación de planes mensuales de propietarios y control de comprobantes de auditorías in situ.
+        </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg transition-all shadow-sm" id="btn-sync-bsj">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+<span>Sincronizar Extracto Bancario (API BSJ)</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-primary font-label-lg text-label-lg transition-colors">
+<span class="material-symbols-outlined text-[18px] text-primary">upload_file</span>
+<span>Subir Comprobante Manual</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container-high text-on-surface-variant font-label-lg text-label-lg shadow-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]">description</span>
+<span>Exportar Libro IVA / AFIP</span>
+</button>
+</div>
+</header>
+<!-- 2. Tarjetas de KPIs Financieros (Top 4 Métricas Clave) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- KPI 1: Recaudación Mes en Curso -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Recaudación Mes</span>
+<div class="w-9 h-9 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="font-headline-lg text-headline-lg text-primary tracking-tight leading-none">$1.480.000 <span class="font-label-md text-label-md text-on-surface-variant font-normal">ARS</span></div>
+<div class="flex items-center gap-space-xs pt-1">
+<span class="inline-flex items-center text-secondary font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +18.4%
+            </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">vs mes anterior</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low/50 -mx-space-lg -mb-space-lg px-space-lg py-2 rounded-b-xl flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>58 suscripciones activas pagas</span>
+<span class="font-bold text-primary">Banco San Juan 100%</span>
+</div>
+</div>
+<!-- KPI 2: Pendientes de Conciliar -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Pendientes de Cotejo</span>
+<div class="w-9 h-9 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary-container">
+<span class="material-symbols-outlined text-[20px]">pending_actions</span>
+</div>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="font-headline-lg text-headline-lg text-primary tracking-tight leading-none">7 <span class="font-headline-sm text-headline-sm font-semibold text-on-surface-variant">transferencias</span></div>
+<div class="font-body-sm text-body-sm text-on-surface-variant pt-1">$168.000 ARS en espera de cotejo</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-tertiary-fixed/30 -mx-space-lg -mb-space-lg px-space-lg py-2 rounded-b-xl flex items-center gap-space-xs text-on-tertiary-container font-label-sm text-label-sm font-bold">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container animate-ping"></span>
+<span>4 requieren validación manual prioritaria</span>
+</div>
+</div>
+<!-- KPI 3: Bonificaciones Promo 50 Cupos -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Cupos Bonificados 6M</span>
+<div class="w-9 h-9 rounded-lg bg-secondary-container/40 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">card_giftcard</span>
+</div>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="font-headline-lg text-headline-lg text-secondary tracking-tight leading-none">39 <span class="font-label-md text-label-md text-on-surface-variant font-normal">/ 50 quintas</span></div>
+<div class="font-body-sm text-body-sm text-on-surface-variant pt-1">Ahorro transferido: $936.000 ARS</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low/50 -mx-space-lg -mb-space-lg px-space-lg py-2 rounded-b-xl flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>Incentivo Provincial Cero Comisión</span>
+<span class="font-bold text-secondary">11 cupos libres</span>
+</div>
+</div>
+<!-- KPI 4: Tasa de Conciliación Automática -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Conciliación Directa</span>
+<div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center text-primary-fixed">
+<span class="material-symbols-outlined text-[20px]">auto_mode</span>
+</div>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="font-headline-lg text-headline-lg text-primary tracking-tight leading-none">94.2%</div>
+<div class="font-body-sm text-body-sm text-secondary font-semibold pt-1">Cruce directo CUIT / CBU origen</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low/50 -mx-space-lg -mb-space-lg px-space-lg py-2 rounded-b-xl flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>Tolerancia de error: 0.00%</span>
+<span class="font-bold text-primary">Hash SHA-256</span>
+</div>
+</div>
+</section>
+<!-- 3. Barra de Filtros y Búsqueda de Movimientos -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-md">
+<!-- Tabs de Estado -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 scrollbar-none font-label-md text-label-md">
+<button class="px-space-md py-2 rounded-lg bg-primary text-on-primary font-bold flex items-center gap-space-xs whitespace-nowrap shadow-sm">
+<span>Todas las Operaciones</span>
+<span class="px-1.5 py-0.2 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm">132</span>
+</button>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container flex items-center gap-space-xs whitespace-nowrap transition-colors">
+<span>Pendientes de Cotejo</span>
+<span class="px-1.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-bold font-label-sm text-label-sm">7</span>
+</button>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container flex items-center gap-space-xs whitespace-nowrap transition-colors">
+<span>Conciliadas Automáticas</span>
+<span class="px-1.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed font-bold font-label-sm text-label-sm">64</span>
+</button>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container flex items-center gap-space-xs whitespace-nowrap transition-colors">
+<span>Conciliadas Manual</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container-high text-primary font-bold font-label-sm text-label-sm">19</span>
+</button>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container flex items-center gap-space-xs whitespace-nowrap transition-colors">
+<span>Discrepancias / Observadas</span>
+<span class="px-1.5 py-0.5 rounded-full bg-error-container text-on-error-container font-bold font-label-sm text-label-sm">3</span>
+</button>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container flex items-center gap-space-xs whitespace-nowrap transition-colors">
+<span>Promo 6 Meses Gratis</span>
+<span class="px-1.5 py-0.5 rounded-full bg-secondary-container/60 text-secondary font-bold font-label-sm text-label-sm">39</span>
+</button>
+</div>
+<!-- Barra de Filtros Operativos y Buscador -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm pt-space-xs">
+<!-- Buscador -->
+<div class="md:col-span-5 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full bg-surface-container-low text-on-surface pl-10 pr-4 py-2.5 rounded-lg text-body-sm font-body-sm placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all" placeholder="Buscar por Nombre, CUIT (20-xxxxxxxx-x), Quinta o TRX ID..." type="text"/>
+</div>
+<!-- Filtro Rango de Fechas -->
+<div class="md:col-span-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">calendar_today</span>
+<select class="w-full bg-surface-container-low text-on-surface pl-9 pr-8 py-2.5 rounded-lg text-body-sm font-body-sm focus:outline-none focus:bg-surface-container-lowest appearance-none cursor-pointer">
+<option>Mayo 2025 (Mes)</option>
+<option>Últimos 7 días</option>
+<option>Abril 2025</option>
+<option>Personalizado...</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Filtro Método de Pago -->
+<div class="md:col-span-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">account_balance</span>
+<select class="w-full bg-surface-container-low text-on-surface pl-9 pr-8 py-2.5 rounded-lg text-body-sm font-body-sm focus:outline-none focus:bg-surface-container-lowest appearance-none cursor-pointer">
+<option>Todos: CBU BSJ / MP / Débito</option>
+<option>Transferencia CBU BSJ</option>
+<option>Mercado Pago Oficial</option>
+<option>Débito Automático CBU</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Filtro Departamento -->
+<div class="md:col-span-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">location_on</span>
+<select class="w-full bg-surface-container-low text-on-surface pl-9 pr-8 py-2.5 rounded-lg text-body-sm font-body-sm focus:outline-none focus:bg-surface-container-lowest appearance-none cursor-pointer">
+<option>Dpto: Todos</option>
+<option>Rawson</option>
+<option>Pocito</option>
+<option>Zonda</option>
+<option>Rivadavia</option>
+<option>Ullum</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Layout Dividido: Columna Izquierda (60%) y Derecha (40%) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- COLUMNA IZQUIERDA: Movimientos Financieros (60%) -->
+<div class="lg:col-span-7 space-y-space-md">
+<div class="flex items-center justify-between px-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-primary">Movimientos Bancarios Recientes</span>
+<span class="text-on-surface-variant font-label-md text-label-md">(5 de 132 en vista)</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>API BSJ En vivo</span>
+</div>
+</div>
+<!-- Lista de Tarjetas de Transacción -->
+<div class="space-y-space-sm" id="movements-container">
+<!-- FILA 1: Observada/Pendiente - SELECCIONADA -->
+<article class="p-space-md rounded-xl bg-surface-container-lowest border-l-4 border-l-tertiary-fixed-dim shadow-md transition-all cursor-pointer ring-2 ring-primary/20 relative" data-trx="TRX-99482">
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex gap-space-md min-w-0">
+<div class="w-12 h-12 rounded-xl bg-tertiary-fixed/30 flex items-center justify-center shrink-0 text-on-tertiary-container">
+<span class="material-symbols-outlined text-[24px]">hourglass_top</span>
+</div>
+<div class="min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs flex-wrap">
+<h3 class="font-label-lg text-label-lg font-bold text-primary truncate">Quinta Don Antonio</h3>
+<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed/50 text-on-tertiary-fixed font-bold font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">rule</span> Cotejo Pendiente - Coincidencia 92%
+                    </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">
+                    Titular: <strong class="text-on-surface">Carlos M. Quiroga</strong> • CUIT 20-24819330-4 • Pocito
+                  </p>
+<div class="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant pt-1">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">account_balance</span> Banco San Juan • #TRX-99482
+                    </span>
+<span>Hoy, 10:42 hs</span>
+<span class="font-semibold text-primary">Plan Oro Renovación</span>
+</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-headline-sm text-headline-sm text-primary font-bold">$24.000,00</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">ARS Recibido</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-1 text-secondary font-semibold">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Inspección in situ aprobada (14/01/2025)</span>
+</div>
+<span class="text-primary font-bold">Seleccionado para auditar →</span>
+</div>
+</article>
+<!-- FILA 2: Conciliada Automática -->
+<article class="p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-colors shadow-sm cursor-pointer" data-trx="TRX-99481">
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex gap-space-md min-w-0">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/40 flex items-center justify-center shrink-0 text-secondary">
+<span class="material-symbols-outlined text-[24px]">task_alt</span>
+</div>
+<div class="min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs flex-wrap">
+<h3 class="font-label-lg text-label-lg font-bold text-primary truncate">Cabaña Los Pinos Diurnos</h3>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed font-bold font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">done_all</span> Conciliada Automática
+                    </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">
+                    Titular: <strong class="text-on-surface">María Belén Mercado</strong> • CUIT 27-31049281-2 • Rivadavia
+                  </p>
+<div class="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant pt-1">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">account_balance</span> CBU BSJ • #TRX-99481
+                    </span>
+<span>Hoy, 09:15 hs</span>
+<span class="text-secondary font-semibold">Factura B #0004-00001248 emitida</span>
+</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-headline-sm text-headline-sm text-primary font-bold">$18.000,00</div>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Acreditado</span>
+</div>
+</div>
+</article>
+<!-- FILA 3: Promo Bonificada 6 Meses -->
+<article class="p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-colors shadow-sm cursor-pointer" data-trx="PRM-00014">
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex gap-space-md min-w-0">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[24px]">loyalty</span>
+</div>
+<div class="min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs flex-wrap">
+<h3 class="font-label-lg text-label-lg font-bold text-primary truncate">Quinta El Remanso del Médano</h3>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/40 text-secondary font-bold font-label-sm text-label-sm">
+                      Cupo #14 de 50 (Promo 6 Meses Gratis)
+                    </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">
+                    Titular: <strong class="text-on-surface">Carlos R. Gómez</strong> • CUIT 20-21849102-3 • Rawson
+                  </p>
+<div class="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant pt-1">
+<span>Bonificación Activa • Vence: 15/08/2025</span>
+<span class="font-semibold text-secondary">Cero Comisión Aplicada</span>
+</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-headline-sm text-headline-sm text-secondary font-bold">$0,00</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Bonificado 100%</span>
+</div>
+</div>
+</article>
+<!-- FILA 4: Discrepancia / Observada -->
+<article class="p-space-md rounded-xl bg-surface-container-lowest border-l-4 border-l-error shadow-sm hover:bg-surface-container-low transition-colors cursor-pointer" data-trx="TRX-99479">
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex gap-space-md min-w-0">
+<div class="w-12 h-12 rounded-xl bg-error-container flex items-center justify-center shrink-0 text-on-error-container">
+<span class="material-symbols-outlined text-[24px]">warning</span>
+</div>
+<div class="min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs flex-wrap">
+<h3 class="font-label-lg text-label-lg font-bold text-primary truncate">Quincho La Ilusión</h3>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-bold font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">gpp_bad</span> Discrepancia Titularidad
+                    </span>
+</div>
+<p class="font-body-sm text-body-sm text-error font-medium truncate">
+                    Monto recibido de cuenta a nombre de tercero (CUIT emisor no coincide con titular verificado).
+                  </p>
+<div class="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant pt-1">
+<span>Titular TS: Roberto S. Castro</span>
+<span>Emisor real: Inmobiliaria San Juan SRL</span>
+<span class="font-bold text-error">Alerta Anti-fraude</span>
+</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-headline-sm text-headline-sm text-on-surface font-bold">$24.000,00</div>
+<span class="font-label-sm text-label-sm text-error font-bold">Retenido</span>
+</div>
+</div>
+</article>
+<!-- FILA 5: Conciliada (Auditoría In Situ + Cuota) -->
+<article class="p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-colors shadow-sm cursor-pointer" data-trx="TRX-99475">
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex gap-space-md min-w-0">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/40 flex items-center justify-center shrink-0 text-secondary">
+<span class="material-symbols-outlined text-[24px]">task_alt</span>
+</div>
+<div class="min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs flex-wrap">
+<h3 class="font-label-lg text-label-lg font-bold text-primary truncate">Finca Los Olivos Diurnos</h3>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed font-bold font-label-sm text-label-sm">
+                      Conciliado CBU Banco San Juan
+                    </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">
+                    Titular: <strong class="text-on-surface">Mariela Santillán</strong> • CUIT 27-28910442-8 • Zonda
+                  </p>
+<div class="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant pt-1">
+<span>Concepto: Arancel Inspección In Situ + Cuota Mensual</span>
+<span>Ayer, 18:20 hs</span>
+</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-headline-sm text-headline-sm text-primary font-bold">$32.000,00</div>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Acreditado</span>
+</div>
+</div>
+</article>
+</div>
+<!-- Paginación y Resumen -->
+<div class="flex items-center justify-between p-space-md rounded-xl bg-surface-container-lowest shadow-sm text-body-sm font-body-sm text-on-surface-variant">
+<span>Mostrando <strong>1 - 5</strong> de <strong>132</strong> registros provinciales</span>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-sm py-1 rounded bg-surface-container-low hover:bg-surface-container text-primary font-label-sm text-label-sm font-bold">Anterior</button>
+<span class="px-space-sm py-1 bg-primary text-on-primary rounded font-label-sm text-label-sm font-bold">1</span>
+<button class="px-space-sm py-1 rounded bg-surface-container-low hover:bg-surface-container text-primary font-label-sm text-label-sm">2</button>
+<button class="px-space-sm py-1 rounded bg-surface-container-low hover:bg-surface-container text-primary font-label-sm text-label-sm">3</button>
+<button class="px-space-sm py-1 rounded bg-surface-container-low hover:bg-surface-container text-primary font-label-sm text-label-sm font-bold">Siguiente</button>
+</div>
+</div>
+</div>
+<!-- COLUMNA DERECHA: Detalle de Conciliación y Comprobante Auditado (40%) -->
+<aside class="lg:col-span-5 space-y-space-md sticky top-24">
+<div class="rounded-xl bg-surface-container-lowest p-space-lg shadow-md space-y-space-lg">
+<!-- Header de Detalle -->
+<div class="flex items-center justify-between pb-space-xs">
+<div>
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">gavel</span> Mesa de Conciliación Activa
+              </span>
+<h2 class="font-headline-sm text-headline-sm text-primary font-bold">Movimiento #TRX-99482</h2>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-bold font-label-sm text-label-sm">
+              Cotejo Pendiente (92%)
+            </span>
+</div>
+<!-- Comparativa Doble Lado a Lado -->
+<div class="space-y-space-xs">
+<div class="font-label-md text-label-md text-on-surface-variant uppercase font-bold tracking-wider">
+              Cotejo Birelacional (API BSJ vs Registro TS)
+            </div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm">
+<!-- Lado A: Extracto Banco San Juan -->
+<div class="p-space-md rounded-lg bg-surface-container-low space-y-space-xs">
+<div class="flex items-center gap-space-xs text-primary font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-secondary text-[16px]">account_balance</span>
+<span>Extracto Banco San Juan</span>
+</div>
+<div class="space-y-1 font-body-sm text-body-sm">
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm block">Importe:</span>
+<strong class="text-primary text-[17px] font-bold">$24.000,00 ARS</strong>
+</div>
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm block">Titular Cuenta:</span>
+<strong class="text-on-surface">QUIROGA CARLOS M</strong>
+</div>
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm block">CBU Origen:</span>
+<code class="text-primary text-[11px] font-mono break-all">04500018-01800045192831</code>
+</div>
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm block">Fecha y Hora:</span>
+<span class="text-on-surface">14/05/2025 10:42:19 hs</span>
+</div>
+</div>
+</div>
+<!-- Lado B: Ficha Propietario TS -->
+<div class="p-space-md rounded-lg bg-surface-container space-y-space-xs">
+<div class="flex items-center gap-space-xs text-primary font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-secondary text-[16px]">verified_user</span>
+<span>Padrón Turismo Seguro</span>
+</div>
+<div class="space-y-1 font-body-sm text-body-sm">
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm block">Valor Cuota Plan Oro:</span>
+<strong class="text-secondary text-[17px] font-bold">$24.000,00 ARS</strong>
+</div>
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm block">Titular Registrado:</span>
+<strong class="text-on-surface">Carlos M. Quiroga</strong>
+</div>
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm block">DNI / CUIT:</span>
+<span class="text-on-surface font-mono text-[12px]">24.819.330 (20-24819330-4)</span>
+</div>
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm block">Auditor Certificador:</span>
+<span class="text-secondary font-semibold">Lic. V. Albarracín</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Vista Previa del Comprobante Adjunto -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase font-bold tracking-wider">
+                Comprobante Digitalizado
+              </span>
+<a class="font-label-sm text-label-sm text-primary font-bold hover:underline flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[14px]">open_in_new</span> Ver Original PDF
+              </a>
+</div>
+<!-- Ticket Mockup con Imagen Placeholder -->
+<div class="rounded-xl bg-surface-container-low p-space-md space-y-space-sm relative overflow-hidden">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-7 h-7 rounded-lg bg-primary text-on-primary flex items-center justify-center font-bold text-[12px]">BSJ</div>
+<span class="font-label-sm text-label-sm font-bold text-primary">Comprobante de Transferencia Inmediata</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">lock</span> Válido
+                </span>
+</div>
+<!-- Comprobante visual -->
+<div class="relative w-full h-32 rounded-lg overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Official bank digital transfer receipt document from Banco San Juan showing transaction codes, timestamps, legal QR verification seal, with high crisp typography and corporate financial navy tones in modern crisp layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxFYv4CLtLGV8Y4WTiot42MQTLw7wb1AOHUjkWPp97y-zOg-89bVG-v7Kj-F7gYVSHmgBIrxOboVKIXzf_IMoklbNfbPpJ2mH9cwjd_MqFqp8Eh2a1TlZFlS5fHDwOeU3p-YHqxgagFm30shJm3k-UfaiXZLtKICmR6Z-xv3koK8712IMbAohNO-GwN7Jf6zfUm69uiIyS9gtdF_HH5LhyViqF9QB7jJzTLxOMNQ68f1X9oFVdPcle"/>
+<div class="absolute inset-0 bg-primary/40 flex items-center justify-center p-space-sm">
+<div class="bg-surface-container-lowest/95 backdrop-blur-sm p-space-sm rounded-lg text-center shadow-lg">
+<span class="font-label-sm text-label-sm font-bold text-primary block">Cotejo CBU Origen Coincidente</span>
+<span class="font-mono text-[10px] text-on-surface-variant">04500018-01800045192831</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1 text-on-surface-variant font-label-sm text-label-sm">
+<span>Ref. Bancaria: <code class="font-mono text-primary font-bold">BSJ-8819401-K</code></span>
+<span>Canal: Home Banking Particulares</span>
+</div>
+</div>
+</div>
+<!-- Checkbox WhatsApp -->
+<label class="flex items-center gap-space-xs p-space-sm rounded-lg bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors select-none">
+<input checked="" class="w-4 h-4 rounded text-secondary focus:ring-secondary accent-secondary" type="checkbox"/>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">chat</span>
+              Enviar constancia y factura vía WhatsApp oficial al propietario (+54 9 264 481-9302)
+            </span>
+</label>
+<!-- Panel de Acciones del Tesorero -->
+<div class="space-y-space-xs pt-space-xs">
+<!-- Botón Principal: Aprobar y Facturar -->
+<button class="w-full py-3 px-space-md rounded-lg bg-secondary hover:bg-on-secondary-container text-on-secondary font-label-lg text-label-lg font-bold flex items-center justify-center gap-space-xs shadow-md transition-all active:scale-[0.99]" id="btn-approve-trx">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span>Aprobar Conciliación y Emitir Factura AFIP</span>
+</button>
+<!-- Acciones Secundarias -->
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="py-2.5 px-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">sync_problem</span>
+<span>Pedir Re-envío</span>
+</button>
+<button class="py-2.5 px-space-sm rounded-lg bg-error-container/60 hover:bg-error-container text-on-error-container font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+<span>Rechazar y Reportar</span>
+</button>
+</div>
+</div>
+<!-- Trazabilidad de Auditoría -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">fingerprint</span>
+<span>Audit Log: Sync API BSJ 10:45 hs</span>
+</div>
+<span class="font-mono text-[11px] text-outline">HASH: c9f2b84...e3</span>
+</div>
+</div>
+</aside>
+</div>
+</div>
+<script>
+    // Micro-interacción: Selección de movimiento en lista
+    document.querySelectorAll('#movements-container article').forEach(card => {
+      card.addEventListener('click', function() {
+        document.querySelectorAll('#movements-container article').forEach(c => {
+          c.classList.remove('ring-2', 'ring-primary/20', 'shadow-md');
+          c.classList.add('shadow-sm');
+        });
+        this.classList.add('ring-2', 'ring-primary/20', 'shadow-md');
+      });
+    });
+
+    // Feedback botón de conciliar
+    const btnApprove = document.getElementById('btn-approve-trx');
+    if (btnApprove) {
+      btnApprove.addEventListener('click', function() {
+        const originalContent = this.innerHTML;
+        this.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">autorenew</span><span>Emitiendo Factura AFIP &amp; Notificando BSJ...</span>';
+        this.classList.add('opacity-90');
+        setTimeout(() => {
+          this.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span><span>¡Conciliación Exitosa! Factura B Generada</span>';
+          this.classList.remove('bg-secondary');
+          this.classList.add('bg-primary');
+          setTimeout(() => {
+            this.innerHTML = originalContent;
+            this.classList.remove('opacity-90', 'bg-primary');
+            this.classList.add('bg-secondary');
+          }, 3000);
+        }, 1200);
+      });
+    }
+
+    // Botón sincronizar extracto
+    const btnSync = document.getElementById('btn-sync-bsj');
+    if (btnSync) {
+      btnSync.addEventListener('click', function() {
+        const icon = this.querySelector('.material-symbols-outlined');
+        if (icon) icon.classList.add('animate-spin');
+        setTimeout(() => {
+          if (icon) icon.classList.remove('animate-spin');
+        }, 1500);
+      });
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] py-space-lg px-space-lg mt-auto"><div class="flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex flex-col"><span class="font-label-md text-label-md text-primary font-bold">Ministerio de Turismo y Cultura • Gobierno de San Juan</span><span class="font-body-sm text-body-sm text-on-surface-variant">Dirección de Fiscalización, Tesorería y Cobranzas Digitales • Centro Cívico Núcleo 4</span></div><div class="flex flex-wrap items-center gap-space-lg font-label-md text-label-md text-on-surface-variant"><span>Mesa de Ayuda Tesorería: +54 264 429-1000 Int. 3401</span><span>Soporte Técnico: tesoreria@turismosanjuan.gob.ar</span></div></div></footer></div></body></html>

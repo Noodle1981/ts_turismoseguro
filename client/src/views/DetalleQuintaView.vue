@@ -11,7 +11,7 @@ const route = useRoute()
 const quintasCatalog: Record<string, any> = {
   '1': {
     id: 1,
-    title: 'Quinta Los Olivos • Día de Campo y Pileta',
+    title: 'Solo Día Quinta Los Olivos',
     location: 'Calle Ramón Franco s/n, El Medanito, Rawson, San Juan',
     distanceInfo: 'A sólo 15 min de San Juan Capital',
     department: 'Rawson (El Medanito)',

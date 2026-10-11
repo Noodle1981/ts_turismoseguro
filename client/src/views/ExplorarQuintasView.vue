@@ -412,30 +412,41 @@ const activeChipsCount = computed(() => {
             </div>
           </div>
 
-          <!-- View mode switcher -->
-          <div class="flex items-center bg-surface-container-low p-1 rounded-xl">
-            <button
-              type="button"
-              :class="[
-                'flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-label-md text-label-md transition-all cursor-pointer font-bold',
-                viewMode === 'grid' ? 'bg-surface-container-lowest text-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'
-              ]"
-              @click="viewMode = 'grid'"
+          <!-- View mode switcher & Agregar Oferta -->
+          <div class="flex items-center gap-2">
+            <RouterLink
+              to="/propietario/panel"
+              class="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-secondary text-on-secondary hover:bg-on-secondary-container transition-colors font-label-md text-label-md font-bold shadow-xs"
+              title="Publicar tu propiedad o quinta diurna"
             >
-              <span class="material-symbols-outlined text-[18px]">grid_view</span>
-              <span>Grilla</span>
-            </button>
-            <button
-              type="button"
-              :class="[
-                'flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-label-md text-label-md transition-all cursor-pointer font-bold',
-                viewMode === 'map' ? 'bg-surface-container-lowest text-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'
-              ]"
-              @click="viewMode = 'map'"
-            >
-              <span class="material-symbols-outlined text-[18px]">map</span>
-              <span>Mapa San Juan</span>
-            </button>
+              <span class="material-symbols-outlined text-[18px]">add_business</span>
+              <span>+ Agregar Oferta</span>
+            </RouterLink>
+
+            <div class="flex items-center bg-surface-container-low p-1 rounded-xl">
+              <button
+                type="button"
+                :class="[
+                  'flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-label-md text-label-md transition-all cursor-pointer font-bold',
+                  viewMode === 'grid' ? 'bg-surface-container-lowest text-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'
+                ]"
+                @click="viewMode = 'grid'"
+              >
+                <span class="material-symbols-outlined text-[18px]">grid_view</span>
+                <span>Grilla</span>
+              </button>
+              <button
+                type="button"
+                :class="[
+                  'flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-label-md text-label-md transition-all cursor-pointer font-bold',
+                  viewMode === 'map' ? 'bg-surface-container-lowest text-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'
+                ]"
+                @click="viewMode = 'map'"
+              >
+                <span class="material-symbols-outlined text-[18px]">map</span>
+                <span>Mapa San Juan</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -729,8 +740,8 @@ const activeChipsCount = computed(() => {
                   />
                   <!-- Seal badge -->
                   <div class="absolute top-3 left-3 flex items-center gap-1.5 bg-surface-container-lowest/95 backdrop-blur-sm px-2.5 py-1 rounded-full shadow-sm">
-                    <span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
-                    <span class="font-label-sm text-label-sm text-secondary font-bold">{{ item.acta }}</span>
+                    <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                    <span class="font-label-sm text-label-sm text-secondary font-bold">Validado</span>
                   </div>
 
                   <!-- Shift indicator -->

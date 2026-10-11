@@ -73,10 +73,10 @@ class CatalogTest extends TestCase
 
     public function test_can_get_property_detail_by_slug(): void
     {
-        $response = $this->getJson('/api/v1/properties/refrescate-en-el-medanito-de-rawson');
+        $response = $this->getJson('/api/v1/properties/solo-dia-quinta-los-olivos');
 
         $response->assertStatus(200)
-            ->assertJsonPath('data.slug', 'refrescate-en-el-medanito-de-rawson')
+            ->assertJsonPath('data.slug', 'solo-dia-quinta-los-olivos')
             ->assertJsonPath('data.verification_status', 'verified');
     }
 

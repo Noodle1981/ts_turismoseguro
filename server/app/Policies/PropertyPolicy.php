@@ -14,7 +14,7 @@ class PropertyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return in_array($user->role, ['super_admin', 'supervisor', 'client']);
+        return in_array($user->role, ['super_admin', 'admin', 'supervisor', 'client']);
     }
 
     /**
@@ -22,7 +22,7 @@ class PropertyPolicy
      */
     public function view(User $user, Property $property): bool
     {
-        if (in_array($user->role, ['super_admin', 'supervisor'])) {
+        if (in_array($user->role, ['super_admin', 'admin', 'supervisor'])) {
             return true;
         }
 
@@ -38,7 +38,7 @@ class PropertyPolicy
      */
     public function create(User $user): bool
     {
-        return in_array($user->role, ['client', 'super_admin']);
+        return in_array($user->role, ['client', 'admin', 'super_admin']);
     }
 
     /**
@@ -46,7 +46,7 @@ class PropertyPolicy
      */
     public function update(User $user, Property $property): bool
     {
-        if ($user->role === 'super_admin') {
+        if (in_array($user->role, ['super_admin', 'admin'])) {
             return true;
         }
 
@@ -58,7 +58,7 @@ class PropertyPolicy
      */
     public function delete(User $user, Property $property): bool
     {
-        if ($user->role === 'super_admin') {
+        if (in_array($user->role, ['super_admin', 'admin'])) {
             return true;
         }
 

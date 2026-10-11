@@ -16,7 +16,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DepartmentSeeder::class,
             UserSeeder::class,
-            LegacyPropertySeeder::class,
+            PropertyAndVerificationSeeder::class,
+            BookingSeeder::class,
+            EventSeeder::class,
             LegacyExperienceSeeder::class,
         ]);
     }

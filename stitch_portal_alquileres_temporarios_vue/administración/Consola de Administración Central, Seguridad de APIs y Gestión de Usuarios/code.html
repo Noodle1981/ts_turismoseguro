@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-bright": "#f8f9ff", "primary-fixed-dim": "#b0c9e8", "surface-container-highest": "#d3e4fe", "on-surface": "#0b1c30", "surface-variant": "#d3e4fe", "on-surface-variant": "#43474d", "tertiary": "#1f1000", "surface": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "tertiary-fixed-dim": "#ffb95f", "primary": "#001428", "on-tertiary-container": "#c77f00", "error": "#ba1a1a", "inverse-surface": "#213145", "on-tertiary": "#ffffff", "error-container": "#ffdad6", "on-background": "#0b1c30", "primary-container": "#0f2942", "secondary-container": "#82f5c1", "on-tertiary-fixed": "#2a1700", "surface-container-high": "#dce9ff", "outline": "#74777e", "secondary-fixed-dim": "#68dba9", "on-secondary-fixed": "#002114", "tertiary-fixed": "#ffddb8", "surface-container-lowest": "#ffffff", "on-error": "#ffffff", "surface-container-low": "#eff4ff", "surface-dim": "#cbdbf5", "primary-fixed": "#d1e4ff", "outline-variant": "#c3c6ce", "tertiary-container": "#3b2200", "secondary-fixed": "#85f8c4", "secondary": "#006c4a", "on-primary-fixed-variant": "#314863", "background": "#f8f9ff", "on-secondary-container": "#00714e", "on-tertiary-fixed-variant": "#653e00", "on-error-container": "#93000a", "on-primary-fixed": "#011d35", "surface-container": "#e5eeff", "on-primary-container": "#7991af", "on-secondary": "#ffffff", "on-secondary-fixed-variant": "#005137", "surface-tint": "#49607c", "inverse-primary": "#b0c9e8", "on-primary": "#ffffff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "gutter-mobile": "1rem", "gutter": "1.5rem", "space-lg": "1.5rem", "space-xl": "2.5rem", "margin-mobile": "1rem", "space-xs": "0.25rem", "margin": "2rem", "space-md": "1rem" }, "fontFamily": { "body-md": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "headline-xl": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"] }, "fontSize": { "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "headline-xl-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "headline-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-7xl mx-auto px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-secondary-fixed text-[24px]">verified_user</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">TURISMO SEGURO</span><span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase leading-none mt-1">San Juan • Panel Técnico</span></div></div><div class="hidden lg:flex items-center gap-space-xs px-3 py-1 rounded-full bg-secondary-container/25"><span class="material-symbols-outlined text-secondary text-[16px]">task_alt</span><span class="font-label-sm text-label-sm text-on-secondary-container font-bold uppercase tracking-wider">100% Verificado In Situ</span></div></div><nav class="hidden xl:flex items-center gap-space-md" data-active-classes="bg-primary-container text-on-primary text-on-surface-variant font-bold rounded-lg px-3 py-2"><a class="px-3 py-2 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="bandeja-de-solicitudes" href="#">Bandeja de Solicitudes</a><a class="px-3 py-2 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="actas-emitidas" href="#">Actas Emitidas</a><a class="px-3 py-2 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="mapa-de-inspecciones" href="#">Mapa de Inspecciones</a><a class="px-3 py-2 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="agenda-in-situ" href="#">Agenda In Situ</a></nav><div class="flex items-center gap-space-md"><div class="hidden sm:flex flex-col text-right"><div class="flex items-center justify-end gap-space-xs"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-on-secondary-container bg-secondary-container/30 px-2 py-0.5 rounded-full">Activo en territorio</span></div><span class="font-label-md text-label-md text-on-surface mt-1">Validador Oficial</span><span class="font-label-sm text-label-sm text-on-surface-variant">Matrícula TS-2025/08</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]"><div class="flex flex-col w-full">
+<!-- 1. Header de Sección / Contexto Superior -->
+<section class="w-full bg-surface-container-low px-gutter py-space-lg">
+<div class="max-w-7xl mx-auto flex flex-col gap-space-md">
+<!-- Top badges and supervisor ID pill -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm tracking-wider uppercase">
+<span class="material-symbols-outlined text-[15px] text-secondary-fixed">shield_lock</span>
+<span>MÓDULO DE SUPERVISIÓN &amp; DICTAMEN OFICIAL</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-secondary">verified</span>
+<span>Nivel de Control: Aprobación Definitiva &amp; Firma Digital</span>
+</div>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+<span class="font-label-sm text-label-sm text-on-surface">
+<strong>Supervisor a Cargo:</strong> Dr. Gustavo E. Benítez
+          </span>
+<span class="text-outline font-label-sm text-label-sm">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">SUP-SJ-004</span>
+</div>
+</div>
+<!-- Main Headline + Actions -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
+<div class="max-w-3xl">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">
+            Mesa de Supervisión y Control de Dictámenes Técnicos
+          </h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 leading-relaxed">
+            Revisión final de actas emitidas por validadores en terreno. Auditoría cruzada de evidencias fotográficas, geolocalización, titularidad bancaria y emisión del Sello Oficial QR San Juan Seguro.
+          </p>
+</div>
+<!-- Upper Action Buttons -->
+<div class="flex flex-wrap items-center gap-space-sm shrink-0">
+<button class="px-4 py-2.5 rounded-lg bg-surface-container-lowest text-primary hover:bg-surface-container-highest transition-colors font-label-lg text-label-lg flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[20px] text-primary">picture_as_pdf</span>
+<span>Exportar Reporte Semanal a PDF</span>
+</button>
+<button class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary-container transition-colors text-on-primary font-label-lg text-label-lg flex items-center gap-2 shadow-md">
+<span class="material-symbols-outlined text-[20px] text-secondary-fixed">draw</span>
+<span>Firmar por Lote Actas Conformadas (3)</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Métricas Clave de Supervisión (KPIs en 4 tarjetas limpias) -->
+<section class="w-full px-gutter py-space-md">
+<div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- KPI 1 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Pendientes de Dictamen</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-xl text-headline-xl text-primary leading-none">5</span>
+<span class="font-label-sm text-label-sm text-error bg-error-container/40 px-2 py-0.5 rounded-full font-bold">2 prioridad alta</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">pending_actions</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-secondary">schedule</span>
+<span>Tiempo de respuesta: <strong>&lt; 4 hs</strong></span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Aprobadas &amp; Publicadas</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-xl text-headline-xl text-secondary leading-none">52</span>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-container/40 px-2 py-0.5 rounded-full font-bold">Mes corriente</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-secondary-container/30 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">verified</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-secondary">account_balance</span>
+<span>100% trazabilidad CBU Banco SJ</span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">En Subsanación</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-xl text-headline-xl text-on-tertiary-container leading-none">4</span>
+<span class="font-label-sm text-label-sm text-on-tertiary-container bg-tertiary-fixed/60 px-2 py-0.5 rounded-full font-bold">Modificaciones</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-tertiary-fixed/40 flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined text-[22px]">rule_folder</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-on-tertiary-container">hourglass_top</span>
+<span>Plazo activo: <strong>48 / 72 hs</strong></span>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Rechazos Ratificados</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-xl text-headline-xl text-error leading-none">3</span>
+<span class="font-label-sm text-label-sm text-error bg-error-container/50 px-2 py-0.5 rounded-full font-bold">Cierre definitivo</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-error-container/30 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[22px]">gavel</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-error">block</span>
+<span>Fraude titular o riesgo crítico</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Barra de Filtros y Búsqueda de Expedientes -->
+<section class="w-full px-gutter py-space-sm">
+<div class="max-w-7xl mx-auto bg-surface-container-lowest p-4 rounded-xl shadow-sm flex flex-col gap-space-sm">
+<!-- Search input and main dropdown filters -->
+<div class="flex flex-col md:flex-row items-center gap-3">
+<div class="relative w-full md:flex-1">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-lowest transition-colors" placeholder="Buscar por N° de Acta, Código EXP, Propietario o CBU..." type="text" value="849-MED/25"/>
+</div>
+<div class="flex items-center gap-2 w-full md:w-auto">
+<!-- Validador de terreno -->
+<div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm w-full md:w-auto">
+<span class="material-symbols-outlined text-outline text-[18px]">badge</span>
+<select class="bg-transparent text-on-surface font-body-sm text-body-sm focus:outline-none cursor-pointer">
+<option value="all">Validador: Todos</option>
+<option selected="" value="albarracin">Lic. Marcos Albarracín (2)</option>
+<option value="quiroga">Tec. Luciana Quiroga (1)</option>
+<option value="salinas">Ing. Pedro Salinas (1)</option>
+</select>
+</div>
+<!-- Departamento -->
+<div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm w-full md:w-auto">
+<span class="material-symbols-outlined text-outline text-[18px]">location_on</span>
+<select class="bg-transparent text-on-surface font-body-sm text-body-sm focus:outline-none cursor-pointer">
+<option value="all">Departamento: Todos</option>
+<option value="pocito">Pocito</option>
+<option value="rawson">Rawson</option>
+<option value="zonda">Zonda</option>
+<option value="ullum">Ullum</option>
+<option value="rivadavia">Rivadavia</option>
+<option selected="" value="medano">Médano de Oro (Rawson)</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Tabs de estado de supervisión -->
+<div class="flex flex-wrap items-center gap-2 pt-2">
+<button class="px-3.5 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md flex items-center gap-2">
+<span>Por Dictaminar</span>
+<span class="px-2 py-0.2 rounded-full bg-secondary-container text-on-secondary-container font-bold text-[11px]">5</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-2 transition-colors">
+<span>En Subsanación / Modificación</span>
+<span class="px-2 py-0.2 rounded-full bg-surface-container-high text-on-surface font-bold text-[11px]">4</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-2 transition-colors">
+<span>Aprobadas Definitivas</span>
+<span class="px-2 py-0.2 rounded-full bg-surface-container-high text-on-surface font-bold text-[11px]">52</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-2 transition-colors">
+<span>Rechazadas Ratificadas</span>
+<span class="px-2 py-0.2 rounded-full bg-surface-container-high text-on-surface font-bold text-[11px]">3</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 4. Layout Dividido: Lista de Expedientes (55%) vs. Panel de Dictamen y Evidencias (45%) -->
+<section class="w-full px-gutter py-space-md mb-space-xl">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LADO IZQUIERDO: BANDEJA DE EXPEDIENTES (7 cols = ~58%) -->
+<div class="lg:col-span-7 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-lg text-label-lg text-primary font-bold">Expedientes en Cola de Firma (4 visibles)</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Orden: Prioridad Técnica y Riesgo</span>
+</div>
+<!-- ITEM 1: SELECCIONADO / EN REVISIÓN -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-md transition-all cursor-pointer relative overflow-hidden bg-gradient-to-r from-surface-container-low/40 via-surface-container-lowest to-surface-container-lowest">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-secondary"></div>
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-label-md text-label-md font-mono text-primary font-bold bg-surface-container-high px-2 py-0.5 rounded">#849-MED/25</span>
+<span class="px-2.5 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                  Esperando Firma Supervisor
+                </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Médano de Oro</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-primary mt-1">
+                Quinta Don Antonio • Casa de Campo
+              </h2>
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-outline">person_pin</span>
+<span>Titular: Carlos M. Quiroga</span>
+<span>•</span>
+<span class="font-mono text-on-surface text-[12px]">DNI 24.819.330</span>
+</div>
+</div>
+<div class="text-right shrink-0 flex flex-col items-end">
+<span class="px-2.5 py-1 rounded bg-secondary-fixed/50 text-on-secondary-fixed font-label-sm text-label-sm font-bold">100% Conforme</span>
+<span class="font-label-sm text-label-sm text-outline mt-1">Inspección: Hoy 11:30 hs</span>
+</div>
+</div>
+<!-- Auditor recommendation & CBU Status -->
+<div class="mt-3 pt-3 flex flex-wrap items-center justify-between gap-2 bg-surface-container-low/60 p-2.5 rounded-lg">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-label-sm text-[10px] font-bold">MA</span>
+<span class="font-label-sm text-label-sm text-on-surface">Validador: Lic. Marcos Albarracín</span>
+</div>
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm text-secondary font-bold">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span>CBU Banco San Juan Cruzado OK</span>
+</div>
+</div>
+</div>
+<!-- ITEM 2: OBSERVADO LEVE / MODIFICACIÓN PROPUESTA -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all cursor-pointer">
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-label-md text-label-md font-mono text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">#850-POC/25</span>
+<span class="px-2.5 py-0.5 rounded-full bg-tertiary-fixed/60 text-on-tertiary-container font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                  Propuesta de Modificación
+                </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Pocito Calle 11</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mt-1">
+                Cabaña Los Pinos Diurnos
+              </h3>
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-outline">person_pin</span>
+<span>Titular: María Belén Mercado</span>
+<span>•</span>
+<span class="font-mono text-on-surface text-[12px]">DNI 31.042.819</span>
+</div>
+</div>
+<div class="text-right shrink-0 flex flex-col items-end">
+<span class="px-2.5 py-1 rounded bg-tertiary-fixed/40 text-on-tertiary-container font-label-sm text-label-sm font-bold">Observado Leve</span>
+<span class="font-label-sm text-label-sm text-outline mt-1">Inspección: Ayer 17:15 hs</span>
+</div>
+</div>
+<div class="mt-3 p-2.5 rounded-lg bg-surface-container-low flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-primary flex items-center justify-center font-label-sm text-[10px] font-bold">LQ</span>
+<span>Validador: Tec. Luciana Quiroga</span>
+</div>
+<span class="text-error font-medium">Cerco pileta a 1.05m (Req: 1.20m)</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1 italic">
+              "El propietario propone suplementar la malla superior en 48hs. Requiere confirmación de prórroga."
+            </p>
+</div>
+</div>
+<!-- ITEM 3: ALERTA ANTIFRAUDE / RIESGO DETECTADO -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all cursor-pointer">
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-label-md text-label-md font-mono text-error bg-error-container/40 px-2 py-0.5 rounded font-bold">#851-RAW/25</span>
+<span class="px-2.5 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">gpp_bad</span>
+                  Alerta Antifraude Crítica
+                </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Rawson Centro</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mt-1">
+                Quincho La Ilusión
+              </h3>
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-outline">person_pin</span>
+<span>Solicitante: Roberto S. Castro (Intermediario)</span>
+</div>
+</div>
+<div class="text-right shrink-0 flex flex-col items-end">
+<span class="px-2.5 py-1 rounded bg-error-container/60 text-on-error-container font-label-sm text-label-sm font-bold">Riesgo Titular</span>
+<span class="font-label-sm text-label-sm text-outline mt-1">Inspección: Hoy 09:20 hs</span>
+</div>
+</div>
+<div class="mt-3 p-2.5 rounded-lg bg-error-container/20 flex items-center justify-between text-on-surface font-label-sm text-label-sm">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-label-sm text-[10px] font-bold">MA</span>
+<span>Validador: Lic. Marcos Albarracín</span>
+</div>
+<span class="text-error font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">credit_card_off</span>
+              CBU de 3ro no apoderado
+            </span>
+</div>
+</div>
+<!-- ITEM 4: SUBSANACIÓN RESPONDIDA / EVALUACIÓN DE EVIDENCIAS NUEVAS -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all cursor-pointer">
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-label-md text-label-md font-mono text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">#847-ZON/25</span>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-highest text-primary font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">mark_email_read</span>
+                  Respuesta de Propietario Recibida
+                </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Valle de Zonda</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mt-1">
+                El Manantial de Zonda
+              </h3>
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-outline">person_pin</span>
+<span>Titular: Ing. Horacio V. Romero</span>
+<span>•</span>
+<span class="font-mono text-on-surface text-[12px]">DNI 18.239.102</span>
+</div>
+</div>
+<div class="text-right shrink-0 flex flex-col items-end">
+<span class="px-2.5 py-1 rounded bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm font-bold">Nueva Evidencia</span>
+<span class="font-label-sm text-label-sm text-outline mt-1">Recibido hace 1h</span>
+</div>
+</div>
+<div class="mt-3 p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between text-on-surface font-label-sm text-label-sm">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-primary flex items-center justify-center font-label-sm text-[10px] font-bold">PS</span>
+<span>Validador: Ing. Pedro Salinas</span>
+</div>
+<span class="text-on-surface-variant">Cargó factura matafuego vigente + foto disyuntor SICA 30mA</span>
+</div>
+</div>
+</div>
+<!-- LADO DERECHO: PANEL DE DICTAMEN, EVIDENCIAS Y RESOLUCIÓN TRIPARTITA (5 cols = ~42%) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md sticky top-24">
+<!-- Ficha técnica del Expediente Seleccionado -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-md flex flex-col gap-space-sm">
+<!-- Header de la Ficha -->
+<div class="flex items-start justify-between pb-3 bg-surface-container-low/40 p-3 rounded-lg">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase font-mono">Expediente Oficial EXP-2025-0849</span>
+<h3 class="font-headline-md text-headline-md text-primary mt-0.5">Quinta Don Antonio</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Callejon Corvalán s/n, Médano de Oro</span>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container font-label-sm text-label-sm font-bold shrink-0">
+              Pre-Aprobado en Terreno
+            </span>
+</div>
+<!-- Auditoría física y datos cruzados -->
+<div class="flex flex-col gap-2 pt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-bold">
+              1. Identidad Registral y Antifraude
+            </span>
+<div class="grid grid-cols-2 gap-2 p-3 rounded-lg bg-surface-container-low font-body-sm text-body-sm">
+<div>
+<span class="text-outline text-[12px] block">Titular Registral:</span>
+<span class="font-medium text-on-surface">Carlos M. Quiroga</span>
+</div>
+<div>
+<span class="text-outline text-[12px] block">DNI Validado:</span>
+<span class="font-medium font-mono text-on-surface">24.819.330</span>
+</div>
+<div class="col-span-2 mt-1 pt-1">
+<span class="text-outline text-[12px] block">CBU Banco San Juan (Sello Seguro):</span>
+<div class="flex items-center gap-1 text-secondary font-mono font-bold text-[13px]">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>04500018-01800045192831</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Checklist técnico del Validador -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-bold">
+                2. Checklist Técnico In Situ
+              </span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">5 / 5 Verificados</span>
+</div>
+<div class="space-y-1.5 font-body-sm text-body-sm">
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
+<span>Cerco perimetral pileta (1.25m con traba)</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold font-mono">1.25m OK</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
+<span>Disyuntor diferencial test 30mA</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Activo / Test OK</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
+<span>Seguro de Responsabilidad Civil</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-mono">Póliza Triunfo Vigente</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
+<span>Capacidad máxima diurna calculada</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">25 personas máx.</span>
+</div>
+</div>
+</div>
+<!-- Evidencias fotográficas georreferenciadas -->
+<div class="flex flex-col gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-bold">
+              3. Evidencias Geotagged (4 fotos auditadas)
+            </span>
+<div class="grid grid-cols-4 gap-2">
+<div class="relative rounded-lg overflow-hidden h-16 group cursor-pointer bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform" data-alt="Fotografía nítida y soleada de una pileta de natación en quinta sanjuanina con cerco de seguridad perimetral reglamentario metálico de 1.25m de altura y puerta con cerrojo de seguridad bajo el cielo azul de San Juan." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJGv-XQucK3UqbmUeNBhCGiZ0esOdo22_YI-i51ntxunVKWO4KxrRdP-FSzESLjsh3Q9Es65nmCKqBrge5KabmJX7bwkXcfwokpC0JSmQi2QVjHAUYxeWwtjNS1KhAlDSavDVfjwTLg08Qi4aZGXcQwXMHYIeaycMvuOiwuEZO7W2m3fjeQC_gIqrjZHvHSCBrY_0lHqtfRS28N77cJ-Dbwunm5BC6qpaXM7COf10jUc5QNhmrif_c"/>
+<span class="absolute bottom-0.5 left-0.5 right-0.5 bg-primary/80 text-on-primary text-[9px] px-1 rounded truncate text-center">Pileta 1.25m</span>
+</div>
+<div class="relative rounded-lg overflow-hidden h-16 group cursor-pointer bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform" data-alt="Detalle de tablero eléctrico reglamentario con disyuntor diferencial termomagnético e interruptor SICA bajo inspección técnica de seguridad turística." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCb2fIHuZ7qqnvRU1AhwTNcQsuw_qtJqjyAL0J3M5PR3R65F0Gw_B4yPRZytxER2LrT7e-nV25nFSOdsfWXcb6HhI7redFfV4q07GVh0PWWYrPFEYRVDE5ze2AelPc1aK1qaduVOINs8u4iCoea_1lrhI0I0-P3rYwr25jv5S5jcMYTPk7mTj-hvB5PZ0HOjIOwqE0iFKmqZSQuWknYh5qM1BGFjy4oSsoMAXZSjwWB-fK0s8kYFgou"/>
+<span class="absolute bottom-0.5 left-0.5 right-0.5 bg-primary/80 text-on-primary text-[9px] px-1 rounded truncate text-center">Tablero Eléc.</span>
+</div>
+<div class="relative rounded-lg overflow-hidden h-16 group cursor-pointer bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform" data-alt="Comprobante oficial bancario emitido por Banco San Juan apoyado sobre mesa con verificación de número de cuenta y CBU del titular." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr7sJSqbcxGssNMD9nwDWb2zg1h3eS_wrFTbU2z2ZGESbRT6dsebRwfxu_KaG_3pLX8lfeKZTLkyIwiDclSDIY_eXERfwTBxoFPx2jlkfhvB1gryE64Lsr1Q0cMoS_iPbfRNArOE9rEN7FH5Sjpz2VEw4ieU6vNqNCZjyZsnzdJuaukRyVc9zJLpqGHgV_cJqJREZYIQBrO7tL1pTiyDHtvm265hwDIU9-NhHOpRzEA8jByLs6ZCoE"/>
+<span class="absolute bottom-0.5 left-0.5 right-0.5 bg-primary/80 text-on-primary text-[9px] px-1 rounded truncate text-center">CBU Banco SJ</span>
+</div>
+<div class="relative rounded-lg overflow-hidden h-16 group cursor-pointer bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform" data-alt="Vista exterior del portón y fachada arbolada de una típica quinta campestre en el Médano de Oro San Juan con luz de mañana y acceso señalizado." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMJqpCSwHbPZNIeYGSe3tIjXQuPNt8C8Lfz6Y_Qsx_pXOorgeiqJK8V7i6u85Q85Kkf-ks3dwtbzEaA2F7-L-s8seaWwkxDZXvFQvpNnckIUNej3El93dghGf49uEO81ocBmZW80aeYaaMPb1Mr8jVnItjj9YWwHDH4HC8VCXk_nkaOL5pQ-NGVjtAf7PblSjomn6NpS_y8U2RHgEUvnnsx0iBD8WoRbTZih6UMlaZTvF1nn-SulcE"/>
+<span class="absolute bottom-0.5 left-0.5 right-0.5 bg-primary/80 text-on-primary text-[9px] px-1 rounded truncate text-center">Frente Quinta</span>
+</div>
+</div>
+</div>
+<!-- CAJA DE RESOLUCIÓN DEL SUPERVISOR (Validar / Modificar / Rechazar) -->
+<div class="mt-2 pt-3 flex flex-col gap-3 bg-surface-container-low p-4 rounded-xl">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-primary font-bold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-primary">gavel</span>
+                Dictamen Final del Supervisor
+              </span>
+<span class="font-label-sm text-label-sm text-secondary font-mono">Firma Token ID #9921-OK</span>
+</div>
+<!-- Campo de observaciones que irá en el acta y WhatsApp -->
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant block mb-1">
+                Observaciones Técnicas y Nota para Notificación Oficial:
+              </label>
+<textarea class="w-full p-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm focus:outline-none focus:bg-surface-bright resize-none" placeholder="Indique notas complementarias para el propietario y el Sello QR público..." rows="2">Auditoría in situ 100% conforme. Cumple normativa provincial Res. 182-MTyC/24. Sello San Juan Seguro habilitado para publicación y reserva inmediata.</textarea>
+</div>
+<!-- ACCIONES TRIPARTITAS: APROBAR / MODIFICAR / RECHAZAR -->
+<div class="flex flex-col gap-2 pt-1">
+<!-- 1. BOTÓN PRINCIPAL VERDE: APROBAR & EMITIR QR -->
+<button class="w-full py-3 px-4 rounded-lg bg-secondary hover:bg-on-secondary-container transition-all text-on-secondary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-md hover:shadow-lg" id="btn-approve" onclick="handleSupervisorAction('approve')">
+<span class="material-symbols-outlined text-[20px]">qr_code_2</span>
+<span>Aprobar Dictamen y Emitir QR Oficial</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<!-- 2. BOTÓN ÁMBAR: SOLICITAR MODIFICACIÓN -->
+<button class="py-2.5 px-3 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed hover:bg-tertiary-fixed-dim transition-colors font-label-md text-label-md flex items-center justify-center gap-1.5 shadow-sm" id="btn-modify" onclick="handleSupervisorAction('modify')">
+<span class="material-symbols-outlined text-[18px]">published_with_changes</span>
+<span>Pedir Modificación (48hs)</span>
+</button>
+<!-- 3. BOTÓN ROJO: RECHAZAR SOLICITUD -->
+<button class="py-2.5 px-3 rounded-lg bg-error-container text-on-error-container hover:bg-error/20 transition-colors font-label-md text-label-md flex items-center justify-center gap-1.5 shadow-sm" id="btn-reject" onclick="handleSupervisorAction('reject')">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+<span>Rechazar Solicitud</span>
+</button>
+</div>
+</div>
+<!-- Dynamic Feedback message container -->
+<div class="hidden p-3 rounded-lg font-body-sm text-body-sm flex items-center gap-2" id="action-feedback">
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive script for Supervisor decisions without external libraries -->
+<script>
+    function handleSupervisorAction(type) {
+      const feedback = document.getElementById('action-feedback');
+      if (!feedback) return;
+      feedback.classList.remove('hidden', 'bg-secondary-container', 'text-on-secondary-container', 'bg-tertiary-fixed', 'text-on-tertiary-fixed', 'bg-error-container', 'text-on-error-container');
+
+      if (type === 'approve') {
+        feedback.className = 'p-3 rounded-lg font-body-sm text-body-sm flex items-center gap-2 bg-secondary-container text-on-secondary-container shadow-sm';
+        feedback.innerHTML = '<span class="material-symbols-outlined text-[20px]">verified</span> <div><strong>¡Expediente Aprobado!</strong> Firma digital aplicada. Sello QR emitido y enviado vía WhatsApp a Carlos M. Quiroga.</div>';
+      } else if (type === 'modify') {
+        feedback.className = 'p-3 rounded-lg font-body-sm text-body-sm flex items-center gap-2 bg-tertiary-fixed text-on-tertiary-fixed shadow-sm';
+        feedback.innerHTML = '<span class="material-symbols-outlined text-[20px]">hourglass_top</span> <div><strong>Plazo de 48hs Notificado:</strong> El propietario y el validador han recibido el requerimiento técnico para subsanar.</div>';
+      } else if (type === 'reject') {
+        feedback.className = 'p-3 rounded-lg font-body-sm text-body-sm flex items-center gap-2 bg-error-container text-on-error-container shadow-sm';
+        feedback.innerHTML = '<span class="material-symbols-outlined text-[20px]">block</span> <div><strong>Dictamen Rechazado:</strong> Acta archivada con causa vinculante. Notificado al Registro Turístico Provincial.</div>';
+      }
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-low py-space-xl mt-space-xl shadow-[0_-1px_6px_rgba(0,0,0,0.02)]"><div class="max-w-7xl mx-auto px-gutter"><div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg items-center text-center md:text-left"><div class="flex flex-col gap-space-xs"><div class="flex items-center justify-center md:justify-start gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">verified</span><span class="font-headline-sm text-headline-sm text-primary">Mesa de Control • San Juan</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">Unidad de Verificación In Situ de Alquileres Temporarios, Quintas y Quinchos Oficiales.</p></div><div class="flex flex-col items-center justify-center gap-space-xs"><span class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-wider">Soporte Técnico Operativo</span><div class="flex items-center gap-space-sm font-body-sm text-body-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px]">support_agent</span><span>Línea Directa Validador: (0264) 429-TURISMO</span></div><div class="flex items-center gap-space-sm font-body-sm text-body-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px]">schedule</span><span>Guardia Operativa: 08:00 a 22:00 hs</span></div></div><div class="flex flex-col items-center md:items-end gap-space-xs text-on-surface-variant"><span class="font-label-sm text-label-sm">© 2025 Ministerio de Turismo y Cultura • San Juan</span><span class="font-label-sm text-label-sm text-outline">Sistema Provincial de Garantía y Antifraude de Alquileres</span></div></div></div></footer></body></html>

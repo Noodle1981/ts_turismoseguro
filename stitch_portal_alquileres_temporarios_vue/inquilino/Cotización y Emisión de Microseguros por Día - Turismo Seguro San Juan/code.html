@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-fixed": "#ffddb8", "inverse-on-surface": "#eaf1ff", "on-tertiary-fixed-variant": "#653e00", "background": "#f8f9ff", "surface-dim": "#cbdbf5", "primary-container": "#0f2942", "on-secondary-fixed-variant": "#005137", "inverse-primary": "#b0c9e8", "on-primary-fixed-variant": "#314863", "surface-container": "#e5eeff", "on-secondary": "#ffffff", "surface-variant": "#d3e4fe", "on-secondary-container": "#00714e", "on-primary-fixed": "#011d35", "error": "#ba1a1a", "on-primary": "#ffffff", "tertiary-container": "#3b2200", "on-tertiary-fixed": "#2a1700", "primary": "#001428", "surface-container-lowest": "#ffffff", "inverse-surface": "#213145", "surface-container-highest": "#d3e4fe", "on-error": "#ffffff", "on-background": "#0b1c30", "error-container": "#ffdad6", "surface-tint": "#49607c", "secondary-container": "#82f5c1", "outline": "#74777e", "surface": "#f8f9ff", "on-tertiary": "#ffffff", "tertiary-fixed-dim": "#ffb95f", "on-surface-variant": "#43474d", "primary-fixed": "#d1e4ff", "surface-container-low": "#eff4ff", "on-error-container": "#93000a", "secondary": "#006c4a", "on-secondary-fixed": "#002114", "tertiary": "#1f1000", "outline-variant": "#c3c6ce", "primary-fixed-dim": "#b0c9e8", "surface-container-high": "#dce9ff", "on-tertiary-container": "#c77f00", "secondary-fixed-dim": "#68dba9", "on-primary-container": "#7991af", "on-surface": "#0b1c30", "surface-bright": "#f8f9ff", "secondary-fixed": "#85f8c4" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "gutter-mobile": "1rem", "space-lg": "1.5rem", "gutter": "1.5rem", "margin-mobile": "1rem", "space-xl": "2.5rem", "space-xs": "0.25rem", "margin": "2rem", "space-md": "1rem" }, "fontFamily": { "label-sm": [ "Plus Jakarta Sans" ], "body-sm": [ "Plus Jakarta Sans" ], "body-md": [ "Plus Jakarta Sans" ], "label-md": [ "Plus Jakarta Sans" ], "label-lg": [ "Plus Jakarta Sans" ], "headline-xl": [ "Plus Jakarta Sans" ], "headline-lg-mobile": [ "Plus Jakarta Sans" ], "headline-lg": [ "Plus Jakarta Sans" ], "body-lg": [ "Plus Jakarta Sans" ], "headline-xl-mobile": [ "Plus Jakarta Sans" ], "headline-sm": [ "Plus Jakarta Sans" ], "headline-md": [ "Plus Jakarta Sans" ] }, "fontSize": { "label-sm": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" } ], "body-sm": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "body-md": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" } ], "label-lg": [ "14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" } ], "headline-xl": [ "48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" } ], "headline-lg-mobile": [ "26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "700" } ], "headline-lg": [ "36px", { "lineHeight": "44px", "letterSpacing": "-0.015em", "fontWeight": "700" } ], "body-lg": [ "18px", { "lineHeight": "28px", "fontWeight": "400" } ], "headline-xl-mobile": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800" } ], "headline-sm": [ "20px", { "lineHeight": "28px", "fontWeight": "600" } ], "headline-md": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" } ] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-md shadow-[0_1px_8px_rgba(15,41,66,0.06)]"><div class="h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><a class="flex items-center gap-space-sm group" data-path="inicio" href="#"><div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-secondary-fixed shadow-[0_2px_4px_rgba(15,41,66,0.12)]"><span class="material-symbols-outlined text-[24px]">verified_user</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary leading-tight font-bold tracking-tight">Turismo Seguro</span><span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">San Juan • Oficial</span></div></a><div class="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">gpp_good</span><span>Control In Situ Activo</span></div></div><nav class="hidden lg:flex items-center gap-space-md" data-active-classes="bg-surface-container-high text-on-surface font-label-lg font-bold rounded-lg px-3 py-2"><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low px-3 py-2 rounded-lg transition-colors" data-path="buscador-quintas" href="#">Buscador de Quintas</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low px-3 py-2 rounded-lg transition-colors" data-path="catalogo-alquileres" href="#">Alquileres Diurnos</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low px-3 py-2 rounded-lg transition-colors" data-path="polizas-seguros" href="#">Pólizas &amp; Seguros</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low px-3 py-2 rounded-lg transition-colors" data-path="validacion-in-situ" href="#">Validación In Situ</a></nav><div class="flex items-center gap-space-md"><a class="hidden sm:inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container hover:text-on-primary transition-colors shadow-sm" data-path="portal-propietarios" href="#">Portal Propietarios</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]"><div class="flex flex-col w-full">
+<!-- Top Trust & Protocol Banner -->
+<div class="w-full bg-primary text-on-primary py-2.5 px-6 lg:px-12">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-space-sm text-xs">
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-secondary text-on-secondary">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+</span>
+<span class="font-label-md text-label-md tracking-wide">Marco Oficial Ley Provincial 8421 • Protocolo de Seguridad Turística y Recreativa San Juan</span>
+</div>
+<div class="flex items-center gap-space-md text-inverse-primary font-label-sm text-label-sm">
+<span class="inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary-fixed">shield_with_heart</span>
+          Triunfo Seguros (Matr. SSN Nº 0422)
+        </span>
+<span class="hidden sm:inline-block opacity-40">•</span>
+<span class="hidden sm:inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary-fixed">health_and_safety</span>
+          San Cristóbal Seguros (Matr. SSN Nº 0198)
+        </span>
+</div>
+</div>
+</div>
+<!-- Header Section with Role Switcher -->
+<section class="w-full bg-surface-container-low py-10 lg:py-14 px-6 lg:px-12 relative overflow-hidden">
+<div class="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-surface-tint/10 blur-3xl pointer-events-none"></div>
+<div class="absolute -left-20 bottom-0 w-80 h-80 rounded-full bg-secondary-container/20 blur-2xl pointer-events-none"></div>
+<div class="max-w-7xl mx-auto relative z-10 flex flex-col gap-8">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+<div class="max-w-3xl space-y-3">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm shadow-sm">
+<span class="material-symbols-outlined text-[16px]">gpp_good</span>
+<span>Microseguro On-Demand • Cobertura Inmediata por Jornada</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-primary leading-tight font-extrabold tracking-tight">
+            Póliza Diurna y Seguro de Responsabilidad Civil para tu Evento
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+            Convenio oficial con Triunfo Seguros &amp; San Cristóbal. Cobertura médica y legal inmediata por 12 o 24 horas para cumpleaños, bautismos, asados y reuniones familiares en quintas verificadas de San Juan.
+          </p>
+</div>
+<!-- Role Toggle Pill -->
+<div class="bg-surface-container-lowest p-1.5 rounded-xl shadow-sm flex flex-col sm:flex-row gap-1 self-start lg:self-end">
+<div class="px-3 py-1 font-label-sm text-label-sm text-on-surface-variant self-center hidden md:block">
+            ¿Quién contrata la póliza hoy?
+          </div>
+<div class="flex items-center bg-surface-container-low p-1 rounded-lg">
+<button class="px-4 py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg flex items-center gap-2 shadow-sm transition-all duration-200" id="role-tenant-btn" onclick="setRole('inquilino')">
+<span class="material-symbols-outlined text-[18px]">family_restroom</span>
+<span>Soy Inquilino / Organizador</span>
+</button>
+<button class="px-4 py-2.5 rounded-lg text-on-surface-variant font-label-lg text-label-lg flex items-center gap-2 hover:text-on-surface transition-all duration-200" id="role-owner-btn" onclick="setRole('propietario')">
+<span class="material-symbols-outlined text-[18px]">real_estate_agent</span>
+<span>Soy Propietario de la Quinta</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Trust Indicators Banner -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+<div class="bg-surface-container-lowest/80 backdrop-blur p-4 rounded-xl shadow-sm flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">flash_on</span>
+</div>
+<div>
+<div class="font-label-lg text-label-lg font-bold text-on-surface">Emisión en 90 seg</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Activación automática</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest/80 backdrop-blur p-4 rounded-xl shadow-sm flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">pool</span>
+</div>
+<div>
+<div class="font-label-lg text-label-lg font-bold text-on-surface">Pileta &amp; Quincho</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Cerco y perímetro cubiertos</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest/80 backdrop-blur p-4 rounded-xl shadow-sm flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">medical_services</span>
+</div>
+<div>
+<div class="font-label-lg text-label-lg font-bold text-on-surface">Ambulancia 24hs</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Urgencias médicas diurnas</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest/80 backdrop-blur p-4 rounded-xl shadow-sm flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">qr_code_2</span>
+</div>
+<div>
+<div class="font-label-lg text-label-lg font-bold text-on-surface">Póliza QR Oficial</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Check-in digital en tranquera</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Quotation Workspace: 7:5 Desktop Bento Ratio -->
+<section class="max-w-7xl mx-auto w-full px-6 lg:px-12 py-10 lg:py-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- LEFT COLUMN: Live Form (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-8">
+<!-- PASO 1: Propiedad Verificada -->
+<div class="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm flex flex-col gap-5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-7 h-7 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center justify-center font-bold">1</span>
+<h2 class="font-headline-sm text-headline-sm text-primary font-bold">Propiedad Verificada San Juan</h2>
+</div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Habilitación Vigente 2025</span>
+</span>
+</div>
+<div class="space-y-3">
+<label class="font-label-md text-label-md text-on-surface-variant">Inmueble donde se realizará el encuentro:</label>
+<div class="relative">
+<select class="w-full bg-surface-container-low px-4 py-3.5 rounded-lg text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none appearance-none cursor-pointer" id="property-select" onchange="updateQuotationSummary()">
+<option selected="" value="Quinta Don Antonio">Quinta Don Antonio - Médano de Oro (#849-MED/25)</option>
+<option value="Quincho Los Olivos">Quincho Los Olivos - Zonda (#412-ZON/25)</option>
+<option value="Finca El Retiro">Finca El Retiro - Pocito Sur (#604-POC/25)</option>
+<option value="Cabaña Las Sierras">Cabaña y Parque Las Sierras - Rivadavia (#219-RIV/25)</option>
+</select>
+<span class="material-symbols-outlined text-on-surface-variant absolute right-4 top-3.5 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Property Inspection Pill Detail -->
+<div class="p-4 rounded-xl bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary mt-0.5">
+<span class="material-symbols-outlined text-[22px]">holiday_village</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg font-bold text-on-surface" id="selected-prop-name">Quinta Don Antonio</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Calle Ramón Franco s/n, Médano de Oro • Rawson</p>
+<div class="flex flex-wrap items-center gap-2 mt-2">
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Cerco Pileta 1.40m OK</span>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Disyuntor Certificado</span>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Matafuegos ABC al día</span>
+</div>
+</div>
+</div>
+<div class="text-right sm:self-center">
+<span class="inline-block px-3 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-secondary font-bold shadow-xs">
+                In Situ #849
+              </span>
+</div>
+</div>
+</div>
+<!-- PASO 2: Jornada, Fecha y Evento -->
+<div class="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm flex flex-col gap-6">
+<div class="flex items-center gap-3">
+<span class="w-7 h-7 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center justify-center font-bold">2</span>
+<h2 class="font-headline-sm text-headline-sm text-primary font-bold">Datos de la Jornada y Concurrencia</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<!-- Fecha -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span>Fecha del Evento</span>
+</label>
+<input class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none" id="event-date" onchange="updateQuotationSummary()" type="date" value="2025-11-15"/>
+</div>
+<!-- Rango Horario / Turno -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Franja Horaria / Turno</span>
+</label>
+<select class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none appearance-none cursor-pointer" id="shift-select" onchange="updateQuotationSummary()">
+<option selected="" value="Turno Diurno (10:00 a 20:00 hs - 10 hs)">Turno Diurno (10:00 a 20:00 hs - 10 hs)</option>
+<option value="Jornada Extendida / Noche (12:00 a 02:00 hs)">Jornada Extendida / Noche (12:00 a 02:00 hs)</option>
+<option value="Día y Noche Completo (24 horas)">Día y Noche Completo (24 horas)</option>
+</select>
+</div>
+</div>
+<!-- Tipo de Encuentro Chips -->
+<div class="space-y-3">
+<label class="font-label-md text-label-md text-on-surface-variant">Tipo de Festejo o Encuentro Diurno:</label>
+<div class="flex flex-wrap gap-2.5" id="event-type-container">
+<button class="event-chip active-chip px-3.5 py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md transition-all flex items-center gap-1.5" onclick="selectEventType(this, 'Cumpleaños / Festejo Familiar')" type="button">
+<span class="material-symbols-outlined text-[16px]">celebration</span>
+<span>Cumpleaños / Festejo Familiar</span>
+</button>
+<button class="event-chip px-3.5 py-2 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container transition-all flex items-center gap-1.5" onclick="selectEventType(this, 'Reunión de Amigos / Asado Diurno')" type="button">
+<span class="material-symbols-outlined text-[16px]">outdoor_grill</span>
+<span>Asado Diurno / Pileta</span>
+</button>
+<button class="event-chip px-3.5 py-2 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container transition-all flex items-center gap-1.5" onclick="selectEventType(this, 'Bautismo / Comunión')" type="button">
+<span class="material-symbols-outlined text-[16px]">church</span>
+<span>Bautismo / Comunión</span>
+</button>
+<button class="event-chip px-3.5 py-2 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container transition-all flex items-center gap-1.5" onclick="selectEventType(this, 'Jornada Corporativa / Team Day')" type="button">
+<span class="material-symbols-outlined text-[16px]">groups</span>
+<span>Jornada Corporativa</span>
+</button>
+</div>
+</div>
+<!-- Aforo Selector con Stepper -->
+<div class="p-4 rounded-xl bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<div class="font-label-lg text-label-lg font-bold text-on-surface flex items-center gap-2">
+<span>Aforo Máximo Declarado</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">info</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Límite homologado para esta quinta: hasta 60 personas.</p>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-lowest px-3 py-1.5 rounded-lg shadow-sm">
+<button class="w-8 h-8 rounded-lg bg-surface-container-low text-on-surface flex items-center justify-center font-bold hover:bg-surface-container transition-colors" onclick="adjustGuests(-5)" type="button">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="font-headline-sm text-headline-sm font-bold text-primary min-w-[70px] text-center" id="guest-count-label">25 pers</span>
+<button class="w-8 h-8 rounded-lg bg-surface-container-low text-on-surface flex items-center justify-center font-bold hover:bg-surface-container transition-colors" onclick="adjustGuests(5)" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- PASO 3: Nivel de Cobertura Deseado -->
+<div class="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-7 h-7 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center justify-center font-bold">3</span>
+<h2 class="font-headline-sm text-headline-sm text-primary font-bold">Nivel de Cobertura Deseado</h2>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Tarifas bonificadas 2025</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<!-- Plan Esencial Diurno Card -->
+<div class="plan-card p-6 rounded-xl bg-surface-container-low cursor-pointer transition-all duration-200 relative flex flex-col justify-between shadow-xs" id="plan-card-esencial" onclick="selectPlan('esencial', 4500, 'Plan Esencial Diurno')">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container font-label-sm text-label-sm font-bold">
+                    Más Elegido por Familias
+                  </span>
+<span class="material-symbols-outlined text-[24px] text-secondary plan-indicator-icon">radio_button_checked</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Plan Esencial Diurno</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Cobertura estándar de seguridad legal y médica para reuniones familiares.</p>
+</div>
+<div class="py-2">
+<div class="font-headline-lg text-headline-lg font-extrabold text-primary">$4.500 <span class="font-label-md text-label-md font-normal text-on-surface-variant">ARS / día</span></div>
+<span class="font-label-sm text-label-sm text-secondary">Asegura hasta 35 personas</span>
+</div>
+<ul class="space-y-2.5 font-body-sm text-body-sm text-on-surface-variant pt-2">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary mt-0.5">check_circle</span>
+<span>Responsabilidad Civil Comprensiva hasta <strong>$15.000.000 ARS</strong>.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary mt-0.5">check_circle</span>
+<span>Asistencia médica de urgencia y traslado en ambulancia ($2.000.000 ARS).</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary mt-0.5">check_circle</span>
+<span>Accidentes en Pileta con cerco verificado in situ.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary mt-0.5">check_circle</span>
+<span>Emisión digital instantánea por WhatsApp &amp; PDF.</span>
+</li>
+</ul>
+</div>
+<div class="mt-6 pt-4 border-none">
+<div class="w-full py-2.5 rounded-lg bg-surface text-center font-label-lg text-label-lg text-primary font-bold plan-btn-label">
+                  Seleccionado
+                </div>
+</div>
+</div>
+<!-- Plan Total Evento Card -->
+<div class="plan-card p-6 rounded-xl bg-surface-container-lowest cursor-pointer transition-all duration-200 relative flex flex-col justify-between shadow-xs" id="plan-card-total" onclick="selectPlan('total', 6800, 'Plan Total Evento')">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="px-2.5 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm font-bold">
+                    Recomendado Festejos Grandes
+                  </span>
+<span class="material-symbols-outlined text-[24px] text-on-surface-variant plan-indicator-icon">radio_button_unchecked</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Plan Total Evento</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Protección ampliada con amparo ante daños materiales y servicio de catering.</p>
+</div>
+<div class="py-2">
+<div class="font-headline-lg text-headline-lg font-extrabold text-primary">$6.800 <span class="font-label-md text-label-md font-normal text-on-surface-variant">ARS / día</span></div>
+<span class="font-label-sm text-label-sm text-secondary">Asegura hasta 60 personas</span>
+</div>
+<ul class="space-y-2.5 font-body-sm text-body-sm text-on-surface-variant pt-2">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary mt-0.5">check_circle</span>
+<span>Responsabilidad Civil ampliada hasta <strong>$30.000.000 ARS</strong>.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary mt-0.5">check_circle</span>
+<span>Cobertura médica integral y amparo por intoxicación alimentaria.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary mt-0.5">check_circle</span>
+<span>Daños accidentales a instalaciones fijas del quincho y parque.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary mt-0.5">check_circle</span>
+<span>Equipamiento de sonido e iluminación propia hasta $5.000.000 ARS.</span>
+</li>
+</ul>
+</div>
+<div class="mt-6 pt-4 border-none">
+<div class="w-full py-2.5 rounded-lg bg-surface-container-low text-center font-label-lg text-label-lg text-on-surface-variant font-bold plan-btn-label">
+                  Elegir Plan Total
+                </div>
+</div>
+</div>
+</div>
+</div>
+<!-- PASO 4: Datos del Asegurado Responsable -->
+<div class="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm flex flex-col gap-6">
+<div class="flex items-center gap-3">
+<span class="w-7 h-7 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center justify-center font-bold">4</span>
+<h2 class="font-headline-sm text-headline-sm text-primary font-bold">Datos del Asegurado Responsable</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Nombre y Apellido Titular</label>
+<input class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none" id="insured-name" placeholder="Ej. Juan Pérez" type="text" value="Marcos Emanuel Quiroga"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant">DNI o CUIL</label>
+<input class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none" id="insured-dni" placeholder="Ej. 34.123.456" type="text" value="34.892.103"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant">WhatsApp (para envío del Certificado)</label>
+<div class="flex items-center bg-surface-container-low rounded-lg overflow-hidden">
+<span class="px-3.5 py-3 text-on-surface-variant font-label-md text-label-md bg-surface-container">+54 9 264</span>
+<input class="w-full bg-transparent px-3 py-3 text-on-surface font-body-md text-body-md focus:outline-none" id="insured-phone" placeholder="Ej. 512-3456" type="tel" value="482-9912"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Correo Electrónico (Copia Póliza)</label>
+<input class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none" id="insured-email" placeholder="ejemplo@correo.com" type="email" value="marcos.quiroga@sanjuan.ar"/>
+</div>
+</div>
+<!-- Declaración y Checkbox -->
+<div class="p-4 rounded-xl bg-surface-container-low space-y-3">
+<label class="flex items-start gap-3 cursor-pointer">
+<input checked="" class="w-5 h-5 rounded mt-0.5 text-secondary accent-secondary focus:ring-0" id="terms-check" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                Declaro bajo juramento que el evento respetará el aforo declarado (<span class="font-bold text-on-surface" id="declared-guests-text">25 personas</span>), que no habrá venta comercial de entradas, y acepto las condiciones particulares de la póliza de Triunfo Seguros &amp; San Cristóbal en el marco de la normativa turística provincial.
+              </span>
+</label>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Sticky Summary & Checkout Card (5 cols) -->
+<div class="lg:col-span-5 lg:sticky lg:top-28 flex flex-col gap-6">
+<div class="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-md flex flex-col gap-6 relative overflow-hidden">
+<!-- Institutional Watermark Accent -->
+<div class="absolute -right-12 -top-12 w-44 h-44 rounded-full bg-secondary-container/20 blur-xl pointer-events-none"></div>
+<!-- Seal Header -->
+<div class="flex items-center justify-between pb-4">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-lg bg-primary text-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">policy</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase font-bold tracking-wider">Convenio San Juan</span>
+<h3 class="font-label-lg text-label-lg font-bold text-on-surface">Certificado Oficial al Instante</h3>
+</div>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container px-2.5 py-1 rounded text-on-surface-variant">#TS-SEG-2025</span>
+</div>
+<!-- Live Summary Card -->
+<div class="p-5 rounded-xl bg-surface-container-low space-y-3.5">
+<div class="flex justify-between items-center text-body-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Propiedad Asegurada:</span>
+<span class="font-label-lg text-label-lg font-bold text-on-surface text-right" id="summary-property">Quinta Don Antonio</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Fecha de Cobertura:</span>
+<span class="font-label-md text-label-md font-bold text-on-surface" id="summary-date">15 Nov 2025</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Turno y Duración:</span>
+<span class="font-label-md text-label-md text-on-surface text-right max-w-[200px] truncate" id="summary-shift">Diurno (10:00 a 20:00 hs)</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Aforo Declarado:</span>
+<span class="font-label-md text-label-md font-bold text-secondary" id="summary-guests">25 personas</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Nivel de Póliza:</span>
+<span class="font-label-md text-label-md font-bold text-primary" id="summary-plan">Plan Esencial Diurno</span>
+</div>
+</div>
+<!-- Price & Discount Breakdown -->
+<div class="space-y-2">
+<div class="flex justify-between items-center text-body-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Tarifa Particular Ventanilla:</span>
+<span class="font-body-sm text-body-sm line-through text-on-surface-variant" id="summary-raw-price">$6.920 ARS</span>
+</div>
+<div class="flex justify-between items-center text-body-sm text-secondary">
+<span class="font-label-sm text-label-sm flex items-center gap-1 font-bold">
+<span class="material-symbols-outlined text-[16px]">redeem</span>
+<span>Bonificación Convenio Oficial (35% OFF):</span>
+</span>
+<span class="font-label-md text-label-md font-bold" id="summary-discount">-$2.420 ARS</span>
+</div>
+<div class="p-4 rounded-xl bg-surface-container flex items-center justify-between mt-2">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold">Total por la Jornada</span>
+<p class="font-label-sm text-label-sm text-secondary">Sin cargos ocultos ni franquicia</p>
+</div>
+<div class="font-headline-lg text-headline-lg font-extrabold text-primary" id="summary-total-price">
+                $4.500 ARS
+              </div>
+</div>
+</div>
+<!-- Express Payment Selectors -->
+<div class="space-y-3">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Método de Pago Inmediato</span>
+<div class="grid grid-cols-3 gap-2">
+<button class="payment-opt active-pay p-3 rounded-lg bg-surface-container-low text-center flex flex-col items-center gap-1 transition-all" onclick="selectPayment(this)" type="button">
+<span class="material-symbols-outlined text-[20px] text-primary">account_balance</span>
+<span class="font-label-sm text-label-sm text-on-surface">Transferencia</span>
+</button>
+<button class="payment-opt p-3 rounded-lg bg-surface-container-low text-center flex flex-col items-center gap-1 opacity-70 hover:opacity-100 transition-all" onclick="selectPayment(this)" type="button">
+<span class="material-symbols-outlined text-[20px] text-secondary">payments</span>
+<span class="font-label-sm text-label-sm text-on-surface">Mercado Pago</span>
+</button>
+<button class="payment-opt p-3 rounded-lg bg-surface-container-low text-center flex flex-col items-center gap-1 opacity-70 hover:opacity-100 transition-all" onclick="selectPayment(this)" type="button">
+<span class="material-symbols-outlined text-[20px] text-on-surface">credit_card</span>
+<span class="font-label-sm text-label-sm text-on-surface">Débito Inmediato</span>
+</button>
+</div>
+</div>
+<!-- CTA Button -->
+<button class="w-full py-4 rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 hover:bg-secondary-container hover:text-on-secondary-container shadow-md transition-all duration-200" onclick="handleEmitPolicy()" type="button">
+<span class="material-symbols-outlined text-[22px]">send_to_mobile</span>
+<span>Emitir Póliza y Recibir por WhatsApp</span>
+</button>
+<!-- Automatic Integration Guarantee -->
+<div class="p-3.5 rounded-lg bg-surface-container-low flex items-start gap-3 text-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary mt-0.5">sync_saved_locally</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+<strong>Sincronización instantánea:</strong> La póliza queda vinculada automáticamente al acta de la quinta y se notifica al propietario al instante para habilitar el ingreso sin demoras.
+            </p>
+</div>
+</div>
+<!-- Official Policy Sample Download Card -->
+<div class="bg-surface-container-low p-5 rounded-xl shadow-xs flex items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">description</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg font-bold text-on-surface">Modelo Oficial de Póliza</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Triunfo Seguros • Resolución SSN</p>
+</div>
+</div>
+<button class="px-3.5 py-2 rounded-lg bg-surface-container-lowest text-primary font-label-sm text-label-sm hover:bg-surface-container transition-colors flex items-center gap-1 shadow-xs" onclick="downloadSamplePolicy()" type="button">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>Descargar Muestra</span>
+</button>
+</div>
+<!-- 24hs Emergency Hotline Card -->
+<div class="bg-primary text-on-primary p-5 rounded-xl shadow-xs flex items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container text-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">emergency</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg font-bold text-on-primary">Guardia Siniestros 24hs</p>
+<p class="font-label-sm text-label-sm text-inverse-primary">0800-444-TRIUNFO / SMS Urgente</p>
+</div>
+</div>
+<a class="w-9 h-9 rounded-full bg-secondary text-on-secondary flex items-center justify-center hover:bg-secondary-container hover:text-on-secondary-container transition-colors" href="tel:08004448748">
+<span class="material-symbols-outlined text-[18px]">call</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Editorial Section: Visual Proof & Safety Infrastructure -->
+<section class="w-full bg-surface-container-low py-14 px-6 lg:px-12">
+<div class="max-w-7xl mx-auto flex flex-col gap-10">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase font-bold tracking-wider">Validación en Terreno</span>
+<h2 class="font-headline-lg text-headline-lg text-primary font-bold">Seguridad Técnica que Respalda tu Fiesta</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">
+          Cada quinta que figura en este cotizador ha recibido inspección presencial del equipo de Turismo Seguro, garantizando los requisitos que exigen las aseguradoras.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Visual Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col">
+<div class="relative h-48 w-full">
+<img class="w-full h-full object-cover" data-alt="A safe and sunny swimming pool in a countryside estate in San Juan Argentina, surrounded by green grass, olive trees, clear water, and a compliant security perimeter fence with child latch under bright blue mountain sky." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALdMDWCadiBqazffye214X8R8d7f0710V1crzpriz_sivPpDN6wmpQOuMm0CzakUIxrVg8-0bFZZUwtCvF6MHQeJgCFDKCGK2dtPq93yZloEBBhfHlSYm3fxH2O31k_lOcH5qZw4JMrsVBb26ftzjb9autLGxL41_VHMEjtIrJO7CHHAEr6No9Qi85BqWnRtlRXKMA4hbs7qhhVz3ZEtowQoqBjFswMarporsMZ0xKvoqB_6nH-Ao2"/>
+<div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-secondary font-bold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Cerco Homologado</span>
+</div>
+</div>
+<div class="p-6 space-y-2 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Pileta con Cerco de 1.40m</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Requisito excluyente para la cobertura de accidentes infantiles. Todas las piletas adheridas cuentan con portón de retorno automático.</p>
+</div>
+<div class="pt-4 flex items-center justify-between text-xs text-on-surface-variant">
+<span>Norma IRAM 3951</span>
+<span class="font-bold text-secondary">Aprobado 100%</span>
+</div>
+</div>
+</div>
+<!-- Visual Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col">
+<div class="relative h-48 w-full">
+<img class="w-full h-full object-cover" data-alt="A traditional Argentine barbecue quincho patio with large covered grill, wooden tables set for a family gathering, bright morning light filtering through vineyard pergolas in San Juan countryside." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw5bssxJc6L7mlzLtJ2oOCygS6FRxSdhmAkOoc3oWua5JUx-PmwqCgJx4SEXTkDnZpOkSQJv3ENUQHHdgnNvWk4vgUhXZZuxjTj1p7_Gq_jonhbIL0bsnvXxI_H0Sx7cbyDUXE3z_tjPtEWi-ZR-8Kh-2UN6srBqlGuhwwCwgFcPY0dDqHbQ7vi37dYDRX6NrM1tV3gkig8GKemDMnMn5capjLX8mX35PMKJOf-VE27v7JP9CU9NHA"/>
+<div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-primary font-bold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">local_fire_department</span>
+<span>Protección Quincho</span>
+</div>
+</div>
+<div class="p-6 space-y-2 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Quincho Techado y Tableros Eléctricos</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Inspección de disyuntores diferenciales bipolares y carga térmica en asadores para neutralizar cualquier conato de incendio o corte.</p>
+</div>
+<div class="pt-4 flex items-center justify-between text-xs text-on-surface-variant">
+<span>Certificación Bomberos SJ</span>
+<span class="font-bold text-secondary">Inspección Vigente</span>
+</div>
+</div>
+</div>
+<!-- Visual Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col">
+<div class="relative h-48 w-full">
+<img class="w-full h-full object-cover" data-alt="Modern medical emergency response van parked near an open rustic vineyard event hall in San Juan during a warm afternoon with mountains in background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqtkag3IK9hvJe2VkbJky9snpltnX4Ev12mB7yYhONaEzPEMyuIgNwGIfB7AMwOfVxFAAKEFr_dES8ywutpbwpG3CPLoycAcpfxuCc6zFqUHIBJJcWiT4VzM_nOCseOvUd5S9US-H8_61wBSP6MYh5wVQ41G6hsPJTSyJCZc_KA8lj5MSDzvjejOKwr6pssjV-QlBLRRHUdjzJLLbKhddIk1uiouPACHvN_KxbOQBkRuRKFNl-vExW"/>
+<div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-secondary font-bold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">ambulance</span>
+<span>Corredor Sanitario</span>
+</div>
+</div>
+<div class="p-6 space-y-2 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Corredor Médico de Cercanía</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Convenio con bases zonales de emergencias (Rawson, Pocito, Zonda, Ullum) con tiempo de respuesta comprometido menor a 18 minutos.</p>
+</div>
+<div class="pt-4 flex items-center justify-between text-xs text-on-surface-variant">
+<span>Ambulancias UTI Móvil</span>
+<span class="font-bold text-secondary">Guardia Activa</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Accordion FAQs & Convention Details -->
+<section class="max-w-7xl mx-auto w-full px-6 lg:px-12 py-14">
+<div class="max-w-3xl mx-auto space-y-8">
+<div class="text-center space-y-2">
+<span class="font-label-sm text-label-sm text-secondary uppercase font-bold tracking-wider">Preguntas Frecuentes</span>
+<h2 class="font-headline-lg text-headline-lg text-primary font-bold">Todo lo que Necesitás Saber sobre el Microseguro</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Explicación simple y transparente sobre cómo te protege la póliza durante tu festejo diurno.</p>
+</div>
+<div class="space-y-4">
+<!-- FAQ 1 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-xs overflow-hidden">
+<button class="w-full p-5 text-left flex items-center justify-between gap-4 font-headline-sm text-headline-sm text-on-surface font-semibold hover:bg-surface-container-low transition-colors" onclick="toggleFaq(this)" type="button">
+<span>¿Qué cubre exactamente ante accidentes en la pileta o quincho?</span>
+<span class="material-symbols-outlined text-on-surface-variant transform transition-transform faq-icon">expand_more</span>
+</button>
+<div class="faq-content hidden px-5 pb-5 text-on-surface-variant font-body-md text-body-md space-y-2">
+<p>La póliza ampara la atención médica inmediata, primeros auxilios, radiografías, suturas, yesos y eventual internación por accidentes sufridos por cualquiera de los concurrentes invitados dentro del predio delimitado.</p>
+<p>Además, incluye el traslado de urgencia en ambulancia de alta complejidad hacia el centro de salud de mayor complejidad más cercano (Hospital Rawson, Marcial Quiroga o Sanatorios Privados asociados).</p>
+</div>
+</div>
+<!-- FAQ 2 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-xs overflow-hidden">
+<button class="w-full p-5 text-left flex items-center justify-between gap-4 font-headline-sm text-headline-sm text-on-surface font-semibold hover:bg-surface-container-low transition-colors" onclick="toggleFaq(this)" type="button">
+<span>¿Por qué el costo es de $4.500 y no el de un seguro comercial de $60.000?</span>
+<span class="material-symbols-outlined text-on-surface-variant transform transition-transform faq-icon">expand_more</span>
+</button>
+<div class="faq-content hidden px-5 pb-5 text-on-surface-variant font-body-md text-body-md space-y-2">
+<p>Gracias al <strong>Convenio Marco de Turismo Seguro con Triunfo y San Cristóbal</strong>, las pólizas se emiten bajo la modalidad on-demand por jornada cerrada (10 a 24 horas), eliminando los costos fijos administrativos y amortizando el riesgo sobre una masa de propiedades previamente auditadas y catalogadas con bajo índice de siniestralidad.</p>
+</div>
+</div>
+<!-- FAQ 3 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-xs overflow-hidden">
+<button class="w-full p-5 text-left flex items-center justify-between gap-4 font-headline-sm text-headline-sm text-on-surface font-semibold hover:bg-surface-container-low transition-colors" onclick="toggleFaq(this)" type="button">
+<span>¿Cómo le llega el comprobante al dueño de la quinta?</span>
+<span class="material-symbols-outlined text-on-surface-variant transform transition-transform faq-icon">expand_more</span>
+</button>
+<div class="faq-content hidden px-5 pb-5 text-on-surface-variant font-body-md text-body-md space-y-2">
+<p>Al completarse la emisión, el sistema oficial de Turismo Seguro dispara automáticamente una notificación con el certificado firmado digitalmente al WhatsApp verificado del dueño y a su panel de control de tranquera.</p>
+<p>Al llegar al lugar el día del evento, basta con mostrar el código QR generado para que el casero o encargado autorice el ingreso formal sin retenciones de depósito desmedidas.</p>
+</div>
+</div>
+<!-- FAQ 4 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-xs overflow-hidden">
+<button class="w-full p-5 text-left flex items-center justify-between gap-4 font-headline-sm text-headline-sm text-on-surface font-semibold hover:bg-surface-container-low transition-colors" onclick="toggleFaq(this)" type="button">
+<span>¿Qué ocurre si llueve o se cancela el evento con anticipación?</span>
+<span class="material-symbols-outlined text-on-surface-variant transform transition-transform faq-icon">expand_more</span>
+</button>
+<div class="faq-content hidden px-5 pb-5 text-on-surface-variant font-body-md text-body-md space-y-2">
+<p>Si el evento se reprograma con hasta 12 horas de antelación a la apertura de tranquera, podés trasladar la vigencia de la póliza a una nueva fecha sin penalidad económica ni costo de reemisión.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Modal / Notification Trigger (Hidden container) -->
+<div class="fixed inset-0 z-50 bg-primary/70 backdrop-blur-sm hidden items-center justify-center p-4" id="emission-success-modal">
+<div class="bg-surface-container-lowest max-w-lg w-full rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6 animate-fade-in">
+<div class="w-16 h-16 rounded-full bg-secondary-container/60 text-secondary mx-auto flex items-center justify-center">
+<span class="material-symbols-outlined text-[36px]">check_circle</span>
+</div>
+<div class="text-center space-y-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Emisión Exitosa • Póliza Activa</span>
+<h3 class="font-headline-md text-headline-md text-primary font-bold">¡Tu Evento ya está Protegido!</h3>
+<p class="font-body-md text-body-md text-on-surface-variant" id="modal-success-desc">
+          El certificado digital Nº TS-849-2025 fue remitido a tu WhatsApp (+54 9 264 482-9912) y notificado al propietario de Quinta Don Antonio.
+        </p>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low space-y-2 text-xs">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Compañía Emisora:</span>
+<span class="font-bold text-on-surface">Triunfo Seguros SJ</span>
+</div>
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Vigencia:</span>
+<span class="font-bold text-on-surface" id="modal-date-val">15/11/2025 • Turno Diurno</span>
+</div>
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Código QR de Tranquera:</span>
+<span class="font-bold text-secondary font-mono">QR-TS-OK-9842</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-3">
+<button class="w-full py-3 rounded-lg bg-surface-container text-on-surface font-label-lg text-label-lg hover:bg-surface-container-high transition-colors" onclick="closeModal()" type="button">
+          Cerrar
+        </button>
+<button class="w-full py-3 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors flex items-center justify-center gap-1.5" onclick="closeModal()" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Ver PDF Oficial</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Inline Micro-Interaction Scripting -->
+<script>
+    let currentRole = 'inquilino';
+    let currentGuests = 25;
+    let selectedPlanId = 'esencial';
+    let planBasePrice = 4500;
+    let selectedPlanName = 'Plan Esencial Diurno';
+
+    function setRole(role) {
+      currentRole = role;
+      const tenantBtn = document.getElementById('role-tenant-btn');
+      const ownerBtn = document.getElementById('role-owner-btn');
+
+      if (role === 'inquilino') {
+        tenantBtn.className = "px-4 py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg flex items-center gap-2 shadow-sm transition-all duration-200";
+        ownerBtn.className = "px-4 py-2.5 rounded-lg text-on-surface-variant font-label-lg text-label-lg flex items-center gap-2 hover:text-on-surface transition-all duration-200";
+      } else {
+        ownerBtn.className = "px-4 py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg flex items-center gap-2 shadow-sm transition-all duration-200";
+        tenantBtn.className = "px-4 py-2.5 rounded-lg text-on-surface-variant font-label-lg text-label-lg flex items-center gap-2 hover:text-on-surface transition-all duration-200";
+      }
+    }
+
+    function selectEventType(btn, typeName) {
+      document.querySelectorAll('.event-chip').forEach(el => {
+        el.className = "event-chip px-3.5 py-2 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container transition-all flex items-center gap-1.5";
+      });
+      btn.className = "event-chip active-chip px-3.5 py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md transition-all flex items-center gap-1.5";
+    }
+
+    function adjustGuests(delta) {
+      currentGuests = Math.max(10, Math.min(60, currentGuests + delta));
+      document.getElementById('guest-count-label').innerText = currentGuests + ' pers';
+      document.getElementById('declared-guests-text').innerText = currentGuests + ' personas';
+      document.getElementById('summary-guests').innerText = currentGuests + ' personas';
+
+      if (currentGuests > 35 && selectedPlanId === 'esencial') {
+        selectPlan('total', 6800, 'Plan Total Evento');
+      }
+      updateQuotationSummary();
+    }
+
+    function selectPlan(id, price, name) {
+      selectedPlanId = id;
+      planBasePrice = price;
+      selectedPlanName = name;
+
+      const cardEsencial = document.getElementById('plan-card-esencial');
+      const cardTotal = document.getElementById('plan-card-total');
+
+      const iconEsencial = cardEsencial.querySelector('.plan-indicator-icon');
+      const iconTotal = cardTotal.querySelector('.plan-indicator-icon');
+
+      const labelEsencial = cardEsencial.querySelector('.plan-btn-label');
+      const labelTotal = cardTotal.querySelector('.plan-btn-label');
+
+      if (id === 'esencial') {
+        cardEsencial.className = "plan-card p-6 rounded-xl bg-surface-container-low cursor-pointer transition-all duration-200 relative flex flex-col justify-between shadow-xs";
+        cardTotal.className = "plan-card p-6 rounded-xl bg-surface-container-lowest cursor-pointer transition-all duration-200 relative flex flex-col justify-between shadow-xs";
+        iconEsencial.innerText = 'radio_button_checked';
+        iconEsencial.className = 'material-symbols-outlined text-[24px] text-secondary plan-indicator-icon';
+        iconTotal.innerText = 'radio_button_unchecked';
+        iconTotal.className = 'material-symbols-outlined text-[24px] text-on-surface-variant plan-indicator-icon';
+        labelEsencial.innerText = 'Seleccionado';
+        labelEsencial.className = 'w-full py-2.5 rounded-lg bg-surface text-center font-label-lg text-label-lg text-primary font-bold plan-btn-label';
+        labelTotal.innerText = 'Elegir Plan Total';
+        labelTotal.className = 'w-full py-2.5 rounded-lg bg-surface-container-low text-center font-label-lg text-label-lg text-on-surface-variant font-bold plan-btn-label';
+      } else {
+        cardTotal.className = "plan-card p-6 rounded-xl bg-surface-container-low cursor-pointer transition-all duration-200 relative flex flex-col justify-between shadow-xs";
+        cardEsencial.className = "plan-card p-6 rounded-xl bg-surface-container-lowest cursor-pointer transition-all duration-200 relative flex flex-col justify-between shadow-xs";
+        iconTotal.innerText = 'radio_button_checked';
+        iconTotal.className = 'material-symbols-outlined text-[24px] text-secondary plan-indicator-icon';
+        iconEsencial.innerText = 'radio_button_unchecked';
+        iconEsencial.className = 'material-symbols-outlined text-[24px] text-on-surface-variant plan-indicator-icon';
+        labelTotal.innerText = 'Seleccionado';
+        labelTotal.className = 'w-full py-2.5 rounded-lg bg-surface text-center font-label-lg text-label-lg text-primary font-bold plan-btn-label';
+        labelEsencial.innerText = 'Elegir Plan Esencial';
+        labelEsencial.className = 'w-full py-2.5 rounded-lg bg-surface-container-low text-center font-label-lg text-label-lg text-on-surface-variant font-bold plan-btn-label';
+      }
+
+      updateQuotationSummary();
+    }
+
+    function updateQuotationSummary() {
+      const propSelect = document.getElementById('property-select');
+      const propName = propSelect.value;
+      document.getElementById('summary-property').innerText = propName;
+      document.getElementById('selected-prop-name').innerText = propName;
+
+      const dateVal = document.getElementById('event-date').value;
+      if (dateVal) {
+        const parts = dateVal.split('-');
+        const formatted = `${parts[2]}/${parts[1]}/${parts[0]}`;
+        document.getElementById('summary-date').innerText = formatted;
+      }
+
+      const shiftSelect = document.getElementById('shift-select');
+      document.getElementById('summary-shift').innerText = shiftSelect.value;
+      document.getElementById('summary-plan').innerText = selectedPlanName;
+
+      // Price Calculations
+      const rawPrice = Math.round(planBasePrice / 0.65);
+      const discount = rawPrice - planBasePrice;
+
+      document.getElementById('summary-raw-price').innerText = `$${rawPrice.toLocaleString('es-AR')} ARS`;
+      document.getElementById('summary-discount').innerText = `-$${discount.toLocaleString('es-AR')} ARS`;
+      document.getElementById('summary-total-price').innerText = `$${planBasePrice.toLocaleString('es-AR')} ARS`;
+    }
+
+    function selectPayment(btn) {
+      document.querySelectorAll('.payment-opt').forEach(el => {
+        el.classList.remove('active-pay');
+        el.classList.add('opacity-70');
+      });
+      btn.classList.add('active-pay');
+      btn.classList.remove('opacity-70');
+    }
+
+    function toggleFaq(btn) {
+      const content = btn.nextElementSibling;
+      const icon = btn.querySelector('.faq-icon');
+      const isHidden = content.classList.contains('hidden');
+
+      if (isHidden) {
+        content.classList.remove('hidden');
+        icon.innerText = 'expand_less';
+      } else {
+        content.classList.add('hidden');
+        icon.innerText = 'expand_more';
+      }
+    }
+
+    function handleEmitPolicy() {
+      const modal = document.getElementById('emission-success-modal');
+      const name = document.getElementById('insured-name').value || 'Asegurado';
+      const phone = document.getElementById('insured-phone').value || '264-000000';
+      const prop = document.getElementById('property-select').value;
+      
+      document.getElementById('modal-success-desc').innerText = 
+        `Póliza emitida a nombre de ${name}. Certificado digital remitido a WhatsApp (+54 9 264 ${phone}) y notificado al encargado de ${prop}.`;
+      
+      const dateVal = document.getElementById('event-date').value || '2025-11-15';
+      document.getElementById('modal-date-val').innerText = `${dateVal} • ${selectedPlanName}`;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('emission-success-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function downloadSamplePolicy() {
+      alert('Descargando archivo modelo: "Poliza_Marco_TS_TriunfoSeguros_Muestra2025.pdf"');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateQuotationSummary();
+    });
+  </script>
+</div></main><footer class="w-full bg-surface-container-low mt-space-xl shadow-[0_-1px_8px_rgba(15,41,66,0.03)]"><div class="max-w-7xl mx-auto px-6 lg:px-12 pt-space-xl pb-space-lg"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-xl mb-space-xl"><div><div class="flex items-center gap-space-sm mb-space-md"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-secondary-fixed"><span class="material-symbols-outlined text-[20px]">shield</span></div><span class="font-headline-sm text-headline-sm text-primary font-bold">Turismo Seguro</span></div><p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Registro y certificación oficial para la contratación transparente de quintas, quinchos y casas de campo con habilitación técnica y cobertura por jornada en la Provincia de San Juan.</p><div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-lowest text-secondary font-label-sm text-label-sm shadow-sm"><span class="material-symbols-outlined text-[16px]">policy</span><span>Marco Regulatorio Provincial Nº 8421</span></div></div><div><h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-md">Garantía y Seguros</h3><p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Convenios institucionales con cobertura activa de responsabilidad civil y accidentes personales durante cada jornada reservada.</p><div class="space-y-space-sm"><div class="flex items-center gap-3 p-2.5 rounded-lg bg-surface-container-lowest shadow-sm"><span class="material-symbols-outlined text-secondary text-[22px]">verified</span><div><p class="font-label-lg text-label-lg text-on-surface leading-tight">Triunfo Seguros</p><p class="font-label-sm text-label-sm text-on-surface-variant">Póliza de Caución y Responsabilidad Civil</p></div></div><div class="flex items-center gap-3 p-2.5 rounded-lg bg-surface-container-lowest shadow-sm"><span class="material-symbols-outlined text-secondary text-[22px]">verified</span><div><p class="font-label-lg text-label-lg text-on-surface leading-tight">San Cristóbal Seguros</p><p class="font-label-sm text-label-sm text-on-surface-variant">Cobertura Integral para Eventos Diurnos</p></div></div></div></div><div><h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-md">Protocolo In Situ</h3><ul class="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant"><li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">check_circle</span><span>Inspección física de piletas con cerco perimetral de seguridad.</span></li><li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">check_circle</span><span>Verificación de tableros eléctricos y disyuntores diferenciales.</span></li><li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">check_circle</span><span>Aforo certificado y control de emisión sonora comunitaria.</span></li><li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">check_circle</span><span>Contrato digital validado con código QR fiscal in situ.</span></li></ul></div><div><h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-md">Mesa de Ayuda San Juan</h3><div class="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant"><p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[20px]">location_on</span><span>Centro Cívico San Juan, Núcleo 5, Planta Baja</span></p><p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[20px]">call</span><span>0800-333-TURISMO (8874)</span></p><p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[20px]">chat</span><span>Guardia WhatsApp: +54 9 264 489-0120</span></p><p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[20px]">schedule</span><span>Lun a Dom de 08:00 a 22:00 hs</span></p></div></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex flex-wrap items-center gap-space-md"><span class="font-label-sm text-label-sm text-on-surface-variant">© 2025 Ministerio de Turismo y Cultura de San Juan. Todos los derechos reservados.</span></div><div class="flex items-center gap-space-lg"><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="terminos-condiciones" href="#">Términos y Seguros</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="registro-propietarios" href="#">Adhesión de Inmuebles</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="contacto-oficial" href="#">Denuncias de Fraude</a></div></div></div></footer></body></html>

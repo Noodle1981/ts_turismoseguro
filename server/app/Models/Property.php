@@ -104,4 +104,9 @@ class Property extends Model
     {
         return $this->hasMany(VerificationRequest::class);
     }
+
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class);
+    }
 }

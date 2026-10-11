@@ -78,6 +78,15 @@
           <span>Cero Estafas</span>
           <span>•</span>
           <span>Auditores In Situ</span>
+          <span>•</span>
+          <RouterLink
+            to="/staff/login"
+            class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors py-1 px-2 rounded hover:bg-surface-container"
+            title="Acceso exclusivo para Auditores, Inspectores y Administración"
+          >
+            <span class="material-symbols-outlined text-[16px] text-secondary">badge</span>
+            <span>Portal Staff</span>
+          </RouterLink>
         </div>
       </div>
     </div>

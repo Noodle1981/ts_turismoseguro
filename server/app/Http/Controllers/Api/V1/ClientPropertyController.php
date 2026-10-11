@@ -182,18 +182,66 @@ class ClientPropertyController extends Controller
     }
 
     /**
-     * Get availability dates for client property.
+     * Get bookings and availability dates for client property.
      */
     public function availability(int $id, Request $request): JsonResponse
     {
         $property = Property::where('user_id', $request->user()->id)->findOrFail($id);
 
-        $dates = PropertyAvailability::where('property_id', $property->id)
+        $availabilities = PropertyAvailability::where('property_id', $property->id)
             ->orderBy('date')
-            ->get(['date', 'status', 'notes']);
+            ->get(['id', 'date', 'status', 'notes']);
+
+        $bookings = $property->bookings()
+            ->with('user:id,name,email,phone,dni')
+            ->orderBy('date')
+            ->get();
 
         return response()->json([
-            'data' => $dates,
+            'availabilities' => $availabilities,
+            'bookings' => $bookings,
+        ]);
+    }
+
+    /**
+     * Toggle or set status for a specific date on a property.
+     */
+    public function toggleAvailabilityDate(int $id, Request $request): JsonResponse
+    {
+        $property = Property::where('user_id', $request->user()->id)->findOrFail($id);
+
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'status' => 'required|string|in:available,blocked,maintenance',
+            'notes' => 'nullable|string|max:150',
+        ]);
+
+        if ($validated['status'] === 'available') {
+            PropertyAvailability::where('property_id', $property->id)
+                ->where('date', $validated['date'])
+                ->delete();
+
+            return response()->json([
+                'message' => 'Día liberado para alquiler.',
+                'date' => $validated['date'],
+                'status' => 'available',
+            ]);
+        }
+
+        $record = PropertyAvailability::updateOrCreate(
+            [
+                'property_id' => $property->id,
+                'date' => $validated['date'],
+            ],
+            [
+                'status' => $validated['status'],
+                'notes' => $validated['notes'] ?? ($validated['status'] === 'maintenance' ? 'Mantenimiento' : 'Bloqueado por anfitrión'),
+            ]
+        );
+
+        return response()->json([
+            'message' => 'Disponibilidad actualizada en base de datos.',
+            'data' => $record,
         ]);
     }
 

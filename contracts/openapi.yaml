@@ -820,9 +820,10 @@ components:
           example: "admin@turismoseguro.com.ar"
         role:
           type: string
-          example: "super_admin"
+          example: "admin"
           enum:
             - super_admin
+            - admin
             - supervisor
             - validator
             - client

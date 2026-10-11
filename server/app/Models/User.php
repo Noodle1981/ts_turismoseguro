@@ -22,6 +22,7 @@ class User extends Authenticatable
         'password',
         'role',
         'phone',
+        'dni',
         'origin_country',
         'origin_province',
         'origin_city',
@@ -57,6 +58,11 @@ class User extends Authenticatable
     public function assignedAudits(): HasMany
     {
         return $this->hasMany(VerificationRequest::class, 'validator_id');
+    }
+
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class, 'user_id');
     }
 
     public function commissions(): HasMany

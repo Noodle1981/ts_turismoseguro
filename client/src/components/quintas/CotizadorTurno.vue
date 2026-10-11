@@ -66,7 +66,7 @@ const whatsappBookingUrl = computed(() => {
   <aside class="sticky top-24 space-y-space-md">
     <div class="bg-surface-container-lowest p-space-lg rounded-2xl shadow-xl transition-all border border-surface-container">
       <!-- Card Header Price -->
-      <div class="flex items-start justify-between pb-space-sm mb-space-md border-b border-surface-container-high">
+      <div class="pb-space-sm mb-space-md border-b border-surface-container-high">
         <div>
           <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block font-bold">
             Valor Base Diurno
@@ -77,15 +77,6 @@ const whatsappBookingUrl = computed(() => {
             </span>
             <span class="font-body-sm text-body-sm text-on-surface-variant">/ jornada</span>
           </div>
-        </div>
-        <div class="text-right">
-          <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-fixed/40 text-on-secondary-fixed font-label-sm text-label-sm font-bold">
-            <span class="material-symbols-outlined text-[14px] text-secondary">handshake</span>
-            Trato Directo
-          </span>
-          <span class="block text-[11px] text-on-surface-variant mt-1 font-semibold text-secondary">
-            0% Comisión al Inquilino
-          </span>
         </div>
       </div>
 

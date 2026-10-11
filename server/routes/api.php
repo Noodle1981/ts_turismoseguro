@@ -33,6 +33,14 @@ Route::prefix('v1')->group(function () {
     Route::get('/properties/{id}/availability', [CatalogController::class, 'propertyAvailability'])->name('properties.availability');
     Route::get('/experiences', [ExperienceController::class, 'index'])->name('experiences.index');
     Route::get('/experiences/{slug}', [ExperienceController::class, 'show'])->name('experiences.show');
+    Route::get('/events', function (\Illuminate\Http\Request $request) {
+        $department = $request->query('department');
+        $events = \App\Models\Event::where('is_active', true)
+            ->forDepartment($department)
+            ->orderBy('start_date', 'asc')
+            ->get();
+        return response()->json(['data' => $events]);
+    })->name('events.index');
 
     // Panel del Anfitrión (Rol: client o super_admin)
     Route::middleware(['auth:sanctum', 'role:client,super_admin'])->prefix('client')->group(function () {
@@ -42,6 +50,7 @@ Route::prefix('v1')->group(function () {
         Route::put('/properties/{id}', [ClientPropertyController::class, 'update'])->name('client.properties.update');
         Route::get('/properties/{id}/availability', [ClientPropertyController::class, 'availability'])->name('client.properties.availability');
         Route::post('/properties/{id}/availability', [ClientPropertyController::class, 'updateAvailability'])->name('client.properties.update-availability');
+        Route::post('/properties/{id}/availability/toggle-date', [ClientPropertyController::class, 'toggleAvailabilityDate'])->name('client.properties.toggle-date');
         Route::post('/verifications/request', [ClientPropertyController::class, 'requestVerification'])->name('client.verifications.request');
     });
 });

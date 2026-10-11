@@ -351,10 +351,10 @@ export interface components {
              */
             email: string;
             /**
-             * @example super_admin
+             * @example admin
              * @enum {string}
              */
-            role: "super_admin" | "supervisor" | "validator" | "client" | "rent";
+            role: "super_admin" | "admin" | "supervisor" | "validator" | "client" | "rent";
             /** @example +54 9 264 400-0001 */
             phone?: string | null;
             /** @example Argentina */

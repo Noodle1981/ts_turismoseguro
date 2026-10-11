@@ -2,13 +2,13 @@
 import { ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 
-// 1. Selector de tipo principal: 'eventos' o 'turisticos'
-const activeMainCategory = ref<'eventos' | 'turisticos'>('eventos')
+// 1. Selector de Evento Activo
+const selectedEventKey = ref<'fns' | 'villicum'>('fns')
 
-// 2. Elemento seleccionado dentro de la categoría
-const selectedItemKey = ref('fns')
+// 2. Selector de Destino Turístico Activo
+const selectedTurismoKey = ref<'ullum' | 'leoncito' | 'cuesta'>('ullum')
 
-// Modelos de datos para Eventos Culturales / Deportivos
+// Modelos de datos
 interface ProximityLodging {
   id: number
   title: string
@@ -19,32 +19,31 @@ interface ProximityLodging {
   capacity: number
   image: string
   whatsapp: string
-  acta: string
   amenities: string[]
 }
 
-interface AttractionData {
+interface EventOrAttractionData {
   key: string
   title: string
   subtitle: string
   department: string
   badge: string
-  category: 'eventos' | 'turisticos'
   description: string
   officialOperator?: string
   lodgingsCount: number
   lodgings: ProximityLodging[]
 }
 
-const ofertasCatalogo: Record<string, AttractionData> = {
-  // PARTE 1: EVENTOS DESTACADOS
+// ==========================================
+// CATÁLOGO 1: EVENTOS DESTACADOS
+// ==========================================
+const eventosCatalogo: Record<string, EventOrAttractionData> = {
   fns: {
     key: 'fns',
     title: 'Fiesta Nacional del Sol 2026',
     subtitle: 'Predio Ferial Costanera & Estadio del Bicentenario',
     department: 'Chimbas / Pocito',
     badge: 'FNS 2026 • Mayor Convocatoria',
-    category: 'eventos',
     description: 'La máxima fiesta sanjuanina. Previas de asados, estadías para delegaciones y descansos familiares con acceso rápido directo por RN 40.',
     lodgingsCount: 14,
     lodgings: [
@@ -58,7 +57,6 @@ const ofertasCatalogo: Record<string, AttractionData> = {
         capacity: 40,
         image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDVXAhfsrz9RqqrhjElGsZFj_z2M5Ym0gyakTGqUQB8rX0d54LTB6l34pYRNLoxip77iA5ZkWclq6hNrsfgJqb3s_lQ4y4Jxv_XHciMHNVEzFgDtn1s7DQadZ8Z31DfHrw0a1QGX6CSrnFmiacozYmlV2mU47idZID1u9srmemQEj6nmG0lcNJ086KpgFw78efBrFepRBWLdibOm70rNMCRxE_PblSNO246AExw4x-Kdw2Ux_99pkqA',
         whatsapp: '5492645892140',
-        acta: 'Acta #812-POC/26',
         amenities: ['Pileta con cerco homologado', 'Parrillero doble', 'Freezer vertical', 'Sombra de olivos']
       },
       {
@@ -71,7 +69,6 @@ const ofertasCatalogo: Record<string, AttractionData> = {
         capacity: 30,
         image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCrYnw6VToBVxaVDwQOi8HVTlqLx5JJQ7FyHx7f7LtYO_nNK1tr_czHaaeva8SUfYh4lEbKkiMCtyME2M993Pj6K0xIQaPhE5Z_pnnetqDhpPBQUExdAW6cUSy0ey68D1ZTUdFUvUzaKn0_C48d_1gxbAOwws_G_lexpTjc1FkHMhrMx1yPCf_vdpKX2z_cCx06nrN_A8AGQpDsOiMIOScqadESlr7y5e7d7uqLGtNd0WDx0bLxbXlw',
         whatsapp: '5492644222333',
-        acta: 'Acta #532-SLU/26',
         amenities: ['Pileta cercada', 'Galería abierta', 'Vajilla 30 personas', 'Wifi Fibra Óptica']
       },
       {
@@ -84,7 +81,6 @@ const ofertasCatalogo: Record<string, AttractionData> = {
         capacity: 35,
         image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC1F3wXz330G8s9f6T23xYI1P3L1Z6YffatwwjHBr2RNecI7Gf49w0OyzheH8aK9DIobLdIn4W35_NN33g4fMHjlQ0QcL7uHBmf4uRFRViMuNahLbAe9SepGVFsLndtDM7a7mQ2gshqkerWImCWWnyzz1T5kCGwtJDYRmRM5pHS9i1AWfMh8i_IrGmOHfC__cUP2bFmIZnCi_rwLs_2280LksARH0G4JmNHrcIRoIzScDnaGiBEsiZZOmk',
         whatsapp: '5492645023341',
-        acta: 'Acta #644-RAW/26',
         amenities: ['Piscina 10x4m', 'Horno de barro', 'Cochera cubierta', 'Sector fogón nocturno']
       }
     ]
@@ -95,7 +91,6 @@ const ofertasCatalogo: Record<string, AttractionData> = {
     subtitle: 'Superbike Mundial, Turismo Carretera & TC2000',
     department: 'Albardón',
     badge: 'Deporte Motor Internacional',
-    category: 'eventos',
     description: 'El templo del automovilismo y motociclismo de Cuyo. Quintas y cabañas con rápido enlace sobre RN 40 Norte para equipos y fanáticos.',
     lodgingsCount: 8,
     lodgings: [
@@ -109,7 +104,6 @@ const ofertasCatalogo: Record<string, AttractionData> = {
         capacity: 35,
         image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDVXAhfsrz9RqqrhjElGsZFj_z2M5Ym0gyakTGqUQB8rX0d54LTB6l34pYRNLoxip77iA5ZkWclq6hNrsfgJqb3s_lQ4y4Jxv_XHciMHNVEzFgDtn1s7DQadZ8Z31DfHrw0a1QGX6CSrnFmiacozYmlV2mU47idZID1u9srmemQEj6nmG0lcNJ086KpgFw78efBrFepRBWLdibOm70rNMCRxE_PblSNO246AExw4x-Kdw2Ux_99pkqA',
         whatsapp: '5492644778899',
-        acta: 'Acta #914-ALB/26',
         amenities: ['Estacionamiento para 10 autos', 'Asador criollo cubierto', 'Pileta con agua de pozo', 'Wifi satelital']
       },
       {
@@ -122,20 +116,22 @@ const ofertasCatalogo: Record<string, AttractionData> = {
         capacity: 25,
         image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCrYnw6VToBVxaVDwQOi8HVTlqLx5JJQ7FyHx7f7LtYO_nNK1tr_czHaaeva8SUfYh4lEbKkiMCtyME2M993Pj6K0xIQaPhE5Z_pnnetqDhpPBQUExdAW6cUSy0ey68D1ZTUdFUvUzaKn0_C48d_1gxbAOwws_G_lexpTjc1FkHMhrMx1yPCf_vdpKX2z_cCx06nrN_A8AGQpDsOiMIOScqadESlr7y5e7d7uqLGtNd0WDx0bLxbXlw',
         whatsapp: '5492644111222',
-        acta: 'Acta #731-CHM/26',
         amenities: ['Parrilla techada', 'Freezer cervecero', 'Piscina cercada', 'Canchita de fútbol tenis']
       }
     ]
-  },
+  }
+}
 
-  // PARTE 2: LUGARES TURÍSTICOS Y EXPERIENCIAS
+// ==========================================
+// CATÁLOGO 2: LUGARES TURÍSTICOS Y DIQUES
+// ==========================================
+const turisticosCatalogo: Record<string, EventOrAttractionData> = {
   ullum: {
     key: 'ullum',
     title: 'Diques de Ullum y Punta Negra (Ruta Interlagos)',
     subtitle: 'Turismo Náutico, Kayak, Windsurf y Atardeceres',
     department: 'Ullum & Zonda',
     badge: 'Interlagos • Espejos de Agua',
-    category: 'turisticos',
     description: 'La gran postal cordillerana sobre el lago. Alquiler de cabañas y quintas con bajada privada, muelles y soláriums panorámicos.',
     officialOperator: 'Náutica & Kayak San Juan (Matr. 84/26)',
     lodgingsCount: 11,
@@ -150,7 +146,6 @@ const ofertasCatalogo: Record<string, AttractionData> = {
         capacity: 20,
         image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAd2EiOfveL3i9TOsDt_6jA0bkXgBOha_sUJ_2PXl84NszF67_xG-0qf9N1k0ywlm8O1rvG0uARNxvVxBZWdJPGIYgvzMOn7YEjGUdSknqiEQbNYhkgnxvrVimvoylJD9JyRit-6mvV0f7IrJR2DPMtXtu568sf1ykKlTTf7OPG8a3b8Ma8OZZqNR3kbQY9dMAxs_CNhkwnDJVKPCjQmovW3_Fr4ZFEotLw6jrrPLDjYGcRMsRlyHEd',
         whatsapp: '5492644444555',
-        acta: 'Acta #311-ULL/26',
         amenities: ['Bajada privada para kayaks', 'Deck sobre el lago', 'Parrillero móvil', 'Mirador al atardecer']
       },
       {
@@ -163,7 +158,6 @@ const ofertasCatalogo: Record<string, AttractionData> = {
         capacity: 25,
         image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDRpm0tRCyFxkTL09ItJSDkIOwkwNPf2S4StWzAOhZtrO9PX-w3GysmFiXgOZYKLIw4_baYSO4EJvtHq0OUXD_u-FCo0krxmFwI1dedCnKXMAdYwxUB8YfNuimCzZMg2WZkDj9GZ6elPAWN-bLYu7y2UPeGlnETL4y94IdPWDKEhD3EwPzDyVoFS7qHRL9wAYpkujJUcq9qtghigFGsuJxtjzNI8VCzOc6XadX6c1-u8JmT5MBco4HV',
         whatsapp: '5492644888123',
-        acta: 'Acta #429-ZON/26',
         amenities: ['Piscina con cascada', 'Gran quincho de caña', 'Parrillero doble', 'Aire acondicionado']
       }
     ]
@@ -174,7 +168,6 @@ const ofertasCatalogo: Record<string, AttractionData> = {
     subtitle: 'Parque Nacional El Leoncito • CASLEO y CESCO',
     department: 'Calingasta (Precordillera)',
     badge: 'Cielos Más Limpios del Mundo',
-    category: 'turisticos',
     description: 'Uno de los centros astronómicos más importantes de Sudamérica. Cabañas y posadas cordilleranas a minutos de los observatorios.',
     officialOperator: 'AstroTours SJ (Certificado Provincial)',
     lodgingsCount: 9,
@@ -189,7 +182,6 @@ const ofertasCatalogo: Record<string, AttractionData> = {
         capacity: 18,
         image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAPnzDWGYQ354AVnodnxyTLNZMOgfuo-Sy8hpqHOKc9FadPYVVeBsoVxTSmylVk9bj1lP3wfDtwIaSlcMhodiMk6SCP9ZAv2LaGA8rd6k_TqtSN5by8lFl_IbWALWlKg2Gp3yp98VrpOA2ep90spHRWKo9F8uz3MobH0Q6a7zUow6tAkoGeSkjC1c46B3dGbI-fZsGbsr66JSiv1UrIntV4scLHEjxYflTcEtUuRGkTS_iKJ4ZNWG3l',
         whatsapp: '5492644333999',
-        acta: 'Acta #104-CAL/26',
         amenities: ['Terraza de astrofotografía', 'Estufa a leña', 'Parque con sauces', 'Parrillero cubierto']
       }
     ]
@@ -200,7 +192,6 @@ const ofertasCatalogo: Record<string, AttractionData> = {
     subtitle: 'Dique Cuesta del Viento • Rodeo',
     department: 'Iglesia (Norte Cordillerano)',
     badge: 'Meca Mundial del Viento',
-    category: 'turisticos',
     description: 'Epicentro internacional de deportes eólicos y aventura. Alojamientos auditados con guardería de tablas y bajada directa a playa.',
     officialOperator: 'Viento Extremo Cuyo (Matr. IKO 19/26)',
     lodgingsCount: 7,
@@ -215,28 +206,21 @@ const ofertasCatalogo: Record<string, AttractionData> = {
         capacity: 22,
         image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAMRaIEylxpe-zO_9hNKTLEiJ1pHRyyGHiEt8qr5hAMOpydHe9eMYO2F-zkwt3Im_1ihPBcknKcD8NwZDlo3KZxA29ibNbF5yCBqmiZLwkR-1FvQ7MH2RTNpJh2iXT38WeEkaizlUo13TBoExSzr4t6QF8TdEJVD-w2qFAOZ4wcxzBu0xG2uEZxER20pL_D-yil_-InKlxvcXfgomwfK5xIyFkWb_f0ShxcXJQsEtwB-u2GjSb6cedr',
         whatsapp: '5492644123456',
-        acta: 'Acta #207-IGL/26',
         amenities: ['Guardería de equipo náutico', 'Piscina protegida de viento', 'Parrillero techado', 'Wifi satelital']
       }
     ]
   }
 }
 
-// Opciones disponibles para la pestaña activa
-const activeAttraction = computed(() => {
-  return ofertasCatalogo[selectedItemKey.value] || ofertasCatalogo.fns
+const activeEvent = computed(() => {
+  return eventosCatalogo[selectedEventKey.value] || eventosCatalogo.fns
 })
 
-const handleCategoryChange = (category: 'eventos' | 'turisticos') => {
-  activeMainCategory.value = category
-  if (category === 'eventos') {
-    selectedItemKey.value = 'fns'
-  } else {
-    selectedItemKey.value = 'ullum'
-  }
-}
+const activeTurismo = computed(() => {
+  return turisticosCatalogo[selectedTurismoKey.value] || turisticosCatalogo.ullum
+})
 
-// DATA: Experiencias Únicas de Naturaleza & Aventura (Foto 1 del usuario)
+// Experiencias de Aventura
 interface OperadorExperiencia {
   id: string
   title: string
@@ -306,7 +290,7 @@ const experienciasAventura: OperadorExperiencia[] = [
   }
 ]
 
-// DATA: Corredores Turísticos y Departamentos Estratégicos (Foto 2 del usuario)
+// Corredores Turísticos
 const corredoresTuristicos = [
   {
     icon: 'location_city',
@@ -351,79 +335,47 @@ const corredoresTuristicos = [
 </script>
 
 <template>
-  <section class="w-full bg-surface-container-low py-space-xl border-y border-surface-container">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12">
-      <!-- HEADER PRINCIPAL DEL MÓDULO -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-space-lg">
-        <div>
-          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary/10 text-secondary font-label-sm text-label-sm font-bold mb-2">
-            <span class="material-symbols-outlined text-[16px]">travel_explore</span>
-            CERCANÍA INTELIGENTE &amp; CONECTIVIDAD
+  <div>
+    <!-- ========================================================= -->
+    <!-- SECCIÓN 1: EXCLUSIVA DE GRANDES EVENTOS & FIESTAS POPULARES -->
+    <!-- ========================================================= -->
+    <section class="w-full bg-surface-container-low py-space-xl border-y border-surface-container">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
+        <!-- HEADER EXCLUSIVO DE EVENTOS -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-space-lg">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary font-label-sm text-label-sm font-bold mb-2">
+              <span class="material-symbols-outlined text-[16px]">festival</span>
+              CALENDARIO DEPORTIVO &amp; FIESTAS POPULARES
+            </div>
+            <h2 class="font-headline-lg text-headline-lg text-primary tracking-tight font-extrabold">
+              Quintas y Hospedajes para Grandes Eventos en San Juan
+            </h2>
+            <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl mt-1">
+              Si venís a vivir la Fiesta Nacional del Sol o una fecha de automovilismo en El Villicum, encontrá quinchos de asado para previas y hospedajes grupales con accesos rápidos y seguros sin demoras viales.
+            </p>
           </div>
-          <h2 class="font-headline-lg text-headline-lg text-primary tracking-tight font-extrabold">
-            Elegí tu Evento o Lugar Turístico: Te Ofrecemos Quintas y Cabañas Cerca
-          </h2>
-          <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl mt-1">
-            Si vas a vivir la Fiesta del Sol, una fecha en el Villicum, un fin de semana náutico en los diques o astroturismo en la cordillera, te mostramos opciones auditadas con accesos despejados para tu grupo.
-          </p>
+
+          <RouterLink
+            to="/eventos"
+            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container text-primary font-label-md text-label-md font-bold shadow-xs border border-surface-container transition-all shrink-0"
+          >
+            <span>Agenda Completa de Eventos</span>
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </RouterLink>
         </div>
 
-        <RouterLink
-          to="/eventos"
-          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container text-primary font-label-md text-label-md font-bold shadow-xs border border-surface-container transition-all"
-        >
-          <span>Ver Portal Completo</span>
-          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-        </RouterLink>
-      </div>
-
-      <!-- SELECTOR EN 2 PARTES: OFERTAS DE EVENTOS vs OFERTAS TURÍSTICAS -->
-      <div class="bg-surface-container-lowest p-2 rounded-2xl shadow-sm border border-surface-container mb-space-md">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <!-- PARTE 1 -->
+        <!-- TABS DE EVENTOS (SIN MEZCLA CON TURISMO) -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none mb-space-lg">
           <button
             type="button"
             :class="[
-              'flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-xl font-label-lg text-label-lg font-bold transition-all cursor-pointer',
-              activeMainCategory === 'eventos'
-                ? 'bg-primary text-on-primary shadow-sm'
-                : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low'
-            ]"
-            @click="handleCategoryChange('eventos')"
-          >
-            <span class="material-symbols-outlined text-[22px]">festival</span>
-            <span>1. Ofertas de Eventos (FNS &amp; Carreras)</span>
-          </button>
-
-          <!-- PARTE 2 -->
-          <button
-            type="button"
-            :class="[
-              'flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-xl font-label-lg text-label-lg font-bold transition-all cursor-pointer',
-              activeMainCategory === 'turisticos'
-                ? 'bg-primary text-on-primary shadow-sm'
-                : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low'
-            ]"
-            @click="handleCategoryChange('turisticos')"
-          >
-            <span class="material-symbols-outlined text-[22px]">landscape</span>
-            <span>2. Lugares y Experiencias Turísticas (Diques &amp; Cordillera)</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- SUB-TABS: ATRACTIVOS DENTRO DE LA CATEGORÍA ELEGIDA -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none mb-space-lg">
-        <template v-if="activeMainCategory === 'eventos'">
-          <button
-            type="button"
-            :class="[
-              'px-4 py-2 rounded-xl font-label-md text-label-md font-bold whitespace-nowrap transition-all cursor-pointer border flex items-center gap-2',
-              selectedItemKey === 'fns'
-                ? 'bg-secondary text-on-secondary border-secondary shadow-xs'
+              'px-4 py-2.5 rounded-xl font-label-md text-label-md font-bold whitespace-nowrap transition-all cursor-pointer border flex items-center gap-2',
+              selectedEventKey === 'fns'
+                ? 'bg-primary text-on-primary border-primary shadow-xs'
                 : 'bg-surface-container-lowest text-on-surface-variant hover:text-on-surface border-surface-container'
             ]"
-            @click="selectedItemKey = 'fns'"
+            @click="selectedEventKey = 'fns'"
           >
             <span class="material-symbols-outlined text-[18px]">celebration</span>
             <span>Fiesta Nacional del Sol 2026</span>
@@ -432,354 +384,148 @@ const corredoresTuristicos = [
           <button
             type="button"
             :class="[
-              'px-4 py-2 rounded-xl font-label-md text-label-md font-bold whitespace-nowrap transition-all cursor-pointer border flex items-center gap-2',
-              selectedItemKey === 'villicum'
-                ? 'bg-secondary text-on-secondary border-secondary shadow-xs'
+              'px-4 py-2.5 rounded-xl font-label-md text-label-md font-bold whitespace-nowrap transition-all cursor-pointer border flex items-center gap-2',
+              selectedEventKey === 'villicum'
+                ? 'bg-primary text-on-primary border-primary shadow-xs'
                 : 'bg-surface-container-lowest text-on-surface-variant hover:text-on-surface border-surface-container'
             ]"
-            @click="selectedItemKey = 'villicum'"
+            @click="selectedEventKey = 'villicum'"
           >
             <span class="material-symbols-outlined text-[18px]">sports_motorsports</span>
             <span>Autódromo Circuito Villicum</span>
           </button>
-        </template>
+        </div>
 
-        <template v-else>
-          <button
-            type="button"
-            :class="[
-              'px-4 py-2 rounded-xl font-label-md text-label-md font-bold whitespace-nowrap transition-all cursor-pointer border flex items-center gap-2',
-              selectedItemKey === 'ullum'
-                ? 'bg-secondary text-on-secondary border-secondary shadow-xs'
-                : 'bg-surface-container-lowest text-on-surface-variant hover:text-on-surface border-surface-container'
-            ]"
-            @click="selectedItemKey = 'ullum'"
-          >
-            <span class="material-symbols-outlined text-[18px]">kayaking</span>
-            <span>Diques Ullum y Punta Negra</span>
-          </button>
-
-          <button
-            type="button"
-            :class="[
-              'px-4 py-2 rounded-xl font-label-md text-label-md font-bold whitespace-nowrap transition-all cursor-pointer border flex items-center gap-2',
-              selectedItemKey === 'leoncito'
-                ? 'bg-secondary text-on-secondary border-secondary shadow-xs'
-                : 'bg-surface-container-lowest text-on-surface-variant hover:text-on-surface border-surface-container'
-            ]"
-            @click="selectedItemKey = 'leoncito'"
-          >
-            <span class="material-symbols-outlined text-[18px]">nights_stay</span>
-            <span>Astroturismo en El Leoncito (Barreal)</span>
-          </button>
-
-          <button
-            type="button"
-            :class="[
-              'px-4 py-2 rounded-xl font-label-md text-label-md font-bold whitespace-nowrap transition-all cursor-pointer border flex items-center gap-2',
-              selectedItemKey === 'cuesta'
-                ? 'bg-secondary text-on-secondary border-secondary shadow-xs'
-                : 'bg-surface-container-lowest text-on-surface-variant hover:text-on-surface border-surface-container'
-            ]"
-            @click="selectedItemKey = 'cuesta'"
-          >
-            <span class="material-symbols-outlined text-[18px]">air</span>
-            <span>Cuesta del Viento (Rodeo)</span>
-          </button>
-        </template>
-      </div>
-
-      <!-- BANNER INFORMATIVO DEL EVENTO / ATRACTIVO ACTIVO -->
-      <div class="bg-primary-container text-on-primary p-6 lg:p-8 rounded-3xl relative overflow-hidden shadow-md mb-space-lg">
-        <div class="absolute -right-12 -bottom-12 w-64 h-64 rounded-full bg-secondary/15 blur-2xl pointer-events-none"></div>
-        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-          <div class="lg:col-span-8 space-y-2">
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-bold">
-              <span class="material-symbols-outlined text-[16px]">verified</span>
-              {{ activeAttraction.badge }}
-            </div>
-            <h3 class="font-headline-lg text-headline-lg font-bold text-on-primary">
-              {{ activeAttraction.title }}
-            </h3>
-            <p class="font-label-md text-label-md text-secondary-fixed font-semibold">
-              {{ activeAttraction.subtitle }} • {{ activeAttraction.department }}
-            </p>
-            <p class="font-body-md text-body-md text-on-primary-container max-w-2xl leading-relaxed">
-              {{ activeAttraction.description }}
-            </p>
-          </div>
-
-          <div class="lg:col-span-4 bg-surface-container-lowest/10 backdrop-blur-md p-5 rounded-2xl border border-white/10 flex flex-col gap-3">
-            <div class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-secondary-fixed text-[26px]">distance</span>
-              <div>
-                <p class="font-label-md text-label-md text-on-primary font-bold">Radio de Proximidad Seguro</p>
-                <p class="font-body-sm text-body-sm text-on-primary-container">Accesos de 5 a 18 minutos sin atascos</p>
+        <!-- BANNER DEL EVENTO ACTIVO -->
+        <div class="bg-primary-container text-on-primary p-6 lg:p-8 rounded-3xl relative overflow-hidden shadow-md mb-space-lg">
+          <div class="absolute -right-12 -bottom-12 w-64 h-64 rounded-full bg-secondary/15 blur-2xl pointer-events-none"></div>
+          <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <div class="lg:col-span-8 space-y-2">
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-bold">
+                <span class="material-symbols-outlined text-[16px]">verified</span>
+                {{ activeEvent.badge }}
               </div>
+              <h3 class="font-headline-lg text-headline-lg font-bold text-on-primary">
+                {{ activeEvent.title }}
+              </h3>
+              <p class="font-label-md text-label-md text-secondary-fixed font-semibold">
+                {{ activeEvent.subtitle }} • {{ activeEvent.department }}
+              </p>
+              <p class="font-body-md text-body-md text-on-primary-container max-w-2xl leading-relaxed">
+                {{ activeEvent.description }}
+              </p>
             </div>
-            <div v-if="activeAttraction.officialOperator" class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-secondary-fixed text-[26px]">shield</span>
-              <div>
-                <p class="font-label-md text-label-md text-on-primary font-bold">Operador Acreditado</p>
-                <p class="font-body-sm text-body-sm text-on-primary-container">{{ activeAttraction.officialOperator }}</p>
+
+            <div class="lg:col-span-4 bg-surface-container-lowest/10 backdrop-blur-md p-5 rounded-2xl border border-white/10 flex flex-col gap-3">
+              <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-secondary-fixed text-[26px]">distance</span>
+                <div>
+                  <p class="font-label-md text-label-md text-on-primary font-bold">Radio de Proximidad Seguro</p>
+                  <p class="font-body-sm text-body-sm text-on-primary-container">Accesos de 5 a 15 minutos al predio</p>
+                </div>
               </div>
-            </div>
-            <div class="pt-2 border-t border-white/10 flex items-center justify-between">
-              <span class="font-label-sm text-label-sm text-on-primary-container">Disponibles en la zona:</span>
-              <span class="font-label-md text-label-md text-secondary-fixed font-bold">{{ activeAttraction.lodgingsCount }} Propiedades</span>
+              <div class="pt-2 border-t border-white/10 flex items-center justify-between">
+                <span class="font-label-sm text-label-sm text-on-primary-container">Disponibles para este evento:</span>
+                <span class="font-label-md text-label-md text-secondary-fixed font-bold">{{ activeEvent.lodgingsCount }} Propiedades</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- RESULTADOS: QUINTAS Y CABAÑAS CERCANAS AL ATRACTIVO SELECCIONADO -->
-      <div class="space-y-space-md">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary text-[22px]">near_me</span>
-            <h4 class="font-headline-sm text-headline-sm text-primary font-bold">
-              Quintas y Cabañas Auditadas Cerca de: <span class="text-secondary">{{ activeAttraction.title }}</span>
-            </h4>
-          </div>
-          <span class="font-label-sm text-label-sm text-on-surface-variant font-medium hidden sm:inline-block">
-            CBU cotejado in situ • Cero estafas
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <article
-            v-for="item in activeAttraction.lodgings"
-            :key="item.id"
-            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between border border-surface-container group"
-          >
-            <div>
-              <!-- Imagen y badges -->
-              <div class="relative h-52 w-full overflow-hidden">
-                <img
-                  :src="item.image"
-                  :alt="item.title"
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div class="absolute top-3 left-3 flex items-center gap-1.5 bg-surface-container-lowest/95 backdrop-blur-sm px-2.5 py-1 rounded-full shadow-sm text-secondary font-label-sm text-label-sm font-bold">
-                  <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
-                  {{ item.acta }}
-                </div>
-                <div class="absolute bottom-3 left-3 bg-primary/90 backdrop-blur-sm text-on-primary px-2.5 py-0.5 rounded-lg font-label-sm text-label-sm font-semibold flex items-center gap-1 shadow-sm">
-                  <span class="material-symbols-outlined text-[14px] text-secondary-fixed">near_me</span>
-                  {{ item.distance }}
-                </div>
-              </div>
-
-              <!-- Contenido -->
-              <div class="p-space-md space-y-3">
-                <div class="flex items-center justify-between">
-                  <span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">
-                    {{ item.location }}
-                  </span>
-                  <span class="font-label-sm text-label-sm text-on-surface-variant font-semibold flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[16px] text-secondary">groups</span>
-                    Hasta {{ item.capacity }} pers.
-                  </span>
-                </div>
-
-                <h5 class="font-headline-sm text-headline-sm text-primary font-bold line-clamp-1">
-                  {{ item.title }}
-                </h5>
-
-                <p class="font-label-sm text-label-sm text-on-surface-variant">
-                  Tipo: <strong class="text-on-surface">{{ item.tipo }}</strong>
-                </p>
-
-                <!-- Amenities chips -->
-                <div class="flex flex-wrap gap-1.5 pt-1">
-                  <span
-                    v-for="(amenity, aIdx) in item.amenities"
-                    :key="aIdx"
-                    class="px-2 py-0.5 rounded-full bg-surface-container-low text-on-surface font-label-sm text-label-sm flex items-center gap-1"
-                  >
-                    <span class="material-symbols-outlined text-[14px] text-secondary">check</span>
-                    {{ amenity }}
-                  </span>
-                </div>
-              </div>
+        <!-- RESULTADOS: QUINTAS Y CABAÑAS CERCANAS AL EVENTO -->
+        <div class="space-y-space-md mb-space-lg">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[22px]">near_me</span>
+              <h4 class="font-headline-sm text-headline-sm text-primary font-bold">
+                Quintas Auditadas Cerca de: <span class="text-secondary">{{ activeEvent.title }}</span>
+              </h4>
             </div>
-
-            <!-- Footer con precio y botones -->
-            <div class="p-space-md pt-0 border-t border-surface-container mt-2 flex items-center justify-between gap-2">
-              <div>
-                <span class="font-label-sm text-label-sm text-on-surface-variant block">Tarifa por día</span>
-                <span class="font-headline-md text-headline-md text-primary font-black">
-                  ${{ item.price.toLocaleString('es-AR') }}
-                </span>
-              </div>
-
-              <div class="flex items-center gap-1.5">
-                <RouterLink
-                  :to="`/quintas/${item.id}`"
-                  class="p-2.5 rounded-xl bg-surface-container hover:bg-surface-dim text-primary transition-colors cursor-pointer"
-                  title="Ver Ficha Detallada"
-                >
-                  <span class="material-symbols-outlined text-[20px]">info</span>
-                </RouterLink>
-
-                <a
-                  :href="`https://wa.me/${item.whatsapp}?text=Hola,%20vi%20la%20propiedad%20${encodeURIComponent(item.title)}%20cerca%20de%20${encodeURIComponent(activeAttraction.title)}%20en%20Turismo%20Seguro`"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="px-3.5 py-2.5 rounded-xl bg-secondary text-on-secondary hover:bg-on-secondary-container transition-all flex items-center gap-2 font-label-md text-label-md font-bold shadow-sm cursor-pointer"
-                >
-                  <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
-                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.78 2.79.78 3.182 0 5.768-2.587 5.768-5.766.001-3.182-2.585-5.766-5.767-5.766zm9.969 5.766c0 5.505-4.475 9.98-9.97 9.98-1.742 0-3.376-.447-4.808-1.23l-5.222 1.369 1.393-5.087c-.89-1.493-1.393-3.238-1.393-5.032 0-5.506 4.475-9.981 9.97-9.981 5.505 0 10.03 4.475 10.03 9.981z" />
-                  </svg>
-                  <span>Contactar</span>
-                </a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-
-      <!-- SECCIÓN ADICIONAL 1: EXPERIENCIAS ÚNICAS DE NATURALEZA & AVENTURA (FOTO 1) -->
-      <div class="mt-space-xl pt-space-xl border-t border-surface-container">
-        <!-- Encabezado con distinción visual -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-space-lg">
-          <div>
-            <span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-bold">OPERADORES TS CERTIFICADOS</span>
-            <h3 class="font-headline-lg text-headline-lg text-primary tracking-tight font-extrabold mt-1">
-              Experiencias Únicas de Naturaleza &amp; Aventura
-            </h3>
-            <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mt-1">
-              Cada operador cuenta con matrícula turística provincial vigente, seguro de responsabilidad civil para turismo aventura y guías baqueanos certificados.
-            </p>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="inline-flex items-center gap-1.5 font-label-md text-label-md px-3.5 py-2 rounded-xl bg-surface-container-lowest text-primary shadow-xs border border-surface-container font-semibold">
-              <span class="material-symbols-outlined text-secondary text-[20px]">assignment_turned_in</span>
-              Pólizas de Seguro Auditadas
+            <span class="font-label-sm text-label-sm text-on-surface-variant font-medium hidden sm:inline-block">
+              CBU cotejado in situ • Cero estafas
             </span>
           </div>
-        </div>
 
-        <!-- 4 Tarjetas de Experiencias de Aventura -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div
-            v-for="exp in experienciasAventura"
-            :key="exp.id"
-            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col lg:flex-row border border-surface-container"
-          >
-            <!-- Imagen lateral / superior -->
-            <div class="relative lg:w-2/5 h-64 lg:h-auto min-h-[16rem]">
-              <img :src="exp.image" :alt="exp.title" class="w-full h-full object-cover" />
-              <div class="absolute top-3 left-3 bg-primary/85 backdrop-blur-md text-on-primary px-2.5 py-1 rounded-md font-label-sm text-label-sm flex items-center gap-1 font-semibold">
-                <span class="material-symbols-outlined text-[16px] text-tertiary-fixed">location_on</span>
-                {{ exp.locationTag }}
-              </div>
-            </div>
-
-            <!-- Contenido descriptivo -->
-            <div class="p-6 lg:w-3/5 flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between mb-2">
-                  <span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-secondary bg-secondary/10 px-2 py-0.5 rounded-md font-bold">
-                    <span class="material-symbols-outlined text-[14px]">verified</span> Operador: {{ exp.operator }}
-                  </span>
-                  <span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Duración: {{ exp.duration }}</span>
-                </div>
-
-                <h4 class="font-headline-sm text-headline-sm text-primary mb-2 font-bold">
-                  {{ exp.title }}
-                </h4>
-
-                <p class="font-body-sm text-body-sm text-on-surface-variant mb-4">
-                  {{ exp.description }}
-                </p>
-
-                <!-- Checklist de servicios incluidos -->
-                <div class="grid grid-cols-2 gap-2 text-on-surface font-label-sm text-label-sm mb-4">
-                  <span v-for="(feat, fIdx) in exp.features" :key="fIdx" class="flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[14px] text-secondary">check</span>
-                    {{ feat }}
-                  </span>
-                </div>
-              </div>
-
-              <!-- Footer de la experiencia -->
-              <div class="pt-3 border-t border-surface-container bg-surface-container-low -mx-6 -mb-6 p-4 rounded-b-2xl flex flex-col sm:flex-row items-center justify-between gap-3">
-                <RouterLink
-                  to="/explorar"
-                  class="text-secondary hover:text-on-secondary-container font-label-md text-label-md flex items-center gap-1.5 transition-colors font-bold cursor-pointer"
-                >
-                  <span class="material-symbols-outlined text-[18px]">cottage</span>
-                  Ver {{ exp.lodgingCount }} quintas y cabañas en {{ exp.lodgingZone }}
-                </RouterLink>
-
-                <a
-                  :href="`https://wa.me/${exp.whatsapp}?text=Hola,%20deseo%20consultar%20por%20la%20experiencia%20${encodeURIComponent(exp.title)}%20en%20Turismo%20Seguro`"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="w-full sm:w-auto px-4 py-2 rounded-xl bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-colors flex items-center justify-center gap-2 font-bold cursor-pointer shadow-xs"
-                >
-                  <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
-                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.78 2.79.78 3.182 0 5.768-2.587 5.768-5.766.001-3.182-2.585-5.766-5.767-5.766zm9.969 5.766c0 5.505-4.475 9.98-9.97 9.98-1.742 0-3.376-.447-4.808-1.23l-5.222 1.369 1.393-5.087c-.89-1.493-1.393-3.238-1.393-5.032 0-5.506 4.475-9.981 9.97-9.981 5.505 0 10.03 4.475 10.03 9.981z" />
-                  </svg>
-                  <span>WhatsApp Operador</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SECCIÓN ADICIONAL 2: CORREDORES TURÍSTICOS Y DEPARTAMENTOS ESTRATÉGICOS (FOTO 2) -->
-      <div class="mt-space-xl pt-space-xl border-t border-surface-container">
-        <div class="max-w-3xl mb-space-lg">
-          <span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-bold">LOGÍSTICA Y TIEMPOS DE TRASLADO</span>
-          <h3 class="font-headline-lg text-headline-lg text-primary tracking-tight font-extrabold mt-1">
-            Corredores Turísticos y Departamentos Estratégicos
-          </h3>
-          <p class="font-body-md text-body-md text-on-surface-variant mt-2">
-            Elegí la base de tu grupo según el evento o la actividad. Cada corredor cuenta con auditorías físicas periódicas para garantizar servicios reales (agua potable, cerco en piletas, electricidad apta para equipos).
-          </p>
-        </div>
-
-        <!-- Grilla de 3 Corredores -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div
-            v-for="(corr, cIdx) in corredoresTuristicos"
-            :key="cIdx"
-            class="p-6 rounded-2xl bg-surface-container-lowest hover:bg-surface-container-low transition-all flex flex-col justify-between border border-surface-container shadow-sm"
-          >
-            <div>
-              <div class="w-12 h-12 rounded-xl bg-primary text-on-primary flex items-center justify-center mb-4 shadow-xs">
-                <span class="material-symbols-outlined text-[26px]">{{ corr.icon }}</span>
-              </div>
-              <div class="inline-flex items-center gap-1 text-label-sm font-label-sm text-secondary uppercase font-bold mb-1">
-                {{ corr.badge }}
-              </div>
-              <h4 class="font-headline-sm text-headline-sm text-primary mb-2 font-bold">
-                {{ corr.title }}
-              </h4>
-              <p class="font-body-sm text-body-sm text-on-surface-variant mb-4">
-                {{ corr.description }}
-              </p>
-              <ul class="space-y-2 mb-6 font-body-sm text-body-sm text-on-surface">
-                <li v-for="(p, pIdx) in corr.points" :key="pIdx" class="flex items-center gap-2">
-                  <span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
-                  <span>{{ p }}</span>
-                </li>
-              </ul>
-            </div>
-            <RouterLink
-              :to="{ path: '/explorar', query: { zone: corr.filterZone } }"
-              class="w-full py-2.5 rounded-xl bg-surface-container-low hover:bg-primary hover:text-on-primary text-primary font-label-md text-label-md text-center transition-colors font-bold cursor-pointer border border-surface-container"
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <article
+              v-for="item in activeEvent.lodgings"
+              :key="item.id"
+              class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between border border-surface-container group"
             >
-              {{ corr.buttonText }}
-            </RouterLink>
+              <div>
+                <!-- Imagen y badges -->
+                <div class="relative h-52 w-full overflow-hidden">
+                  <img
+                    :src="item.image"
+                    :alt="item.title"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div class="absolute top-3 left-3 flex items-center gap-1.5 bg-surface-container-lowest/95 backdrop-blur-sm px-2.5 py-1 rounded-full shadow-sm text-secondary font-label-sm text-label-sm font-bold">
+                    <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                    Validado
+                  </div>
+                  <div class="absolute bottom-3 left-3 bg-primary/90 backdrop-blur-sm text-on-primary px-2.5 py-0.5 rounded-lg font-label-sm text-label-sm font-semibold flex items-center gap-1 shadow-sm">
+                    <span class="material-symbols-outlined text-[14px] text-secondary-fixed">near_me</span>
+                    {{ item.distance }}
+                  </div>
+                </div>
+
+                <!-- Contenido -->
+                <div class="p-space-md space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">
+                      {{ item.location }}
+                    </span>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant font-semibold flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[16px] text-secondary">groups</span>
+                      Hasta {{ item.capacity }} pers.
+                    </span>
+                  </div>
+
+                  <h5 class="font-headline-sm text-headline-sm text-primary font-bold line-clamp-1">
+                    {{ item.title }}
+                  </h5>
+
+                  <p class="font-label-sm text-label-sm text-on-surface-variant">
+                    Tipo: <strong class="text-on-surface">{{ item.tipo }}</strong>
+                  </p>
+
+                  <div class="flex flex-wrap gap-1.5 pt-1">
+                    <span
+                      v-for="(amenity, aIdx) in item.amenities"
+                      :key="aIdx"
+                      class="px-2 py-0.5 rounded-full bg-surface-container-low text-on-surface font-label-sm text-label-sm flex items-center gap-1"
+                    >
+                      <span class="material-symbols-outlined text-[14px] text-secondary">check</span>
+                      {{ amenity }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Footer con precio y acción principal a detalles -->
+              <div class="p-space-md pt-0 border-t border-surface-container mt-2 flex items-center justify-between gap-2">
+                <div>
+                  <span class="font-label-sm text-label-sm text-on-surface-variant block">Tarifa por día</span>
+                  <span class="font-headline-md text-headline-md text-primary font-black">
+                    ${{ item.price.toLocaleString('es-AR') }}
+                  </span>
+                </div>
+
+                <RouterLink
+                  :to="`/quintas/${item.id}`"
+                  class="px-4 py-2.5 rounded-xl bg-surface-container hover:bg-surface-dim text-primary transition-colors font-label-md text-label-md font-bold flex items-center gap-1.5 cursor-pointer"
+                >
+                  <span class="material-symbols-outlined text-[18px]">info</span>
+                  <span>Ver Detalles</span>
+                </RouterLink>
+              </div>
+            </article>
           </div>
         </div>
 
-        <!-- Banner de Rutas y Accesibilidad FNS -->
-        <div class="mt-8 bg-surface-container-lowest p-6 rounded-2xl flex flex-col lg:flex-row items-center justify-between gap-6 border border-surface-container shadow-sm">
+        <!-- Banner de Rutas y Accesibilidad de Eventos -->
+        <div class="bg-surface-container-lowest p-6 rounded-2xl flex flex-col lg:flex-row items-center justify-between gap-6 border border-surface-container shadow-sm">
           <div class="flex items-start gap-4">
             <div class="w-10 h-10 rounded-full bg-secondary/15 flex items-center justify-center text-secondary shrink-0 mt-0.5">
               <span class="material-symbols-outlined text-[24px]">map</span>
@@ -787,7 +533,7 @@ const corredoresTuristicos = [
             <div>
               <h4 class="font-headline-sm text-headline-sm text-primary font-bold">Mapa de Rutas y Accesibilidad en Tiempo Real</h4>
               <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
-                Consultá los desvíos habilitados durante la Fiesta del Sol, Autódromo El Villicum y accesos a Ruta 150 y Ruta 149.
+                Consultá los desvíos habilitados durante la Fiesta del Sol, Autódromo El Villicum y accesos despejados por RN 40.
               </p>
             </div>
           </div>
@@ -798,10 +544,353 @@ const corredoresTuristicos = [
             class="px-5 py-3 rounded-xl bg-primary text-on-primary hover:bg-primary-container transition-all flex items-center gap-2 font-label-md text-label-md font-bold whitespace-nowrap shadow-sm cursor-pointer shrink-0"
           >
             <span class="material-symbols-outlined text-[20px] text-secondary-fixed">navigation</span>
-            <span>Guía de Rutas y Estacionamiento FNS</span>
+            <span>Guía de Rutas y Accesos FNS</span>
           </a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- SECCIÓN 2: EXCLUSIVA DE TURISMO PURO, DIQUES & CORDILLERA  -->
+    <!-- ========================================================= -->
+    <section class="w-full bg-background py-space-xl border-b border-surface-container">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
+        <!-- HEADER EXCLUSIVO DE TURISMO PURO -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-space-lg">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary/10 text-secondary font-label-sm text-label-sm font-bold mb-2">
+              <span class="material-symbols-outlined text-[16px]">landscape</span>
+              DESTINOS NATURALES &amp; TURISMO PURO
+            </div>
+            <h2 class="font-headline-lg text-headline-lg text-primary tracking-tight font-extrabold">
+              Cabañas y Quintas en Diques y Valles Cordilleranos
+            </h2>
+            <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl mt-1">
+              Descanso al pie de la montaña, náutica en los diques o astroturismo bajo cielos certificados. Propiedades verificadas in situ con trato directo y sin comisiones.
+            </p>
+          </div>
+
+          <RouterLink
+            to="/explorar"
+            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container hover:bg-surface-dim text-primary font-label-md text-label-md font-bold shadow-xs border border-surface-container transition-all shrink-0"
+          >
+            <span>Explorar Todos los Destinos</span>
+            <span class="material-symbols-outlined text-[18px]">travel_explore</span>
+          </RouterLink>
+        </div>
+
+        <!-- TABS DE DESTINOS TURÍSTICOS (DIQUES / LEONCITO / CUESTA) -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none mb-space-lg">
+          <button
+            type="button"
+            :class="[
+              'px-4 py-2.5 rounded-xl font-label-md text-label-md font-bold whitespace-nowrap transition-all cursor-pointer border flex items-center gap-2',
+              selectedTurismoKey === 'ullum'
+                ? 'bg-secondary text-on-secondary border-secondary shadow-xs'
+                : 'bg-surface-container-lowest text-on-surface-variant hover:text-on-surface border-surface-container'
+            ]"
+            @click="selectedTurismoKey === 'ullum'"
+          >
+            <span class="material-symbols-outlined text-[18px]">kayaking</span>
+            <span>Diques Ullum y Punta Negra</span>
+          </button>
+
+          <button
+            type="button"
+            :class="[
+              'px-4 py-2.5 rounded-xl font-label-md text-label-md font-bold whitespace-nowrap transition-all cursor-pointer border flex items-center gap-2',
+              selectedTurismoKey === 'leoncito'
+                ? 'bg-secondary text-on-secondary border-secondary shadow-xs'
+                : 'bg-surface-container-lowest text-on-surface-variant hover:text-on-surface border-surface-container'
+            ]"
+            @click="selectedTurismoKey === 'leoncito'"
+          >
+            <span class="material-symbols-outlined text-[18px]">nights_stay</span>
+            <span>Astroturismo en El Leoncito (Barreal)</span>
+          </button>
+
+          <button
+            type="button"
+            :class="[
+              'px-4 py-2.5 rounded-xl font-label-md text-label-md font-bold whitespace-nowrap transition-all cursor-pointer border flex items-center gap-2',
+              selectedTurismoKey === 'cuesta'
+                ? 'bg-secondary text-on-secondary border-secondary shadow-xs'
+                : 'bg-surface-container-lowest text-on-surface-variant hover:text-on-surface border-surface-container'
+            ]"
+            @click="selectedTurismoKey === 'cuesta'"
+          >
+            <span class="material-symbols-outlined text-[18px]">air</span>
+            <span>Cuesta del Viento (Rodeo)</span>
+          </button>
+        </div>
+
+        <!-- BANNER DEL DESTINO TURÍSTICO ACTIVO -->
+        <div class="bg-surface-container-lowest text-on-surface p-6 lg:p-8 rounded-3xl relative overflow-hidden shadow-sm mb-space-lg border border-surface-container">
+          <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <div class="lg:col-span-8 space-y-2">
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-bold">
+                <span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+                {{ activeTurismo.badge }}
+              </div>
+              <h3 class="font-headline-lg text-headline-lg font-bold text-primary">
+                {{ activeTurismo.title }}
+              </h3>
+              <p class="font-label-md text-label-md text-secondary font-semibold">
+                {{ activeTurismo.subtitle }} • {{ activeTurismo.department }}
+              </p>
+              <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl leading-relaxed">
+                {{ activeTurismo.description }}
+              </p>
+            </div>
+
+            <div class="lg:col-span-4 bg-surface-container-low p-5 rounded-2xl border border-surface-container flex flex-col gap-3">
+              <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-secondary text-[26px]">landscape</span>
+                <div>
+                  <p class="font-label-md text-label-md text-primary font-bold">Polo Turístico Natural</p>
+                  <p class="font-body-sm text-body-sm text-on-surface-variant">Aguas calmas, vientos y cielo diáfano</p>
+                </div>
+              </div>
+              <div v-if="activeTurismo.officialOperator" class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-secondary text-[26px]">shield</span>
+                <div>
+                  <p class="font-label-md text-label-md text-primary font-bold">Operador Acreditado</p>
+                  <p class="font-body-sm text-body-sm text-on-surface-variant">{{ activeTurismo.officialOperator }}</p>
+                </div>
+              </div>
+              <div class="pt-2 border-t border-surface-container flex items-center justify-between">
+                <span class="font-label-sm text-label-sm text-on-surface-variant">Cabañas y quintas en la zona:</span>
+                <span class="font-label-md text-label-md text-primary font-bold">{{ activeTurismo.lodgingsCount }} Propiedades</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESULTADOS: CABAÑAS Y QUINTAS DEL DESTINO TURÍSTICO -->
+        <div class="space-y-space-md mb-space-xl">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[22px]">cottage</span>
+              <h4 class="font-headline-sm text-headline-sm text-primary font-bold">
+                Alojamientos en: <span class="text-secondary">{{ activeTurismo.title }}</span>
+              </h4>
+            </div>
+            <span class="font-label-sm text-label-sm text-on-surface-variant font-medium hidden sm:inline-block">
+              Inspección técnica vigente • Directo con dueño
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <article
+              v-for="item in activeTurismo.lodgings"
+              :key="item.id"
+              class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between border border-surface-container group"
+            >
+              <div>
+                <!-- Imagen y badges -->
+                <div class="relative h-52 w-full overflow-hidden">
+                  <img
+                    :src="item.image"
+                    :alt="item.title"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div class="absolute top-3 left-3 flex items-center gap-1.5 bg-surface-container-lowest/95 backdrop-blur-sm px-2.5 py-1 rounded-full shadow-sm text-secondary font-label-sm text-label-sm font-bold">
+                    <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                    Validado
+                  </div>
+                  <div class="absolute bottom-3 left-3 bg-primary/90 backdrop-blur-sm text-on-primary px-2.5 py-0.5 rounded-lg font-label-sm text-label-sm font-semibold flex items-center gap-1 shadow-sm">
+                    <span class="material-symbols-outlined text-[14px] text-secondary-fixed">near_me</span>
+                    {{ item.distance }}
+                  </div>
+                </div>
+
+                <!-- Contenido -->
+                <div class="p-space-md space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">
+                      {{ item.location }}
+                    </span>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant font-semibold flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[16px] text-secondary">groups</span>
+                      Hasta {{ item.capacity }} pers.
+                    </span>
+                  </div>
+
+                  <h5 class="font-headline-sm text-headline-sm text-primary font-bold line-clamp-1">
+                    {{ item.title }}
+                  </h5>
+
+                  <p class="font-label-sm text-label-sm text-on-surface-variant">
+                    Tipo: <strong class="text-on-surface">{{ item.tipo }}</strong>
+                  </p>
+
+                  <div class="flex flex-wrap gap-1.5 pt-1">
+                    <span
+                      v-for="(amenity, aIdx) in item.amenities"
+                      :key="aIdx"
+                      class="px-2 py-0.5 rounded-full bg-surface-container-low text-on-surface font-label-sm text-label-sm flex items-center gap-1"
+                    >
+                      <span class="material-symbols-outlined text-[14px] text-secondary">check</span>
+                      {{ amenity }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Footer con precio y acción principal a detalles -->
+              <div class="p-space-md pt-0 border-t border-surface-container mt-2 flex items-center justify-between gap-2">
+                <div>
+                  <span class="font-label-sm text-label-sm text-on-surface-variant block">Tarifa por día</span>
+                  <span class="font-headline-md text-headline-md text-primary font-black">
+                    ${{ item.price.toLocaleString('es-AR') }}
+                  </span>
+                </div>
+
+                <RouterLink
+                  :to="`/quintas/${item.id}`"
+                  class="px-4 py-2.5 rounded-xl bg-surface-container hover:bg-surface-dim text-primary transition-colors font-label-md text-label-md font-bold flex items-center gap-1.5 cursor-pointer"
+                >
+                  <span class="material-symbols-outlined text-[18px]">info</span>
+                  <span>Ver Detalles</span>
+                </RouterLink>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- EXPERIENCIAS ÚNICAS DE NATURALEZA & AVENTURA -->
+        <div class="pt-space-xl border-t border-surface-container">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-space-lg">
+            <div>
+              <span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-bold">OPERADORES TS CERTIFICADOS</span>
+              <h3 class="font-headline-lg text-headline-lg text-primary tracking-tight font-extrabold mt-1">
+                Experiencias Únicas de Naturaleza &amp; Aventura
+              </h3>
+              <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mt-1">
+                Cada operador cuenta con matrícula turística provincial vigente, seguro de responsabilidad civil para turismo aventura y guías baqueanos certificados.
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 font-label-md text-label-md px-3.5 py-2 rounded-xl bg-surface-container text-primary shadow-xs border border-surface-container font-semibold">
+                <span class="material-symbols-outlined text-secondary text-[20px]">assignment_turned_in</span>
+                Pólizas de Seguro Auditadas
+              </span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div
+              v-for="exp in experienciasAventura"
+              :key="exp.id"
+              class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col lg:flex-row border border-surface-container"
+            >
+              <div class="relative lg:w-2/5 h-64 lg:h-auto min-h-[16rem]">
+                <img :src="exp.image" :alt="exp.title" class="w-full h-full object-cover" />
+                <div class="absolute top-3 left-3 bg-primary/85 backdrop-blur-md text-on-primary px-2.5 py-1 rounded-md font-label-sm text-label-sm flex items-center gap-1 font-semibold">
+                  <span class="material-symbols-outlined text-[16px] text-tertiary-fixed">location_on</span>
+                  {{ exp.locationTag }}
+                </div>
+              </div>
+
+              <div class="p-6 lg:w-3/5 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-secondary bg-secondary/10 px-2 py-0.5 rounded-md font-bold">
+                      <span class="material-symbols-outlined text-[14px]">verified</span> Operador: {{ exp.operator }}
+                    </span>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Duración: {{ exp.duration }}</span>
+                  </div>
+
+                  <h4 class="font-headline-sm text-headline-sm text-primary mb-2 font-bold">
+                    {{ exp.title }}
+                  </h4>
+
+                  <p class="font-body-sm text-body-sm text-on-surface-variant mb-4">
+                    {{ exp.description }}
+                  </p>
+
+                  <div class="grid grid-cols-2 gap-2 text-on-surface font-label-sm text-label-sm mb-4">
+                    <span v-for="(feat, fIdx) in exp.features" :key="fIdx" class="flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[14px] text-secondary">check</span>
+                      {{ feat }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="pt-3 border-t border-surface-container bg-surface-container-low -mx-6 -mb-6 p-4 rounded-b-2xl flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <RouterLink
+                    to="/explorar"
+                    class="text-secondary hover:text-on-secondary-container font-label-md text-label-md flex items-center gap-1.5 transition-colors font-bold cursor-pointer"
+                  >
+                    <span class="material-symbols-outlined text-[18px]">cottage</span>
+                    Ver {{ exp.lodgingCount }} cabañas en {{ exp.lodgingZone }}
+                  </RouterLink>
+
+                  <a
+                    :href="`https://wa.me/${exp.whatsapp}?text=Hola,%20deseo%20consultar%20por%20la%20experiencia%20${encodeURIComponent(exp.title)}%20en%20Turismo%20Seguro`"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-full sm:w-auto px-4 py-2 rounded-xl bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-colors flex items-center justify-center gap-2 font-bold cursor-pointer shadow-xs"
+                  >
+                    <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+                      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.78 2.79.78 3.182 0 5.768-2.587 5.768-5.766.001-3.182-2.585-5.766-5.767-5.766zm9.969 5.766c0 5.505-4.475 9.98-9.97 9.98-1.742 0-3.376-.447-4.808-1.23l-5.222 1.369 1.393-5.087c-.89-1.493-1.393-3.238-1.393-5.032 0-5.506 4.475-9.981 9.97-9.981 5.505 0 10.03 4.475 10.03 9.981z" />
+                    </svg>
+                    <span>WhatsApp Operador</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CORREDORES TURÍSTICOS Y DEPARTAMENTOS ESTRATÉGICOS -->
+        <div class="mt-space-xl pt-space-xl border-t border-surface-container">
+          <div class="max-w-3xl mb-space-lg">
+            <span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-bold">LOGÍSTICA Y TIEMPOS DE TRASLADO</span>
+            <h3 class="font-headline-lg text-headline-lg text-primary tracking-tight font-extrabold mt-1">
+              Corredores Turísticos y Departamentos Estratégicos
+            </h3>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-2">
+              Elegí la base de tu grupo según tu plan. Cada corredor cuenta con auditorías físicas periódicas para garantizar servicios reales (agua potable, cerco en piletas, electricidad apta para equipos).
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div
+              v-for="(corr, cIdx) in corredoresTuristicos"
+              :key="cIdx"
+              class="p-6 rounded-2xl bg-surface-container-lowest hover:bg-surface-container-low transition-all flex flex-col justify-between border border-surface-container shadow-sm"
+            >
+              <div>
+                <div class="w-12 h-12 rounded-xl bg-primary text-on-primary flex items-center justify-center mb-4 shadow-xs">
+                  <span class="material-symbols-outlined text-[26px]">{{ corr.icon }}</span>
+                </div>
+                <div class="inline-flex items-center gap-1 text-label-sm font-label-sm text-secondary uppercase font-bold mb-1">
+                  {{ corr.badge }}
+                </div>
+                <h4 class="font-headline-sm text-headline-sm text-primary mb-2 font-bold">
+                  {{ corr.title }}
+                </h4>
+                <p class="font-body-sm text-body-sm text-on-surface-variant mb-4">
+                  {{ corr.description }}
+                </p>
+                <ul class="space-y-2 mb-6 font-body-sm text-body-sm text-on-surface">
+                  <li v-for="(p, pIdx) in corr.points" :key="pIdx" class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+                    <span>{{ p }}</span>
+                  </li>
+                </ul>
+              </div>
+              <RouterLink
+                :to="{ path: '/explorar', query: { zone: corr.filterZone } }"
+                class="w-full py-2.5 rounded-xl bg-surface-container hover:bg-primary hover:text-on-primary text-primary font-label-md text-label-md text-center transition-colors font-bold cursor-pointer border border-surface-container"
+              >
+                {{ corr.buttonText }}
+              </RouterLink>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </template>

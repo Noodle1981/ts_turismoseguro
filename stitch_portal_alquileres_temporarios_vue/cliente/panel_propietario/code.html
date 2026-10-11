@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "secondary": "#006c4a", "surface-dim": "#cbdbf5", "primary-fixed-dim": "#b0c9e8", "on-secondary-container": "#00714e", "on-tertiary-container": "#c77f00", "inverse-surface": "#213145", "on-secondary-fixed": "#002114", "on-surface-variant": "#43474d", "surface-tint": "#49607c", "tertiary-fixed-dim": "#ffb95f", "on-tertiary": "#ffffff", "primary-fixed": "#d1e4ff", "on-primary": "#ffffff", "tertiary": "#1f1000", "on-background": "#0b1c30", "on-secondary": "#ffffff", "background": "#f8f9ff", "inverse-primary": "#b0c9e8", "on-secondary-fixed-variant": "#005137", "on-tertiary-fixed-variant": "#653e00", "surface-container-lowest": "#ffffff", "on-error-container": "#93000a", "error": "#ba1a1a", "primary-container": "#0f2942", "outline-variant": "#c3c6ce", "on-primary-container": "#7991af", "surface-container-highest": "#d3e4fe", "error-container": "#ffdad6", "surface": "#f8f9ff", "surface-variant": "#d3e4fe", "surface-container-low": "#eff4ff", "on-tertiary-fixed": "#2a1700", "surface-container": "#e5eeff", "surface-container-high": "#dce9ff", "primary": "#001428", "secondary-fixed": "#85f8c4", "on-primary-fixed-variant": "#314863", "surface-bright": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "secondary-fixed-dim": "#68dba9", "on-surface": "#0b1c30", "tertiary-container": "#3b2200", "on-primary-fixed": "#011d35", "outline": "#74777e", "on-error": "#ffffff", "tertiary-fixed": "#ffddb8", "secondary-container": "#82f5c1" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "margin-mobile": "1rem", "space-sm": "0.5rem", "margin": "2rem", "gutter-mobile": "1rem", "gutter": "1.5rem", "space-xs": "0.25rem", "space-md": "1rem", "space-xl": "2.5rem", "space-lg": "1.5rem" }, "fontFamily": { "body-md": ["Plus Jakarta Sans"], "headline-xl": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"] }, "fontSize": { "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-xl-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "headline-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.015em", "fontWeight": "700" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between py-space-lg"><div class="flex flex-col gap-space-lg"><div class="px-space-lg flex items-center gap-space-sm"><div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary">verified_user</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight">Turismo Seguro</span><span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">San Juan Propietarios</span></div></div><div class="mx-space-lg p-space-sm bg-surface-container-low rounded-xl flex items-center gap-space-sm"><div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-secondary-container">villa</span></div><div class="flex flex-col overflow-hidden"><span class="font-label-lg text-label-lg text-on-surface truncate">Quinta Don Antonio</span><span class="font-body-sm text-body-sm text-on-surface-variant truncate">Marcelo Quiroga</span></div></div><nav class="px-space-md flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary font-label-lg rounded-xl shadow-[0_1px_3px_0_rgba(15,41,66,0.04)]"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm transition-all bg-primary-container text-on-primary font-label-lg rounded-xl shadow-[0_1px_3px_0_rgba(15,41,66,0.04)]" data-path="resumen-general" href="#"><span class="material-symbols-outlined">dashboard</span>Panel General</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="mis-ofertas-y-tarifas" href="#"><span class="material-symbols-outlined">sell</span>Mis Ofertas y Tarifas</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="calendario-y-reservas-diurnas" href="#"><span class="material-symbols-outlined">calendar_month</span>Calendario y Reservas</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="registro-de-inquilinos-y-seguros" href="#"><span class="material-symbols-outlined">assignment_ind</span>Registro de Inquilinos</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="solicitar-re-validacion-in-situ" href="#"><span class="material-symbols-outlined">fact_check</span>Re-Validación In Situ</a></nav></div><div class="px-space-lg flex flex-col gap-space-sm"><div class="p-space-sm bg-secondary-container/40 rounded-xl flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">gshield</span><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-bold">Legajo N° SJ-4821</span><span class="font-label-sm text-label-sm text-secondary">Vence: Nov 2025</span></div></div></div><div class="flex items-center justify-between pt-space-sm"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface">M. Quiroga</span><span class="font-label-sm text-label-sm text-on-surface-variant">Anfitrión</span></div></div><button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-all" type="button"><span class="material-symbols-outlined text-[20px]">logout</span></button></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><div class="inline-flex items-center gap-space-xs px-space-sm py-space-xs rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">verified</span><span>Verificación Activa: In Situ Validado</span></div><div class="hidden xl:flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">pin_drop</span><span>Pocito, San Juan</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container-low px-space-sm py-space-xs rounded-lg"><span class="material-symbols-outlined text-tertiary text-[18px]">sunny</span><span class="font-label-sm text-label-sm text-on-surface">Turnos Diurnos Activos</span></div><button class="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-all" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
+<div class="p-space-lg lg:p-margin flex flex-col gap-space-lg max-w-[1440px] mx-auto w-full">
+<!-- TOP NOTIFICATION BANNER / OFFICIAL DISPATCH -->
+<div class="relative overflow-hidden bg-primary-container rounded-xl p-space-md text-on-primary shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm z-10">
+<div class="w-10 h-10 rounded-lg bg-secondary/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary-fixed">shield_with_heart</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary-fixed">Sistema Integral de Prevención de Fraude</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
+<span class="font-body-sm text-body-sm text-primary-fixed">Registro Oficial de Prestadores Turísticos de San Juan</span>
+</div>
+<p class="font-body-sm text-body-sm text-primary-fixed-dim">
+            Su propiedad cumple con la inspección anual obligatoria. Próxima revisión documental preventiva en 48 días.
+          </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm z-10 shrink-0">
+<a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-lg bg-surface-container-lowest text-primary font-label-md text-label-md hover:bg-surface-container transition-colors shadow-sm" href="#revalidacion-in-situ">
+<span class="material-symbols-outlined text-[18px] text-secondary">fact_check</span>
+          Pedir Visita de Inspector
+        </a>
+</div>
+<div class="absolute -right-8 -bottom-8 w-48 h-48 bg-secondary/10 rounded-full blur-2xl pointer-events-none"></div>
+</div>
+<!-- 1. HEADER: ESTADO DE LA PROPIEDAD Y MÉTRICAS CLAVE -->
+<section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg">
+<div class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm flex-wrap">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Quinta Don Antonio</h1>
+<span class="px-space-xs py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">#849-MED/25</span>
+<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full bg-secondary/10 text-secondary font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+              Verificado In Situ Vigente
+            </span>
+<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-secondary">health_and_safety</span>
+              Póliza Triunfo Seguros #9482
+            </span>
+</div>
+<div class="flex items-center gap-space-md text-on-surface-variant font-body-sm text-body-sm flex-wrap">
+<span class="inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px] text-tertiary">location_on</span>
+              Callejón Muñoz s/n, Médano de Oro, Rawson, San Juan
+            </span>
+<span class="inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px] text-secondary">verified_user</span>
+              Última inspección presencial: 18/Ene/2025
+            </span>
+<span class="inline-flex items-center gap-1 text-secondary font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+              En Línea / Aceptando Consultas
+            </span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<button class="inline-flex items-center gap-space-xs px-space-lg py-space-sm rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg hover:bg-on-secondary-container transition-all shadow-sm" id="btn-open-booking-modal" type="button">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+            Agendar Nueva Reserva
+          </button>
+<a class="inline-flex items-center gap-space-xs px-space-md py-space-sm rounded-lg bg-surface-container-low text-primary font-label-lg text-label-lg hover:bg-surface-container transition-colors" href="#almanaque">
+<span class="material-symbols-outlined text-[20px]">date_range</span>
+            Ver Calendario
+          </a>
+</div>
+</div>
+<!-- KEY METRICS GRID -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Metric 1: Alquileres -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Jornadas Este Mes</span>
+<span class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">event_available</span>
+</span>
+</div>
+<div class="mt-space-sm">
+<span class="font-headline-lg text-headline-lg text-primary">14</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant ml-1">jornadas confirmadas</span>
+</div>
+<div class="mt-space-xs flex items-center gap-1 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+3 jornadas vs. mes pasado</span>
+</div>
+</div>
+<!-- Metric 2: Ocupación -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Tasa de Ocupación</span>
+<span class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">pie_chart</span>
+</span>
+</div>
+<div class="mt-space-sm flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-primary">78%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">de fines de semana</span>
+</div>
+<!-- Tiny SVG Bar Indicator -->
+<div class="mt-space-xs w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 78%;"></div>
+</div>
+</div>
+<!-- Metric 3: Ingresos Brutos -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Ingresos Brutos Estimados</span>
+<span class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</span>
+</div>
+<div class="mt-space-sm">
+<span class="font-headline-lg text-headline-lg text-primary">$630.000</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">ARS</span>
+</div>
+<div class="mt-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<span class="font-label-sm text-label-sm text-primary">$490.000 cobrado</span> (77%)
+          </div>
+</div>
+<!-- Metric 4: Calificación -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Reputación Verificada</span>
+<span class="w-8 h-8 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary-container">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+</div>
+<div class="mt-space-sm flex items-baseline gap-1">
+<span class="font-headline-lg text-headline-lg text-primary">4.9</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">/ 5.0</span>
+</div>
+<div class="mt-space-xs text-on-surface-variant font-label-sm text-label-sm">
+            Basado en <span class="font-bold text-primary">42 reseñas</span> con DNI validado
+          </div>
+</div>
+</div>
+</section>
+<!-- 2. GESTIÓN DE OFERTA Y EDICIÓN RÁPIDA DE PRECIOS + SOLICITUD RE-VALIDACIÓN -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- PROPERTY OVERVIEW & QUICK PRICING (8 COLS) -->
+<section class="lg:col-span-8 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-lg">
+<div>
+<div class="flex items-center justify-between pb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[24px]">price_change</span>
+<h2 class="font-headline-md text-headline-md text-primary">Gestión de Oferta y Tarifas Diurnas</h2>
+</div>
+<!-- Switch Estado de Oferta -->
+<div class="flex items-center gap-space-sm bg-surface-container-low px-space-md py-space-xs rounded-xl">
+<span class="font-label-sm text-label-sm text-on-surface">Visible en Buscador:</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" id="toggle-visible" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+<span class="font-label-sm text-label-sm text-secondary font-bold" id="label-estado-oferta">Activo</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md pt-space-xs">
+<!-- Property Snapshot with Badge -->
+<div class="md:col-span-5 relative rounded-xl overflow-hidden shadow-sm group">
+<img class="w-full h-56 object-cover object-center group-hover:scale-105 transition-transform duration-500" data-alt="Expansive countryside estate Quinta Don Antonio in San Juan Argentina, crystal blue enclosed pool surrounded by green lawn, rustic stone Argentine parrillero and shaded quincho, bright sunny day under deep blue sky with Andes mountains in the far background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCr50fmmCBNrPJ5U8gKe6JQpLOIojRlCYdb9QIQFDKB9U1YtlxRMCGdNBgfkX07G8YFueQui-U-BHZFgM09dkH7memr-WZGjgvWMGYosRGdt7lwoq6otTmtCXT9T4AR_x0G_uXtET9tvLwhNFHKBCDb6GkfnIJLVZAl4Ftso0TkPuq9e3CDR4E7vmsRleEh9NJJGWm0GxxwrthMpq5OAwrHC25jO96kxLXk_iiEDI68xMe1zkCYMdiO"/>
+<div class="absolute top-2 left-2 z-10">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-surface-container-lowest/95 backdrop-blur-md text-secondary font-label-sm text-label-sm shadow-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                  Verificado In Situ
+                </span>
+</div>
+<div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent p-space-sm text-on-primary">
+<p class="font-label-sm text-label-sm text-primary-fixed">Médano de Oro, San Juan</p>
+<p class="font-headline-sm text-headline-sm truncate text-white">Quincho &amp; Parque Arbolado</p>
+</div>
+</div>
+<!-- Features homologadas -->
+<div class="md:col-span-7 flex flex-col justify-between gap-space-sm">
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-md bg-surface-container-highest flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">groups</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Aforo Homologado</span>
+<span class="font-label-lg text-label-lg text-primary font-bold">Hasta 50 personas</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-md bg-surface-container-highest flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Franja Diurna</span>
+<span class="font-label-lg text-label-lg text-primary font-bold">10:00 a 20:00 hs</span>
+</div>
+</div>
+</div>
+<!-- Amenity Badges Homologados -->
+<div class="flex flex-wrap gap-1.5">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-surface-container-low text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-secondary text-[14px]">pool</span> Pileta Cercada (1.80m)
+                </span>
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-surface-container-low text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-secondary text-[14px]">outdoor_grill</span> Parrillero Techado
+                </span>
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-surface-container-low text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-secondary text-[14px]">kitchen</span> 2 Freezers de Bebidas
+                </span>
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-surface-container-low text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-secondary text-[14px]">park</span> 2.500 m² Césped
+                </span>
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-surface-container-low text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-secondary text-[14px]">bolt</span> Disyuntor Diferencial OK
+                </span>
+</div>
+<div class="bg-surface-container p-space-xs rounded-lg text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">info</span>
+<span>Los límites de aforo y sonido diurno están normados por Ley Provincial de Hospedaje Rural.</span>
+</div>
+</div>
+</div>
+<!-- TARIFAS EDITABLES -->
+<form class="mt-space-lg flex flex-col gap-space-md" id="tarifa-form">
+<h3 class="font-headline-sm text-headline-sm text-primary">Tarifas Diurnas de Temporada (ARS)</h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+<!-- Tarifa 1 -->
+<div class="p-space-sm rounded-xl bg-surface-container-low flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Lunes a Jueves</span>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">wb_sunny</span>
+</div>
+<div class="relative">
+<span class="absolute left-3 top-2.5 text-on-surface-variant font-label-lg text-label-lg">$</span>
+<input class="w-full pl-7 pr-3 py-2 rounded-lg bg-surface-container-lowest text-primary font-headline-sm text-headline-sm focus:outline-none focus:bg-surface-container-high transition-colors" id="price-lunes-jueves" step="1000" type="number" value="35000"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Tarifa base x jornada (10h)</span>
+</div>
+<!-- Tarifa 2 -->
+<div class="p-space-sm rounded-xl bg-surface-container-low flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Viernes y Domingos</span>
+<span class="material-symbols-outlined text-[18px] text-tertiary">celebration</span>
+</div>
+<div class="relative">
+<span class="absolute left-3 top-2.5 text-on-surface-variant font-label-lg text-label-lg">$</span>
+<input class="w-full pl-7 pr-3 py-2 rounded-lg bg-surface-container-lowest text-primary font-headline-sm text-headline-sm focus:outline-none focus:bg-surface-container-high transition-colors" id="price-viernes-domingo" step="1000" type="number" value="45000"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Media demanda familiar</span>
+</div>
+<!-- Tarifa 3 -->
+<div class="p-space-sm rounded-xl bg-surface-container-low flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sábados y Feriados</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">star</span>
+</div>
+<div class="relative">
+<span class="absolute left-3 top-2.5 text-on-surface-variant font-label-lg text-label-lg">$</span>
+<input class="w-full pl-7 pr-3 py-2 rounded-lg bg-surface-container-lowest text-primary font-headline-sm text-headline-sm focus:outline-none focus:bg-surface-container-high transition-colors" id="price-sabados" step="1000" type="number" value="55000"/>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Alta demanda fija</span>
+</div>
+</div>
+<div class="flex items-center justify-between flex-wrap gap-space-sm pt-space-xs">
+<span class="font-label-sm text-label-sm text-secondary flex items-center gap-1" id="tarifa-status-feedback">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                Tarifas sincronizadas con la Red Oficial de Prestadores
+              </span>
+<button class="inline-flex items-center gap-space-xs px-space-lg py-space-sm rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-all shadow-sm" type="submit">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                Guardar y Publicar Tarifas
+              </button>
+</div>
+</form>
+</div>
+</section>
+<!-- SOLICITUD DE RE-VALIDACIÓN IN SITU (4 COLS) -->
+<section class="lg:col-span-4 bg-surface-container-low rounded-xl p-space-lg shadow-sm flex flex-col justify-between" id="revalidacion-in-situ">
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary">fact_check</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary">Re-Validación In Situ</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Inspección Técnica Oficial</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            ¿Realizó ampliaciones, instaló nuevo cerco en pileta o pintó el quincho? Solicite la visita presencial del inspector para certificar y renovar las fotos oficiales en la plataforma.
+          </p>
+<form class="flex flex-col gap-space-sm" id="form-revalidacion">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Motivo principal de la visita</label>
+<select class="w-full px-3 py-2 rounded-lg bg-surface-container-lowest text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-highest" id="motivo-visita">
+<option value="fotos">Actualización de fotos oficiales (Pintura / Quincho)</option>
+<option value="pileta">Nuevo cerco perimetral de pileta reglamentario</option>
+<option value="sanitarios">Ampliación de baños / Nuevos sanitarios</option>
+<option value="electrico">Recertificación de disyuntores y seguridad eléctrica</option>
+<option value="aforo">Solicitud de aumento de aforo homologado</option>
+</select>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Fecha tentativa preferida</label>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-lowest text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-highest" type="date" value="2025-02-15"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Notas para el Inspector Asignado</label>
+<textarea class="w-full p-2.5 rounded-lg bg-surface-container-lowest text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-highest resize-none" placeholder="Ej: Se instaló traba magnética en portón de pileta y cerámicas atérmicas nuevas..." rows="3"></textarea>
+</div>
+<button class="w-full mt-space-xs inline-flex items-center justify-center gap-space-xs px-space-md py-space-sm rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg hover:bg-on-secondary-container transition-all shadow-sm" type="submit">
+<span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+              Solicitar Turno con Inspector
+            </button>
+</form>
+</div>
+<div class="mt-space-md pt-space-sm text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[16px]">verified</span>
+          Sin costo adicional para propietarios con Póliza Activa.
+        </div>
+</section>
+</div>
+<!-- 3. ALMANAQUE / CALENDARIO INTERACTIVO DIURNO -->
+<section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md" id="almanaque">
+<div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-space-md">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[24px]">calendar_month</span>
+<h2 class="font-headline-md text-headline-md text-primary">Calendario y Disponibilidad Diurna</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Administre turnos de 10:00 a 20:00 hs. Haga clic en cualquier día para cambiar su estado instantáneamente.
+          </p>
+</div>
+<!-- Acciones rápidas del calendario -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="flex items-center bg-surface-container-low rounded-lg p-1">
+<button class="px-space-sm py-1 rounded bg-surface-container-lowest text-primary font-label-sm text-label-sm shadow-xs font-bold">Febrero 2025</button>
+<button class="px-space-sm py-1 rounded text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface">Marzo 2025</button>
+</div>
+<button class="inline-flex items-center gap-1 px-space-md py-space-xs rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors" id="btn-quick-block-selection" type="button">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+            Bloqueo Rápido Familiar
+          </button>
+<div class="px-space-sm py-space-xs rounded-lg bg-secondary/10 text-secondary font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span>
+<span>6 Fines de Semana Libres</span>
+</div>
+</div>
+</div>
+<!-- Leyenda de colores del calendario -->
+<div class="flex items-center gap-space-md flex-wrap p-space-sm bg-surface-container-low rounded-lg text-label-sm font-label-sm">
+<div class="flex items-center gap-1.5">
+<div class="w-3.5 h-3.5 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container text-[10px]">check</span>
+</div>
+<span class="text-on-surface">Disponible para Alquiler</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-3.5 h-3.5 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[10px]">person</span>
+</div>
+<span class="text-on-surface">Reservado / Alquilado</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-3.5 h-3.5 rounded-full bg-tertiary-fixed-dim flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-[10px]">cottage</span>
+</div>
+<span class="text-on-surface">Uso Familiar / Mantenimiento</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-3.5 h-3.5 rounded-full bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-[10px]">block</span>
+</div>
+<span class="text-on-surface">Bloqueado / Refacción</span>
+</div>
+</div>
+<!-- GRID DEL CALENDARIO: FEBRERO 2025 -->
+<div class="w-full overflow-x-auto">
+<div class="min-w-[760px]">
+<!-- Encabezados de días -->
+<div class="grid grid-cols-7 gap-2 pb-2 text-center font-label-md text-label-md text-on-surface-variant">
+<span>Lun</span>
+<span>Mar</span>
+<span>Mié</span>
+<span>Jue</span>
+<span>Vie</span>
+<span class="text-secondary font-bold">Sáb</span>
+<span class="text-secondary font-bold">Dom</span>
+</div>
+<!-- Cuadrícula de 28 días (Febrero) + días previos de Enero -->
+<div class="grid grid-cols-7 gap-2" id="grid-calendario">
+<!-- 27 Ene (Previo) -->
+<div class="h-24 p-2 rounded-xl bg-surface-container-high/40 opacity-40 flex flex-col justify-between">
+<span class="font-label-sm text-label-sm">27</span>
+<span class="text-[10px] text-on-surface-variant">Enero</span>
+</div>
+<!-- 28 Ene -->
+<div class="h-24 p-2 rounded-xl bg-surface-container-high/40 opacity-40 flex flex-col justify-between">
+<span class="font-label-sm text-label-sm">28</span>
+</div>
+<!-- 29 Ene -->
+<div class="h-24 p-2 rounded-xl bg-surface-container-high/40 opacity-40 flex flex-col justify-between">
+<span class="font-label-sm text-label-sm">29</span>
+</div>
+<!-- 30 Ene -->
+<div class="h-24 p-2 rounded-xl bg-surface-container-high/40 opacity-40 flex flex-col justify-between">
+<span class="font-label-sm text-label-sm">30</span>
+</div>
+<!-- 31 Ene -->
+<div class="h-24 p-2 rounded-xl bg-surface-container-high/40 opacity-40 flex flex-col justify-between">
+<span class="font-label-sm text-label-sm">31</span>
+</div>
+<!-- 1 Feb: Sábado Reservado -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-primary text-on-primary flex flex-col justify-between shadow-xs cursor-pointer hover:opacity-95 transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold">1</span>
+<span class="material-symbols-outlined text-[16px]">verified</span>
+</div>
+<div class="text-[11px] leading-tight font-medium">
+<p class="truncate font-bold">Esteban Morales</p>
+<p class="text-primary-fixed opacity-90">42 asis. • Cumpleaños</p>
+</div>
+</div>
+<!-- 2 Feb: Domingo Reservado -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-primary text-on-primary flex flex-col justify-between shadow-xs cursor-pointer hover:opacity-95 transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold">2</span>
+<span class="material-symbols-outlined text-[16px]">person</span>
+</div>
+<div class="text-[11px] leading-tight font-medium">
+<p class="truncate font-bold">Carla Furlotti</p>
+<p class="text-primary-fixed opacity-90">25 asis. • Bautismo</p>
+</div>
+</div>
+<!-- 3 Feb: Lun Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">3</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 4 Feb: Mar Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">4</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 5 Feb: Miercoles Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">5</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 6 Feb: Jueves Mantenimiento Propietario -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-tertiary-fixed text-tertiary-container flex flex-col justify-between cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold">6</span>
+<span class="material-symbols-outlined text-[16px]">construction</span>
+</div>
+<div class="text-[11px] leading-tight">
+<p class="font-bold">Mantenimiento</p>
+<p class="text-on-tertiary-fixed-variant">Filtrado &amp; Corte césped</p>
+</div>
+</div>
+<!-- 7 Feb: Viernes Reservado -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-primary text-on-primary flex flex-col justify-between shadow-xs cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold">7</span>
+<span class="material-symbols-outlined text-[16px]">person</span>
+</div>
+<div class="text-[11px] leading-tight font-medium">
+<p class="truncate font-bold">Marcos Benítez</p>
+<p class="text-primary-fixed opacity-90">30 asis. • Despedida</p>
+</div>
+</div>
+<!-- 8 Feb: Sabado Reservado -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-primary text-on-primary flex flex-col justify-between shadow-xs cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold">8</span>
+<span class="material-symbols-outlined text-[16px]">verified</span>
+</div>
+<div class="text-[11px] leading-tight font-medium">
+<p class="truncate font-bold">Valeria Soria</p>
+<p class="text-primary-fixed opacity-90">48 asis. • Boda Civil</p>
+</div>
+</div>
+<!-- 9 Feb: Domingo Uso Familiar -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-tertiary-fixed text-tertiary-container flex flex-col justify-between cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold">9</span>
+<span class="material-symbols-outlined text-[16px]">cottage</span>
+</div>
+<div class="text-[11px] leading-tight">
+<p class="font-bold">Uso Familiar</p>
+<p class="text-on-tertiary-fixed-variant">Cumpleaños Nieto</p>
+</div>
+</div>
+<!-- 10 Feb: Lunes Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">10</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 11 Feb: Martes Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">11</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 12 Feb: Miercoles Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">12</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 13 Feb: Jueves Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">13</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 14 Feb: Viernes Reservado -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-primary text-on-primary flex flex-col justify-between shadow-xs cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold">14</span>
+<span class="material-symbols-outlined text-[16px]">favorite</span>
+</div>
+<div class="text-[11px] leading-tight font-medium">
+<p class="truncate font-bold">Guillermo Páez</p>
+<p class="text-primary-fixed opacity-90">20 asis. • San Valentín</p>
+</div>
+</div>
+<!-- 15 Feb: Sabado Reservado -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-primary text-on-primary flex flex-col justify-between shadow-xs cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold">15</span>
+<span class="material-symbols-outlined text-[16px]">verified</span>
+</div>
+<div class="text-[11px] leading-tight font-medium">
+<p class="truncate font-bold">Lorena Agüero</p>
+<p class="text-primary-fixed opacity-90">38 asis. • Bautismo</p>
+</div>
+</div>
+<!-- 16 Feb: Domingo Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold text-secondary">16</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible Dom</span>
+</div>
+<!-- 17 Feb: Lun Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">17</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 18 Feb: Mar Bloqueado Clima -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-surface-container text-on-surface-variant flex flex-col justify-between cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold">18</span>
+<span class="material-symbols-outlined text-[16px]">cloud</span>
+</div>
+<div class="text-[11px] leading-tight">
+<p class="font-bold">Bloqueo Clima</p>
+<p class="text-outline">Viento Zonda Fuerte</p>
+</div>
+</div>
+<!-- 19 Feb: Miercoles Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">19</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 20 Feb: Jueves Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">20</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 21 Feb: Viernes Reservado -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-primary text-on-primary flex flex-col justify-between shadow-xs cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold">21</span>
+<span class="material-symbols-outlined text-[16px]">person</span>
+</div>
+<div class="text-[11px] leading-tight font-medium">
+<p class="truncate font-bold">Damián Ruarte</p>
+<p class="text-primary-fixed opacity-90">35 asis. • Asado amigos</p>
+</div>
+</div>
+<!-- 22 Feb: Sabado Reservado -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-primary text-on-primary flex flex-col justify-between shadow-xs cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold">22</span>
+<span class="material-symbols-outlined text-[16px]">verified</span>
+</div>
+<div class="text-[11px] leading-tight font-medium">
+<p class="truncate font-bold">Ignacio Castro</p>
+<p class="text-primary-fixed opacity-90">45 asis. • Cumple 50</p>
+</div>
+</div>
+<!-- 23 Feb: Domingo Reservado -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-primary text-on-primary flex flex-col justify-between shadow-xs cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold">23</span>
+<span class="material-symbols-outlined text-[16px]">person</span>
+</div>
+<div class="text-[11px] leading-tight font-medium">
+<p class="truncate font-bold">Beatriz Montiel</p>
+<p class="text-primary-fixed opacity-90">32 asis. • Cumple infantil</p>
+</div>
+</div>
+<!-- 24 Feb: Lunes Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">24</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 25 Feb: Martes Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">25</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 26 Feb: Miercoles Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">26</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 27 Feb: Jueves Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg">27</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible</span>
+</div>
+<!-- 28 Feb: Viernes Disponible -->
+<div class="calendar-cell h-24 p-2 rounded-xl bg-secondary-container/50 text-on-surface flex flex-col justify-between hover:bg-secondary-container transition-all cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold text-secondary">28</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Disponible Vie</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. TABLA DETALLADA DE PRÓXIMOS ALQUILERES AGENDADOS -->
+<section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-space-sm">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Próximos Alquileres Agendados</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Listado de inquilinos confirmados, seguros vigentes y control de pagos</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="inline-flex items-center gap-1 px-space-md py-space-xs rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+            Planilla de Ingreso Policial
+          </button>
+</div>
+</div>
+<!-- Tabla Responsiva -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">
+<th class="py-space-sm px-space-md rounded-l-lg">Fecha &amp; Horario</th>
+<th class="py-space-sm px-space-md">Inquilino Verificado</th>
+<th class="py-space-sm px-space-md">Asistentes &amp; Evento</th>
+<th class="py-space-sm px-space-md">Póliza / Seguro</th>
+<th class="py-space-sm px-space-md">Estado de Pago</th>
+<th class="py-space-sm px-space-md rounded-r-lg text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high font-body-sm text-body-sm text-on-surface">
+<!-- Fila 1 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-primary font-bold">Sábado 15 Feb, 2025</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">10:00 a 20:00 hs</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold font-label-sm text-label-sm shrink-0">
+                    LA
+                  </div>
+<div>
+<div class="flex items-center gap-1">
+<span class="font-label-lg text-label-lg text-primary font-bold">Lorena Agüero</span>
+<span class="material-symbols-outlined text-secondary text-[16px]" title="DNI Verificado Renaper">verified</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">DNI 32.844.119 • Rawson</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-primary font-bold">38 personas (28 adultos, 10 niños)</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Bautismo familiar</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+                  Póliza TS Activa #9482
+                </span>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary font-bold">Seña 50% ($27.500)</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Saldo $27.500 en tranquera</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<a class="w-8 h-8 rounded-lg bg-secondary/10 text-secondary hover:bg-secondary hover:text-on-secondary flex items-center justify-center transition-all" href="https://wa.me/5492645889911" target="_blank" title="Contactar por WhatsApp">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</a>
+<button class="btn-ver-inquilino px-space-sm py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm transition-colors" data-asistentes="38" data-dni="32.844.119" data-evento="Bautismo" data-fecha="15/02/2025" data-historial="5 estrellas • 2 alquileres previos • Excelente cuidado" data-inquilino="Lorena Agüero" data-saldo="$27.500" data-sena="$27.500" type="button">
+                    Ficha
+                  </button>
+</div>
+</td>
+</tr>
+<!-- Fila 2 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-primary font-bold">Viernes 21 Feb, 2025</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">10:00 a 20:00 hs</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container-highest text-primary flex items-center justify-center font-bold font-label-sm text-label-sm shrink-0">
+                    DR
+                  </div>
+<div>
+<div class="flex items-center gap-1">
+<span class="font-label-lg text-label-lg text-primary font-bold">Damián Ruarte</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">verified</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">DNI 35.109.432 • Rivadavia</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-primary font-bold">35 personas (30 adultos, 5 niños)</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Asado de amigos</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+                  Póliza TS Activa #9482
+                </span>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary font-bold">Seña 50% ($22.500)</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Saldo $22.500 en tranquera</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<a class="w-8 h-8 rounded-lg bg-secondary/10 text-secondary hover:bg-secondary hover:text-on-secondary flex items-center justify-center transition-all" href="https://wa.me/5492645889922" target="_blank" title="WhatsApp">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</a>
+<button class="btn-ver-inquilino px-space-sm py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm transition-colors" data-asistentes="35" data-dni="35.109.432" data-evento="Asado de amigos" data-fecha="21/02/2025" data-historial="4.8 estrellas • 1 alquiler previo • Cuidó el parrillero" data-inquilino="Damián Ruarte" data-saldo="$22.500" data-sena="$22.500" type="button">
+                    Ficha
+                  </button>
+</div>
+</td>
+</tr>
+<!-- Fila 3 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-primary font-bold">Sábado 22 Feb, 2025</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">10:00 a 20:00 hs</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold font-label-sm text-label-sm shrink-0">
+                    IC
+                  </div>
+<div>
+<div class="flex items-center gap-1">
+<span class="font-label-lg text-label-lg text-primary font-bold">Ignacio Castro</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">verified</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">DNI 28.601.780 • Santa Lucía</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-primary font-bold">45 personas (40 adultos, 5 niños)</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Cumpleaños 50 años</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-surface-container text-primary font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-secondary text-[14px]">health_and_safety</span>
+                  Microseguro TS #SEG-4821
+                </span>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary font-bold">Total Abonado ($55.000)</span>
+<span class="text-secondary font-label-sm text-label-sm font-bold">100% Pagado</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<a class="w-8 h-8 rounded-lg bg-secondary/10 text-secondary hover:bg-secondary hover:text-on-secondary flex items-center justify-center transition-all" href="https://wa.me/5492645889933" target="_blank" title="WhatsApp">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</a>
+<button class="btn-ver-inquilino px-space-sm py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm transition-colors" data-asistentes="45" data-dni="28.601.780" data-evento="Cumpleaños 50 años" data-fecha="22/02/2025" data-historial="5.0 estrellas • 4 alquileres previos sin reclamos" data-inquilino="Ignacio Castro" data-saldo="$0 (Cancelado)" data-sena="$55.000" type="button">
+                    Ficha
+                  </button>
+</div>
+</td>
+</tr>
+<!-- Fila 4 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-primary font-bold">Domingo 23 Feb, 2025</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">10:00 a 20:00 hs</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container-highest text-primary flex items-center justify-center font-bold font-label-sm text-label-sm shrink-0">
+                    BM
+                  </div>
+<div>
+<div class="flex items-center gap-1">
+<span class="font-label-lg text-label-lg text-primary font-bold">Beatriz Montiel</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">verified</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">DNI 30.984.111 • Pocito</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-primary font-bold">32 personas (16 adultos, 16 niños)</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Cumple infantil temático</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+                  Póliza TS Activa #9482
+                </span>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary font-bold">Seña 50% ($22.500)</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Saldo $22.500 en tranquera</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<a class="w-8 h-8 rounded-lg bg-secondary/10 text-secondary hover:bg-secondary hover:text-on-secondary flex items-center justify-center transition-all" href="https://wa.me/5492645889944" target="_blank" title="WhatsApp">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</a>
+<button class="btn-ver-inquilino px-space-sm py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm transition-colors" data-asistentes="32" data-dni="30.984.111" data-evento="Cumple infantil" data-fecha="23/02/2025" data-historial="5.0 estrellas • Nuevo en Turismo Seguro" data-inquilino="Beatriz Montiel" data-saldo="$22.500" data-sena="$22.500" type="button">
+                    Ficha
+                  </button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- 5. MODAL INTERACTIVO: AGENDAR NUEVA RESERVA DE INQUILINO -->
+<div class="fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto" id="modal-reserva">
+<div class="bg-surface-container-lowest rounded-xl shadow-xl max-w-2xl w-full p-space-lg flex flex-col gap-space-md my-8 animate-in fade-in duration-200">
+<!-- Modal Header -->
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-xs">
+<div class="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">person_add</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Agendar Nueva Reserva de Inquilino</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Quinta Don Antonio (#849-MED/25)</span>
+</div>
+</div>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container text-on-surface-variant flex items-center justify-center transition-colors" id="btn-close-modal" type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Form Content -->
+<form class="flex flex-col gap-space-md" id="form-nueva-reserva">
+<!-- Datos personales del inquilino -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-md text-label-md uppercase tracking-wider text-secondary font-bold">1. Datos Personales del Inquilino Titular</span>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Nombre y Apellido</label>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-low text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container" placeholder="Ej: Marcela González" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">DNI / CUIL</label>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-low text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container" placeholder="Ej: 33.123.456" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Celular con WhatsApp</label>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-low text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container" placeholder="Ej: +54 9 264 455-8822" required="" type="tel"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Localidad de Origen</label>
+<select class="w-full px-3 py-2 rounded-lg bg-surface-container-low text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container">
+<option value="rawson">Rawson, San Juan</option>
+<option value="capital">Capital, San Juan</option>
+<option value="pocito">Pocito, San Juan</option>
+<option value="rivadavia">Rivadavia, San Juan</option>
+<option value="chimbas">Chimbas, San Juan</option>
+<option value="santalucia">Santa Lucía, San Juan</option>
+<option value="otro">Otro departamento / Turista</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Datos de la jornada y aforo con alerta en tiempo real -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<span class="font-label-md text-label-md uppercase tracking-wider text-secondary font-bold">2. Jornada, Motivo y Aforo de Personas</span>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Fecha de la Jornada</label>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-low text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container" required="" type="date" value="2025-02-28"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Turno Homologado</label>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container text-on-surface-variant font-label-sm text-label-sm" disabled="" type="text" value="Diurno (10:00 a 20:00 hs)"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Motivo del Festejo</label>
+<select class="w-full px-3 py-2 rounded-lg bg-surface-container-low text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container">
+<option value="cumple">Cumpleaños infantil</option>
+<option value="asado">Asado familiar / Amigos</option>
+<option value="bautismo">Bautismo / Comunión</option>
+<option value="civil">Casamiento civil diurno</option>
+<option value="corporativo">Jornada corporativa de empresa</option>
+</select>
+</div>
+</div>
+<!-- Asistentes: Adultos + Niños con cálculo interactivo -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm mt-space-xs">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Adultos</label>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-low text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container" id="input-adultos" max="60" min="1" type="number" value="30"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Niños (hasta 12 años)</label>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-low text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container" id="input-ninos" max="40" min="0" type="number" value="10"/>
+</div>
+</div>
+<!-- Total aforo con feedback visual dinámico -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center justify-between" id="aforo-alerta">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]" id="aforo-icon">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface" id="aforo-text">Total declarados: <strong>40 personas</strong> (Tope Homologado: 50)</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold" id="aforo-badge">Aforo Permitido</span>
+</div>
+</div>
+<!-- Estado de seguro y montos de seña -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<span class="font-label-md text-label-md uppercase tracking-wider text-secondary font-bold">3. Seguro y Estado Financiero</span>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Póliza Aplicada</label>
+<select class="w-full px-3 py-2 rounded-lg bg-surface-container-low text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container">
+<option value="mensual">Amparado en mi Póliza Mensual Triunfo #9482 (Incluido)</option>
+<option value="microseguro">Microseguro emitido por el inquilino (#TS-SEG)</option>
+<option value="emitir">Emitir Póliza de Jornada Adicional ($4.200)</option>
+</select>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Garantía / Depósito de Roturas</label>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-low text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container" type="text" value="$30.000 ARS (Reintegrable al egreso)"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Monto Seña Abonado</label>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-low text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container" placeholder="Ej: $22.500" type="text" value="$22.500"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Saldo a Cobrar en Tranquera</label>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-low text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container" placeholder="Ej: $22.500" type="text" value="$22.500"/>
+</div>
+</div>
+</div>
+<!-- Notas privadas para el anfitrión -->
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Notas internas privadas del anfitrión</label>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-low text-primary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container" placeholder="Ej: Traen castillo inflable pequeño, avisar corte de música 19:30 hs..." type="text"/>
+</div>
+<!-- Modal Actions -->
+<div class="flex items-center justify-end gap-space-sm pt-space-sm">
+<button class="px-space-md py-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg transition-colors" id="btn-cancel-modal" type="button">
+            Cancelar
+          </button>
+<button class="inline-flex items-center gap-space-xs px-space-lg py-space-sm rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg hover:bg-on-secondary-container transition-all shadow-sm" type="submit">
+<span class="material-symbols-outlined text-[20px]">how_to_reg</span>
+            Confirmar y Bloquear Fecha
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- 6. DRAWER / MODAL DE DETALLE DE FICHA DE INQUILINO (INTERACTIVO) -->
+<div class="fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm hidden items-center justify-center p-4" id="modal-detalle-inquilino">
+<div class="bg-surface-container-lowest rounded-xl shadow-xl max-w-lg w-full p-space-lg flex flex-col gap-space-md animate-in fade-in duration-200">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[24px]">assignment_ind</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Ficha Integral del Inquilino</h3>
+</div>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container text-on-surface-variant flex items-center justify-center" id="btn-close-detalle" type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container-low flex items-center justify-between">
+<div>
+<h4 class="font-headline-sm text-headline-sm text-primary" id="det-inquilino-nombre">Lorena Agüero</h4>
+<span class="font-body-sm text-body-sm text-on-surface-variant" id="det-inquilino-dni">DNI 32.844.119</span>
+</div>
+<div class="text-right">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-secondary/15 text-secondary font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">verified</span> Validado
+          </span>
+</div>
+</div>
+<!-- Detalle de reserva -->
+<div class="space-y-space-xs font-body-sm text-body-sm text-on-surface">
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Fecha de ingreso:</span>
+<strong class="text-primary font-bold" id="det-inquilino-fecha">15/02/2025</strong>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Turno contratado:</span>
+<span class="text-primary">Diurno (10:00 a 20:00 hs)</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Motivo del evento:</span>
+<span class="text-primary" id="det-inquilino-evento">Bautismo familiar</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Cantidad asistentes:</span>
+<strong class="text-secondary font-bold" id="det-inquilino-asistentes">38 personas</strong>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Seña recibida:</span>
+<span class="text-secondary font-bold" id="det-inquilino-sena">$27.500</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Saldo pendiente:</span>
+<span class="text-primary font-bold" id="det-inquilino-saldo">$27.500</span>
+</div>
+</div>
+<!-- Historial de confianza -->
+<div class="p-space-sm rounded-lg bg-surface-container flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface font-bold">Historial en Red Turismo Seguro San Juan:</span>
+<p class="font-body-sm text-body-sm text-secondary" id="det-inquilino-historial">
+          5.0 estrellas • 2 alquileres previos • Sin incidentes registrados
+        </p>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="w-full py-space-sm rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors" id="btn-cerrar-detalle-sec" type="button">
+          Cerrar Ficha
+        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- INTERACTIVE SCRIPTS -->
+<script>
+  // 1. MODAL AGENDAR RESERVA
+  const modalReserva = document.getElementById('modal-reserva');
+  const btnOpenModal = document.getElementById('btn-open-booking-modal');
+  const btnCloseModal = document.getElementById('btn-close-modal');
+  const btnCancelModal = document.getElementById('btn-cancel-modal');
+  const formNuevaReserva = document.getElementById('form-nueva-reserva');
+
+  btnOpenModal.addEventListener('click', () => {
+    modalReserva.classList.remove('hidden');
+    modalReserva.classList.add('flex');
+  });
+
+  const closeModal = () => {
+    modalReserva.classList.add('hidden');
+    modalReserva.classList.remove('flex');
+  };
+
+  btnCloseModal.addEventListener('click', closeModal);
+  btnCancelModal.addEventListener('click', closeModal);
+
+  // 2. DETECTOR DE SOBRE-AFORO EN TIEMPO REAL
+  const inputAdultos = document.getElementById('input-adultos');
+  const inputNinos = document.getElementById('input-ninos');
+  const aforoAlerta = document.getElementById('aforo-alerta');
+  const aforoIcon = document.getElementById('aforo-icon');
+  const aforoText = document.getElementById('aforo-text');
+  const aforoBadge = document.getElementById('aforo-badge');
+
+  function updateAforo() {
+    const adultos = parseInt(inputAdultos.value) || 0;
+    const ninos = parseInt(inputNinos.value) || 0;
+    const total = adultos + ninos;
+
+    if (total > 50) {
+      aforoAlerta.classList.remove('bg-surface-container-low');
+      aforoAlerta.classList.add('bg-error-container');
+      aforoIcon.classList.remove('text-secondary');
+      aforoIcon.classList.add('text-error');
+      aforoIcon.textContent = 'warning';
+      aforoText.innerHTML = `Total declarados: <strong>${total} personas</strong> (Supera el tope homologado de 50)`;
+      aforoBadge.classList.remove('text-secondary');
+      aforoBadge.classList.add('text-error');
+      aforoBadge.textContent = '¡Exceso de Aforo!';
+    } else {
+      aforoAlerta.classList.add('bg-surface-container-low');
+      aforoAlerta.classList.remove('bg-error-container');
+      aforoIcon.classList.add('text-secondary');
+      aforoIcon.classList.remove('text-error');
+      aforoIcon.textContent = 'check_circle';
+      aforoText.innerHTML = `Total declarados: <strong>${total} personas</strong> (Tope Homologado: 50)`;
+      aforoBadge.classList.add('text-secondary');
+      aforoBadge.classList.remove('text-error');
+      aforoBadge.textContent = 'Aforo Permitido';
+    }
+  }
+
+  inputAdultos.addEventListener('input', updateAforo);
+  inputNinos.addEventListener('input', updateAforo);
+
+  formNuevaReserva.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('¡Reserva agendada y asegurada con éxito! La fecha se ha bloqueado en el calendario y se emitió la constancia.');
+    closeModal();
+  });
+
+  // 3. MODAL VER FICHA INQUILINO
+  const modalDetalle = document.getElementById('modal-detalle-inquilino');
+  const btnCloseDetalle = document.getElementById('btn-close-detalle');
+  const btnCerrarDetalleSec = document.getElementById('btn-cerrar-detalle-sec');
+  const btnsVerInquilino = document.querySelectorAll('.btn-ver-inquilino');
+
+  btnsVerInquilino.forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('det-inquilino-nombre').textContent = btn.getAttribute('data-inquilino');
+      document.getElementById('det-inquilino-dni').textContent = 'DNI ' + btn.getAttribute('data-dni');
+      document.getElementById('det-inquilino-fecha').textContent = btn.getAttribute('data-fecha');
+      document.getElementById('det-inquilino-evento').textContent = btn.getAttribute('data-evento');
+      document.getElementById('det-inquilino-asistentes').textContent = btn.getAttribute('data-asistentes') + ' personas';
+      document.getElementById('det-inquilino-sena').textContent = btn.getAttribute('data-sena');
+      document.getElementById('det-inquilino-saldo').textContent = btn.getAttribute('data-saldo');
+      document.getElementById('det-inquilino-historial').textContent = btn.getAttribute('data-historial');
+
+      modalDetalle.classList.remove('hidden');
+      modalDetalle.classList.add('flex');
+    });
+  });
+
+  const closeDetalle = () => {
+    modalDetalle.classList.add('hidden');
+    modalDetalle.classList.remove('flex');
+  };
+
+  btnCloseDetalle.addEventListener('click', closeDetalle);
+  btnCerrarDetalleSec.addEventListener('click', closeDetalle);
+
+  // 4. GUARDAR TARIFAS
+  const tarifaForm = document.getElementById('tarifa-form');
+  const tarifaStatusFeedback = document.getElementById('tarifa-status-feedback');
+
+  tarifaForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    tarifaStatusFeedback.innerHTML = '<span class="material-symbols-outlined text-[16px]">done_all</span> Tarifas actualizadas y publicadas correctamente';
+    tarifaStatusFeedback.classList.add('text-secondary', 'font-bold');
+  });
+
+  // 5. TOGGLE VISIBILIDAD DE OFERTA
+  const toggleVisible = document.getElementById('toggle-visible');
+  const labelEstado = document.getElementById('label-estado-oferta');
+
+  toggleVisible.addEventListener('change', () => {
+    if (toggleVisible.checked) {
+      labelEstado.textContent = 'Activo';
+      labelEstado.className = 'font-label-sm text-label-sm text-secondary font-bold';
+    } else {
+      labelEstado.textContent = 'Pausado';
+      labelEstado.className = 'font-label-sm text-label-sm text-outline font-bold';
+    }
+  });
+
+  // 6. FORM RE-VALIDACIÓN
+  const formReval = document.getElementById('form-revalidacion');
+  formReval.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Solicitud enviada al cuerpo técnico de inspectores de Turismo Seguro San Juan. Nos comunicaremos dentro de las 24hs hábiles para confirmar el turno presencial.');
+    formReval.reset();
+  });
+
+  // 7. INTERACCIÓN RÁPIDA EN CELDAS DEL CALENDARIO
+  const celdas = document.querySelectorAll('.calendar-cell');
+  celdas.forEach(celda => {
+    celda.addEventListener('click', () => {
+      if (celda.classList.contains('bg-secondary-container/50')) {
+        celda.classList.remove('bg-secondary-container/50', 'text-on-surface');
+        celda.classList.add('bg-tertiary-fixed', 'text-tertiary-container');
+        celda.querySelector('span:last-child').textContent = 'Bloqueo Manual';
+      }
+    });
+  });
+
+  // 8. BLOQUEO RÁPIDO DE FIN DE SEMANA
+  const btnQuickBlock = document.getElementById('btn-quick-block-selection');
+  btnQuickBlock.addEventListener('click', () => {
+    alert('Modo Bloqueo Activado: Seleccione cualquier celda disponible para alternar estado entre alquiler y uso propio.');
+  });
+</script></main></div></body></html>

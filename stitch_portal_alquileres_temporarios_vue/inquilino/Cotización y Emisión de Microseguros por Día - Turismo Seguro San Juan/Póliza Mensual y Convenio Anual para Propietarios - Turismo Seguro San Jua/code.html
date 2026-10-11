@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-fixed": "#ffddb8", "inverse-on-surface": "#eaf1ff", "on-tertiary-fixed-variant": "#653e00", "background": "#f8f9ff", "surface-dim": "#cbdbf5", "primary-container": "#0f2942", "on-secondary-fixed-variant": "#005137", "inverse-primary": "#b0c9e8", "on-primary-fixed-variant": "#314863", "surface-container": "#e5eeff", "on-secondary": "#ffffff", "surface-variant": "#d3e4fe", "on-secondary-container": "#00714e", "on-primary-fixed": "#011d35", "error": "#ba1a1a", "on-primary": "#ffffff", "tertiary-container": "#3b2200", "on-tertiary-fixed": "#2a1700", "primary": "#001428", "surface-container-lowest": "#ffffff", "inverse-surface": "#213145", "surface-container-highest": "#d3e4fe", "on-error": "#ffffff", "on-background": "#0b1c30", "error-container": "#ffdad6", "surface-tint": "#49607c", "secondary-container": "#82f5c1", "outline": "#74777e", "surface": "#f8f9ff", "on-tertiary": "#ffffff", "tertiary-fixed-dim": "#ffb95f", "on-surface-variant": "#43474d", "primary-fixed": "#d1e4ff", "surface-container-low": "#eff4ff", "on-error-container": "#93000a", "secondary": "#006c4a", "on-secondary-fixed": "#002114", "tertiary": "#1f1000", "outline-variant": "#c3c6ce", "primary-fixed-dim": "#b0c9e8", "surface-container-high": "#dce9ff", "on-tertiary-container": "#c77f00", "secondary-fixed-dim": "#68dba9", "on-primary-container": "#7991af", "on-surface": "#0b1c30", "surface-bright": "#f8f9ff", "secondary-fixed": "#85f8c4" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "gutter-mobile": "1rem", "space-lg": "1.5rem", "gutter": "1.5rem", "margin-mobile": "1rem", "space-xl": "2.5rem", "space-xs": "0.25rem", "margin": "2rem", "space-md": "1rem" }, "fontFamily": { "label-sm": [ "Plus Jakarta Sans" ], "body-sm": [ "Plus Jakarta Sans" ], "body-md": [ "Plus Jakarta Sans" ], "label-md": [ "Plus Jakarta Sans" ], "label-lg": [ "Plus Jakarta Sans" ], "headline-xl": [ "Plus Jakarta Sans" ], "headline-lg-mobile": [ "Plus Jakarta Sans" ], "headline-lg": [ "Plus Jakarta Sans" ], "body-lg": [ "Plus Jakarta Sans" ], "headline-xl-mobile": [ "Plus Jakarta Sans" ], "headline-sm": [ "Plus Jakarta Sans" ], "headline-md": [ "Plus Jakarta Sans" ] }, "fontSize": { "label-sm": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" } ], "body-sm": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "body-md": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" } ], "label-lg": [ "14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" } ], "headline-xl": [ "48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" } ], "headline-lg-mobile": [ "26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "700" } ], "headline-lg": [ "36px", { "lineHeight": "44px", "letterSpacing": "-0.015em", "fontWeight": "700" } ], "body-lg": [ "18px", { "lineHeight": "28px", "fontWeight": "400" } ], "headline-xl-mobile": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800" } ], "headline-sm": [ "20px", { "lineHeight": "28px", "fontWeight": "600" } ], "headline-md": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" } ] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-md shadow-[0_1px_8px_rgba(15,41,66,0.06)]"><div class="h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><a class="flex items-center gap-space-sm group" data-path="inicio" href="#"><div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-secondary-fixed shadow-[0_2px_4px_rgba(15,41,66,0.12)]"><span class="material-symbols-outlined text-[24px]">verified_user</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary leading-tight font-bold tracking-tight">Turismo Seguro</span><span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">San Juan • Oficial</span></div></a><div class="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">gpp_good</span><span>Control In Situ Activo</span></div></div><nav class="hidden lg:flex items-center gap-space-md" data-active-classes="bg-surface-container-high text-on-surface font-label-lg font-bold rounded-lg px-3 py-2"><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low px-3 py-2 rounded-lg transition-colors" data-path="buscador-quintas" href="#">Buscador de Quintas</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low px-3 py-2 rounded-lg transition-colors" data-path="catalogo-alquileres" href="#">Alquileres Diurnos</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low px-3 py-2 rounded-lg transition-colors" data-path="polizas-seguros" href="#">Pólizas &amp; Seguros</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low px-3 py-2 rounded-lg transition-colors" data-path="validacion-in-situ" href="#">Validación In Situ</a></nav><div class="flex items-center gap-space-md"><a class="hidden sm:inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container hover:text-on-primary transition-colors shadow-sm" data-path="portal-propietarios" href="#">Portal Propietarios</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]"><div class="flex flex-col w-full">
+<!-- Top Ambient Banner & Header -->
+<section class="relative w-full bg-surface-container-low px-6 lg:px-12 py-12 lg:py-16 overflow-hidden">
+<!-- Subtle architectural decorative background circles -->
+<div class="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-secondary-fixed/20 blur-3xl pointer-events-none"></div>
+<div class="absolute -left-20 bottom-0 w-80 h-80 rounded-full bg-primary-fixed/30 blur-2xl pointer-events-none"></div>
+<div class="max-w-7xl mx-auto relative z-10 flex flex-col gap-space-lg">
+<!-- Breadcrumb & Status Pill -->
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-container-lowest shadow-sm text-secondary font-label-md">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="tracking-wide uppercase font-label-sm">Convenio Exclusivo Propietarios Verificados San Juan</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm">
+<span>Res. Ministerial Prov. Nº 481/25</span>
+<span class="text-outline">•</span>
+<span>Triunfo Seguros &amp; San Cristóbal</span>
+</div>
+</div>
+<!-- Main Proposition Title Area -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-end">
+<div class="lg:col-span-8 flex flex-col gap-space-md">
+<h1 class="font-headline-xl text-headline-xl text-primary font-extrabold tracking-tight">
+            Póliza Mensual Integral para Propietarios: <span class="text-secondary">Blindá tu Quinta</span> todo el Año
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">
+            Olvidate de contratar por evento. Cubrí todos los fines de semana, reuniones familiares y alquileres del mes con una cuota fija bonificada hasta un 45% por estar verificado in situ.
+          </p>
+</div>
+<!-- Quick Comparison Micro-Card -->
+<div class="lg:col-span-4 bg-surface-container-lowest p-6 rounded-xl shadow-md flex flex-col gap-3">
+<div class="flex items-center gap-2 text-primary font-headline-sm">
+<span class="material-symbols-outlined text-secondary text-[24px]">savings</span>
+<span>Ahorro Comprobado</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Si alquilás 4 o más veces al mes, la póliza mensual te ahorra más de <strong class="text-primary font-bold">$15.000 ARS</strong> frente al seguro por día y activa automáticamente el distintivo de máxima confianza.
+          </p>
+<div class="mt-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary-container/40 text-on-secondary-container font-label-sm">
+<span class="material-symbols-outlined text-[16px]">military_tech</span>
+<span>Badge “Seguro Anual Activo” incluido</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Billing Frequency Selector Section -->
+<section class="max-w-7xl mx-auto w-full px-6 lg:px-12 -mt-6 z-20">
+<div class="bg-surface-container-lowest rounded-xl p-4 sm:p-5 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">calendar_month</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-primary">Modalidad de Facturación</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Elegí pago recurrente o contratá la temporada completa</p>
+</div>
+</div>
+<!-- Segmented Interactive Switch -->
+<div class="bg-surface-container-low p-1.5 rounded-lg flex items-center gap-1 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-5 py-2.5 rounded-md font-label-lg transition-all duration-200 bg-primary text-on-primary shadow-sm flex items-center justify-center gap-2" id="billing-monthly-btn" onclick="setBillingFrequency('monthly')">
+<span class="material-symbols-outlined text-[18px]">autorenew</span>
+<span>Abono Mensual Recurrente</span>
+</button>
+<button class="flex-1 sm:flex-none px-5 py-2.5 rounded-md font-label-lg transition-all duration-200 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-2" id="billing-annual-btn" onclick="setBillingFrequency('annual')">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Plan Anual Temporada (2 Meses Off)</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Plans Grid (3 Tiers) -->
+<section class="max-w-7xl mx-auto w-full px-6 lg:px-12 py-12">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg items-stretch">
+<!-- Plan 1: Básico Quincho -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm flex flex-col justify-between transition-all duration-300 hover:shadow-lg">
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<span class="font-label-sm uppercase tracking-wider px-3 py-1 rounded-full bg-surface-container text-on-surface-variant">Familiar y Quinchos</span>
+<span class="material-symbols-outlined text-outline text-[24px]">cabin</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary">Mensual Básico Quincho</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Para quintas de uso familiar y alquileres moderados de fin de semana.</p>
+</div>
+<div class="flex items-baseline gap-1 py-2">
+<span class="font-headline-xl text-headline-xl text-primary font-bold" id="price-plan-1">$18.500</span>
+<span class="font-label-md text-on-surface-variant" id="period-plan-1">ARS / mes</span>
+</div>
+<div class="text-secondary font-label-sm hidden" id="save-plan-1">Abono anual: $185.000 (Ahorrás $37.000)</div>
+<!-- Feature List -->
+<ul class="flex flex-col gap-3 font-body-sm text-body-sm text-on-surface">
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">groups</span>
+<span>Aforo de hasta <strong>25 personas</strong> por jornada de alquiler.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">shield</span>
+<span>Responsabilidad Civil hasta <strong>$30.000.000 ARS</strong> dentro del predio.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">pool</span>
+<span>Cobertura de accidentes en pileta (con cerco perimetral auditado in situ).</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">emergency</span>
+<span>Emergencias médicas diurnas con ambulancia prioritaria en zona.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">badge</span>
+<span>Insignia oficial en ficha: <strong>“Seguro RC Activo”</strong>.</span>
+</li>
+</ul>
+</div>
+<div class="mt-8 pt-6 bg-surface-container-low/50 -mx-8 -mb-8 p-8 rounded-b-xl">
+<button class="w-full py-3.5 px-4 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg transition-colors flex items-center justify-center gap-2 shadow-sm" onclick="selectPlan('Básico Quincho', 18500)">
+<span>Elegir Plan Básico</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Plan 2: Premium Multieventos (DESTACADO) -->
+<div class="relative bg-surface-container-lowest rounded-xl p-8 shadow-xl flex flex-col justify-between ring-2 ring-secondary transform lg:-translate-y-2">
+<!-- Floating highlight badge -->
+<div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-secondary text-on-secondary font-label-sm uppercase tracking-widest shadow-md flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">star</span>
+<span>Más Elegido por Anfitriones</span>
+</div>
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between pt-2">
+<span class="font-label-sm uppercase tracking-wider px-3 py-1 rounded-full bg-secondary-container/40 text-on-secondary-container font-bold">Eventos &amp; Cumpleaños</span>
+<span class="material-symbols-outlined text-secondary text-[26px]">celebration</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary font-bold">Mensual Premium Multieventos</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">La protección total recomendada por el Ministerio de Turismo para predios activos.</p>
+</div>
+<div class="flex items-baseline gap-1 py-2">
+<span class="font-headline-xl text-headline-xl text-primary font-extrabold" id="price-plan-2">$26.900</span>
+<span class="font-label-md text-on-surface-variant" id="period-plan-2">ARS / mes</span>
+</div>
+<div class="text-secondary font-label-sm hidden" id="save-plan-2">Abono anual: $269.000 (Ahorrás $53.800 + Placa Dorada)</div>
+<!-- Feature List -->
+<ul class="flex flex-col gap-3 font-body-sm text-body-sm text-on-surface">
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">groups</span>
+<span>Aforo ampliado de hasta <strong>50 personas</strong> por alquiler.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">gpp_good</span>
+<span>Responsabilidad Civil ampliada hasta <strong>$60.000.000 ARS</strong>.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">local_fire_department</span>
+<span>Cobertura de incendio en quincho y sector asador hasta <strong>$10.000.000 ARS</strong>.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">restaurant</span>
+<span>RC por suministro de alimentos/bebidas e intoxicación fortuita.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">build</span>
+<span>Asistencia técnica urgente en jornada (electricidad, plomería de contingencia).</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">all_inclusive</span>
+<span><strong>Alquileres ilimitados al mes</strong> sin necesidad de reportar fecha a fecha.</span>
+</li>
+<li class="flex items-start gap-2.5 p-2 rounded-lg bg-secondary-container/20">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">verified_user</span>
+<span class="text-on-secondary-container font-label-sm">Distintivo Dorado: <strong>“Propiedad con Cobertura Integral Anual”</strong></span>
+</li>
+</ul>
+</div>
+<div class="mt-8 pt-6 bg-surface-container-high/40 -mx-8 -mb-8 p-8 rounded-b-xl">
+<button class="w-full py-3.5 px-4 rounded-lg bg-secondary hover:bg-on-secondary-container text-on-secondary font-label-lg transition-colors flex items-center justify-center gap-2 shadow-md" onclick="selectPlan('Premium Multieventos', 26900)">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span>Elegir Plan Premium</span>
+</button>
+</div>
+</div>
+<!-- Plan 3: Corporativo & Complejos Grandes -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm flex flex-col justify-between transition-all duration-300 hover:shadow-lg">
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<span class="font-label-sm uppercase tracking-wider px-3 py-1 rounded-full bg-surface-container text-on-surface-variant">Complejos &amp; Canchas</span>
+<span class="material-symbols-outlined text-outline text-[24px]">corporate_fare</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary">Corporativo &amp; Complejos Grandes</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Para predios de gran porte, jornadas empresariales o instalaciones con canchas múltiples.</p>
+</div>
+<div class="flex items-baseline gap-1 py-2">
+<span class="font-headline-xl text-headline-xl text-primary font-bold" id="price-plan-3">$38.000</span>
+<span class="font-label-md text-on-surface-variant" id="period-plan-3">ARS / mes</span>
+</div>
+<div class="text-secondary font-label-sm hidden" id="save-plan-3">Abono anual: $380.000 (Ahorrás $76.000)</div>
+<!-- Feature List -->
+<ul class="flex flex-col gap-3 font-body-sm text-body-sm text-on-surface">
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">groups_3</span>
+<span>Aforo homologado para hasta <strong>100 personas</strong> simultáneas.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">security</span>
+<span>RC amplísima de hasta <strong>$120.000.000 ARS</strong> de suma asegurada.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">sports_soccer</span>
+<span>Cobertura de canchas de fútbol/pádel y hasta 2 piscinas simultáneas.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">directions_car</span>
+<span>Daños a bienes de inquilinos y vehículos dentro del estacionamiento techado.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">gavel</span>
+<span>Patrocinio legal, mediación e indemnización judicial sin franquicia.</span>
+</li>
+</ul>
+</div>
+<div class="mt-8 pt-6 bg-surface-container-low/50 -mx-8 -mb-8 p-8 rounded-b-xl">
+<button class="w-full py-3.5 px-4 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label-lg transition-colors flex items-center justify-center gap-2" onclick="selectPlan('Corporativo Complejos', 38000)">
+<span>Solicitar Asesor Corporativo</span>
+<span class="material-symbols-outlined text-[18px]">support_agent</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Simulator & Savings Calculator Section -->
+<section class="w-full bg-surface-container-low py-16 px-6 lg:px-12 my-6">
+<div class="max-w-7xl mx-auto">
+<div class="mb-10 text-center max-w-2xl mx-auto">
+<span class="font-label-sm uppercase tracking-widest text-secondary font-bold">Simulador Financiero para Propietarios</span>
+<h2 class="font-headline-lg text-headline-lg text-primary mt-2">¿Cuánto dinero y tiempo ahorrás al mes?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+          Calculá el costo comparativo entre pólizas individuales por fin de semana versus la póliza mensual flat convenio Turismo Seguro.
+        </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-surface-container-lowest p-8 lg:p-10 rounded-2xl shadow-md">
+<!-- Interactive Controls (Left Column) -->
+<div class="lg:col-span-6 flex flex-col gap-8">
+<div>
+<div class="flex items-center justify-between mb-2">
+<label class="font-headline-sm text-headline-sm text-primary flex items-center gap-2" for="rentals-range">
+<span class="material-symbols-outlined text-secondary text-[20px]">event_repeat</span>
+<span>Frecuencia mensual de alquileres:</span>
+</label>
+<span class="font-headline-sm text-headline-sm text-secondary font-bold px-3 py-1 bg-surface-container rounded-lg" id="rentals-val-display">6 jornadas</span>
+</div>
+<input class="w-full accent-secondary h-2 bg-surface-variant rounded-lg cursor-pointer" id="rentals-range" max="15" min="1" oninput="recalcSimulator()" step="1" type="range" value="6"/>
+<div class="flex justify-between font-label-sm text-on-surface-variant mt-1">
+<span>1 alquiler/mes</span>
+<span>6 habituales</span>
+<span>15 alquileres (alta temporada)</span>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-2">
+<label class="font-headline-sm text-headline-sm text-primary flex items-center gap-2" for="day-rate-range">
+<span class="material-symbols-outlined text-secondary text-[20px]">payments</span>
+<span>Tu tarifa promedio de cobro por día:</span>
+</label>
+<span class="font-headline-sm text-headline-sm text-primary font-bold px-3 py-1 bg-surface-container rounded-lg" id="rate-val-display">$45.000 ARS</span>
+</div>
+<input class="w-full accent-primary h-2 bg-surface-variant rounded-lg cursor-pointer" id="day-rate-range" max="150000" min="20000" oninput="recalcSimulator()" step="5000" type="range" value="45000"/>
+<div class="flex justify-between font-label-sm text-on-surface-variant mt-1">
+<span>$20.000 ARS</span>
+<span>$85.000 ARS</span>
+<span>$150.000 ARS</span>
+</div>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px] shrink-0 mt-0.5">verified</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+<strong>Uso familiar incluido 24/7:</strong> A diferencia de las pólizas por evento que caducan a las 20:00 hs, la póliza mensual protege a tu propia familia durante mantenimientos, podas y asados privados sin pagar adicionales.
+            </p>
+</div>
+</div>
+<!-- Simulation Comparison Output Card (Right Column) -->
+<div class="lg:col-span-6 bg-surface-container p-6 lg:p-8 rounded-xl flex flex-col gap-6">
+<h3 class="font-headline-sm text-headline-sm text-primary border-b border-surface pb-3">Balance Mensual Estimado</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3.5 rounded-lg bg-surface-container-lowest">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface">Costo emitiendo seguros individuales:</span>
+<span class="font-label-sm text-on-surface-variant" id="calc-events-formula">6 eventos x $4.500 c/u</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-error font-bold" id="calc-cost-individual">$27.000 ARS</span>
+</div>
+<div class="flex items-center justify-between p-3.5 rounded-lg bg-secondary-container/30">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-secondary-container font-semibold">Costo Póliza Mensual Convenio TS:</span>
+<span class="font-label-sm text-secondary">Plan Recomendado (Multieventos Ilimitado)</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-secondary font-extrabold" id="calc-cost-monthly">$26.900 ARS</span>
+</div>
+</div>
+<!-- Savings Banner -->
+<div class="p-4 rounded-lg bg-surface-container-lowest flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[26px]">paid</span>
+<div>
+<p class="font-label-lg text-label-lg text-primary">Ahorro en seguros y trámites:</p>
+<p class="font-label-sm text-on-surface-variant">Sin tener que emitir certificados individuales cada viernes</p>
+</div>
+</div>
+<div class="text-right">
+<span class="font-headline-sm text-headline-sm text-secondary font-extrabold" id="calc-net-savings">+$15.100 ARS</span>
+<p class="font-label-sm text-secondary">Por mes contratado</p>
+</div>
+</div>
+<a class="w-full py-3 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-center transition-colors shadow-sm" href="#formulario-adhesion">
+            Fijar mi tarifa mensual bonificada
+          </a>
+</div>
+</div>
+</div>
+</section>
+<!-- Visual Proof: Properties with Active Insurance in Catalog -->
+<section class="max-w-7xl mx-auto w-full px-6 lg:px-12 py-10">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<span class="font-label-sm uppercase tracking-wider text-secondary font-bold">Visibilidad e Impacto Comercial</span>
+<h2 class="font-headline-lg text-headline-lg text-primary mt-1">Cómo se ve tu quinta en el buscador oficial</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-md">
+        Las propiedades con distintivo de cobertura anual se posicionan en los primeros resultados y transmiten seguridad inmediata a familias y grupos.
+      </p>
+</div>
+<!-- Example Real Property Previews -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card Example 1 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col">
+<div class="relative h-48 w-full bg-cover bg-center" data-alt="Sunny countryside villa in Pocito San Juan with a fenced turquoise swimming pool, manicured green lawn, rustic barbecue quincho, pergola with vines, and clear blue sky under bright natural sunlight." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3AlGJd9TL5-6twmK_I-s64LUpBRpHpgbCuF_bE_3zQqf5TRrV30Rt_JXmqNC3GW5OUpEWDH23XnyRTdB6nj3RIWn7BVDYtTyJpzdtTuE9lkba7BjHTf4jtaxyv1F0KrpqN1DaU7rOcKwRB8GMDQlzDLfLvm91R-nyP3CyzwEllI2GtfTxpuLEkAiNdPoYItME-SLXBUjurv52CCnR0Y5ulSl9Js0pAdcpDMrjxik7MQFW9diVX-lp')">
+<div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-secondary font-label-sm flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Verificado In Situ • 14/01/2025</span>
+</div>
+<div class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm font-bold shadow-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+<span>Seguro Anual Activo</span>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-sm text-headline-sm text-primary">Quinta Los Olivos</h4>
+<span class="font-label-md text-secondary">Pocito, San Juan</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Parque arbolado, quincho para 40 comensales, pileta con cerco perimetral homologado y grupo electrógeno.</p>
+<div class="flex flex-wrap gap-1.5 mt-2">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm">Pileta cercada</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm">Triunfo Seguros #9482</span>
+</div>
+</div>
+</div>
+<!-- Card Example 2 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col">
+<div class="relative h-48 w-full bg-cover bg-center" data-alt="Traditional Argentinian ranch house in Médano de Oro San Juan, showcasing a large covered barbecue area with brick oven, picnic wooden tables, surrounded by olive trees under a warm afternoon light." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCEonhSX9WoxS2zlmMoVzSYuLSoHO7Z7YUsUw1QyPI5UzL3DyfbM4L9UrNezd1AMxFYOCOKrk-SWk4uequSUXM3VGenqhnufQLQZefD0inVJpWgbeb5AjMlM4YsE3v34QG0l2NBAMKF594IY2jGQ2h92ysI7wbJvmezf1UPP8x8cOfZ99A_y9euouBeqdGOLv_3U5NYz5CdLauTflS-YLoS0v9DxWhNDiwLhydJ7HgerNTs1zXQoIh0')">
+<div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-secondary font-label-sm flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Verificado In Situ • 28/01/2025</span>
+</div>
+<div class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm font-bold shadow-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">military_tech</span>
+<span>Póliza Integral 365</span>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-sm text-headline-sm text-primary">El Mirador del Médano</h4>
+<span class="font-label-md text-secondary">Médano de Oro</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Quincho rústico cerrado con climatización, asador criollo de 4 metros y área de juegos infantiles.</p>
+<div class="flex flex-wrap gap-1.5 mt-2">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm">Asador techado</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm">San Cristóbal #4102</span>
+</div>
+</div>
+</div>
+<!-- Card Example 3 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col">
+<div class="relative h-48 w-full bg-cover bg-center" data-alt="Modern country residence in Santa Lucía San Juan with illuminated swimming pool at sunset, expansive wooden deck, well-kept gardens, and contemporary outdoor furniture with Andes mountains in the distant background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDGtKmNKAZ-7uRNK3r-UJ0on6sYOlJ080sR09holIz3nCNCjW2vgV7db5MTs--GclcmGpiGMfr6At5NV_BEIzAKOlehjbxWzhc-4txqSvyIzio-eDfd7Eoy_BHHNL3vjfIkiqArVfBhQZDzvkr_CdnZnYEqiPv3fjcmD6fHzjAtanpfPrMT1nE0RqXwT4mKoE2Slr8EhF_cQdC3fzKMyw-ztUjiYEZHwGENxl6ddzBjAN7uMD6yy5cg')">
+<div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-secondary font-label-sm flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Verificado In Situ • 05/02/2025</span>
+</div>
+<div class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-secondary text-on-secondary font-label-sm font-bold shadow-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+<span>Cobertura Corporativa</span>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-sm text-headline-sm text-primary">Quinta Solar de Santa Lucía</h4>
+<span class="font-label-md text-secondary">Santa Lucía</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Predio premium para 90 personas, cancha de pádel de cristal sintético y suite de descanso anexa.</p>
+<div class="flex flex-wrap gap-1.5 mt-2">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm">Cancha pádel</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm">Triunfo Corporativo</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contract & Enrollment Direct Form -->
+<section class="max-w-7xl mx-auto w-full px-6 lg:px-12 py-12" id="formulario-adhesion">
+<div class="bg-surface-container-lowest rounded-2xl p-8 lg:p-12 shadow-xl">
+<div class="max-w-3xl mb-8">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm mb-3">
+<span class="material-symbols-outlined text-[16px]">edit_document</span>
+<span>Formulario de Adhesión Digital Inmediata</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Vinculá tu Quinta a la Póliza Mensual</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+          Completá los datos del titular tomador del seguro. La vinculación se valida en el acto con tu informe de inspección in situ aprobado.
+        </p>
+</div>
+<form class="grid grid-cols-1 lg:grid-cols-12 gap-6" id="enrollment-form" onsubmit="handleContractSubmit(event)">
+<!-- Field 1: Property Selector (Auto-fill linked) -->
+<div class="lg:col-span-12 flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-primary flex items-center justify-between">
+<span>Seleccionar Inmueble Verificado Registrado</span>
+<span class="font-label-sm text-secondary">Ficha Técnica Asociada</span>
+</label>
+<div class="relative">
+<select class="w-full bg-surface-container-low px-4 py-3.5 rounded-lg text-on-surface font-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary transition-all" id="property-select" onchange="updatePropertyData()">
+<option value="medano">Quinta Don Antonio — Médano de Oro (#849-MED/25 - Aforo 45 pers.)</option>
+<option value="pocito">Villa Los Alamos — Pocito Norte (#412-POC/24 - Aforo 60 pers.)</option>
+<option value="rivadavia">Quincho La Campiña — Rivadavia (#193-RIV/25 - Aforo 30 pers.)</option>
+<option value="albardon">Finca Los Ciruelos — Albardón (#305-ALB/25 - Aforo 80 pers.)</option>
+</select>
+</div>
+<!-- Dynamic Auditor Inspection Note -->
+<div class="p-3 rounded-lg bg-surface-container-low flex items-center justify-between font-label-sm text-on-surface-variant mt-1" id="inspector-badge-box">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">gpp_good</span>
+<span>Inspección In Situ Aprobada por: <strong>Arq. Matías Canto (Mat. 2841)</strong></span>
+</div>
+<span class="text-secondary font-semibold">Pileta Cercada Homologada ✓</span>
+</div>
+</div>
+<!-- Field 2: Holder Info -->
+<div class="lg:col-span-6 flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-primary">Titular Tomador del Seguro (Nombre y Apellido)</label>
+<input class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface font-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Marcelo Antonio Rodríguez" required="" type="text" value="Marcelo Antonio Rodríguez"/>
+</div>
+<div class="lg:col-span-6 flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-primary">CUIT / CUIL del Titular</label>
+<input class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface font-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary" placeholder="20-28941829-7" required="" type="text" value="20-28941829-7"/>
+</div>
+<!-- Field 3: Plan Selected Confirmation -->
+<div class="lg:col-span-6 flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-primary">Plan de Cobertura Seleccionado</label>
+<select class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface font-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary" id="form-plan-choice">
+<option value="basic">Mensual Básico Quincho — $18.500 ARS/mes</option>
+<option selected="" value="premium">Mensual Premium Multieventos — $26.900 ARS/mes (Recomendado)</option>
+<option value="corporate">Corporativo &amp; Complejos Grandes — $38.000 ARS/mes</option>
+</select>
+</div>
+<!-- Field 4: Preferred Insurer Partner -->
+<div class="lg:col-span-6 flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-primary">Compañía Aseguradora del Convenio</label>
+<div class="grid grid-cols-2 gap-3">
+<label class="flex items-center gap-2 p-3 rounded-lg bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors">
+<input checked="" class="accent-secondary" name="insurer" type="radio" value="triunfo"/>
+<span class="font-label-md text-on-surface">Triunfo Seguros</span>
+</label>
+<label class="flex items-center gap-2 p-3 rounded-lg bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors">
+<input class="accent-secondary" name="insurer" type="radio" value="sancristobal"/>
+<span class="font-label-md text-on-surface">San Cristóbal Seguros</span>
+</label>
+</div>
+</div>
+<!-- Field 5: Payment method & Special Discount -->
+<div class="lg:col-span-12 flex flex-col gap-3 p-5 rounded-xl bg-surface-container-low">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-primary">Medio de Pago del Abono</span>
+<span class="px-2.5 py-1 rounded bg-secondary text-on-secondary font-label-sm font-bold">10% OFF EXTRA con Débito CBU / Banco San Juan</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<label class="flex items-center gap-3 p-3.5 rounded-lg bg-surface-container-lowest cursor-pointer">
+<input checked="" class="accent-secondary" name="payment-method" type="radio" value="cbu"/>
+<div class="flex flex-col">
+<span class="font-label-lg text-on-surface">Débito Automático CBU</span>
+<span class="font-label-sm text-secondary">Aplica 10% descuento mensual</span>
+</div>
+</label>
+<label class="flex items-center gap-3 p-3.5 rounded-lg bg-surface-container-lowest cursor-pointer">
+<input class="accent-secondary" name="payment-method" type="radio" value="card"/>
+<div class="flex flex-col">
+<span class="font-label-lg text-on-surface">Tarjeta de Crédito</span>
+<span class="font-label-sm text-on-surface-variant">Visa, Mastercard o Cabal</span>
+</div>
+</label>
+<label class="flex items-center gap-3 p-3.5 rounded-lg bg-surface-container-lowest cursor-pointer">
+<input class="accent-secondary" name="payment-method" type="radio" value="transfer"/>
+<div class="flex flex-col">
+<span class="font-label-lg text-on-surface">Pago Semestral Anticipado</span>
+<span class="font-label-sm text-on-surface-variant">Transferencia directa</span>
+</div>
+</label>
+</div>
+<div class="mt-2">
+<input class="w-full bg-surface-container-lowest px-4 py-3 rounded-lg text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ingresá tu CBU / CVU o Alias bancario para adhesión automática..." type="text" value="0450001901800049281920"/>
+</div>
+</div>
+<!-- Terms & SSN Framework -->
+<div class="lg:col-span-12 flex flex-col gap-3">
+<label class="flex items-start gap-3 cursor-pointer">
+<input checked="" class="mt-1 accent-secondary h-4 w-4 rounded" required="" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+              Acepto las condiciones generales de la póliza colectiva de Responsabilidad Civil aprobada por la <strong>Superintendencia de Seguros de la Nación (SSN)</strong> y el régimen de certificación física permanente del Ministerio de Turismo de la Provincia de San Juan. Entiendo que puedo pausar o cancelar el débito recurrente al término de cada período mensual.
+            </span>
+</label>
+</div>
+<!-- Final CTA Button -->
+<div class="lg:col-span-12 pt-4">
+<button class="w-full py-4 px-6 rounded-xl bg-secondary hover:bg-on-secondary-container text-on-secondary font-headline-sm text-headline-sm transition-all duration-200 flex items-center justify-center gap-3 shadow-lg" type="submit">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+<span>Adherir mi Quinta a la Póliza Mensual y Activar Badge Oficial</span>
+</button>
+<p class="font-label-sm text-center text-on-surface-variant mt-2">
+            Emisión instantánea con certificado digital descargable y actualización automática en el buscador público.
+          </p>
+</div>
+</form>
+<!-- Confirmation Toast Modal Placeholder -->
+<div class="hidden mt-6 p-6 rounded-xl bg-secondary-container/40 text-on-secondary-container flex flex-col sm:flex-row items-center justify-between gap-4" id="contract-success-modal">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[36px]">task_alt</span>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-primary">¡Póliza Vinculada Exitosamente!</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Certificado Nº TS-SJ-2025-0812 emitido con Triunfo Seguros. La placa oficial y el badge ya se encuentran activos en tu ficha pública.</p>
+</div>
+</div>
+<button class="px-4 py-2 bg-primary text-on-primary font-label-md rounded-lg" onclick="document.getElementById('contract-success-modal').classList.add('hidden')">
+          Entendido
+        </button>
+</div>
+</div>
+</section>
+<!-- FAQ Section (Specific to Monthly Property Owners Policy) -->
+<section class="max-w-7xl mx-auto w-full px-6 lg:px-12 py-12 mb-8">
+<div class="max-w-3xl mb-8">
+<span class="font-label-sm uppercase tracking-wider text-secondary font-bold">Respuestas Claras</span>
+<h2 class="font-headline-lg text-headline-lg text-primary mt-1">Preguntas Frecuentes sobre la Póliza Mensual</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Todo lo que necesitás saber antes de vincular tu inmueble al convenio provincial.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- FAQ Item 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col gap-2">
+<div class="flex items-center gap-2.5 text-primary font-headline-sm">
+<span class="material-symbols-outlined text-secondary text-[22px]">family_restroom</span>
+<span class="text-base font-bold">¿Cubre si el predio lo usa mi propia familia un fin de semana?</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+<strong>Sí, totalmente.</strong> La póliza mensual brinda amparo integral los 365 días del año. Tu familia y amigos gozan de la misma protección ante accidentes en pileta, urgencias médicas o siniestros en asadores, sin importar si hay o no un inquilino formal.
+        </p>
+</div>
+<!-- FAQ Item 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col gap-2">
+<div class="flex items-center gap-2.5 text-primary font-headline-sm">
+<span class="material-symbols-outlined text-secondary text-[22px]">notification_important</span>
+<span class="text-base font-bold">¿Tengo que informar cada vez que entra un inquilino nuevo?</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+<strong>No, es automático.</strong> La póliza de abono mensual ampara de manera genérica todos los alquileres diurnos celebrados dentro del período, siempre que se respete el aforo máximo auditado en tu certificado de verificación in situ.
+        </p>
+</div>
+<!-- FAQ Item 3 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col gap-2">
+<div class="flex items-center gap-2.5 text-primary font-headline-sm">
+<span class="material-symbols-outlined text-secondary text-[22px]">trending_up</span>
+<span class="text-base font-bold">¿Cómo impacta esto en mis reservas y posicionamiento?</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Según las estadísticas oficiales del portal 2024-2025, las quintas con la insignia dorada <em>“Propiedad con Cobertura Integral Anual”</em> reciben un <strong>65% más de consultas directas</strong> y cierran reservas con mayor rapidez porque el huésped no debe abonar seguros extra por jornada.
+        </p>
+</div>
+<!-- FAQ Item 4 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col gap-2">
+<div class="flex items-center gap-2.5 text-primary font-headline-sm">
+<span class="material-symbols-outlined text-secondary text-[22px]">pause_circle</span>
+<span class="text-base font-bold">¿Hay tiempo mínimo de permanencia obligatoria?</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+<strong>No hay permanencia atada.</strong> El abono mensual se debita mes a mes y podés pausarlo libremente durante la temporada baja de invierno (ej: mayo a agosto) directamente desde el Portal de Propietarios con un solo clic.
+        </p>
+</div>
+</div>
+<!-- Direct Owner Assistance Strip -->
+<div class="mt-8 p-6 rounded-xl bg-surface-container flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-on-primary shrink-0">
+<span class="material-symbols-outlined text-[24px]">support_agent</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-primary">¿Dudas sobre el aforo de tu predio o cerco de pileta?</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Coordiná una llamada directa con la Mesa Técnica de Seguros del Ministerio.</p>
+</div>
+</div>
+<a class="px-5 py-2.5 rounded-lg bg-secondary hover:bg-on-secondary-container text-on-secondary font-label-lg transition-colors flex items-center gap-2 whitespace-nowrap" href="https://wa.me/5492644890120?text=Hola,%20necesito%20asesoramiento%20sobre%20la%20p%C3%B3liza%20mensual%20para%20propietarios" target="_blank">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+<span>Hablar por WhatsApp Oficial</span>
+</a>
+</div>
+</section>
+<!-- Logic scripts for simulation & interactions -->
+<script>
+    let currentBilling = 'monthly';
+
+    function setBillingFrequency(type) {
+      currentBilling = type;
+      const monthlyBtn = document.getElementById('billing-monthly-btn');
+      const annualBtn = document.getElementById('billing-annual-btn');
+      
+      const p1 = document.getElementById('price-plan-1');
+      const p2 = document.getElementById('price-plan-2');
+      const p3 = document.getElementById('price-plan-3');
+      
+      const per1 = document.getElementById('period-plan-1');
+      const per2 = document.getElementById('period-plan-2');
+      const per3 = document.getElementById('period-plan-3');
+
+      const s1 = document.getElementById('save-plan-1');
+      const s2 = document.getElementById('save-plan-2');
+      const s3 = document.getElementById('save-plan-3');
+
+      if (type === 'annual') {
+        monthlyBtn.className = 'flex-1 sm:flex-none px-5 py-2.5 rounded-md font-label-lg transition-all duration-200 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-2';
+        annualBtn.className = 'flex-1 sm:flex-none px-5 py-2.5 rounded-md font-label-lg transition-all duration-200 bg-primary text-on-primary shadow-sm flex items-center justify-center gap-2';
+        
+        // Annual discounted values (10 months pay = 2 free)
+        p1.innerText = '$185.000';
+        p2.innerText = '$269.000';
+        p3.innerText = '$380.000';
+
+        per1.innerText = 'ARS / año (12 meses)';
+        per2.innerText = 'ARS / año (12 meses)';
+        per3.innerText = 'ARS / año (12 meses)';
+
+        s1.classList.remove('hidden');
+        s2.classList.remove('hidden');
+        s3.classList.remove('hidden');
+      } else {
+        monthlyBtn.className = 'flex-1 sm:flex-none px-5 py-2.5 rounded-md font-label-lg transition-all duration-200 bg-primary text-on-primary shadow-sm flex items-center justify-center gap-2';
+        annualBtn.className = 'flex-1 sm:flex-none px-5 py-2.5 rounded-md font-label-lg transition-all duration-200 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-2';
+        
+        p1.innerText = '$18.500';
+        p2.innerText = '$26.900';
+        p3.innerText = '$38.000';
+
+        per1.innerText = 'ARS / mes';
+        per2.innerText = 'ARS / mes';
+        per3.innerText = 'ARS / mes';
+
+        s1.classList.add('hidden');
+        s2.classList.add('hidden');
+        s3.classList.add('hidden');
+      }
+    }
+
+    function selectPlan(planName, amount) {
+      const selectBox = document.getElementById('form-plan-choice');
+      if (planName.includes('Básico')) selectBox.value = 'basic';
+      if (planName.includes('Premium')) selectBox.value = 'premium';
+      if (planName.includes('Corporativo')) selectBox.value = 'corporate';
+
+      const targetSection = document.getElementById('formulario-adhesion');
+      targetSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function recalcSimulator() {
+      const rentals = parseInt(document.getElementById('rentals-range').value);
+      const dayRate = parseInt(document.getElementById('day-rate-range').value);
+
+      document.getElementById('rentals-val-display').innerText = rentals + (rentals === 1 ? ' jornada' : ' jornadas');
+      document.getElementById('rate-val-display').innerText = '$' + dayRate.toLocaleString('es-AR') + ' ARS';
+
+      // Daily individual policy average cost is $4.500 ARS per event
+      const costIndividual = rentals * 4500;
+      const costMonthly = 26900; // Premium plan benchmark
+
+      document.getElementById('calc-events-formula').innerText = rentals + ' eventos x $4.500 c/u';
+      document.getElementById('calc-cost-individual').innerText = '$' + costIndividual.toLocaleString('es-AR') + ' ARS';
+      document.getElementById('calc-cost-monthly').innerText = '$' + costMonthly.toLocaleString('es-AR') + ' ARS';
+
+      const netSavings = costIndividual - costMonthly;
+      const savingsElem = document.getElementById('calc-net-savings');
+
+      if (netSavings >= 0) {
+        savingsElem.innerText = '+$' + netSavings.toLocaleString('es-AR') + ' ARS';
+        savingsElem.className = 'font-headline-sm text-headline-sm text-secondary font-extrabold';
+      } else {
+        savingsElem.innerText = 'Amparo 24/7 sin límites';
+        savingsElem.className = 'font-headline-sm text-headline-sm text-primary font-bold';
+      }
+    }
+
+    function updatePropertyData() {
+      const sel = document.getElementById('property-select').value;
+      const note = document.getElementById('inspector-badge-box');
+
+      if (sel === 'medano') {
+        note.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary text-[18px]">gpp_good</span>
+            <span>Inspección In Situ Aprobada por: <strong>Arq. Matías Canto (Mat. 2841)</strong></span>
+          </div>
+          <span class="text-secondary font-semibold">Pileta Cercada Homologada ✓</span>
+        `;
+      } else if (sel === 'pocito') {
+        note.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary text-[18px]">gpp_good</span>
+            <span>Inspección In Situ Aprobada por: <strong>Ing. Lucía Valverde (Mat. 1952)</strong></span>
+          </div>
+          <span class="text-secondary font-semibold">Doble Disyuntor &amp; Cerco 1.30m ✓</span>
+        `;
+      } else {
+        note.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary text-[18px]">gpp_good</span>
+            <span>Inspección In Situ Vigente: <strong>Protocolo Provincial Apto Eventos</strong></span>
+          </div>
+          <span class="text-secondary font-semibold">Aforo Validado ✓</span>
+        `;
+      }
+    }
+
+    function handleContractSubmit(e) {
+      e.preventDefault();
+      const modal = document.getElementById('contract-success-modal');
+      modal.classList.remove('hidden');
+      modal.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-low mt-space-xl shadow-[0_-1px_8px_rgba(15,41,66,0.03)]"><div class="max-w-7xl mx-auto px-6 lg:px-12 pt-space-xl pb-space-lg"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-xl mb-space-xl"><div><div class="flex items-center gap-space-sm mb-space-md"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-secondary-fixed"><span class="material-symbols-outlined text-[20px]">shield</span></div><span class="font-headline-sm text-headline-sm text-primary font-bold">Turismo Seguro</span></div><p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Registro y certificación oficial para la contratación transparente de quintas, quinchos y casas de campo con habilitación técnica y cobertura por jornada en la Provincia de San Juan.</p><div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-lowest text-secondary font-label-sm text-label-sm shadow-sm"><span class="material-symbols-outlined text-[16px]">policy</span><span>Marco Regulatorio Provincial Nº 8421</span></div></div><div><h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-md">Garantía y Seguros</h3><p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Convenios institucionales con cobertura activa de responsabilidad civil y accidentes personales durante cada jornada reservada.</p><div class="space-y-space-sm"><div class="flex items-center gap-3 p-2.5 rounded-lg bg-surface-container-lowest shadow-sm"><span class="material-symbols-outlined text-secondary text-[22px]">verified</span><div><p class="font-label-lg text-label-lg text-on-surface leading-tight">Triunfo Seguros</p><p class="font-label-sm text-label-sm text-on-surface-variant">Póliza de Caución y Responsabilidad Civil</p></div></div><div class="flex items-center gap-3 p-2.5 rounded-lg bg-surface-container-lowest shadow-sm"><span class="material-symbols-outlined text-secondary text-[22px]">verified</span><div><p class="font-label-lg text-label-lg text-on-surface leading-tight">San Cristóbal Seguros</p><p class="font-label-sm text-label-sm text-on-surface-variant">Cobertura Integral para Eventos Diurnos</p></div></div></div></div><div><h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-md">Protocolo In Situ</h3><ul class="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant"><li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">check_circle</span><span>Inspección física de piletas con cerco perimetral de seguridad.</span></li><li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">check_circle</span><span>Verificación de tableros eléctricos y disyuntores diferenciales.</span></li><li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">check_circle</span><span>Aforo certificado y control de emisión sonora comunitaria.</span></li><li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">check_circle</span><span>Contrato digital validado con código QR fiscal in situ.</span></li></ul></div><div><h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-md">Mesa de Ayuda San Juan</h3><div class="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant"><p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[20px]">location_on</span><span>Centro Cívico San Juan, Núcleo 5, Planta Baja</span></p><p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[20px]">call</span><span>0800-333-TURISMO (8874)</span></p><p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[20px]">chat</span><span>Guardia WhatsApp: +54 9 264 489-0120</span></p><p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[20px]">schedule</span><span>Lun a Dom de 08:00 a 22:00 hs</span></p></div></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex flex-wrap items-center gap-space-md"><span class="font-label-sm text-label-sm text-on-surface-variant">© 2025 Ministerio de Turismo y Cultura de San Juan. Todos los derechos reservados.</span></div><div class="flex items-center gap-space-lg"><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="terminos-condiciones" href="#">Términos y Seguros</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="registro-propietarios" href="#">Adhesión de Inmuebles</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="contacto-oficial" href="#">Denuncias de Fraude</a></div></div></div></footer></body></html>

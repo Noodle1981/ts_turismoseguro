@@ -1,4 +1,8 @@
+packages:
+  - 'client'
+
 allowBuilds:
   '@scarf/scarf': true
   esbuild: true
   vue-demi: true
+

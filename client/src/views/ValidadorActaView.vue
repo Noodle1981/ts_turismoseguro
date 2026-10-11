@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuth } from '../composables/useAuth'
 
 const router = useRouter()
+const { user, logout } = useAuth()
 
 // Checklist reactivo de inspección técnica
 const checklist = ref({
@@ -29,6 +31,11 @@ const handleApprove = () => {
     router.push('/')
   }, 1000)
 }
+
+const handleLogout = async () => {
+  await logout()
+  router.push('/staff/login')
+}
 </script>
 
 <template>
@@ -44,6 +51,13 @@ const handleApprove = () => {
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div class="flex flex-col gap-2">
             <div class="flex flex-wrap items-center gap-2">
+              <RouterLink
+                to="/validador/bandeja"
+                class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-surface-container hover:bg-surface-dim text-primary font-label-sm text-label-sm font-bold transition-colors"
+              >
+                <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+                Volver a Bandeja
+              </RouterLink>
               <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm uppercase tracking-wider font-bold">
                 <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
                 Inspección Presencial en Terreno
@@ -62,19 +76,34 @@ const handleApprove = () => {
           </div>
 
           <!-- Inspector Badge Details -->
-          <div class="flex items-center gap-4 p-4 rounded-xl bg-surface-container-low min-w-[300px] border border-surface-container">
-            <div class="relative w-12 h-12 rounded-full bg-primary flex items-center justify-center text-on-primary">
-              <span class="material-symbols-outlined text-[26px]">engineering</span>
-              <span class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-secondary"></span>
+          <div class="flex items-center justify-between sm:justify-start gap-4 p-4 rounded-xl bg-surface-container-low min-w-[320px] border border-surface-container">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="relative w-12 h-12 rounded-full bg-primary flex items-center justify-center text-on-primary shrink-0">
+                <span class="material-symbols-outlined text-[26px]">engineering</span>
+                <span class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-secondary"></span>
+              </div>
+              <div class="flex flex-col min-w-0">
+                <span class="font-label-lg text-label-lg text-primary truncate font-bold">
+                  {{ user?.name ?? 'Matías Fernández (Validador Matriculado)' }}
+                </span>
+                <span class="font-label-md text-label-md text-secondary font-semibold">
+                  {{ user?.email ?? 'validador@turismoseguro.com.ar' }}
+                </span>
+                <span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
+                  <span class="material-symbols-outlined text-[14px]">verified</span>
+                  Sesión Staff Activa
+                </span>
+              </div>
             </div>
-            <div class="flex flex-col min-w-0">
-              <span class="font-label-lg text-label-lg text-primary truncate font-bold">Ing. Marcos Quiroga (#TS-044)</span>
-              <span class="font-label-md text-label-md text-secondary font-semibold">Auditor Matriculado Terreno</span>
-              <span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
-                <span class="material-symbols-outlined text-[14px]">timer</span>
-                Iniciado: Hoy 14:15 hs
-              </span>
-            </div>
+
+            <button
+              type="button"
+              class="p-2 rounded-lg text-on-surface-variant hover:text-error hover:bg-surface-container transition-colors ml-auto cursor-pointer"
+              title="Cerrar sesión"
+              @click="handleLogout"
+            >
+              <span class="material-symbols-outlined text-[20px]">logout</span>
+            </button>
           </div>
         </div>
       </div>

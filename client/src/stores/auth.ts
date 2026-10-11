@@ -13,7 +13,16 @@ import type {
 } from '../types/auth'
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref<UserResource | null>(null)
+  const initialUser = (() => {
+    try {
+      const raw = localStorage.getItem('ts_auth_user')
+      return raw ? JSON.parse(raw) : null
+    } catch {
+      return null
+    }
+  })()
+
+  const user = ref<UserResource | null>(initialUser)
   const token = ref<string | null>(localStorage.getItem('ts_auth_token'))
   const isLoading = ref<boolean>(false)
   const errorMessage = ref<string | null>(null)
@@ -30,6 +39,7 @@ export const useAuthStore = defineStore('auth', () => {
     token.value = newToken
     user.value = newUser
     localStorage.setItem('ts_auth_token', newToken)
+    localStorage.setItem('ts_auth_user', JSON.stringify(newUser))
     api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`
   }
 
@@ -37,6 +47,7 @@ export const useAuthStore = defineStore('auth', () => {
     token.value = null
     user.value = null
     localStorage.removeItem('ts_auth_token')
+    localStorage.removeItem('ts_auth_user')
     delete api.defaults.headers.common['Authorization']
   }
 
