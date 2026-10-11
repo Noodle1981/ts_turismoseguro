@@ -27,17 +27,17 @@
           <div class="font-headline-sm text-headline-sm text-primary font-bold mb-space-sm">Seguridad y Legal</div>
           <ul class="space-y-2 text-sm">
             <li>
-              <a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors">
+              <a href="#anfitriones" class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors">
                 Auditoría Física y Checklist
               </a>
             </li>
             <li>
-              <a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors">
+              <a href="#anfitriones" class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors">
                 Protocolo de Señas Bancarias
               </a>
             </li>
             <li>
-              <a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors">
+              <a href="#anfitriones" class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors">
                 Cuentas Validadas por CUIT
               </a>
             </li>
@@ -59,6 +59,7 @@
               href="https://wa.me/5492644000000?text=Hola,%20necesito%20validar%20una%20propiedad%20en%20Turismo%20Seguro"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Abrir chat de WhatsApp para validación de propiedad (se abre en una ventana nueva)"
               class="inline-flex items-center gap-space-xs font-label-md text-label-md text-secondary hover:text-on-secondary-container transition-colors font-bold"
             >
               <span class="material-symbols-outlined text-[18px]">chat</span>

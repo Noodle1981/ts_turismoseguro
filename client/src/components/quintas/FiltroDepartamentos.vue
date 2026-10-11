@@ -46,12 +46,13 @@ const resetPills = () => {
     <form class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md" @submit.prevent="emit('search')">
       <!-- Field 1: Zona / Departamento -->
       <div class="flex flex-col gap-1.5">
-        <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-1 font-bold">
+        <label for="filter-zone" class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-1 font-bold">
           <span class="material-symbols-outlined text-secondary text-[16px]">pin_drop</span>
           Zona / Departamento
         </label>
         <div class="relative">
           <select
+            id="filter-zone"
             :value="zone"
             class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:bg-surface-container transition-colors cursor-pointer"
             @change="emit('update:zone', ($event.target as HTMLSelectElement).value)"
@@ -71,12 +72,13 @@ const resetPills = () => {
 
       <!-- Field 2: Tipo de Ocasión -->
       <div class="flex flex-col gap-1.5">
-        <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-1 font-bold">
+        <label for="filter-occasion" class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-1 font-bold">
           <span class="material-symbols-outlined text-secondary text-[16px]">celebration</span>
           Tipo de Ocasión
         </label>
         <div class="relative">
           <select
+            id="filter-occasion"
             :value="occasion"
             class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:bg-surface-container transition-colors cursor-pointer"
             @change="emit('update:occasion', ($event.target as HTMLSelectElement).value)"
@@ -92,12 +94,13 @@ const resetPills = () => {
 
       <!-- Field 3: Capacidad Diurna -->
       <div class="flex flex-col gap-1.5">
-        <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-1 font-bold">
+        <label for="filter-capacity" class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-1 font-bold">
           <span class="material-symbols-outlined text-secondary text-[16px]">groups</span>
           Capacidad Diurna
         </label>
         <div class="relative">
           <select
+            id="filter-capacity"
             :value="capacity"
             class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:bg-surface-container transition-colors cursor-pointer"
             @change="emit('update:capacity', ($event.target as HTMLSelectElement).value)"
@@ -113,12 +116,13 @@ const resetPills = () => {
 
       <!-- Field 4: Horario / Turno -->
       <div class="flex flex-col gap-1.5">
-        <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-1 font-bold">
+        <label for="filter-shift" class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-1 font-bold">
           <span class="material-symbols-outlined text-secondary text-[16px]">schedule</span>
           Horario / Turno
         </label>
         <div class="relative">
           <select
+            id="filter-shift"
             :value="shift"
             class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:bg-surface-container transition-colors cursor-pointer"
             @change="emit('update:shift', ($event.target as HTMLSelectElement).value)"
@@ -152,6 +156,7 @@ const resetPills = () => {
       <div class="flex items-center gap-space-sm overflow-x-auto pb-1 scrollbar-none">
         <button
           type="button"
+          :aria-pressed="(pills || []).includes('fence')"
           :class="[
             'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
             (pills || []).includes('fence') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
@@ -164,6 +169,7 @@ const resetPills = () => {
 
         <button
           type="button"
+          :aria-pressed="(pills || []).includes('grill')"
           :class="[
             'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
             (pills || []).includes('grill') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
@@ -176,6 +182,7 @@ const resetPills = () => {
 
         <button
           type="button"
+          :aria-pressed="(pills || []).includes('kitchen')"
           :class="[
             'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
             (pills || []).includes('kitchen') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
@@ -188,6 +195,7 @@ const resetPills = () => {
 
         <button
           type="button"
+          :aria-pressed="(pills || []).includes('park')"
           :class="[
             'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
             (pills || []).includes('park') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
@@ -200,6 +208,7 @@ const resetPills = () => {
 
         <button
           type="button"
+          :aria-pressed="(pills || []).includes('car')"
           :class="[
             'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
             (pills || []).includes('car') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',

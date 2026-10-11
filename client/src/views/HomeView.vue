@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import FiltroDepartamentos from '../components/quintas/FiltroDepartamentos.vue'
 import CardQuintaDiurna from '../components/quintas/CardQuintaDiurna.vue'
-import ExperienciasCercanasHub from '../components/quintas/ExperienciasCercanasHub.vue'
+import CalculadoraAsistentes from '../components/quintas/CalculadoraAsistentes.vue'
 import type { QuintaItem } from '../components/quintas/CardQuintaDiurna.vue'
+
+// Carga asíncrona para Lighthouse (Code-Splitting optimizado del chunk inicial)
+const ExperienciasCercanasHub = defineAsyncComponent(
+  () => import('../components/quintas/ExperienciasCercanasHub.vue')
+)
 
 const router = useRouter()
 
@@ -13,22 +18,6 @@ const searchZone = ref('todos')
 const searchOccasion = ref('quinta-pileta')
 const searchCapacity = ref('20-40')
 const searchShift = ref('dia-completo')
-
-// Calculadora de asistentes
-const guestCount = ref(25)
-const baseDailyRate = 45000
-
-const costPerPerson = computed(() => {
-  return Math.round(baseDailyRate / guestCount.value)
-})
-
-const incrementGuests = () => {
-  if (guestCount.value < 80) guestCount.value += 5
-}
-
-const decrementGuests = () => {
-  if (guestCount.value > 10) guestCount.value -= 5
-}
 
 // Filtros rápidos
 const activePills = ref<string[]>(['fence'])
@@ -158,6 +147,10 @@ const handleSearch = () => {
                   class="w-full h-48 object-cover rounded-xl"
                   alt="Inspector técnico de Turismo Seguro San Juan"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-KblXpDFmkd1I3C_w8SVRktSYLOCOV0v2ot_dMeZI1aN59rCAd_z2Gss294DIeq115NWf8uaJmr3PP__p6F_Ij2el6w9qWKf2s_EAIqayziI5n4TXEDzkK1bHNr5x3g4Ft-SSNofAGZaWKZiU7wJXoJFNCgylz-mYxqOdOXjN3duA7Q83c1n2aGeIOaYRO0vE-Yq6m8_YALBTQeAYs6x2DTW95pyETYM7lzrhZY6AXwax7BTyfWd0"
+                  loading="eager"
+                  fetchpriority="high"
+                  width="480"
+                  height="192"
                 />
                 <div class="absolute bottom-3 left-3 bg-primary-container/90 backdrop-blur-md text-on-primary px-space-sm py-1 rounded-lg flex items-center gap-1.5 shadow-md">
                   <span class="material-symbols-outlined text-secondary-fixed text-[16px]">verified</span>
@@ -224,115 +217,10 @@ const handleSearch = () => {
       </div>
     </section>
 
-    <!-- Calculador Estimativo por Persona -->
-    <section class="max-w-7xl mx-auto px-6 lg:px-12 py-space-xl w-full">
-      <div class="bg-surface-container-high rounded-3xl p-space-lg lg:p-space-xl overflow-hidden relative">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
-          <div class="lg:col-span-7 flex flex-col gap-space-md">
-            <div class="inline-flex items-center gap-space-xs text-secondary font-label-sm text-label-sm font-semibold uppercase tracking-wider">
-              <span class="material-symbols-outlined text-[18px]">calculate</span>
-              Calculadora Estimativa para Festejos Diurnos
-            </div>
-            <h3 class="font-headline-lg text-headline-lg text-primary">
-              Calculá el costo por persona para tu asado o evento
-            </h3>
-            <p class="font-body-md text-body-md text-on-surface-variant">
-              Alquilar una quinta o cabaña para pasar el día en grupo es más económico y seguro que un salón tradicional. Ajustá la cantidad de invitados:
-            </p>
+    <!-- Calculador Estimativo por Persona (Extraído con accesibilidad completa) -->
+    <CalculadoraAsistentes />
 
-            <div class="bg-surface-container-lowest p-space-md rounded-2xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-space-md">
-              <div>
-                <span class="font-label-sm text-label-sm text-on-surface-variant block font-bold">Cantidad de Asistentes</span>
-                <div class="flex items-center gap-space-md mt-1">
-                  <button
-                    type="button"
-                    class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary hover:bg-surface-dim font-headline-sm text-headline-sm font-bold cursor-pointer"
-                    @click="decrementGuests"
-                  >
-                    -
-                  </button>
-                  <span class="font-headline-lg text-headline-lg text-primary min-w-[50px] text-center font-extrabold">
-                    {{ guestCount }}
-                  </span>
-                  <button
-                    type="button"
-                    class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary hover:bg-surface-dim font-headline-sm text-headline-sm font-bold cursor-pointer"
-                    @click="incrementGuests"
-                  >
-                    +
-                  </button>
-                  <span class="font-label-md text-label-md text-on-surface-variant font-medium">personas</span>
-                </div>
-              </div>
-
-              <div class="sm:text-right w-full sm:w-auto p-space-sm bg-surface-container-low rounded-xl">
-                <span class="font-label-sm text-label-sm text-on-surface-variant block font-semibold">Estimado por invitado:</span>
-                <span class="font-headline-md text-headline-md text-secondary font-extrabold">
-                  ${{ costPerPerson.toLocaleString('es-AR') }} / pers.
-                </span>
-                <span class="block font-label-sm text-label-sm text-on-surface-variant font-medium">
-                  Base promedio $45.000 día
-                </span>
-              </div>
-            </div>
-
-            <div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
-              <span class="material-symbols-outlined text-secondary text-[16px]">info</span>
-              Incluye uso total de piscina, quincho o cabaña, asadores y freezers de refrigeración.
-            </div>
-          </div>
-
-          <div class="lg:col-span-5 bg-surface-container-lowest p-space-lg rounded-2xl shadow-md">
-            <h4 class="font-headline-sm text-headline-sm text-primary mb-space-sm flex items-center gap-2 font-bold">
-              <span class="material-symbols-outlined text-secondary text-[22px]">policy</span>
-              Protocolo de Reserva Verificada
-            </h4>
-            <ul class="space-y-space-sm">
-              <li class="flex items-start gap-space-xs text-on-surface">
-                <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">chat</span>
-                <div>
-                  <strong class="font-label-md text-label-md block">1. Contacto Directo por WhatsApp:</strong>
-                  <span class="font-body-sm text-body-sm text-on-surface-variant">
-                    Hablás directamente con el propietario autenticado, sin chats robóticos ni intermediarios que encarezcan.
-                  </span>
-                </div>
-              </li>
-              <li class="flex items-start gap-space-xs text-on-surface">
-                <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">account_balance</span>
-                <div>
-                  <strong class="font-label-md text-label-md block">2. CBU Cotejado en Mano:</strong>
-                  <span class="font-body-sm text-body-sm text-on-surface-variant">
-                    Te brindamos el Alias/CBU validado en persona del titular catastral para que transfieras tu seña con total tranquilidad.
-                  </span>
-                </div>
-              </li>
-              <li class="flex items-start gap-space-xs text-on-surface">
-                <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">payments</span>
-                <div>
-                  <strong class="font-label-md text-label-md block">3. Cero Comisiones al Inquilino:</strong>
-                  <span class="font-body-sm text-body-sm text-on-surface-variant">
-                    El dinero va 100% al dueño. Nosotros cobramos una suscripción fija de validación al anfitrión para certificar su predio.
-                  </span>
-                </div>
-              </li>
-            </ul>
-            <div class="mt-space-md pt-space-sm">
-              <a
-                href="https://wa.me/5492644000000?text=Deseo%20conocer%20como%20auditan%20las%20cuentas"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="w-full inline-flex items-center justify-center gap-space-xs py-3 px-space-md rounded-xl bg-secondary text-on-secondary font-label-md text-label-md hover:bg-on-secondary-container transition-colors shadow-sm font-bold"
-              >
-                <span class="material-symbols-outlined text-[18px]">verified_user</span>
-                Conocer cómo auditamos las cuentas bancarias
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Módulo de Ofertas de Eventos y Experiencias Turísticas Cercanas -->
+    <!-- Módulo de Ofertas de Eventos y Experiencias Turísticas Cercanas (Lazy Loaded) -->
     <ExperienciasCercanasHub />
 
     <!-- Value Proposition: ¿Por qué reservar a través de Turismo Seguro? -->
@@ -465,6 +353,7 @@ const handleSearch = () => {
                   href="https://wa.me/5492644000000?text=Hola,%20deseo%20sumar%20mi%20quinta%20o%20caba%C3%B1a%20a%20Turismo%20Seguro"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Contactar al validador por WhatsApp para sumar propiedad (se abre en nueva ventana)"
                   class="inline-flex items-center justify-center gap-space-xs py-3.5 px-space-md rounded-xl bg-secondary text-on-secondary font-headline-sm text-headline-sm hover:bg-on-secondary-container transition-all shadow-lg hover:shadow-xl font-bold cursor-pointer"
                 >
                   <span class="material-symbols-outlined text-[22px]">support_agent</span>

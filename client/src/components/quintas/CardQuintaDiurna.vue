@@ -21,11 +21,15 @@ defineProps<{
 <template>
   <article class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
     <div>
-      <div class="relative h-64 overflow-hidden">
+      <div class="relative h-64 w-full overflow-hidden bg-surface-container">
         <img
           class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           :src="quinta.image"
           :alt="quinta.title"
+          loading="lazy"
+          decoding="async"
+          width="600"
+          height="384"
         />
         <div class="absolute top-3 left-3 bg-surface-container-lowest/95 backdrop-blur-md px-space-sm py-1.5 rounded-full flex items-center gap-1.5 text-secondary shadow-md font-bold">
           <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
