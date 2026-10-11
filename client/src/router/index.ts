@@ -150,8 +150,8 @@ const router = createRouter({
   },
 })
 
-// Guardia de Navegación Global para Control de Acceso y Aislamiento de Roles
-router.beforeEach((to, _from, next) => {
+// Guardia de Navegación Global para Control de Acceso y Aislamiento de Roles (Vue Router 4 Modern Return API)
+router.beforeEach((to) => {
   const authRaw = localStorage.getItem('ts_auth_user')
   const token = localStorage.getItem('ts_auth_token')
   let user: { role?: string; name?: string } | null = null
@@ -176,11 +176,11 @@ router.beforeEach((to, _from, next) => {
       )
 
       if (isStaffRoute) {
-        return next({ path: '/staff/login', query: { redirect: to.fullPath } })
+        return { path: '/staff/login', query: { redirect: to.fullPath } }
       } else if (allowedRoles.includes('client')) {
-        return next({ path: '/login', query: { role: 'owner', redirect: to.fullPath } })
+        return { path: '/login', query: { role: 'owner', redirect: to.fullPath } }
       } else {
-        return next({ path: '/login', query: { role: 'renter', redirect: to.fullPath } })
+        return { path: '/login', query: { role: 'renter', redirect: to.fullPath } }
       }
     }
 
@@ -189,32 +189,30 @@ router.beforeEach((to, _from, next) => {
     if (allowedRoles.length > 0 && userRole && !allowedRoles.includes(userRole)) {
       // Si un staff intenta acceder a rutas de cliente/inquilino
       if (['validator', 'supervisor', 'admin'].includes(userRole)) {
-        return next({ path: '/validador/bandeja' })
+        return { path: '/validador/bandeja' }
       }
       // Si un propietario intenta entrar a validador o inquilino
       if (userRole === 'client') {
-        return next({ path: '/propietario/panel' })
+        return { path: '/propietario/panel' }
       }
       // Si un inquilino intenta entrar a validador o propietario
       if (userRole === 'rent') {
-        return next({ path: '/inquilino/panel' })
+        return { path: '/inquilino/panel' }
       }
-      return next({ path: '/' })
+      return { path: '/' }
     }
   }
 
   // 2. Rutas exclusivas para visitantes no autenticados (login / registro)
   if (to.meta.guestOnly && isAuthenticated) {
     if (userRole === 'client') {
-      return next({ path: '/propietario/panel' })
+      return { path: '/propietario/panel' }
     } else if (userRole === 'rent') {
-      return next({ path: '/inquilino/panel' })
+      return { path: '/inquilino/panel' }
     } else if (['validator', 'supervisor', 'admin', 'super_admin'].includes(userRole || '')) {
-      return next({ path: '/validador/bandeja' })
+      return { path: '/validador/bandeja' }
     }
   }
-
-  next()
 })
 
 router.afterEach((to) => {
