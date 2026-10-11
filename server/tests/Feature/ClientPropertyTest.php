@@ -224,8 +224,12 @@ class ClientPropertyTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'proximos',
-                'pasados',
+                'proximos' => [
+                    '*' => ['id', 'booking_code', 'name', 'time', 'modality', 'eventType', 'status'],
+                ],
+                'pasados' => [
+                    '*' => ['id', 'booking_code', 'name', 'time', 'modality', 'eventType', 'status'],
+                ],
             ]);
 
         // 2. Calificar un booking si existe
@@ -241,6 +245,19 @@ class ClientPropertyTest extends TestCase
             $this->assertDatabaseHas('bookings', [
                 'id' => $booking->id,
                 'owner_rating' => 'up',
+            ]);
+
+            // 3. Guardar observación
+            $obsResponse = $this->postJson("/api/v1/client/bookings/{$booking->id}/observation", [
+                'observation' => 'Inquilino ejemplar, respetó todo.',
+            ]);
+
+            $obsResponse->assertStatus(200)
+                ->assertJsonPath('owner_observation', 'Inquilino ejemplar, respetó todo.');
+
+            $this->assertDatabaseHas('bookings', [
+                'id' => $booking->id,
+                'owner_observation' => 'Inquilino ejemplar, respetó todo.',
             ]);
         }
     }

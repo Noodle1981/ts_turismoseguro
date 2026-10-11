@@ -128,6 +128,7 @@ const {
   fetchTenants,
   openTenantDetail,
   setTenantRating,
+  saveTenantObservation,
 } = usePropietarioTenants(selectedOffer)
 
 watch(selectedOfferId, (newId) => {
@@ -344,6 +345,7 @@ watch(
                 v-model:tenant-tab="tenantTab"
                 @open-detail="openTenantDetail"
                 @rate="setTenantRating($event.tenant, $event.rating)"
+                @save-observation="saveTenantObservation($event.tenant, $event.observation)"
               />
             </div>
           </div>
@@ -364,7 +366,9 @@ watch(
     <ModalTenantDetail
       v-model="showTenantModal"
       :selected-tenant="selectedTenant"
+      :is-past="tenantTab === 'pasados'"
       @rate="setTenantRating($event.tenant, $event.rating)"
+      @save-observation="saveTenantObservation($event.tenant, $event.observation)"
     />
 
     <ModalAddOffer

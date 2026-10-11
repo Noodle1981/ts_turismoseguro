@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import type { PropietarioOferta, Tenant } from '../../../types/propietario'
 
-defineProps<{
+const props = defineProps<{
   selectedOffer: PropietarioOferta
   tenantTab: 'proximos' | 'pasados'
 }>()
@@ -11,6 +12,43 @@ const emit = defineEmits<{
   (e: 'openDetail', tenant: Tenant): void
   (e: 'rate', payload: { tenant: Tenant; rating: 'up' | 'down' }): void
 }>()
+
+// Filtro de modalidad
+type ModalityFilter = 'all' | 'diurno' | 'pernocte' | 'fiesta_nocturna' | 'finde_completo' | 'evento_especial'
+const selectedModality = ref<ModalityFilter>('all')
+
+const modalityOptions = [
+  { value: 'all', label: 'Todas las modalidades', icon: 'filter_list' },
+  { value: 'diurno', label: 'Turno Diurno', icon: 'wb_sunny' },
+  { value: 'pernocte', label: 'Pernocte', icon: 'bed' },
+  { value: 'fiesta_nocturna', label: 'Fiesta Nocturna', icon: 'nightlife' },
+  { value: 'evento_especial', label: 'Evento Especial', icon: 'stars' },
+] as const
+
+const filterByModality = (list?: Tenant[]) => {
+  if (!list) return []
+  if (selectedModality.value === 'all') return list
+  return list.filter((t) => (t.modality || 'diurno') === selectedModality.value)
+}
+
+const filteredProximos = computed(() => filterByModality(props.selectedOffer?.tenants))
+const filteredPasados = computed(() => filterByModality(props.selectedOffer?.pastTenants))
+
+const getModalityMeta = (modality?: string) => {
+  switch (modality) {
+    case 'pernocte':
+      return { label: 'Pernocte', icon: 'bed', bgClass: 'bg-primary/10 text-primary border-primary/20' }
+    case 'fiesta_nocturna':
+      return { label: 'Fiesta Nocturna', icon: 'nightlife', bgClass: 'bg-purple-900/15 text-purple-700 dark:text-purple-300 border-purple-500/20' }
+    case 'evento_especial':
+      return { label: 'Evento Especial', icon: 'stars', bgClass: 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30' }
+    case 'finde_completo':
+      return { label: 'Finde Completo', icon: 'date_range', bgClass: 'bg-teal-600/15 text-teal-700 dark:text-teal-300 border-teal-500/20' }
+    case 'diurno':
+    default:
+      return { label: 'Turno Diurno', icon: 'wb_sunny', bgClass: 'bg-secondary/15 text-secondary border-secondary/20' }
+  }
+}
 </script>
 
 <template>
@@ -74,6 +112,29 @@ const emit = defineEmits<{
       </div>
     </div>
 
+    <!-- Barra de Filtros por Modalidad (Diurno, Pernocte, Fiestas, Especiales) -->
+    <div class="flex items-center gap-1.5 overflow-x-auto pb-1 border-b border-surface-container/60">
+      <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider pr-1 flex items-center gap-1 shrink-0">
+        <span class="material-symbols-outlined text-[14px]">tune</span>
+        Modalidad:
+      </span>
+      <button
+        v-for="opt in modalityOptions"
+        :key="opt.value"
+        type="button"
+        @click="selectedModality = opt.value"
+        class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold cursor-pointer transition-all shrink-0"
+        :class="
+          selectedModality === opt.value
+            ? 'bg-primary text-on-primary shadow-xs font-bold'
+            : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface border border-surface-container'
+        "
+      >
+        <span class="material-symbols-outlined text-[14px]">{{ opt.icon }}</span>
+        <span>{{ opt.label }}</span>
+      </button>
+    </div>
+
     <!-- Tabla Responsiva -->
     <div class="overflow-x-auto">
       <table class="w-full text-left border-collapse">
@@ -91,14 +152,27 @@ const emit = defineEmits<{
           <!-- Vista de Próximos Alquileres -->
           <template v-if="tenantTab === 'proximos'">
             <tr
-              v-for="tenant in selectedOffer.tenants"
+              v-for="tenant in filteredProximos"
               :key="tenant.id"
               class="hover:bg-surface-container-low/60 transition-colors"
             >
               <td class="py-space-md px-space-md whitespace-nowrap">
-                <div class="flex flex-col">
-                  <span class="font-label-lg text-label-lg text-primary font-bold">{{ tenant.date }}</span>
-                  <span class="text-on-surface-variant font-label-sm text-label-sm">{{ tenant.time }}</span>
+                <div class="flex flex-col gap-1">
+                  <div class="flex items-center gap-1.5">
+                    <span class="font-label-lg text-label-lg text-primary font-bold">{{ tenant.date }}</span>
+                    <!-- Badge de Modalidad Histórica / Contratada -->
+                    <span
+                      class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-bold border"
+                      :class="getModalityMeta(tenant.modality).bgClass"
+                    >
+                      <span class="material-symbols-outlined text-[12px]">{{ getModalityMeta(tenant.modality).icon }}</span>
+                      {{ getModalityMeta(tenant.modality).label }}
+                    </span>
+                  </div>
+                  <span class="text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">schedule</span>
+                    {{ tenant.time }}
+                  </span>
                 </div>
               </td>
 
@@ -119,13 +193,13 @@ const emit = defineEmits<{
                 </div>
               </td>
 
-              <!-- Columna Criterio Anfitrión -->
+              <!-- Columna Criterio Anfitrión (Histórico para Próximos Alquileres) -->
               <td class="py-space-md px-space-md whitespace-nowrap">
                 <div class="flex items-center gap-2">
                   <div
                     v-if="tenant.ownerRating === 'up'"
                     class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary/15 text-secondary font-label-sm text-label-sm font-bold border border-secondary/20"
-                    title="Inquilino recomendado con historial positivo"
+                    title="Inquilino recomendado con historial previo positivo"
                   >
                     <span class="material-symbols-outlined text-[15px]">thumb_up</span>
                     <span>Buen Inquilino</span>
@@ -134,7 +208,7 @@ const emit = defineEmits<{
                   <div
                     v-else-if="tenant.ownerRating === 'down'"
                     class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-error-container/40 text-error font-label-sm text-label-sm font-bold border border-error/20"
-                    title="Inquilino observado / No conforme"
+                    title="Inquilino observado / No conforme en alquileres previos"
                   >
                     <span class="material-symbols-outlined text-[15px]">thumb_down</span>
                     <span>No Conforme</span>
@@ -143,44 +217,25 @@ const emit = defineEmits<{
                   <div
                     v-else
                     class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-bold border border-surface-container-high"
-                    title="Sin historial previo / Inquilino nuevo"
+                    title="Sin alquileres previos en la Red Turismo Seguro"
                   >
                     <span class="material-symbols-outlined text-[15px] text-outline">horizontal_rule</span>
                     <span>Sin historial</span>
                   </div>
 
-                  <div
-                    class="flex items-center gap-0.5 bg-surface-container-low p-0.5 rounded-lg border border-surface-container"
+                  <!-- Globito de Notas Históricas (Lectura en Próximos) -->
+                  <button
+                    v-if="tenant.historicalObservations && tenant.historicalObservations.length > 0"
+                    type="button"
+                    @click="emit('openDetail', tenant)"
+                    class="w-7 h-7 rounded-full bg-secondary/10 text-secondary hover:bg-secondary hover:text-on-secondary flex items-center justify-center transition-all cursor-pointer relative"
+                    title="Ver observaciones previas de anfitriones"
                   >
-                    <button
-                      type="button"
-                      @click="emit('rate', { tenant, rating: 'up' })"
-                      class="w-6 h-6 rounded flex items-center justify-center transition-colors cursor-pointer"
-                      :class="
-                        tenant.ownerRating === 'up'
-                          ? 'bg-secondary text-on-secondary shadow-2xs'
-                          : 'text-on-surface-variant hover:text-secondary hover:bg-surface-container-high'
-                      "
-                      title="Marcar como Buen Inquilino (Pulgar arriba)"
-                      aria-label="Marcar como Buen Inquilino"
-                    >
-                      <span class="material-symbols-outlined text-[14px]">thumb_up</span>
-                    </button>
-                    <button
-                      type="button"
-                      @click="emit('rate', { tenant, rating: 'down' })"
-                      class="w-6 h-6 rounded flex items-center justify-center transition-colors cursor-pointer"
-                      :class="
-                        tenant.ownerRating === 'down'
-                          ? 'bg-error text-on-error shadow-2xs'
-                          : 'text-on-surface-variant hover:text-error hover:bg-surface-container-high'
-                      "
-                      title="Marcar como No Conforme (Pulgar abajo)"
-                      aria-label="Marcar como No Conforme"
-                    >
-                      <span class="material-symbols-outlined text-[14px]">thumb_down</span>
-                    </button>
-                  </div>
+                    <span class="material-symbols-outlined text-[15px]">chat_bubble</span>
+                    <span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-secondary text-on-secondary text-[9px] font-bold rounded-full flex items-center justify-center">
+                      {{ tenant.historicalObservations.length }}
+                    </span>
+                  </button>
                 </div>
               </td>
 
@@ -221,15 +276,15 @@ const emit = defineEmits<{
                 </div>
               </td>
             </tr>
-            <tr v-if="!selectedOffer.tenants || selectedOffer.tenants.length === 0">
+            <tr v-if="!filteredProximos || filteredProximos.length === 0">
               <td colspan="6" class="py-space-xl text-center">
                 <div class="flex flex-col items-center justify-center gap-space-xs py-space-md text-on-surface-variant">
                   <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-secondary mb-1">
                     <span class="material-symbols-outlined text-[28px]" aria-hidden="true">event_available</span>
                   </div>
-                  <span class="font-headline-sm text-headline-sm text-primary font-bold">Sin reservas próximas agendadas</span>
+                  <span class="font-headline-sm text-headline-sm text-primary font-bold">Sin reservas próximas con este criterio</span>
                   <p class="font-body-sm text-body-sm max-w-md text-on-surface-variant">
-                    Cuando confirmes una reserva desde el calendario o por consulta directa, aparecerá registrada aquí con su constancia de identidad y póliza activa.
+                    No encontramos alquileres agendados para la modalidad seleccionada.
                   </p>
                 </div>
               </td>
@@ -239,21 +294,32 @@ const emit = defineEmits<{
           <!-- Vista de Alquileres Pasados (Historial) -->
           <template v-else>
             <tr
-              v-for="tenant in selectedOffer.pastTenants"
+              v-for="tenant in filteredPasados"
               :key="tenant.id"
               class="hover:bg-surface-container-low/60 transition-colors"
             >
               <td class="py-space-md px-space-md whitespace-nowrap">
-                <div class="flex flex-col">
+                <div class="flex flex-col gap-1">
                   <div class="flex items-center gap-1.5">
                     <span class="font-label-lg text-label-lg text-primary font-bold">{{ tenant.date }}</span>
+                    <!-- Badge de Modalidad Histórica -->
+                    <span
+                      class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-bold border"
+                      :class="getModalityMeta(tenant.modality).bgClass"
+                    >
+                      <span class="material-symbols-outlined text-[12px]">{{ getModalityMeta(tenant.modality).icon }}</span>
+                      {{ getModalityMeta(tenant.modality).label }}
+                    </span>
                     <span
                       class="px-1.5 py-0.5 rounded text-[10px] bg-surface-container-high text-on-surface-variant font-bold"
                     >
                       Concluido
                     </span>
                   </div>
-                  <span class="text-on-surface-variant font-label-sm text-label-sm">{{ tenant.time }}</span>
+                  <span class="text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">schedule</span>
+                    {{ tenant.time }}
+                  </span>
                 </div>
               </td>
 
@@ -363,6 +429,23 @@ const emit = defineEmits<{
 
               <td class="py-space-md px-space-md text-right whitespace-nowrap">
                 <div class="inline-flex items-center gap-1">
+                  <!-- Globito de Comentario / Observación para Alquileres Pasados -->
+                  <button
+                    type="button"
+                    class="w-8 h-8 rounded-lg flex items-center justify-center transition-all cursor-pointer"
+                    :class="
+                      tenant.ownerObservation
+                        ? 'bg-secondary/15 text-secondary hover:bg-secondary hover:text-on-secondary'
+                        : 'bg-surface-container text-on-surface-variant hover:text-secondary hover:bg-surface-container-high'
+                    "
+                    :title="tenant.ownerObservation ? `Ver/Editar observación: &quot;${tenant.ownerObservation}&quot;` : 'Agregar observación privada para este turno'"
+                    @click="emit('openDetail', tenant)"
+                  >
+                    <span class="material-symbols-outlined text-[17px]">
+                      {{ tenant.ownerObservation ? 'chat_bubble' : 'add_comment' }}
+                    </span>
+                  </button>
+
                   <button
                     type="button"
                     class="inline-flex items-center gap-1 px-space-sm py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm transition-colors cursor-pointer font-bold"
@@ -374,15 +457,15 @@ const emit = defineEmits<{
                 </div>
               </td>
             </tr>
-            <tr v-if="!selectedOffer.pastTenants || selectedOffer.pastTenants.length === 0">
+            <tr v-if="!filteredPasados || filteredPasados.length === 0">
               <td colspan="6" class="py-space-xl text-center">
                 <div class="flex flex-col items-center justify-center gap-space-xs py-space-md text-on-surface-variant">
                   <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant mb-1">
                     <span class="material-symbols-outlined text-[28px]" aria-hidden="true">history_toggle_off</span>
                   </div>
-                  <span class="font-headline-sm text-headline-sm text-primary font-bold">Sin historial de alquileres previos</span>
+                  <span class="font-headline-sm text-headline-sm text-primary font-bold">Sin registros pasados con este criterio</span>
                   <p class="font-body-sm text-body-sm max-w-md text-on-surface-variant">
-                    Aquí se archivarán los alquileres completados para consultar constancias, calificaciones y el comportamiento de los huéspedes.
+                    No encontramos alquileres pasados archivados para la modalidad seleccionada.
                   </p>
                 </div>
               </td>

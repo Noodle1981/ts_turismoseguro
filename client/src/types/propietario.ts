@@ -20,6 +20,16 @@ export interface Tenant {
   history: string
   status: string
   ownerRating?: 'up' | 'down' | 'none'
+  ownerObservation?: string | null
+  historicalObservations?: string[]
+  reputationStats?: {
+    upCount: number
+    downCount: number
+    totalPast: number
+  }
+  modality?: 'diurno' | 'pernocte' | 'fiesta_nocturna' | 'finde_completo' | 'evento_especial'
+  checkInTime?: string
+  checkOutTime?: string
 }
 
 export interface PropietarioTariffs {

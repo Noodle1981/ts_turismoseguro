@@ -352,23 +352,53 @@ class ClientPropertyController extends Controller
 
         $today = now()->toDateString();
 
-        $mapBooking = function ($b) {
+        // Precargar todas las reservas pasadas de los usuarios asociados a esta propiedad para calcular reputación histórica
+        $userIds = $bookings->pluck('user_id')->filter()->unique();
+        $userRatings = Booking::whereIn('user_id', $userIds)
+            ->where(function ($q) use ($today) {
+                $q->where('date', '<', $today)
+                    ->orWhere('status', 'completed');
+            })
+            ->get(['user_id', 'owner_rating', 'owner_observation', 'date'])
+            ->groupBy('user_id');
+
+        $mapBooking = function ($b, bool $isPast) use ($userRatings) {
             $name = $b->user?->name ?? 'Inquilino';
             $parts = array_values(array_filter(explode(' ', trim($name))));
             $initials = count($parts) >= 2
                 ? mb_strtoupper(mb_substr($parts[0], 0, 1) . mb_substr($parts[1], 0, 1))
                 : mb_strtoupper(mb_substr($name, 0, 2));
 
+            // Historial global del inquilino a través de sus reservas pasadas
+            $pastUserBookings = $userRatings->get($b->user_id, collect());
+            $upCount = $pastUserBookings->where('owner_rating', 'up')->count();
+            $downCount = $pastUserBookings->where('owner_rating', 'down')->count();
+            $pastObservations = $pastUserBookings->pluck('owner_observation')->filter()->values()->all();
+
+            $reputation = 'none';
+            if ($downCount > 0) {
+                $reputation = 'down';
+            } elseif ($upCount > 0) {
+                $reputation = 'up';
+            }
+
+            // Para un alquiler pasado, su rating directo es el que tiene guardado la reserva
+            $displayRating = $isPast ? ($b->owner_rating ?? 'none') : $reputation;
+
             return [
                 'id' => (string) $b->id,
                 'booking_code' => $b->booking_code,
+                'user_id' => $b->user_id,
                 'name' => $name,
                 'initials' => $initials,
                 'dni' => $b->user?->dni ?? 'S/DNI',
                 'phone' => $b->user?->phone ?? 'S/Tel',
                 'date' => $b->date ? $b->date->format('Y-m-d') : null,
                 'date_formatted' => $b->date ? $b->date->format('d/m/Y') : null,
-                'time' => $b->shift ?? '10:00 a 20:00 hs',
+                'time' => $b->shift ?? ($b->check_in_time && $b->check_out_time ? "{$b->check_in_time} a {$b->check_out_time} hs" : '10:00 a 20:00 hs'),
+                'modality' => $b->modality ?? 'diurno',
+                'check_in_time' => $b->check_in_time,
+                'check_out_time' => $b->check_out_time,
                 'guestsText' => "{$b->guests_count} personas ({$b->guests_adults} adultos, {$b->guests_children} niños)",
                 'guestsAdults' => (int) $b->guests_adults,
                 'guestsChildren' => (int) $b->guests_children,
@@ -376,17 +406,24 @@ class ClientPropertyController extends Controller
                 'insuranceBadge' => $b->insurance_code ?? 'Póliza TS-SEG-4821',
                 'history' => $b->notes ?? 'Inquilino verificado en Red Turismo Seguro',
                 'status' => $b->status,
-                'ownerRating' => $b->owner_rating ?? 'none',
+                'ownerRating' => $displayRating,
+                'ownerObservation' => $b->owner_observation,
+                'historicalObservations' => $pastObservations,
+                'reputationStats' => [
+                    'upCount' => $upCount,
+                    'downCount' => $downCount,
+                    'totalPast' => $pastUserBookings->count(),
+                ],
             ];
         };
 
         $proximos = $bookings->filter(fn ($b) => $b->date && $b->date->toDateString() >= $today && $b->status !== 'completed')
             ->values()
-            ->map($mapBooking);
+            ->map(fn ($b) => $mapBooking($b, false));
 
         $pasados = $bookings->filter(fn ($b) => !$b->date || $b->date->toDateString() < $today || $b->status === 'completed')
             ->values()
-            ->map($mapBooking);
+            ->map(fn ($b) => $mapBooking($b, true));
 
         return response()->json([
             'proximos' => $proximos,
@@ -415,6 +452,30 @@ class ClientPropertyController extends Controller
             'message' => 'Calificación del inquilino actualizada correctamente.',
             'booking_id' => $booking->id,
             'owner_rating' => $booking->owner_rating,
+        ]);
+    }
+
+    /**
+     * Save observation/comment for a completed past booking.
+     */
+    public function saveBookingObservation(int $bookingId, Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'observation' => 'nullable|string|max:1000',
+        ]);
+
+        $booking = Booking::whereHas('property', function ($q) use ($request) {
+            $q->where('user_id', $request->user()->id);
+        })->findOrFail($bookingId);
+
+        $booking->update([
+            'owner_observation' => $validated['observation'] ?? null,
+        ]);
+
+        return response()->json([
+            'message' => 'Observación del inquilino guardada correctamente.',
+            'booking_id' => $booking->id,
+            'owner_observation' => $booking->owner_observation,
         ]);
     }
 }

@@ -18,6 +18,9 @@ class Booking extends Model
         'user_id',
         'date',
         'shift',
+        'modality',
+        'check_in_time',
+        'check_out_time',
         'guests_count',
         'guests_adults',
         'guests_children',
@@ -27,6 +30,7 @@ class Booking extends Model
         'cbu_verified',
         'notes',
         'owner_rating',
+        'owner_observation',
     ];
 
     protected function casts(): array

@@ -58,6 +58,22 @@ export function usePropietarioTenants(selectedOffer?: Ref<PropietarioOferta | un
     }
   }
 
+  /**
+   * Guarda o actualiza la observación/comentario del anfitrión para un alquiler
+   */
+  const saveTenantObservation = async (tenant: Tenant, observation: string) => {
+    tenant.ownerObservation = observation
+    if (isAuthenticated.value && tenant.id) {
+      try {
+        await api.post(`/client/bookings/${tenant.id}/observation`, {
+          observation,
+        })
+      } catch (err: any) {
+        console.warn('No se pudo guardar la observación del inquilino.', err)
+      }
+    }
+  }
+
   return {
     tenantTab,
     showTenantModal,
@@ -66,5 +82,6 @@ export function usePropietarioTenants(selectedOffer?: Ref<PropietarioOferta | un
     fetchTenants,
     openTenantDetail,
     setTenantRating,
+    saveTenantObservation,
   }
 }

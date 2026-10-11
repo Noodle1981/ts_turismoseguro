@@ -99,7 +99,9 @@ Documento de seguimiento, registro de hitos completados y backlog para la próxi
   - Creada migración `2026_10_11_000900_drop_payment_fields_from_bookings_table.php` eliminando de forma definitiva `deposit_paid`, `balance_due` y `total_price` de la base de datos y de las interfaces de usuario (alineado al modelo de negocio de 0% retención monetaria de señas).
   - Implementado endpoint `POST /api/v1/client/bookings/{id}/rate` para persistir la calificación del propietario (`up`, `down`, `none`).
   - Actualizado composable `usePropietarioTenants.ts` y enlazado reactivamente con `watch(selectedOfferId)` y `onMounted` en `PropietarioPanelView.vue`.
-  - Cobertura de tests en Laravel ampliada (28 tests en verde, 323 assertions).
+  - Creada migración `2026_10_11_001000_add_modality_and_schedule_snapshots_to_bookings_table.php` agregando `modality`, `check_in_time` y `check_out_time` a `bookings` para garantizar inmutabilidad histórica frente a cambios de horario en la propiedad.
+  - Implementada barra de filtros interactiva por modalidad (`diurno`, `pernocte`, `fiesta_nocturna`, `evento_especial`) con badges semánticos en `PropietarioTenantsSection.vue` y visualización en `ModalTenantDetail.vue`.
+  - Cobertura de tests en Laravel ampliada (28 tests en verde, 465 assertions).
 - [ ] **Flujo End-to-End: "Agregar Oferta" $\rightarrow$ Bandeja del Validador:**
   - El modal *"Agregar Oferta"* (`ModalAddOffer.vue`) persiste la propiedad en `POST /api/v1/client/properties` y genera la `verification_request` en estado `pending`.
   - Debe verse reflejada automáticamente en la bandeja del validador (`ValidadorBandejaView.vue`).
