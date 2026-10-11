@@ -1,0 +1,412 @@
+# contracts/modules/propietario/paths.yaml
+# Endpoints OpenAPI 3.1 para el panel de Propietario / Anfitrión (/propietario/panel)
+
+clientProperties:
+  get:
+    tags:
+      - Anfitrión
+    summary: Listado de propiedades pertenecientes al cliente autenticado
+    operationId: getClientProperties
+    security:
+      - sanctumCookie: []
+    responses:
+      '200':
+        description: Lista de alojamientos propios
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '../../openapi.yaml#/components/schemas/Property'
+  post:
+    tags:
+      - Anfitrión
+    summary: Crear nuevo alojamiento propio (inicia en estado borrador 'draft')
+    operationId: createClientProperty
+    security:
+      - sanctumCookie: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - title
+              - department_id
+              - property_type
+              - location
+              - price
+              - price_type
+              - capacity
+            properties:
+              title:
+                type: string
+              department_id:
+                type: integer
+              property_type:
+                type: string
+              location:
+                type: string
+              address:
+                type: string
+              description:
+                type: string
+              price:
+                type: integer
+              price_type:
+                type: string
+              capacity:
+                type: integer
+              bedrooms:
+                type: integer
+              bathrooms:
+                type: integer
+              host_whatsapp:
+                type: string
+              host_phone:
+                type: string
+              amenities:
+                type: array
+                items:
+                  $ref: './schemas.yaml#/AmenityBadge'
+              rules:
+                type: array
+                items:
+                  type: string
+    responses:
+      '201':
+        description: Alojamiento creado exitosamente
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  $ref: '../../openapi.yaml#/components/schemas/Property'
+
+clientPropertyById:
+  get:
+    tags:
+      - Anfitrión
+    summary: Obtener alojamiento propio por ID
+    operationId: getClientPropertyById
+    security:
+      - sanctumCookie: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Detalle del alojamiento propio
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  $ref: '../../openapi.yaml#/components/schemas/Property'
+  put:
+    tags:
+      - Anfitrión
+    summary: Actualizar datos de alojamiento propio
+    operationId: updateClientProperty
+    security:
+      - sanctumCookie: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              department_id:
+                type: integer
+              property_type:
+                type: string
+              location:
+                type: string
+              address:
+                type: string
+              description:
+                type: string
+              price:
+                type: integer
+              price_type:
+                type: string
+              capacity:
+                type: integer
+              bedrooms:
+                type: integer
+              bathrooms:
+                type: integer
+              host_whatsapp:
+                type: string
+              host_phone:
+                type: string
+              amenities:
+                type: array
+                items:
+                  $ref: './schemas.yaml#/AmenityBadge'
+              rules:
+                type: array
+                items:
+                  type: string
+    responses:
+      '200':
+        description: Propiedad actualizada
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  $ref: '../../openapi.yaml#/components/schemas/Property'
+
+clientPropertyAvailability:
+  get:
+    tags:
+      - Anfitrión
+    summary: Consultar calendario de disponibilidad de propiedad propia
+    operationId: getClientPropertyAvailability
+    security:
+      - sanctumCookie: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Fechas ocupadas/bloqueadas
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: './schemas.yaml#/CalendarAvailabilityDay'
+  post:
+    tags:
+      - Anfitrión
+    summary: Bloquear o desbloquear rango de fechas en calendario propio
+    operationId: updateClientPropertyAvailability
+    security:
+      - sanctumCookie: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - start_date
+              - end_date
+              - action
+            properties:
+              start_date:
+                type: string
+                format: date
+              end_date:
+                type: string
+                format: date
+              action:
+                type: string
+                enum: [block, free]
+    responses:
+      '200':
+        description: Calendario actualizado
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+
+clientVerificationRequest:
+  post:
+    tags:
+      - Anfitrión
+    summary: Solicitar inspección y validación física in situ para una propiedad
+    operationId: requestVerification
+    security:
+      - sanctumCookie: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - property_id
+            properties:
+              property_id:
+                type: integer
+              notes:
+                type: string
+    responses:
+      '200':
+        description: Solicitud de validación enviada al supervisor
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                verification_status:
+                  type: string
+
+clientPropertyTenants:
+  get:
+    tags:
+      - Anfitrión
+    summary: Listar reservas e inquilinos registrados para la propiedad
+    operationId: getClientPropertyTenants
+    security:
+      - sanctumCookie: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Listado de inquilinos
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: './schemas.yaml#/Tenant'
+  post:
+    tags:
+      - Anfitrión
+    summary: Registrar un nuevo inquilino / reserva manual
+    operationId: createClientPropertyTenant
+    security:
+      - sanctumCookie: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: './schemas.yaml#/Tenant'
+    responses:
+      '201':
+        description: Inquilino registrado exitosamente
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  $ref: './schemas.yaml#/Tenant'
+
+clientPropertySpecialEvents:
+  get:
+    tags:
+      - Anfitrión
+    summary: Listar eventos de temporada o tarifas especiales configurados
+    operationId: getClientPropertySpecialEvents
+    security:
+      - sanctumCookie: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Listado de eventos especiales
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: './schemas.yaml#/SpecialEvent'
+  post:
+    tags:
+      - Anfitrión
+    summary: Crear evento de tarifa especial
+    operationId: createClientPropertySpecialEvent
+    security:
+      - sanctumCookie: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: './schemas.yaml#/SpecialEvent'
+    responses:
+      '201':
+        description: Evento especial creado
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  $ref: './schemas.yaml#/SpecialEvent'

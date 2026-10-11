@@ -45,12 +45,29 @@ metadata:
 
 ## 2. Ubicación y Estructura del Archivo de Contrato
 
-El archivo canónico reside en:
+El contrato se organiza en un índice orquestador y sub-módulos temáticos por vista/dominio:
+
 ```
-contracts/openapi.yaml
+contracts/
+├── openapi.yaml                         # Índice canónico orquestador (OpenAPI 3.1)
+└── modules/
+    ├── propietario/                     # Vista: /propietario/panel (Anfitrión)
+    │   ├── paths.yaml                   # Endpoints específicos (/client/...)
+    │   └── schemas.yaml                 # AmenityBadge, Tenant, SpecialEvent, etc.
+    ├── auth/                            # (Modularizable) Autenticación y perfiles
+    ├── explorar/                        # (Modularizable) Búsqueda pública
+    └── validador/                       # (Modularizable) Inspecciones in situ
 ```
 
-### Cabecera Estándar (OpenAPI 3.1.0):
+> [!IMPORTANT]
+> **Regla de Contexto para Agentes (Ahorro de Tokens y Eficiencia):**
+> Cuando un agente de IA esté trabajando, auditando o consultando endpoints de una vista específica (por ejemplo, el panel de anfitrión `/propietario/panel`), **TIENE PROHIBIDO LEER COMPLETAMENTE `contracts/openapi.yaml`** (más de 900 líneas).
+> Debe dirigirse **directamente** al sub-contrato del módulo correspondiente:
+> 👉 `contracts/modules/propietario/paths.yaml` y `contracts/modules/propietario/schemas.yaml`.
+> 
+> El archivo raíz `contracts/openapi.yaml` actúa únicamente como orquestador mediante `$ref: './modules/<modulo>/paths.yaml#/<item>'`.
+
+### Cabecera Estándar del Índice (`contracts/openapi.yaml`):
 ```yaml
 openapi: 3.1.0
 info:
@@ -69,6 +86,8 @@ tags:
     description: Autenticación, roles y recuperación de contraseña
   - name: Properties
     description: Catálogo y gestión de alojamientos
+  - name: Anfitrión
+    description: Panel y gestión para propietarios de alojamientos
   - name: Experiences
     description: Experiencias y operadores turísticos
   - name: Departments
@@ -79,6 +98,7 @@ tags:
     description: Comisiones y liquidaciones
 ```
 
+
 ---
 
 ## 3. Mapeo Trilateral Obligatorio
@@ -87,11 +107,15 @@ Cada entidad debe tener representación idéntica en los tres niveles:
 
 | Entidad | OpenAPI (`components/schemas`) | Laravel (`app/Http/Resources/`) | Vue 3 (`client/src/types/`) |
 | :--- | :--- | :--- | :--- |
-| Propiedad | `PropertyResource` | `PropertyResource.php` | `interface Property` |
-| Departamento | `DepartmentResource` | `DepartmentResource.php` | `interface Department` |
+| Propiedad | `Property` | `PropertyResource.php` | `interface Property` |
+| Amenidad / Seguridad | `AmenityBadge` | `AmenityResource.php` | `interface AmenityBadge` |
+| Inquilino / Reserva | `Tenant` | `TenantResource.php` | `interface Tenant` |
+| Evento Especial | `SpecialEvent` | `SpecialEventResource.php` | `interface SpecialEvent` |
+| Departamento | `Department` | `DepartmentResource.php` | `interface Department` |
 | Usuario | `UserResource` | `UserResource.php` | `interface User` |
 | Inspección | `AuditResource` | `AuditResource.php` | `interface Audit` |
 | Comisión | `CommissionResource` | `CommissionResource.php` | `interface Commission` |
+
 
 ---
 
@@ -198,10 +222,20 @@ components:
 
 ---
 
-## 7. Regla de Oro de Actualización
+## 7. Regla de Oro de Actualización y Desglose Modular
 
-Al implementar una nueva funcionalidad (por ejemplo, `Fase 2: Catálogo de Departamentos`):
-1. **Paso 1:** Abrir `contracts/openapi.yaml` y declarar `GET /departments` con su schema `DepartmentResource`.
-2. **Paso 2:** Crear la migración, modelo, `DepartmentResource.php` y controlador en Laravel.
-3. **Paso 3:** Exportar o sincronizar la `interface Department` en `client/src/types/department.ts`.
-4. **Paso 4:** Conectar el composable `useDepartments.ts` y verificar que no existan errores de `vue-tsc`.
+Al implementar o refactorizar una vista o funcionalidad (por ejemplo, el panel de anfitrión `/propietario/panel`):
+1. **Paso 1 (Modularización o Creación del Contrato):**
+   - Crear o actualizar la carpeta del módulo: `contracts/modules/<modulo>/` (ej: `contracts/modules/propietario/`).
+   - Declarar en `paths.yaml` los endpoints específicos requeridos por la vista.
+   - Declarar en `schemas.yaml` los objetos de datos, modelos y badges parametrizados (ej: `AmenityBadge`).
+   - Vincular en `contracts/openapi.yaml` el `$ref` correspondiente hacia el módulo.
+2. **Paso 2 (Tipado Estricto en Frontend):**
+   - Crear o sincronizar la definición TypeScript en `client/src/types/<modulo>.ts` respetando exactamente los schemas YAML.
+3. **Paso 3 (Backend API en Laravel):**
+   - Crear/actualizar la migración, modelo, Form Request de validación, y `JsonResource` en `app/Http/Resources/`.
+   - Implementar el controlador devolviendo el recurso tipado.
+4. **Paso 4 (Composables y Vistas):**
+   - Crear el composable reactivo (`usePropietario...ts`) consumiendo la API y tipando la respuesta.
+   - Conectar los componentes Vue 3 verificando con `npm run build` (`vue-tsc`).
+

@@ -1,0 +1,151 @@
+# contracts/modules/propietario/schemas.yaml
+# Esquemas de datos para el módulo y vista del Propietario / Anfitrión (/propietario/panel)
+
+AmenityBadge:
+  type: object
+  description: Característica o amenidad parametrizada, destacando atributos de seguridad y confort verificados
+  required:
+    - icon
+    - label
+  properties:
+    icon:
+      type: string
+      example: "shield-check"
+      description: Identificador de icono Lucide/SVG
+    label:
+      type: string
+      example: "Pileta Cercada (1.80m)"
+      description: Nombre o descripción parametrizada de la amenidad
+    is_security_feature:
+      type: boolean
+      default: false
+      example: true
+      description: Indica si la amenidad es un requisito de seguridad auditable por Turismo Seguro
+
+Tenant:
+  type: object
+  description: Registro de inquilino / huésped y reserva asociada en el panel
+  required:
+    - id
+    - property_id
+    - name
+    - phone
+    - email
+    - status
+    - start_date
+    - end_date
+    - nights
+    - total_amount
+    - channel
+  properties:
+    id:
+      type: integer
+      example: 1
+    property_id:
+      type: integer
+      example: 123
+    name:
+      type: string
+      example: "Mariana Gómez"
+    phone:
+      type: string
+      example: "+54 9 264 555-1234"
+    email:
+      type: string
+      format: email
+      example: "mariana.gomez@gmail.com"
+    status:
+      type: string
+      enum: [confirmed, pending, cancelled]
+      example: "confirmed"
+    start_date:
+      type: string
+      format: date
+      example: "2026-10-15"
+    end_date:
+      type: string
+      format: date
+      example: "2026-10-18"
+    nights:
+      type: integer
+      example: 3
+    total_amount:
+      type: number
+      example: 75000
+    channel:
+      type: string
+      enum: [WhatsApp, TurismoSeguro, Airbnb, Directo]
+      example: "TurismoSeguro"
+    notes:
+      type: string
+      nullable: true
+      example: "Familia con 2 niños. Solicitan cuna."
+
+SpecialEvent:
+  type: object
+  description: Evento de tarifa especial o bloqueo estacional configurado por el propietario
+  required:
+    - id
+    - property_id
+    - title
+    - type
+    - start_date
+    - end_date
+    - daily_rate
+    - min_nights
+  properties:
+    id:
+      type: integer
+      example: 1
+    property_id:
+      type: integer
+      example: 123
+    title:
+      type: string
+      example: "Fiesta Nacional del Sol 2026"
+    type:
+      type: string
+      enum: [custom, season, holiday]
+      example: "season"
+    start_date:
+      type: string
+      format: date
+      example: "2026-11-20"
+    end_date:
+      type: string
+      format: date
+      example: "2026-11-25"
+    daily_rate:
+      type: number
+      example: 45000
+    min_nights:
+      type: integer
+      example: 4
+    notes:
+      type: string
+      nullable: true
+      example: "Tarifa para fin de semana largo de la FNS."
+
+CalendarAvailabilityDay:
+  type: object
+  description: Estado de un día específico en el calendario del anfitrión
+  required:
+    - date
+    - status
+  properties:
+    date:
+      type: string
+      format: date
+      example: "2026-10-15"
+    status:
+      type: string
+      enum: [free, occupied, blocked, pending]
+      example: "occupied"
+    tenant_name:
+      type: string
+      nullable: true
+      example: "Mariana Gómez"
+    daily_rate:
+      type: number
+      nullable: true
+      example: 25000
