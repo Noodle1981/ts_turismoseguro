@@ -222,8 +222,6 @@ export function usePropietarioBookings(
       guestsChildren: newBooking.value.children,
       eventType: newBooking.value.reason,
       insuranceBadge: 'Póliza TS Activa #9482',
-      sena: newBooking.value.sena,
-      saldo: `${newBooking.value.saldo} en tranquera`,
       history: 'Validado in situ • Aprobado por anfitrión',
       status: 'confirmed',
     })

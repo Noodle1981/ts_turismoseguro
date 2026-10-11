@@ -41,7 +41,7 @@ const decrementGuests = () => {
                 <button
                   type="button"
                   aria-label="Disminuir cantidad de asistentes en 5 personas"
-                  class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary hover:bg-surface-dim font-headline-sm text-headline-sm font-bold cursor-pointer transition-colors"
+                  class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary hover:bg-surface-dim active:scale-90 select-none font-headline-sm text-headline-sm font-bold cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   @click="decrementGuests"
                 >
                   -
@@ -52,7 +52,7 @@ const decrementGuests = () => {
                 <button
                   type="button"
                   aria-label="Aumentar cantidad de asistentes en 5 personas"
-                  class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary hover:bg-surface-dim font-headline-sm text-headline-sm font-bold cursor-pointer transition-colors"
+                  class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary hover:bg-surface-dim active:scale-90 select-none font-headline-sm text-headline-sm font-bold cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   @click="incrementGuests"
                 >
                   +
@@ -119,7 +119,7 @@ const decrementGuests = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Conocer cómo auditamos las cuentas bancarias por WhatsApp (se abre en nueva ventana)"
-              class="w-full inline-flex items-center justify-center gap-space-xs py-3 px-space-md rounded-xl bg-secondary text-on-secondary font-label-md text-label-md hover:bg-on-secondary-container transition-colors shadow-sm font-bold"
+              class="w-full inline-flex items-center justify-center gap-space-xs py-3 px-space-md rounded-xl bg-secondary text-on-secondary font-label-md text-label-md hover:bg-on-secondary-container active:scale-[0.98] transition-all shadow-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2"
             >
               <span class="material-symbols-outlined text-[18px]">verified_user</span>
               Conocer cómo auditamos las cuentas bancarias

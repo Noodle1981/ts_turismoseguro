@@ -17,9 +17,6 @@ export interface Tenant {
   guestsChildren: number
   eventType: string
   insuranceBadge: string
-  sena?: string
-  saldo?: string
-  totalPrice?: string
   history: string
   status: string
   ownerRating?: 'up' | 'down' | 'none'

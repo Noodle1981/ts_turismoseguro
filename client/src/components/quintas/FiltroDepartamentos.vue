@@ -54,7 +54,7 @@ const resetPills = () => {
           <select
             id="filter-zone"
             :value="zone"
-            class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:bg-surface-container transition-colors cursor-pointer"
+            class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 focus:bg-surface-container transition-all cursor-pointer"
             @change="emit('update:zone', ($event.target as HTMLSelectElement).value)"
           >
             <option value="todos">Todos los Departamentos</option>
@@ -80,7 +80,7 @@ const resetPills = () => {
           <select
             id="filter-occasion"
             :value="occasion"
-            class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:bg-surface-container transition-colors cursor-pointer"
+            class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 focus:bg-surface-container transition-all cursor-pointer"
             @change="emit('update:occasion', ($event.target as HTMLSelectElement).value)"
           >
             <option value="quinta-pileta">Quinta con Pileta</option>
@@ -102,7 +102,7 @@ const resetPills = () => {
           <select
             id="filter-capacity"
             :value="capacity"
-            class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:bg-surface-container transition-colors cursor-pointer"
+            class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 focus:bg-surface-container transition-all cursor-pointer"
             @change="emit('update:capacity', ($event.target as HTMLSelectElement).value)"
           >
             <option value="10-20">10 a 20 personas (Grupos chicos)</option>
@@ -124,7 +124,7 @@ const resetPills = () => {
           <select
             id="filter-shift"
             :value="shift"
-            class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:bg-surface-container transition-colors cursor-pointer"
+            class="w-full bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg py-3 px-space-md appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 focus:bg-surface-container transition-all cursor-pointer"
             @change="emit('update:shift', ($event.target as HTMLSelectElement).value)"
           >
             <option value="dia-completo">Día Completo (10:00 a 20:00 hs)</option>
@@ -158,7 +158,7 @@ const resetPills = () => {
           type="button"
           :aria-pressed="(pills || []).includes('fence')"
           :class="[
-            'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
+            'shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border select-none active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
             (pills || []).includes('fence') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
           ]"
           @click="togglePill('fence')"
@@ -171,7 +171,7 @@ const resetPills = () => {
           type="button"
           :aria-pressed="(pills || []).includes('grill')"
           :class="[
-            'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
+            'shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border select-none active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
             (pills || []).includes('grill') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
           ]"
           @click="togglePill('grill')"
@@ -184,7 +184,7 @@ const resetPills = () => {
           type="button"
           :aria-pressed="(pills || []).includes('kitchen')"
           :class="[
-            'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
+            'shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border select-none active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
             (pills || []).includes('kitchen') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
           ]"
           @click="togglePill('kitchen')"
@@ -197,7 +197,7 @@ const resetPills = () => {
           type="button"
           :aria-pressed="(pills || []).includes('park')"
           :class="[
-            'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
+            'shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border select-none active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
             (pills || []).includes('park') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
           ]"
           @click="togglePill('park')"
@@ -210,7 +210,7 @@ const resetPills = () => {
           type="button"
           :aria-pressed="(pills || []).includes('car')"
           :class="[
-            'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border',
+            'shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full font-label-sm text-label-sm transition-all cursor-pointer border select-none active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
             (pills || []).includes('car') ? 'bg-primary text-on-primary border-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container border-transparent',
           ]"
           @click="togglePill('car')"
@@ -229,7 +229,7 @@ const resetPills = () => {
       </div>
       <button
         type="button"
-        class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-lg py-3.5 rounded-xl bg-secondary text-on-secondary font-label-lg text-label-lg hover:bg-on-secondary-container transition-all shadow-md hover:shadow-lg font-bold cursor-pointer"
+        class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-lg py-3.5 rounded-xl bg-secondary text-on-secondary font-label-lg text-label-lg hover:bg-on-secondary-container active:scale-[0.98] transition-all shadow-md hover:shadow-lg font-bold cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2"
         @click="emit('search')"
       >
         <span class="material-symbols-outlined text-[20px]">search</span>

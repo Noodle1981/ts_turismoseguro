@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PropertyResource;
+use App\Models\Booking;
 use App\Models\Property;
 use App\Models\PropertyAmenity;
 use App\Models\PropertyAvailability;
@@ -334,6 +335,86 @@ class ClientPropertyController extends Controller
             'message' => 'Solicitud de verificación física in situ enviada con éxito.',
             'request_id' => $verificationRequest->id,
             'verification_status' => $property->verification_status,
+        ]);
+    }
+
+    /**
+     * Get bookings and tenants list (proximos and pasados) for client property.
+     */
+    public function tenants(int $id, Request $request): JsonResponse
+    {
+        $property = Property::where('user_id', $request->user()->id)->findOrFail($id);
+
+        $bookings = $property->bookings()
+            ->with('user:id,name,email,phone,dni')
+            ->orderBy('date', 'desc')
+            ->get();
+
+        $today = now()->toDateString();
+
+        $mapBooking = function ($b) {
+            $name = $b->user?->name ?? 'Inquilino';
+            $parts = array_values(array_filter(explode(' ', trim($name))));
+            $initials = count($parts) >= 2
+                ? mb_strtoupper(mb_substr($parts[0], 0, 1) . mb_substr($parts[1], 0, 1))
+                : mb_strtoupper(mb_substr($name, 0, 2));
+
+            return [
+                'id' => (string) $b->id,
+                'booking_code' => $b->booking_code,
+                'name' => $name,
+                'initials' => $initials,
+                'dni' => $b->user?->dni ?? 'S/DNI',
+                'phone' => $b->user?->phone ?? 'S/Tel',
+                'date' => $b->date ? $b->date->format('Y-m-d') : null,
+                'date_formatted' => $b->date ? $b->date->format('d/m/Y') : null,
+                'time' => $b->shift ?? '10:00 a 20:00 hs',
+                'guestsText' => "{$b->guests_count} personas ({$b->guests_adults} adultos, {$b->guests_children} niños)",
+                'guestsAdults' => (int) $b->guests_adults,
+                'guestsChildren' => (int) $b->guests_children,
+                'eventType' => $b->event_type ?? 'Alquiler diurno',
+                'insuranceBadge' => $b->insurance_code ?? 'Póliza TS-SEG-4821',
+                'history' => $b->notes ?? 'Inquilino verificado en Red Turismo Seguro',
+                'status' => $b->status,
+                'ownerRating' => $b->owner_rating ?? 'none',
+            ];
+        };
+
+        $proximos = $bookings->filter(fn ($b) => $b->date && $b->date->toDateString() >= $today && $b->status !== 'completed')
+            ->values()
+            ->map($mapBooking);
+
+        $pasados = $bookings->filter(fn ($b) => !$b->date || $b->date->toDateString() < $today || $b->status === 'completed')
+            ->values()
+            ->map($mapBooking);
+
+        return response()->json([
+            'proximos' => $proximos,
+            'pasados' => $pasados,
+        ]);
+    }
+
+    /**
+     * Rate a tenant booking (thumbs up, down, or reset).
+     */
+    public function rateBooking(int $bookingId, Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'rating' => 'required|string|in:up,down,none',
+        ]);
+
+        $booking = Booking::whereHas('property', function ($q) use ($request) {
+            $q->where('user_id', $request->user()->id);
+        })->findOrFail($bookingId);
+
+        $booking->update([
+            'owner_rating' => $validated['rating'],
+        ]);
+
+        return response()->json([
+            'message' => 'Calificación del inquilino actualizada correctamente.',
+            'booking_id' => $booking->id,
+            'owner_rating' => $booking->owner_rating,
         ]);
     }
 }

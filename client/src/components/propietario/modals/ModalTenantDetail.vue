@@ -84,7 +84,7 @@ const close = () => {
           <span class="text-on-surface-variant">Estado de cobertura:</span>
           <span class="text-secondary font-bold flex items-center gap-1">
             <span class="material-symbols-outlined text-[15px]">verified_user</span>
-            {{ selectedTenant.totalPrice ? 'Turno Finalizado & Póliza Rendida' : 'Cobertura Activa y Asistida' }}
+            {{ selectedTenant.status === 'completed' ? 'Turno Finalizado & Póliza Rendida' : 'Cobertura Activa y Asistida' }}
           </span>
         </div>
       </div>

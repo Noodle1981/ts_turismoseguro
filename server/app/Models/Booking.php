@@ -24,11 +24,9 @@ class Booking extends Model
         'event_type',
         'insurance_code',
         'status',
-        'total_price',
-        'deposit_paid',
-        'balance_due',
         'cbu_verified',
         'notes',
+        'owner_rating',
     ];
 
     protected function casts(): array
@@ -38,9 +36,6 @@ class Booking extends Model
             'guests_count' => 'integer',
             'guests_adults' => 'integer',
             'guests_children' => 'integer',
-            'total_price' => 'decimal:2',
-            'deposit_paid' => 'decimal:2',
-            'balance_due' => 'decimal:2',
             'cbu_verified' => 'boolean',
         ];
     }

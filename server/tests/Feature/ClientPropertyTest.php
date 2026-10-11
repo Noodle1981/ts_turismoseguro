@@ -165,4 +165,83 @@ class ClientPropertyTest extends TestCase
             'status' => 'pending',
         ]);
     }
+
+    public function test_client_can_update_multimodal_tariffs_and_vacation_mode(): void
+    {
+        Sanctum::actingAs($this->clientUser);
+
+        $prop = Property::where('user_id', $this->clientUser->id)->first();
+
+        $updatePayload = [
+            'tariff_lunes_jueves' => 42000,
+            'tariff_viernes_domingo' => 52000,
+            'tariff_sabado_feriados' => 64000,
+            'tariff_evento_especial' => 95000,
+            'tariff_pernocte_camas' => 70000,
+            'tariff_pernocte_carpas' => 45000,
+            'tariff_finde_completo' => 125000,
+            'tariff_fiesta_nocturna' => 135000,
+            'schedule_start' => '09:30',
+            'schedule_end' => '21:00',
+            'active_days' => [4, 5, 6, 0],
+            'is_listing_visible' => false,
+            'pause_mode' => 'vacation',
+            'pause_start_date' => '2026-10-15',
+            'pause_end_date' => '2026-10-25',
+        ];
+
+        $response = $this->putJson("/api/v1/client/properties/{$prop->id}", $updatePayload);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('data.tariffs.lunes_jueves', 42000)
+            ->assertJsonPath('data.tariffs.sabado_feriados', 64000)
+            ->assertJsonPath('data.schedule.start', '09:30')
+            ->assertJsonPath('data.schedule.end', '21:00')
+            ->assertJsonPath('data.is_listing_visible', false)
+            ->assertJsonPath('data.pause_mode', 'vacation')
+            ->assertJsonPath('data.pause_start_date', '2026-10-15')
+            ->assertJsonPath('data.pause_end_date', '2026-10-25');
+
+        $this->assertDatabaseHas('properties', [
+            'id' => $prop->id,
+            'tariff_lunes_jueves' => 42000,
+            'tariff_sabado_feriados' => 64000,
+            'schedule_start' => '09:30',
+            'schedule_end' => '21:00',
+            'is_listing_visible' => false,
+            'pause_mode' => 'vacation',
+        ]);
+    }
+
+    public function test_client_can_get_tenants_and_rate_booking(): void
+    {
+        Sanctum::actingAs($this->clientUser);
+
+        $prop = Property::where('user_id', $this->clientUser->id)->first();
+
+        // 1. Consultar inquilinos
+        $response = $this->getJson("/api/v1/client/properties/{$prop->id}/tenants");
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'proximos',
+                'pasados',
+            ]);
+
+        // 2. Calificar un booking si existe
+        $booking = $prop->bookings()->first();
+        if ($booking) {
+            $rateResponse = $this->postJson("/api/v1/client/bookings/{$booking->id}/rate", [
+                'rating' => 'up',
+            ]);
+
+            $rateResponse->assertStatus(200)
+                ->assertJsonPath('owner_rating', 'up');
+
+            $this->assertDatabaseHas('bookings', [
+                'id' => $booking->id,
+                'owner_rating' => 'up',
+            ]);
+        }
+    }
 }

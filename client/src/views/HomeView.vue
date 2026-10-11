@@ -354,7 +354,7 @@ const handleSearch = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Contactar al validador por WhatsApp para sumar propiedad (se abre en nueva ventana)"
-                  class="inline-flex items-center justify-center gap-space-xs py-3.5 px-space-md rounded-xl bg-secondary text-on-secondary font-headline-sm text-headline-sm hover:bg-on-secondary-container transition-all shadow-lg hover:shadow-xl font-bold cursor-pointer"
+                  class="inline-flex items-center justify-center gap-space-xs py-3.5 px-space-md rounded-xl bg-secondary text-on-secondary font-headline-sm text-headline-sm hover:bg-on-secondary-container active:scale-[0.98] transition-all shadow-lg hover:shadow-xl font-bold cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2"
                 >
                   <span class="material-symbols-outlined text-[22px]">support_agent</span>
                   Contactar Validador

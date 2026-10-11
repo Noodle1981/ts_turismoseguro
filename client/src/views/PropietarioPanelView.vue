@@ -51,12 +51,34 @@ const { dialogState, showAlert, handleConfirm, handleCancel } = useConfirmDialog
 // Estado del Modal de Vacaciones / Pausa
 const showVacationModal = ref(false)
 
-const handleConfirmPause = (payload: { mode: 'indefinite' | 'vacation'; startDate?: string; endDate?: string }) => {
+// 1. Estado y Operaciones de Ofertas
+const {
+  user,
+  myOffers,
+  selectedOfferId,
+  selectedOffer,
+  activeNav,
+  tariffsTab,
+  tarifaSavedFeedback,
+  fetchOffers,
+  handleSaveTarifas,
+  updateListingVisibility,
+  showAddOfferModal,
+  newOffer,
+  handleAddOffer,
+  revalidacionForm,
+  handleSolicitarRevalidacion,
+  handleLogout,
+} = usePropietarioOffers()
+
+const handleConfirmPause = async (payload: { mode: 'indefinite' | 'vacation'; startDate?: string; endDate?: string }) => {
   if (selectedOffer.value) {
-    selectedOffer.value.isListingVisible = false
-    selectedOffer.value.pauseMode = payload.mode
-    selectedOffer.value.pauseStartDate = payload.startDate
-    selectedOffer.value.pauseEndDate = payload.endDate
+    await updateListingVisibility({
+      isListingVisible: false,
+      pauseMode: payload.mode,
+      pauseStartDate: payload.startDate,
+      pauseEndDate: payload.endDate,
+    })
 
     if (payload.mode === 'vacation') {
       showAlert({
@@ -74,12 +96,14 @@ const handleConfirmPause = (payload: { mode: 'indefinite' | 'vacation'; startDat
   }
 }
 
-const handleReactivateOffer = () => {
+const handleReactivateOffer = async () => {
   if (selectedOffer.value) {
-    selectedOffer.value.isListingVisible = true
-    selectedOffer.value.pauseMode = undefined
-    selectedOffer.value.pauseStartDate = undefined
-    selectedOffer.value.pauseEndDate = undefined
+    await updateListingVisibility({
+      isListingVisible: true,
+      pauseMode: undefined,
+      pauseStartDate: undefined,
+      pauseEndDate: undefined,
+    })
 
     showAlert({
       title: 'Predio Reactivado',
@@ -96,33 +120,19 @@ const selectedMonth = ref<number>(10)
 // Estado del Drawer Móvil para pantallas < 1024px
 const isMobileSidebarOpen = ref(false)
 
-
-// 1. Estado y Operaciones de Ofertas
-const {
-  user,
-  myOffers,
-  selectedOfferId,
-  selectedOffer,
-  activeNav,
-  tariffsTab,
-  tarifaSavedFeedback,
-  handleSaveTarifas,
-  showAddOfferModal,
-  newOffer,
-  handleAddOffer,
-  revalidacionForm,
-  handleSolicitarRevalidacion,
-  handleLogout,
-} = usePropietarioOffers()
-
 // 2. Gestión de Inquilinos
 const {
   tenantTab,
   showTenantModal,
   selectedTenant,
+  fetchTenants,
   openTenantDetail,
   setTenantRating,
-} = usePropietarioTenants()
+} = usePropietarioTenants(selectedOffer)
+
+watch(selectedOfferId, (newId) => {
+  fetchTenants(newId)
+})
 
 // 3. Gestión de Reservas y Bloqueos
 const {
@@ -218,6 +228,8 @@ onMounted(() => {
   window.addEventListener('hashchange', syncNavWithHash)
 
   syncNavWithHash()
+  fetchOffers()
+  fetchTenants()
 
   if (route.query.action === 'nueva-oferta') {
     showAddOfferModal.value = true

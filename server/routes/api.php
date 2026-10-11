@@ -63,6 +63,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/properties/{id}/availability', [ClientPropertyController::class, 'availability'])->name('client.properties.availability');
         Route::post('/properties/{id}/availability', [ClientPropertyController::class, 'updateAvailability'])->name('client.properties.update-availability');
         Route::post('/properties/{id}/availability/toggle-date', [ClientPropertyController::class, 'toggleAvailabilityDate'])->name('client.properties.toggle-date');
+        Route::get('/properties/{id}/tenants', [ClientPropertyController::class, 'tenants'])->name('client.properties.tenants');
+        Route::post('/bookings/{id}/rate', [ClientPropertyController::class, 'rateBooking'])->name('client.bookings.rate');
         Route::post('/verifications/request', [ClientPropertyController::class, 'requestVerification'])->name('client.verifications.request');
     });
 });

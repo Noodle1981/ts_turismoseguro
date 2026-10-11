@@ -70,10 +70,36 @@ Documento de seguimiento, registro de hitos completados y backlog para la próxi
 
 ---
 
-## 5. Próximos Pasos Pendientes (Backlog para Reanudar)
+## 5. Optimización Frontend, Accesibilidad y Calidad UI/UX (HomeView)
 
-- [ ] **Conectar el Panel del Propietario con la API:**
-  - Reemplazar el guardado mockeado en `usePropietarioOffers.ts` por llamadas reales a `PUT /api/v1/client/properties/{id}` con las tarifas multimodales, horarios y estado de receso/vacaciones.
+- [x] **Rendimiento y Code-Splitting Inicial:**
+  - Carga asíncrona optimizada (`defineAsyncComponent`) para `ExperienciasCercanasHub.vue`, reduciendo el bundle inicial en ~36 kB.
+  - Corrección de advertencia deprecada en Vue Router 4 migrando `beforeEach` a retornos modernos (eliminando callback `next()`).
+- [x] **Accesibilidad (a11y) y SEO:**
+  - Emparejamiento de `<label for>` con `<select id>` en buscador principal.
+  - Preconexión y `display=swap` en Google Fonts.
+  - Meta tags Open Graph y descripciones semánticas.
+- [x] **Auditoría UI/UX Pro Max y Micro-interacciones:**
+  - Clic integral y affordance en cards de quintas (`CardQuintaDiurna.vue`).
+  - Anillos de foco accesible `focus-visible` y ergonomía táctil en móviles para filtros (`FiltroDepartamentos.vue`).
+  - Respuesta física elástica (`active:scale-*`) en calculador y botones de llamada a la acción.
+
+---
+
+## 6. Próximos Pasos Pendientes (Backlog para Reanudar)
+
+- [x] **Conectar el Panel del Propietario con la API Real:**
+  - En `usePropietarioOffers.ts`, implementado `fetchOffers()` conectado a `GET /api/v1/client/properties` con mapeador bidireccional y preservación de estado local.
+  - Implementado `saveOfferToServer()` y conectado a `PUT /api/v1/client/properties/{id}` enviando tarifas multimodales (`tariff_lunes_jueves`, `tariff_viernes_domingo`, `tariff_sabado_feriados`, `tariff_evento_especial`, pernoctes, finde completo, fiesta nocturna), franja horaria (`schedule_start`, `schedule_end`, `active_days`), visibilidad y modo vacaciones (`pause_mode`, `pause_start_date`, `pause_end_date`).
+  - Conectados los handlers de activación de vacaciones (`handleConfirmPause`) y reactivación (`handleReactivateOffer`) con persistencia en base de datos.
+  - Test Feature agregado en `ClientPropertyTest.php` validando la actualización de tarifas multimodales y vacaciones en Laravel (27 tests en verde, 320 assertions).
+- [x] **Conectar Inquilinos (`#inquilinos`) y Reservas con la BD Real:**
+  - Creada migración `2026_10_11_000800_add_owner_rating_to_bookings_table.php` agregando el atributo `owner_rating` a la tabla `bookings`.
+  - Implementado endpoint `GET /api/v1/client/properties/{id}/tenants` con división automática de reservas en `proximos` (futuros) y `pasados` (completados/historial), y formateo de datos de contacto (DNI, teléfono, póliza).
+  - Creada migración `2026_10_11_000900_drop_payment_fields_from_bookings_table.php` eliminando de forma definitiva `deposit_paid`, `balance_due` y `total_price` de la base de datos y de las interfaces de usuario (alineado al modelo de negocio de 0% retención monetaria de señas).
+  - Implementado endpoint `POST /api/v1/client/bookings/{id}/rate` para persistir la calificación del propietario (`up`, `down`, `none`).
+  - Actualizado composable `usePropietarioTenants.ts` y enlazado reactivamente con `watch(selectedOfferId)` y `onMounted` en `PropietarioPanelView.vue`.
+  - Cobertura de tests en Laravel ampliada (28 tests en verde, 323 assertions).
 - [ ] **Flujo End-to-End: "Agregar Oferta" $\rightarrow$ Bandeja del Validador:**
   - El modal *"Agregar Oferta"* (`ModalAddOffer.vue`) persiste la propiedad en `POST /api/v1/client/properties` y genera la `verification_request` en estado `pending`.
   - Debe verse reflejada automáticamente en la bandeja del validador (`ValidadorBandejaView.vue`).

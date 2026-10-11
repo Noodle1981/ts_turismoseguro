@@ -21,9 +21,13 @@ defineProps<{
 <template>
   <article class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
     <div>
-      <div class="relative h-64 w-full overflow-hidden bg-surface-container">
+      <RouterLink
+        :to="`/quintas/${quinta.id}`"
+        class="block relative h-64 w-full overflow-hidden bg-surface-container group cursor-pointer"
+        :aria-label="`Ver detalles de ${quinta.title}`"
+      >
         <img
-          class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           :src="quinta.image"
           :alt="quinta.title"
           loading="lazy"
@@ -39,13 +43,18 @@ defineProps<{
           <span class="material-symbols-outlined text-[14px]">location_on</span>
           {{ quinta.location }}
         </div>
-      </div>
+      </RouterLink>
 
       <div class="p-space-lg">
         <div class="flex items-start justify-between gap-space-sm mb-space-xs">
-          <h3 class="font-headline-md text-headline-md text-primary font-bold">
-            {{ quinta.title }}
-          </h3>
+          <RouterLink
+            :to="`/quintas/${quinta.id}`"
+            class="group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
+          >
+            <h3 class="font-headline-md text-headline-md text-primary font-bold group-hover:text-secondary transition-colors cursor-pointer">
+              {{ quinta.title }}
+            </h3>
+          </RouterLink>
           <div class="text-right">
             <div class="font-headline-md text-headline-md text-secondary font-bold">
               {{ quinta.priceFormatted }}
@@ -77,7 +86,7 @@ defineProps<{
     <div class="px-space-lg pb-space-lg pt-0">
       <RouterLink
         :to="`/quintas/${quinta.id}`"
-        class="w-full inline-flex items-center justify-center gap-space-xs py-3 px-space-md rounded-xl bg-surface-container hover:bg-surface-dim text-primary font-label-md text-label-md transition-colors font-bold"
+        class="w-full inline-flex items-center justify-center gap-space-xs py-3 px-space-md rounded-xl bg-surface-container hover:bg-surface-dim active:scale-[0.98] text-primary font-label-md text-label-md transition-all font-bold cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
         <span class="material-symbols-outlined text-[18px]">info</span>
         Ver Detalles
