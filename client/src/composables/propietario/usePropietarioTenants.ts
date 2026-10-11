@@ -43,7 +43,7 @@ export function usePropietarioTenants(selectedOffer?: Ref<PropietarioOferta | un
   /**
    * Califica al inquilino y persiste la valoración en la BD
    */
-  const setTenantRating = async (tenant: Tenant, rating: 'up' | 'down') => {
+  const setTenantRating = async (tenant: Tenant, rating: 'up' | 'down' | 'follow_up' | 'rejected') => {
     const newRating = tenant.ownerRating === rating ? 'none' : rating
     tenant.ownerRating = newRating
 

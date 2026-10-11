@@ -371,13 +371,26 @@ class ClientPropertyController extends Controller
 
             // Historial global del inquilino a través de sus reservas pasadas
             $pastUserBookings = $userRatings->get($b->user_id, collect());
-            $upCount = $pastUserBookings->where('owner_rating', 'up')->count();
+
+            // Jerarquía de reputación histórica del inquilino (del más severo al más favorable):
+            // 1. rejected (No Aceptar / Bloqueado)
+            // 2. down (No Conforme)
+            // 3. follow_up (En Observación / Seguimiento)
+            // 4. up (Buen Inquilino)
+            // 5. none (Sin historial)
+            $rejectedCount = $pastUserBookings->where('owner_rating', 'rejected')->count();
             $downCount = $pastUserBookings->where('owner_rating', 'down')->count();
+            $followUpCount = $pastUserBookings->where('owner_rating', 'follow_up')->count();
+            $upCount = $pastUserBookings->where('owner_rating', 'up')->count();
             $pastObservations = $pastUserBookings->pluck('owner_observation')->filter()->values()->all();
 
             $reputation = 'none';
-            if ($downCount > 0) {
+            if ($rejectedCount > 0) {
+                $reputation = 'rejected';
+            } elseif ($downCount > 0) {
                 $reputation = 'down';
+            } elseif ($followUpCount > 0) {
+                $reputation = 'follow_up';
             } elseif ($upCount > 0) {
                 $reputation = 'up';
             }
@@ -411,7 +424,9 @@ class ClientPropertyController extends Controller
                 'historicalObservations' => $pastObservations,
                 'reputationStats' => [
                     'upCount' => $upCount,
+                    'followUpCount' => $followUpCount,
                     'downCount' => $downCount,
+                    'rejectedCount' => $rejectedCount,
                     'totalPast' => $pastUserBookings->count(),
                 ],
             ];
@@ -432,12 +447,12 @@ class ClientPropertyController extends Controller
     }
 
     /**
-     * Rate a tenant booking (thumbs up, down, or reset).
+     * Rate a tenant booking (up, follow_up, down, rejected, none).
      */
     public function rateBooking(int $bookingId, Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'rating' => 'required|string|in:up,down,none',
+            'rating' => 'required|string|in:up,follow_up,down,rejected,none',
         ]);
 
         $booking = Booking::whereHas('property', function ($q) use ($request) {

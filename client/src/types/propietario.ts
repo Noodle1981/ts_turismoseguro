@@ -19,7 +19,7 @@ export interface Tenant {
   insuranceBadge: string
   history: string
   status: string
-  ownerRating?: 'up' | 'down' | 'none'
+  ownerRating?: 'up' | 'down' | 'follow_up' | 'rejected' | 'none'
   ownerObservation?: string | null
   historicalObservations?: string[]
   reputationStats?: {

@@ -10,7 +10,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void
-  (e: 'rate', payload: { tenant: Tenant; rating: 'up' | 'down' }): void
+  (e: 'rate', payload: { tenant: Tenant; rating: 'up' | 'down' | 'follow_up' | 'rejected' }): void
   (e: 'saveObservation', payload: { tenant: Tenant; observation: string }): void
 }>()
 
@@ -181,6 +181,20 @@ const close = () => {
           <button
             v-if="isPast"
             type="button"
+            @click="emit('rate', { tenant: selectedTenant, rating: 'follow_up' })"
+            class="px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1 transition-all cursor-pointer"
+            :class="
+              selectedTenant.ownerRating === 'follow_up'
+                ? 'bg-amber-500 text-white shadow-xs'
+                : 'bg-surface-container text-on-surface-variant hover:text-amber-600 hover:bg-surface-container-high'
+            "
+          >
+            <span class="material-symbols-outlined text-[16px]">visibility</span>
+            <span>Observar</span>
+          </button>
+          <button
+            v-if="isPast"
+            type="button"
             @click="emit('rate', { tenant: selectedTenant, rating: 'down' })"
             class="px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1 transition-all cursor-pointer"
             :class="
@@ -191,6 +205,20 @@ const close = () => {
           >
             <span class="material-symbols-outlined text-[16px]">thumb_down</span>
             <span>No Conforme</span>
+          </button>
+          <button
+            v-if="isPast"
+            type="button"
+            @click="emit('rate', { tenant: selectedTenant, rating: 'rejected' })"
+            class="px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1 transition-all cursor-pointer"
+            :class="
+              selectedTenant.ownerRating === 'rejected'
+                ? 'bg-red-700 text-white shadow-xs'
+                : 'bg-surface-container text-on-surface-variant hover:text-red-700 hover:bg-surface-container-high'
+            "
+          >
+            <span class="material-symbols-outlined text-[16px]">block</span>
+            <span>No Aceptar</span>
           </button>
 
           <!-- Si es Próximo Alquiler, solo muestra el badge de reputación histórica -->
@@ -203,11 +231,25 @@ const close = () => {
               <span>Buen Inquilino</span>
             </div>
             <div
+              v-else-if="selectedTenant.ownerRating === 'follow_up'"
+              class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 font-label-sm text-label-sm font-bold border border-amber-500/30"
+            >
+              <span class="material-symbols-outlined text-[15px]">visibility</span>
+              <span>En Observación / Seguimiento</span>
+            </div>
+            <div
               v-else-if="selectedTenant.ownerRating === 'down'"
               class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-error-container/40 text-error font-label-sm text-label-sm font-bold border border-error/20"
             >
               <span class="material-symbols-outlined text-[15px]">thumb_down</span>
-              <span>Observado / No Conforme</span>
+              <span>No Conforme</span>
+            </div>
+            <div
+              v-else-if="selectedTenant.ownerRating === 'rejected'"
+              class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-950/20 text-red-600 dark:text-red-400 font-label-sm text-label-sm font-bold border border-red-600/40"
+            >
+              <span class="material-symbols-outlined text-[15px]">block</span>
+              <span>No Aceptar / Restringido</span>
             </div>
             <div
               v-else

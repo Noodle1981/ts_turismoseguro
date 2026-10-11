@@ -10,7 +10,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'update:tenantTab', tab: 'proximos' | 'pasados'): void
   (e: 'openDetail', tenant: Tenant): void
-  (e: 'rate', payload: { tenant: Tenant; rating: 'up' | 'down' }): void
+  (e: 'rate', payload: { tenant: Tenant; rating: 'up' | 'down' | 'follow_up' | 'rejected' }): void
 }>()
 
 // Filtro de modalidad
@@ -206,12 +206,30 @@ const getModalityMeta = (modality?: string) => {
                   </div>
 
                   <div
+                    v-else-if="tenant.ownerRating === 'follow_up'"
+                    class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 font-label-sm text-label-sm font-bold border border-amber-500/30"
+                    title="Inquilino bajo observación / Seguimiento preventivo"
+                  >
+                    <span class="material-symbols-outlined text-[15px]">visibility</span>
+                    <span>En Observación</span>
+                  </div>
+
+                  <div
                     v-else-if="tenant.ownerRating === 'down'"
                     class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-error-container/40 text-error font-label-sm text-label-sm font-bold border border-error/20"
-                    title="Inquilino observado / No conforme en alquileres previos"
+                    title="Inquilino no conforme en turnos anteriores"
                   >
                     <span class="material-symbols-outlined text-[15px]">thumb_down</span>
                     <span>No Conforme</span>
+                  </div>
+
+                  <div
+                    v-else-if="tenant.ownerRating === 'rejected'"
+                    class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-950/20 text-red-600 dark:text-red-400 font-label-sm text-label-sm font-bold border border-red-600/40"
+                    title="Inquilino con restricción: No Aceptar / Bloqueado por anfitriones"
+                  >
+                    <span class="material-symbols-outlined text-[15px]">block</span>
+                    <span>No Aceptar</span>
                   </div>
 
                   <div
@@ -340,7 +358,7 @@ const getModalityMeta = (modality?: string) => {
                 </div>
               </td>
 
-              <!-- Columna Criterio Anfitrión -->
+              <!-- Columna Criterio Anfitrión (Alquileres Pasados) -->
               <td class="py-space-md px-space-md whitespace-nowrap">
                 <div class="flex items-center gap-2">
                   <div
@@ -353,21 +371,39 @@ const getModalityMeta = (modality?: string) => {
                   </div>
 
                   <div
+                    v-else-if="tenant.ownerRating === 'follow_up'"
+                    class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 font-label-sm text-label-sm font-bold border border-amber-500/30"
+                    title="Inquilino en seguimiento / observación"
+                  >
+                    <span class="material-symbols-outlined text-[15px]">visibility</span>
+                    <span>Observar</span>
+                  </div>
+
+                  <div
                     v-else-if="tenant.ownerRating === 'down'"
                     class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-error-container/40 text-error font-label-sm text-label-sm font-bold border border-error/20"
-                    title="Inquilino no conforme / Observado"
+                    title="Inquilino no conforme"
                   >
                     <span class="material-symbols-outlined text-[15px]">thumb_down</span>
                     <span>No Conforme</span>
                   </div>
 
                   <div
+                    v-else-if="tenant.ownerRating === 'rejected'"
+                    class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-950/20 text-red-600 dark:text-red-400 font-label-sm text-label-sm font-bold border border-red-600/40"
+                    title="Restricción estricta: No Aceptar"
+                  >
+                    <span class="material-symbols-outlined text-[15px]">block</span>
+                    <span>No Aceptar</span>
+                  </div>
+
+                  <div
                     v-else
                     class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-bold border border-surface-container-high"
-                    title="Sin historial previo / Inquilino nuevo"
+                    title="Sin calificar aún para este turno"
                   >
                     <span class="material-symbols-outlined text-[15px] text-outline">horizontal_rule</span>
-                    <span>Sin historial</span>
+                    <span>Sin calificar</span>
                   </div>
 
                   <div
@@ -382,10 +418,24 @@ const getModalityMeta = (modality?: string) => {
                           ? 'bg-secondary text-on-secondary shadow-2xs'
                           : 'text-on-surface-variant hover:text-secondary hover:bg-surface-container-high'
                       "
-                      title="Marcar como Buen Inquilino (Pulgar arriba)"
-                      aria-label="Marcar como Buen Inquilino"
+                      title="Buen Inquilino (Pulgar arriba)"
+                      aria-label="Buen Inquilino"
                     >
                       <span class="material-symbols-outlined text-[14px]">thumb_up</span>
+                    </button>
+                    <button
+                      type="button"
+                      @click="emit('rate', { tenant, rating: 'follow_up' })"
+                      class="w-6 h-6 rounded flex items-center justify-center transition-colors cursor-pointer"
+                      :class="
+                        tenant.ownerRating === 'follow_up'
+                          ? 'bg-amber-500 text-white shadow-2xs'
+                          : 'text-on-surface-variant hover:text-amber-600 hover:bg-surface-container-high'
+                      "
+                      title="En Observación / Seguimiento"
+                      aria-label="En Observación"
+                    >
+                      <span class="material-symbols-outlined text-[14px]">visibility</span>
                     </button>
                     <button
                       type="button"
@@ -396,10 +446,24 @@ const getModalityMeta = (modality?: string) => {
                           ? 'bg-error text-on-error shadow-2xs'
                           : 'text-on-surface-variant hover:text-error hover:bg-surface-container-high'
                       "
-                      title="Marcar como No Conforme (Pulgar abajo)"
-                      aria-label="Marcar como No Conforme"
+                      title="No Conforme (Pulgar abajo)"
+                      aria-label="No Conforme"
                     >
                       <span class="material-symbols-outlined text-[14px]">thumb_down</span>
+                    </button>
+                    <button
+                      type="button"
+                      @click="emit('rate', { tenant, rating: 'rejected' })"
+                      class="w-6 h-6 rounded flex items-center justify-center transition-colors cursor-pointer"
+                      :class="
+                        tenant.ownerRating === 'rejected'
+                          ? 'bg-red-700 text-white shadow-2xs'
+                          : 'text-on-surface-variant hover:text-red-700 hover:bg-surface-container-high'
+                      "
+                      title="No Aceptar / Bloquear estadía"
+                      aria-label="No Aceptar"
+                    >
+                      <span class="material-symbols-outlined text-[14px]">block</span>
                     </button>
                   </div>
                 </div>
