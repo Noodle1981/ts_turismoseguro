@@ -18,15 +18,21 @@ class CatalogController extends Controller
 {
     /**
      * List all departments with count of active properties.
+     * Si se solicita with_offers=true o for_filter=true, solo retorna departamentos con ofertas activas.
      */
-    public function departments(): AnonymousResourceCollection
+    public function departments(Request $request): AnonymousResourceCollection
     {
-        $departments = Department::where('is_active', true)
+        $query = Department::where('is_active', true)
             ->withCount(['properties' => function ($q) {
                 $q->published();
             }])
-            ->orderBy('name')
-            ->get();
+            ->orderBy('name');
+
+        if ($request->boolean('with_offers') || $request->boolean('for_filter')) {
+            $query->has('properties');
+        }
+
+        $departments = $query->get();
 
         return DepartmentResource::collection($departments);
     }

@@ -168,37 +168,8 @@ const handleLogout = async () => {
 
         <!-- 2. CASO PÚBLICO: PROPIETARIO O INQUILINO AUTENTICADO O VISITANTE ANÓNIMO -->
         <template v-else>
-          <!-- Navigation Links según tipo de usuario -->
-          <!-- A) SI ES PROPIETARIO AUTENTICADO: Navegación del Panel Interno -->
-          <nav v-if="isAuthenticated && currentRole === 'client'" class="hidden lg:flex items-center gap-space-md">
-            <RouterLink
-              to="/propietario/panel#mis-ofertas"
-              class="px-space-sm py-2 transition-colors font-label-lg text-label-lg text-on-surface-variant hover:text-primary font-semibold flex items-center gap-1.5"
-            >
-              <span class="material-symbols-outlined text-[18px] text-primary">villa</span>
-              <span>Mis Ofertas</span>
-            </RouterLink>
-
-            <button
-              type="button"
-              class="px-space-sm py-2 transition-colors font-label-lg text-label-lg text-on-surface-variant hover:text-primary font-semibold flex items-center gap-1.5 cursor-pointer"
-              @click="router.push('/propietario/panel?action=nueva-oferta')"
-            >
-              <span class="material-symbols-outlined text-[18px] text-secondary">add_business</span>
-              <span>Agregar Oferta</span>
-            </button>
-
-            <RouterLink
-              to="/propietario/panel#pagos"
-              class="px-space-sm py-2 transition-colors font-label-lg text-label-lg text-on-surface-variant hover:text-primary font-semibold flex items-center gap-1.5"
-            >
-              <span class="material-symbols-outlined text-[18px] text-secondary">payments</span>
-              <span>Pagos</span>
-            </RouterLink>
-          </nav>
-
-          <!-- B) VISITANTE ANÓNIMO O INQUILINO: Catálogo Público -->
-          <nav v-else class="hidden lg:flex items-center gap-space-md">
+          <!-- Navigation Links Públicos del Catálogo (Siempre visibles para explorar) -->
+          <nav class="hidden lg:flex items-center gap-space-md">
             <RouterLink
               to="/explorar"
               class="px-space-sm py-2 transition-colors font-label-lg text-label-lg text-on-surface-variant hover:text-primary font-semibold"
@@ -213,28 +184,34 @@ const handleLogout = async () => {
             >
               Eventos &amp; Experiencias
             </RouterLink>
-            <a
-              href="#protocolo"
-              class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary px-space-sm py-2 transition-colors font-semibold"
-            >
-              Cómo Validamos
-            </a>
           </nav>
 
           <!-- Zona de Usuario a la Derecha -->
           <div class="flex items-center gap-space-sm">
             <!-- Si el Propietario o Inquilino está autenticado -->
             <div v-if="isAuthenticated" class="flex items-center gap-2 sm:gap-3">
+              <!-- Botón 'Ver como Propietario' cuando navega el catálogo con sesión de anfitrión activa -->
+              <RouterLink
+                v-if="currentRole === 'client'"
+                to="/propietario/panel"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-primary text-on-primary hover:bg-primary-container font-label-sm text-label-sm font-bold shadow-xs transition-all cursor-pointer"
+                title="Regresar a mi panel de gestión de quintas y tarifas"
+              >
+                <span class="material-symbols-outlined text-[17px] text-secondary">tune</span>
+                <span>Ver como Propietario</span>
+              </RouterLink>
+
+              <!-- Chip de Identidad -->
               <RouterLink
                 :to="currentRole === 'client' ? '/propietario/panel' : '/inquilino/panel'"
-                class="flex items-center gap-2.5 p-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container border border-surface-container max-w-[220px] transition-colors group cursor-pointer"
+                class="flex items-center gap-2 p-1 sm:px-2.5 sm:py-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container border border-surface-container max-w-[200px] transition-colors group cursor-pointer"
                 :title="currentRole === 'client' ? 'Ir al Panel de Propietario' : 'Ir a Mis Alquileres'"
               >
                 <div
-                  class="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                  class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
                   :class="currentRole === 'client' ? 'bg-secondary text-on-secondary' : 'bg-primary text-on-primary'"
                 >
-                  <span class="material-symbols-outlined text-[18px]">
+                  <span class="material-symbols-outlined text-[16px]">
                     {{ currentRole === 'client' ? 'villa' : 'person' }}
                   </span>
                 </div>
@@ -242,8 +219,8 @@ const handleLogout = async () => {
                   <span class="font-label-sm text-label-sm text-primary font-bold truncate group-hover:underline">
                     {{ user?.name ?? 'Mi Cuenta' }}
                   </span>
-                  <span class="text-[11px] font-semibold" :class="currentRole === 'client' ? 'text-secondary' : 'text-on-surface-variant'">
-                    {{ currentRole === 'client' ? 'Panel Propietario' : 'Mis Alquileres' }}
+                  <span class="text-[10px] font-semibold" :class="currentRole === 'client' ? 'text-secondary' : 'text-on-surface-variant'">
+                    {{ currentRole === 'client' ? 'Propietario' : 'Inquilino' }}
                   </span>
                 </div>
               </RouterLink>
@@ -260,12 +237,6 @@ const handleLogout = async () => {
 
             <!-- Si NO está autenticado (Visitante) -->
             <template v-else>
-              <a
-                href="#anfitriones"
-                class="hidden md:inline-flex items-center justify-center font-label-md text-label-md px-space-md py-2.5 rounded-lg bg-primary text-on-primary hover:bg-primary-container transition-colors font-bold shadow-xs"
-              >
-                Publicar Oferta
-              </a>
               <RouterLink
                 to="/login"
                 class="inline-flex items-center gap-1.5 font-label-md text-label-md px-space-md py-2.5 rounded-lg bg-surface-container hover:bg-surface-dim text-on-surface transition-colors shadow-xs font-bold"

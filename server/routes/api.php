@@ -28,6 +28,18 @@ Route::prefix('v1')->group(function () {
 
     // Catálogo Público (Turistas y Habitantes Locales)
     Route::get('/departments', [CatalogController::class, 'departments'])->name('departments.index');
+    Route::get('/departments/{department}/localities', function (string $department) {
+        $dept = \App\Models\Department::where('slug', $department)
+            ->orWhere('id', is_numeric($department) ? (int)$department : null)
+            ->firstOrFail();
+
+        $localities = $dept->localities()
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get(['id', 'department_id', 'name', 'slug', 'latitude', 'longitude', 'postal_code']);
+
+        return response()->json(['data' => $localities]);
+    })->name('departments.localities');
     Route::get('/properties', [CatalogController::class, 'properties'])->name('properties.index');
     Route::get('/properties/{slug}', [CatalogController::class, 'propertyDetail'])->name('properties.show');
     Route::get('/properties/{id}/availability', [CatalogController::class, 'propertyAvailability'])->name('properties.availability');

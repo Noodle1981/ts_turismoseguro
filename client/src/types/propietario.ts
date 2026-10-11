@@ -65,6 +65,9 @@ export interface PropietarioOferta {
   tariffs: PropietarioTariffs
   schedule: PropietarioSchedule
   isListingVisible: boolean
+  pauseMode?: 'indefinite' | 'vacation'
+  pauseStartDate?: string
+  pauseEndDate?: string
   metrics: PropietarioMetrics
   amenities: AmenityBadge[]
   tenants: Tenant[]

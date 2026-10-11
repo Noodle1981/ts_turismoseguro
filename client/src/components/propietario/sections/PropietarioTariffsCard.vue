@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PropietarioOferta } from '../../../types/propietario'
 
-defineProps<{
+const props = defineProps<{
   selectedOffer: PropietarioOferta
   tariffsTab: 'diurno' | 'pernocte' | 'fiestas'
   tarifaSavedFeedback: boolean
@@ -13,8 +13,20 @@ const emit = defineEmits<{
   (e: 'update:tariffsTab', tab: 'diurno' | 'pernocte' | 'fiestas'): void
   (e: 'saveTarifas'): void
   (e: 'openScheduleModal'): void
+  (e: 'openVacationModal'): void
+  (e: 'toggleListingVisibility'): void
   (e: 'toggleActiveDay', dayId: number): void
 }>()
+
+const handleToggleVisibility = () => {
+  if (props.selectedOffer.isListingVisible) {
+    // Si está activo y quiere pausar, abrimos el modal de vacaciones / pausa
+    emit('openVacationModal')
+  } else {
+    // Si ya está pausado, lo reactiva directamente
+    emit('toggleListingVisibility')
+  }
+}
 </script>
 
 <template>
@@ -22,7 +34,7 @@ const emit = defineEmits<{
     class="lg:col-span-8 bg-surface-container-lowest rounded-xl p-space-md shadow-xs flex flex-col justify-between gap-space-md border border-surface-container"
   >
     <div>
-      <div class="flex items-center justify-between pb-space-xs">
+      <div class="flex items-center justify-between pb-space-xs flex-wrap gap-2">
         <div class="flex items-center gap-space-xs">
           <span class="material-symbols-outlined text-primary text-[22px]">price_change</span>
           <h2 class="font-headline-sm text-headline-sm text-primary font-bold">
@@ -30,22 +42,33 @@ const emit = defineEmits<{
           </h2>
         </div>
 
-        <!-- Switch Estado de Oferta Compacto -->
+        <!-- Switch Estado de Oferta Compacto con apertura de Modal de Vacaciones -->
         <div
-          class="flex items-center gap-space-xs bg-surface-container-low px-space-sm py-1 rounded-lg border border-surface-container"
+          class="flex items-center gap-space-xs bg-surface-container-low px-space-sm py-1 rounded-xl border border-surface-container cursor-pointer select-none"
+          @click="handleToggleVisibility"
         >
           <span class="font-label-sm text-label-sm text-on-surface font-semibold">Buscador:</span>
-          <label class="relative inline-flex items-center cursor-pointer">
-            <input v-model="selectedOffer.isListingVisible" type="checkbox" class="sr-only peer" />
+          <div class="relative inline-flex items-center">
+            <input :checked="selectedOffer.isListingVisible" type="checkbox" class="sr-only peer" readonly />
             <div
-              class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-secondary"
+              class="w-9 h-5 bg-surface-container-highest rounded-full transition-all peer-checked:bg-secondary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all"
+              :class="selectedOffer.isListingVisible ? 'after:translate-x-4 bg-secondary' : ''"
             ></div>
-          </label>
+          </div>
           <span
-            class="font-label-sm text-label-sm font-bold"
-            :class="selectedOffer.isListingVisible ? 'text-secondary' : 'text-outline'"
+            class="font-label-sm text-label-sm font-bold flex items-center gap-1"
+            :class="selectedOffer.isListingVisible ? 'text-secondary' : 'text-amber-800 dark:text-amber-300'"
           >
-            {{ selectedOffer.isListingVisible ? 'Activo' : 'Pausado' }}
+            <span v-if="!selectedOffer.isListingVisible && selectedOffer.pauseMode === 'vacation'" class="material-symbols-outlined text-[13px]">
+              beach_access
+            </span>
+            {{
+              selectedOffer.isListingVisible
+                ? 'Activo'
+                : selectedOffer.pauseMode === 'vacation'
+                ? 'Vacaciones'
+                : 'Pausado'
+            }}
           </span>
         </div>
       </div>
@@ -72,74 +95,94 @@ const emit = defineEmits<{
           </div>
         </div>
 
-        <!-- Features homologadas Compactas -->
+        <!-- Features homologadas y Configuración Diurna Espaciosa -->
         <div class="md:col-span-8 flex flex-col justify-between gap-space-xs">
-          <div class="grid grid-cols-2 gap-space-xs">
+          <!-- Bloque Superior: Aforo y Franja Horaria en 2 columnas proporcionadas -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+            <!-- Columna 1: Aforo Homologado -->
             <div
-              class="p-2 rounded-lg bg-surface-container-low flex items-center gap-2 border border-surface-container"
+              class="p-space-sm rounded-xl bg-surface-container-low flex items-center gap-space-sm border border-surface-container"
             >
               <div
-                class="w-7 h-7 rounded-md bg-surface-container-highest flex items-center justify-center text-primary shrink-0"
+                class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary shrink-0"
               >
-                <span class="material-symbols-outlined text-[16px]">groups</span>
+                <span class="material-symbols-outlined text-[20px]">groups</span>
               </div>
-              <div>
-                <span class="font-label-sm text-label-sm text-on-surface-variant block text-[11px] leading-tight">Aforo Homologado</span>
-                <span class="font-label-md text-label-md text-primary font-bold">Hasta 50 personas</span>
+              <div class="min-w-0">
+                <span class="font-label-sm text-label-sm text-on-surface-variant block uppercase tracking-wider text-[11px] font-bold">
+                  Aforo Homologado
+                </span>
+                <span class="font-headline-sm text-headline-sm text-primary font-extrabold truncate block">
+                  Hasta 50 personas
+                </span>
               </div>
             </div>
 
+            <!-- Columna 2: Franja Horaria Diurna -->
             <div
-              class="p-2 rounded-lg bg-surface-container-low flex flex-col justify-between gap-1 border border-surface-container"
+              class="p-space-sm rounded-xl bg-surface-container-low flex items-center justify-between gap-2 border border-surface-container relative"
             >
-              <!-- Horario de Franja Diurna -->
-              <div class="flex items-center justify-between gap-1">
-                <div class="flex items-center gap-1.5 min-w-0">
-                  <div
-                    class="w-6 h-6 rounded-md bg-surface-container-highest flex items-center justify-center text-tertiary shrink-0"
-                  >
-                    <span class="material-symbols-outlined text-[15px]">schedule</span>
-                  </div>
-                  <div class="truncate">
-                    <span class="font-label-md text-label-md text-primary font-bold whitespace-nowrap block">
-                      {{ selectedOffer.schedule.start }} a {{ selectedOffer.schedule.end }} hs
-                    </span>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  @click="emit('openScheduleModal')"
-                  class="p-1 rounded bg-surface-container-highest hover:bg-surface-container-high text-primary font-label-sm text-label-sm font-bold border border-surface-container flex items-center justify-center cursor-pointer transition-colors"
-                  title="Configurar horarios y días que se ofrece"
+              <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                <div
+                  class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-tertiary shrink-0"
                 >
-                  <span class="material-symbols-outlined text-[14px]">tune</span>
-                </button>
+                  <span class="material-symbols-outlined text-[20px]">schedule</span>
+                </div>
+                <div class="min-w-0 flex-1">
+                  <span class="font-label-sm text-label-sm text-on-surface-variant block uppercase tracking-wider text-[11px] font-bold">
+                    Franja Diurna
+                  </span>
+                  <span class="text-base sm:text-lg text-primary font-extrabold whitespace-nowrap block tracking-tight">
+                    {{ selectedOffer.schedule.start }} a {{ selectedOffer.schedule.end }} hs
+                  </span>
+                </div>
               </div>
 
-              <!-- Selector rápido de días ofrecidos -->
-              <div class="pt-0.5 border-t border-surface-container/60 flex items-center justify-between gap-1">
-                <span class="text-[10px] text-on-surface-variant font-medium">Días:</span>
-                <div class="flex items-center gap-0.5">
-                  <button
-                    v-for="day in weekDayDefs"
-                    :key="day.id"
-                    type="button"
-                    @click="emit('toggleActiveDay', day.id)"
-                    class="w-4.5 h-4.5 rounded text-[9px] font-bold flex items-center justify-center transition-all cursor-pointer"
-                    :class="
-                      selectedOffer.schedule.activeDays.includes(day.id)
-                        ? 'bg-primary text-on-primary shadow-2xs'
-                        : 'bg-amber-100 text-amber-900 border border-amber-300 dark:bg-amber-950/60 dark:text-amber-200 line-through opacity-75'
-                    "
-                    :title="
-                      day.fullName +
-                      (selectedOffer.schedule.activeDays.includes(day.id) ? ' (Habilitado)' : ' (Bloqueado)')
-                    "
-                  >
-                    {{ day.letter }}
-                  </button>
-                </div>
-              </div>
+              <!-- Botón Configurar Horario Compacto -->
+              <button
+                type="button"
+                @click="emit('openScheduleModal')"
+                class="h-8 px-2 rounded-lg bg-surface-container-highest hover:bg-surface-container-high text-primary font-label-sm text-label-sm font-bold border border-surface-container flex items-center gap-1 cursor-pointer transition-colors shrink-0"
+                title="Configurar horarios y días que se ofrece"
+                aria-label="Editar franja diurna"
+              >
+                <span class="material-symbols-outlined text-[16px]">tune</span>
+                <span class="text-xs">Editar</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bloque Medio: Días Ofrecidos con Distribución Espaciosa -->
+          <div
+            class="p-space-sm rounded-xl bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm border border-surface-container"
+          >
+            <div class="flex items-center gap-1.5 shrink-0">
+              <span class="material-symbols-outlined text-secondary text-[18px]">calendar_today</span>
+              <span class="font-label-sm text-label-sm text-on-surface font-bold">Días habilitados:</span>
+            </div>
+
+            <!-- Botones de Días con espaciado amplio y etiquetas legibles -->
+            <div class="flex items-center gap-1 sm:gap-1.5 flex-wrap">
+              <button
+                v-for="day in weekDayDefs"
+                :key="day.id"
+                type="button"
+                @click="emit('toggleActiveDay', day.id)"
+                class="h-7 min-w-7 px-1.5 rounded-md text-xs font-bold flex items-center justify-center transition-all cursor-pointer shadow-2xs"
+                :class="
+                  selectedOffer.schedule.activeDays.includes(day.id)
+                    ? 'bg-primary text-on-primary ring-1 ring-primary'
+                    : 'bg-amber-100/80 text-amber-950 border border-amber-300 dark:bg-amber-950/60 dark:text-amber-200 line-through opacity-70 hover:opacity-100'
+                "
+                :title="
+                  day.fullName +
+                  (selectedOffer.schedule.activeDays.includes(day.id)
+                    ? ' (Habilitado para reservas)'
+                    : ' (Bloqueado/No se ofrece)')
+                "
+              >
+                {{ day.letter }}
+              </button>
             </div>
           </div>
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, defineAsyncComponent } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuth } from '../composables/useAuth'
 
 // Composables de Dominio
 import { usePropietarioOffers } from '../composables/propietario/usePropietarioOffers'
@@ -34,13 +35,59 @@ const ModalScheduleConfig = defineAsyncComponent(
 const ModalSpecialEvent = defineAsyncComponent(
   () => import('../components/propietario/modals/ModalSpecialEvent.vue')
 )
+const ModalVacationPause = defineAsyncComponent(
+  () => import('../components/propietario/modals/ModalVacationPause.vue')
+)
 import ModalConfirmDialog from '../components/propietario/modals/ModalConfirmDialog.vue'
 import { useConfirmDialog } from '../composables/propietario/useConfirmDialog'
 
+const router = useRouter()
 const route = useRoute()
+const { isAuthenticated, userRole } = useAuth()
 
 // Diálogo visual unificado de alertas y confirmaciones
-const { dialogState, handleConfirm, handleCancel } = useConfirmDialog()
+const { dialogState, showAlert, handleConfirm, handleCancel } = useConfirmDialog()
+
+// Estado del Modal de Vacaciones / Pausa
+const showVacationModal = ref(false)
+
+const handleConfirmPause = (payload: { mode: 'indefinite' | 'vacation'; startDate?: string; endDate?: string }) => {
+  if (selectedOffer.value) {
+    selectedOffer.value.isListingVisible = false
+    selectedOffer.value.pauseMode = payload.mode
+    selectedOffer.value.pauseStartDate = payload.startDate
+    selectedOffer.value.pauseEndDate = payload.endDate
+
+    if (payload.mode === 'vacation') {
+      showAlert({
+        title: 'Modo Vacaciones Activado',
+        message: `El predio estará en receso desde el ${payload.startDate} hasta el ${payload.endDate}. Se reactivará automáticamente luego de esa fecha.`,
+        icon: 'beach_access',
+      })
+    } else {
+      showAlert({
+        title: 'Publicación Pausada',
+        message: 'El predio ha sido ocultado temporalmente del buscador público. Puede reactivarlo cuando desee.',
+        icon: 'visibility_off',
+      })
+    }
+  }
+}
+
+const handleReactivateOffer = () => {
+  if (selectedOffer.value) {
+    selectedOffer.value.isListingVisible = true
+    selectedOffer.value.pauseMode = undefined
+    selectedOffer.value.pauseStartDate = undefined
+    selectedOffer.value.pauseEndDate = undefined
+
+    showAlert({
+      title: 'Predio Reactivado',
+      message: '¡El predio vuelve a ser visible en el buscador público para recibir reservas!',
+      icon: 'check_circle',
+    })
+  }
+}
 
 // Período activo de visualización (Octubre 2026 por defecto)
 const selectedYear = ref<number>(2026)
@@ -136,6 +183,7 @@ const handleGlobalKeydown = (e: KeyboardEvent) => {
     showAddOfferModal.value = false
     showScheduleModal.value = false
     showSpecialEventModal.value = false
+    showVacationModal.value = false
     isMobileSidebarOpen.value = false
   }
 }
@@ -161,6 +209,11 @@ watch(activeNav, (newNav) => {
 })
 
 onMounted(() => {
+  if (!isAuthenticated.value || (userRole.value !== 'client' && userRole.value !== 'super_admin')) {
+    router.push({ path: '/login', query: { role: 'owner', redirect: '/propietario/panel' } })
+    return
+  }
+
   window.addEventListener('keydown', handleGlobalKeydown)
   window.addEventListener('hashchange', syncNavWithHash)
 
@@ -211,7 +264,9 @@ watch(
         v-model:selected-year="selectedYear"
         :available-months="availableMonths"
         :available-years="availableYears"
+        :user-name="user?.name"
         @toggle-mobile-sidebar="isMobileSidebarOpen = !isMobileSidebarOpen"
+        @logout="handleLogout"
       />
 
 
@@ -239,6 +294,8 @@ watch(
                   :calculate-hours-duration="calculateHoursDuration"
                   @save-tarifas="handleSaveTarifas"
                   @open-schedule-modal="showScheduleModal = true"
+                  @open-vacation-modal="showVacationModal = true"
+                  @toggle-listing-visibility="handleReactivateOffer"
                   @toggle-active-day="toggleActiveDay"
                 />
 
@@ -320,6 +377,13 @@ watch(
       :selected-special-event-def="selectedSpecialEventDef"
       :special-event-form="specialEventForm"
       @apply="applySpecialEventToCalendar"
+    />
+
+    <!-- Modal para Pausar en Buscador / Modo Vacaciones -->
+    <ModalVacationPause
+      v-model="showVacationModal"
+      :offer-title="selectedOffer.title"
+      @confirm-pause="handleConfirmPause"
     />
 
     <!-- Diálogo de Confirmación y Alerta del Sistema (Visual Stitch Canónico) -->

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 
@@ -18,6 +18,22 @@ const form = ref({
 const isSubmitting = ref(false)
 const errorMessage = ref('')
 const successMessage = ref('')
+
+const isConflictingClientSession = computed(() => {
+  return authStore.isAuthenticated && (authStore.userRole === 'client' || authStore.userRole === 'rent')
+})
+
+const isAlreadyStaffSession = computed(() => {
+  return authStore.isAuthenticated && ['validator', 'supervisor', 'admin', 'super_admin'].includes(authStore.userRole ?? '')
+})
+
+const handleSwitchAccount = async () => {
+  await authStore.logout()
+  successMessage.value = 'Sesión anterior cerrada correctamente. Puede iniciar sesión con sus credenciales de Staff.'
+  setTimeout(() => {
+    successMessage.value = ''
+  }, 3500)
+}
 
 // Accesos rápidos de desarrollo / prueba
 const setDemoCredentials = (role: 'validator' | 'supervisor' | 'admin' | 'super_admin') => {
@@ -40,6 +56,11 @@ const handleLogin = async () => {
   successMessage.value = ''
 
   try {
+    // Si había una sesión activa (ej. propietario o cuenta previa), cerrarla limpiamente
+    if (authStore.isAuthenticated) {
+      await authStore.logout()
+    }
+
     const res = await authStore.login({
       email: form.value.email,
       password: form.value.password,
@@ -95,6 +116,82 @@ const handleLogin = async () => {
         <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
           Uso exclusivo para validadores matriculados, supervisores y administración central/regional.
         </p>
+      </div>
+
+      <!-- Banner de Advertencia si hay Sesión Activa de Propietario / Inquilino -->
+      <div
+        v-if="isConflictingClientSession"
+        class="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 sm:p-5 flex flex-col gap-3 text-left shadow-sm"
+      >
+        <div class="flex items-start gap-3">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
+            <span class="material-symbols-outlined text-[22px]">warning</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h2 class="font-label-lg text-label-lg font-bold text-amber-800 dark:text-amber-300">
+              Sesión activa de {{ authStore.userRole === 'client' ? 'Propietario' : 'Inquilino' }} detectada
+            </h2>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+              Estás conectado como <strong class="text-on-surface">{{ authStore.user?.name }}</strong> ({{ authStore.user?.email }}).
+              Para ingresar al Portal Staff de Inspección y Auditoría, debes cerrar primero tu sesión de usuario público para evitar solapamientos de permisos.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-amber-500/20">
+          <button
+            type="button"
+            class="px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-label-sm text-label-sm font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
+            @click="handleSwitchAccount"
+          >
+            <span class="material-symbols-outlined text-[16px]">logout</span>
+            <span>Cerrar sesión de {{ authStore.userRole === 'client' ? 'Propietario' : 'Inquilino' }} y continuar aquí</span>
+          </button>
+          <RouterLink
+            :to="authStore.userRole === 'client' ? '/propietario/panel' : '/inquilino/panel'"
+            class="px-3 py-2 rounded-xl bg-surface-container hover:bg-surface-dim text-on-surface font-label-sm text-label-sm font-semibold transition-all cursor-pointer"
+          >
+            Volver a mi panel
+          </RouterLink>
+        </div>
+      </div>
+
+      <!-- Banner si ya tiene sesión de Staff activa -->
+      <div
+        v-else-if="isAlreadyStaffSession"
+        class="bg-secondary-fixed/30 border border-secondary/30 rounded-2xl p-4 sm:p-5 flex flex-col gap-3 text-left shadow-sm"
+      >
+        <div class="flex items-start gap-3">
+          <div class="w-9 h-9 rounded-xl bg-secondary/20 text-secondary flex items-center justify-center shrink-0 mt-0.5">
+            <span class="material-symbols-outlined text-[22px]">badge</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h2 class="font-label-lg text-label-lg font-bold text-primary">
+              Sesión activa como personal Staff
+            </h2>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+              Ya te encuentras autenticado como <strong class="text-primary">{{ authStore.user?.name }}</strong> ({{ authStore.userRole }}).
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-secondary/20">
+          <RouterLink
+            to="/validador/bandeja"
+            class="px-3.5 py-2 rounded-xl bg-primary text-on-primary hover:bg-primary-container font-label-sm text-label-sm font-bold transition-all flex items-center gap-1.5 shadow-xs"
+          >
+            <span class="material-symbols-outlined text-[16px]">inbox</span>
+            <span>Ir a Bandeja Operativa</span>
+          </RouterLink>
+          <button
+            type="button"
+            class="px-3 py-2 rounded-xl bg-surface-container hover:bg-surface-dim text-on-surface font-label-sm text-label-sm font-semibold transition-all cursor-pointer flex items-center gap-1"
+            @click="handleSwitchAccount"
+          >
+            <span class="material-symbols-outlined text-[16px]">logout</span>
+            <span>Cerrar sesión actual</span>
+          </button>
+        </div>
       </div>
 
       <!-- Selector de Rol de Staff -->

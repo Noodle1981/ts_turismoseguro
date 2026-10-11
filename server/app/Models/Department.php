@@ -32,6 +32,11 @@ class Department extends Model
         return $this->hasMany(Property::class);
     }
 
+    public function localities(): HasMany
+    {
+        return $this->hasMany(Locality::class);
+    }
+
     public function experiences(): HasMany
     {
         return $this->hasMany(Experience::class);

@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
 import { useAuth } from '../composables/useAuth'
 
-const { user } = useAuth()
+const router = useRouter()
+const { user, isAuthenticated, userRole } = useAuth()
+
+onMounted(() => {
+  if (!isAuthenticated.value || (userRole.value !== 'rent' && userRole.value !== 'super_admin')) {
+    router.push({ path: '/login', query: { role: 'renter', redirect: '/inquilino/panel' } })
+  }
+})
 
 // Tab de reservas: Próximas vs Historial
 const activeTab = ref<'proximas' | 'historial'>('proximas')

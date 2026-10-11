@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import type { PropietarioOferta } from '../../../types/propietario'
 
 defineProps<{
@@ -7,12 +8,14 @@ defineProps<{
   selectedYear: number
   availableMonths: Array<{ value: number; label: string }>
   availableYears: number[]
+  userName?: string
 }>()
 
 const emit = defineEmits<{
   (e: 'update:selectedMonth', value: number): void
   (e: 'update:selectedYear', value: number): void
   (e: 'toggleMobileSidebar'): void
+  (e: 'logout'): void
 }>()
 </script>
 
@@ -62,18 +65,36 @@ const emit = defineEmits<{
         </select>
       </div>
 
-      <button
-        type="button"
-        class="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-all cursor-pointer relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-        title="Notificaciones"
-        aria-label="Notificaciones"
+      <!-- Botón Ver como Inquilino (lleva a la vista principal /) -->
+      <RouterLink
+        to="/"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container-high text-primary font-label-sm text-label-sm font-bold border border-surface-container transition-all shadow-2xs cursor-pointer"
+        title="Explorar la plataforma con la vista del inquilino"
       >
-        <span class="material-symbols-outlined text-[20px]" aria-hidden="true">notifications</span>
-        <span class="w-2 h-2 rounded-full bg-secondary absolute top-2 right-2"></span>
-      </button>
+        <span class="material-symbols-outlined text-[16px] text-secondary">visibility</span>
+        <span class="hidden sm:inline">Ver como Inquilino</span>
+      </RouterLink>
 
-      <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary">
-        <span class="material-symbols-outlined text-[18px]" aria-hidden="true">person</span>
+      <!-- Usuario y Botón Cerrar Sesión -->
+      <div class="flex items-center gap-1.5 pl-1">
+        <div class="flex items-center gap-2 p-1 sm:px-2.5 sm:py-1 rounded-xl bg-surface-container-low border border-surface-container">
+          <div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-on-primary shrink-0">
+            <span class="text-xs font-bold">{{ userName ? userName.split(' ').map((n: string) => n[0]).slice(0, 2).join('') : 'PR' }}</span>
+          </div>
+          <span class="font-label-sm text-label-sm text-primary font-bold hidden md:inline truncate max-w-[120px]">
+            {{ userName ? userName.split(' ')[0] : 'Propietario' }}
+          </span>
+        </div>
+
+        <button
+          type="button"
+          class="w-9 h-9 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-error hover:bg-surface-container border border-surface-container transition-colors cursor-pointer"
+          title="Cerrar sesión de propietario"
+          aria-label="Cerrar sesión de propietario"
+          @click="emit('logout')"
+        >
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+        </button>
       </div>
     </div>
   </header>

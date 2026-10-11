@@ -41,29 +41,29 @@ const emit = defineEmits<{
         </p>
       </div>
 
-      <!-- Acciones rápidas del calendario -->
-      <div class="flex items-center gap-space-sm flex-wrap">
+      <!-- Acciones rápidas del calendario (Alineadas en una fila equilibrada) -->
+      <div class="flex items-center gap-space-xs sm:gap-space-sm flex-wrap w-full lg:w-auto justify-start lg:justify-end">
         <!-- Navegación Universal de Mes y Año con Flechas -->
         <div
-          class="flex items-center gap-1 bg-surface-container-low px-2 py-1 rounded-lg border border-surface-container"
+          class="flex items-center gap-1 bg-surface-container-low px-2 py-1 rounded-xl border border-surface-container shadow-2xs"
         >
           <button
             type="button"
             @click="emit('prevMonth')"
-            class="w-7 h-7 rounded flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors cursor-pointer"
+            class="w-7 h-7 rounded-lg flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors cursor-pointer"
             title="Mes anterior"
             aria-label="Mes anterior"
           >
             <span class="material-symbols-outlined text-[18px]">chevron_left</span>
           </button>
 
-          <div class="flex items-center gap-1">
+          <div class="flex items-center gap-1 px-1">
             <span class="material-symbols-outlined text-primary text-[16px]">calendar_month</span>
             <select
               :value="selectedMonth"
               @change="emit('update:selectedMonth', Number(($event.target as HTMLSelectElement).value))"
               aria-label="Seleccionar mes del calendario"
-              class="bg-transparent text-primary text-xs font-bold focus:outline-none cursor-pointer"
+              class="bg-transparent text-primary text-xs font-bold focus:outline-none cursor-pointer py-0.5"
             >
               <option v-for="m in availableMonths" :key="m.value" :value="m.value">
                 {{ m.label }}
@@ -73,7 +73,7 @@ const emit = defineEmits<{
               :value="selectedYear"
               @change="emit('update:selectedYear', Number(($event.target as HTMLSelectElement).value))"
               aria-label="Seleccionar año del calendario"
-              class="bg-transparent text-primary text-xs font-bold focus:outline-none cursor-pointer"
+              class="bg-transparent text-primary text-xs font-bold focus:outline-none cursor-pointer py-0.5"
             >
               <option v-for="y in availableYears" :key="y" :value="y">{{ y }}</option>
             </select>
@@ -82,7 +82,7 @@ const emit = defineEmits<{
           <button
             type="button"
             @click="emit('nextMonth')"
-            class="w-7 h-7 rounded flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors cursor-pointer"
+            class="w-7 h-7 rounded-lg flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors cursor-pointer"
             title="Mes siguiente"
             aria-label="Mes siguiente"
           >
@@ -94,23 +94,23 @@ const emit = defineEmits<{
         <button
           v-if="currentMonthEvents.length > 0"
           type="button"
-          class="inline-flex items-center gap-1 px-space-md py-space-xs rounded-lg bg-purple-700 text-white hover:bg-purple-800 text-label-md font-label-md transition-all font-bold cursor-pointer shadow-xs animate-in fade-in duration-150"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-700 text-white hover:bg-purple-800 text-xs font-bold transition-all cursor-pointer shadow-2xs"
           title="Vincular fechas de este mes a eventos provinciales con tarifa diferenciada"
           @click="emit('openSpecialEvents')"
         >
-          <span class="material-symbols-outlined text-[18px]">festival</span>
-          <span>Reservar Eventos Especiales</span>
+          <span class="material-symbols-outlined text-[16px]">festival</span>
+          <span>Eventos Especiales</span>
         </button>
 
-        <!-- Botón Bloquear Fechas -->
+        <!-- Botón Bloquear Fechas / Uso Particular -->
         <button
           type="button"
-          class="inline-flex items-center gap-1 px-space-md py-space-xs rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors font-semibold cursor-pointer border border-surface-container"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container-high text-on-surface text-xs font-bold transition-colors cursor-pointer border border-surface-container shadow-2xs"
           title="Bloquear fechas para Uso Familiar, Mantenimiento o Reservas Particulares Fuera de Plataforma"
           @click="emit('openInternalBlocks')"
         >
-          <span class="material-symbols-outlined text-[18px]">event_busy</span>
-          Bloquear Fechas / Uso Particular
+          <span class="material-symbols-outlined text-[16px] text-tertiary">event_busy</span>
+          <span>Bloquear Fechas / Particular</span>
         </button>
       </div>
     </div>

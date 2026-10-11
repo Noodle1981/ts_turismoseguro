@@ -18,6 +18,7 @@ class Property extends Model
     protected $fillable = [
         'user_id',
         'department_id',
+        'locality_id',
         'validator_id',
         'title',
         'slug',
@@ -27,6 +28,25 @@ class Property extends Model
         'description',
         'price',
         'price_type',
+        'tariff_lunes_jueves',
+        'tariff_viernes_domingo',
+        'tariff_sabado_feriados',
+        'tariff_evento_especial',
+        'tariff_pernocte_camas',
+        'tariff_pernocte_carpas',
+        'tariff_finde_completo',
+        'tariff_fiesta_nocturna',
+        'schedule_start',
+        'schedule_end',
+        'active_days',
+        'is_listing_visible',
+        'pause_mode',
+        'pause_start_date',
+        'pause_end_date',
+        'insurance_company',
+        'policy_number',
+        'policy_valid_until',
+        'acta_inspeccion_fecha',
         'capacity',
         'bedrooms',
         'bathrooms',
@@ -46,6 +66,19 @@ class Property extends Model
     {
         return [
             'price' => 'integer',
+            'tariff_lunes_jueves' => 'integer',
+            'tariff_viernes_domingo' => 'integer',
+            'tariff_sabado_feriados' => 'integer',
+            'tariff_evento_especial' => 'integer',
+            'tariff_pernocte_camas' => 'integer',
+            'tariff_pernocte_carpas' => 'integer',
+            'tariff_finde_completo' => 'integer',
+            'tariff_fiesta_nocturna' => 'integer',
+            'active_days' => 'array',
+            'is_listing_visible' => 'boolean',
+            'pause_start_date' => 'date',
+            'pause_end_date' => 'date',
+            'policy_valid_until' => 'date',
             'capacity' => 'integer',
             'bedrooms' => 'integer',
             'bathrooms' => 'integer',
@@ -54,6 +87,11 @@ class Property extends Model
             'latitude' => 'float',
             'longitude' => 'float',
         ];
+    }
+
+    public function locality(): BelongsTo
+    {
+        return $this->belongsTo(Locality::class);
     }
 
     /**

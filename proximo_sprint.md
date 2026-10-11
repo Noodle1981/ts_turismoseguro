@@ -6,39 +6,50 @@ Documento de seguimiento y backlog para la próxima sesión de desarrollo en **T
 
 ## 1. Ajustes UI/UX y Funcionales en Vista "Configurar Tarifas" (`#tarifas`)
 
-- [ ] **Arreglar la tarjeta de Días y Horas:**
-  - En la tarjeta de gestión de oferta, los selectores de días (`L`, `M`, `M`, `J`, `V`, `S`, `D`), la franja horaria y el botón de configurar se ven apretujados y antiestéticos.
-  - Rediseñar el componente para que respete una distribución espaciosa, armónica y limpia conforme al Design System Stitch (*San Juan Verificado*).
-- [ ] **Funcionalidad "Visible en Buscador" (Pausar / Desactivar publicación):**
-  - Validar y refinar la lógica de pausar visibilidad para evitar aparecer en el buscador público.
-  - Diseñar flujo para propietarios que quieran tomarse vacaciones o pausar temporalmente:
-    - Evaluar/implementar un modal que pregunte por rango de fechas (desde / hasta) de la pausa.
-    - Analizar impacto con el estado de la suscripción/póliza activa durante el período de inactividad.
+- [x] **Arreglar la tarjeta de Días y Horas:**
+  - Rediseñado con distribución aireada y clara: Aforo Homologado y Franja Horaria en columnas amplias con botón de edición, y días habilitados (`L`, `M`, `M`, `J`, `V`, `S`, `D`) en fila independiente con botones legibles y contrastados.
+- [x] **Funcionalidad "Visible en Buscador" (Pausar / Desactivar publicación):**
+  - Implementado `ModalVacationPause.vue` con dos modalidades:
+    - *Modo Vacaciones / Receso Temporal:* Permite seleccionar rango de fechas (Desde / Hasta) con reactivación automática.
+    - *Pausa Indefinida:* Oculta la oferta hasta reactivación manual.
+    - Incluye aviso institucional de preservación de Póliza de Seguro y reservas previas vigentes.
 
 ---
 
 ## 2. Ajustes en Vista "Calendario y Reservas" (`#calendario`)
 
-- [ ] **Selector de Período y Botón de Bloqueo:**
-  - El selector de meses/años se ve visualmente desajustado junto a los botones *"Bloquear Fechas / Uso Particular"*.
-  - Reorganizar la barra de herramientas del calendario para que la navegación temporal (mes anterior, selector mes/año, mes siguiente) y los accesos de acción (*Bloqueo Interno / Eventos Especiales*) queden correctamente alineados y responsivos.
+- [x] **Selector de Período y Botón de Bloqueo:**
+  - Reorganizada la barra de herramientas del calendario en una única fila balanceada y responsiva: navegador temporal (flechas + selectores mes/año) y botones de acción (*Eventos Especiales* y *Bloquear Fechas / Particular*).
 
 ---
 
-## 3. Integración Backend con Base de Datos & Laravel Best Practices
+## 3. Lógica y Estructura de la Base de Datos & Laravel Best Practices
 
-- [ ] **Conexión de Vistas con la Base de Datos:**
-  - Reemplazar datos mockeados en las vistas (`tarifas`, `calendario`, `inquilinos`) por endpoints reales de la API en Laravel.
-  - Emplear la skill **`laravel-best-practices`** y arquitectura de API Resources / DTOs.
-- [ ] **Validación y Testing (TDD):**
-  - Implementar Form Requests para validación de tarifas, reservas manuales y solicitudes de revalidación.
-  - Ejecutar suites de pruebas con PHPUnit / Pest (`laravel-tdd`) para asegurar consistencia e integridad de datos.
+- [x] **Modelo de Datos y Localidades Reales (San Juan):**
+  - Creada tabla `localities` vinculada a los 19 departamentos oficiales de San Juan.
+  - Creado y ejecutado `LocalitySeeder.php` extrayendo las **266 localidades reales de San Juan** desde `establecimientos.sqlite` con centroides GPS calculados.
+  - Vinculación `locality_id` (nullable) agregada a la entidad de propiedades.
+- [x] **Atributos de la Oferta alineados con el Panel:**
+  - Migración `enhance_properties_and_events`:
+    - Tarifas multimodales (diurna lun-jue, vie-dom, sáb-feriados, pernocte camas/carpas, finde completo, fiesta nocturna, evento especial).
+    - Franja diurna (`schedule_start`, `schedule_end`) y días activos (`active_days` JSON).
+    - Visibilidad y vacaciones (`is_listing_visible`, `pause_mode`, `pause_start_date`, `pause_end_date`).
+    - Póliza de seguro (`insurance_company`, `policy_number`, `policy_valid_until`, `acta_inspeccion_fecha`).
+- [x] **Reglas de Filtros y Cobertura (Puntos 6 y 7):**
+  - `GET /api/v1/departments?with_offers=true`: Oculta automáticamente los departamentos que no tienen ofertas activas en los filtros de búsqueda.
+  - `GET /api/v1/departments`: Retorna los 19 departamentos completos de San Juan para la navegación general/portada.
+  - `GET /api/v1/departments/{slug}/localities`: Endpoint para obtener las localidades de cada departamento.
+- [x] **Eventos Provinciales y Radio de Alcance (Punto 5):**
+  - Agregado `radius_km` a eventos y tabla relacional `event_departments` para alcance dual por departamentos y por proximidad GPS.
+- [x] **Tests Backend:**
+  - Suite de pruebas de Laravel (`php artisan test`) ejecutada exitosamente: **26 tests pasados, 310 assertions, 0 fallos**.
 
 ---
 
-## 4. Flujo End-to-End: "Agregar Oferta" $\rightarrow$ Bandeja del Validador
+## 4. Próximos Pasos en el Flujo Backend $\rightarrow$ Frontend
 
-- [ ] **Interconexión con la Vista del Validador:**
-  - El modal *"Agregar Oferta"* (`ModalAddOffer.vue`) debe persistir la nueva oferta en la base de datos con estado pendiente de homologación (`pendiente_validacion`).
-  - Dicha oferta debe reflejarse en tiempo real en la bandeja de inspección del validador (`ValidadorBandejaView.vue` / `ValidadorMapaView.vue`).
-  - Una vez validado y homologado por el validador oficial, completar el ciclo de vida del predio para dar por concluida esta vista.
+- [ ] **Conectar el Panel del Propietario con la API:**
+  - Reemplazar el guardado mockeado en `usePropietarioOffers.ts` por llamadas reales a `PUT /api/v1/client/properties/{id}` con las tarifas multimodales y horarios.
+- [ ] **Flujo End-to-End: "Agregar Oferta" $\rightarrow$ Bandeja del Validador:**
+  - El modal *"Agregar Oferta"* (`ModalAddOffer.vue`) persiste la propiedad en `POST /api/v1/client/properties` y genera la `verification_request` en estado `pending`.
+  - Debe verse reflejada en la bandeja del validador (`ValidadorBandejaView.vue`).

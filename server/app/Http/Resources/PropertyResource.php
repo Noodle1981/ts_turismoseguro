@@ -39,7 +39,42 @@ class PropertyResource extends JsonResource
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'featured' => (bool) $this->featured,
+
+            // Tarifas multimodales
+            'tariffs' => [
+                'lunes_jueves' => (int) ($this->tariff_lunes_jueves ?? $this->price),
+                'viernes_domingo' => (int) ($this->tariff_viernes_domingo ?? $this->price),
+                'sabado_feriados' => (int) ($this->tariff_sabado_feriados ?? $this->price),
+                'evento_especial' => (int) ($this->tariff_evento_especial ?? 90000),
+                'pernocte_camas' => $this->tariff_pernocte_camas ? (int) $this->tariff_pernocte_camas : null,
+                'pernocte_carpas' => $this->tariff_pernocte_carpas ? (int) $this->tariff_pernocte_carpas : null,
+                'finde_completo' => $this->tariff_finde_completo ? (int) $this->tariff_finde_completo : null,
+                'fiesta_nocturna' => $this->tariff_fiesta_nocturna ? (int) $this->tariff_fiesta_nocturna : null,
+            ],
+
+            // Franja diurna y días activos
+            'schedule' => [
+                'start' => $this->schedule_start ?? '10:00',
+                'end' => $this->schedule_end ?? '20:00',
+                'active_days' => $this->active_days ?? [0, 4, 5, 6],
+            ],
+
+            // Visibilidad y vacaciones
+            'is_listing_visible' => (bool) ($this->is_listing_visible ?? true),
+            'pause_mode' => $this->pause_mode,
+            'pause_start_date' => $this->pause_start_date?->format('Y-m-d'),
+            'pause_end_date' => $this->pause_end_date?->format('Y-m-d'),
+
+            // Póliza y Seguro
+            'insurance' => [
+                'company' => $this->insurance_company ?? 'Triunfo Seguros',
+                'policy_number' => $this->policy_number,
+                'valid_until' => $this->policy_valid_until?->format('Y-m-d'),
+                'acta_fecha' => $this->acta_inspeccion_fecha,
+            ],
+
             'department' => new DepartmentResource($this->whenLoaded('department')),
+            'locality' => new LocalityResource($this->whenLoaded('locality')),
             'images' => PropertyImageResource::collection($this->whenLoaded('images')),
             'amenities' => $this->whenLoaded('amenities', fn () => $this->amenities->pluck('amenity')->values()->all()),
             'rules' => $this->whenLoaded('rules', fn () => $this->rules->pluck('rule')->values()->all()),

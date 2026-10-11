@@ -85,7 +85,7 @@ const emit = defineEmits<{
       class="mt-2 pt-2 text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1.5 border-t border-surface-container text-[11px]"
     >
       <span class="material-symbols-outlined text-secondary text-[15px]">verified</span>
-      Sin costo adicional para propietarios con Póliza Activa.
+      Sin costo adicional para propietarios con Validación Activa.
     </div>
   </section>
 </template>
