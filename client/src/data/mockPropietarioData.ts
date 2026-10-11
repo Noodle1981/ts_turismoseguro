@@ -240,6 +240,9 @@ export const INITIAL_OFFERS: PropietarioOferta[] = [
         ownerRating: 'up',
       },
     ],
+    verificationStatus: 'verified',
+    publicationStatus: 'published',
+    capacity: 45,
   },
 ]
 

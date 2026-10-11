@@ -78,6 +78,28 @@ class PropertyResource extends JsonResource
             'images' => PropertyImageResource::collection($this->whenLoaded('images')),
             'amenities' => $this->whenLoaded('amenities', fn () => $this->amenities->pluck('amenity')->values()->all()),
             'rules' => $this->whenLoaded('rules', fn () => $this->rules->pluck('rule')->values()->all()),
+
+            // Última solicitud de verificación in situ (si está cargada)
+            'verification_request' => $this->whenLoaded('verificationRequests', function () {
+                $latest = $this->verificationRequests->sortByDesc('created_at')->first();
+                if (! $latest) {
+                    return null;
+                }
+                return [
+                    'id' => $latest->id,
+                    'status' => $latest->status,
+                    'security_token' => $latest->security_token,
+                    'notes' => $latest->notes,
+                    'created_at' => $latest->created_at?->toIso8601String(),
+                    'validator' => $latest->validator ? [
+                        'id' => $latest->validator->id,
+                        'name' => $latest->validator->name,
+                        'phone' => $latest->validator->phone,
+                        'dni' => $latest->validator->dni,
+                        'origin_city' => $latest->validator->origin_city,
+                    ] : null,
+                ];
+            }),
         ];
     }
 }

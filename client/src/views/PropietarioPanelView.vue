@@ -14,6 +14,7 @@ import { usePropietarioBookings } from '../composables/propietario/usePropietari
 import PropietarioSidebar from '../components/propietario/layout/PropietarioSidebar.vue'
 import PropietarioTopHeader from '../components/propietario/layout/PropietarioTopHeader.vue'
 import PropietarioMetricsHeader from '../components/propietario/sections/PropietarioMetricsHeader.vue'
+import PropietarioHomologacionStatusCard from '../components/propietario/sections/PropietarioHomologacionStatusCard.vue'
 import PropietarioTariffsCard from '../components/propietario/sections/PropietarioTariffsCard.vue'
 import PropietarioRevalidacionCard from '../components/propietario/sections/PropietarioRevalidacionCard.vue'
 import PropietarioCalendarSection from '../components/propietario/sections/PropietarioCalendarSection.vue'
@@ -289,6 +290,12 @@ watch(
           <div class="p-space-md lg:p-space-lg flex flex-col gap-space-md max-w-[1440px] mx-auto w-full">
             <!-- 1. VISTA INDEPENDIENTE: CONFIGURAR TARIFAS (#tarifas) -->
             <div v-show="activeNav === 'tarifas'" id="tarifas" class="flex flex-col gap-space-md">
+              <!-- Tarjeta de Estado de Homologación e Inspección In Situ (esperando / validador asignado / token antifraude) -->
+              <PropietarioHomologacionStatusCard
+                v-if="selectedOffer"
+                :offer="selectedOffer"
+              />
+
               <!-- Métricas Clave y Estado de la Propiedad -->
               <PropietarioMetricsHeader
                 :selected-offer="selectedOffer"

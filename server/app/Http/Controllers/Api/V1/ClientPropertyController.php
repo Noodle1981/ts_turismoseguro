@@ -30,7 +30,7 @@ class ClientPropertyController extends Controller
     public function index(Request $request): AnonymousResourceCollection
     {
         $properties = Property::where('user_id', $request->user()->id)
-            ->with(['department', 'images', 'amenities', 'rules'])
+            ->with(['department', 'images', 'amenities', 'rules', 'verificationRequests.validator'])
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -104,15 +104,19 @@ class ClientPropertyController extends Controller
             }
         }
 
+        // Generar Token de Seguridad Oficial Antifraude (ej: TS-748291)
+        $securityToken = 'TS-' . str_pad((string) random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
+
         // Crear automáticamente la Solicitud de Verificación In Situ para la mesa de supervisión
         $verificationRequest = VerificationRequest::create([
             'property_id' => $property->id,
             'client_id' => $request->user()->id,
             'status' => 'pending',
+            'security_token' => $securityToken,
             'notes' => $validated['observations'] ?? 'Alta inicial de oferta realizada desde el Panel del Anfitrión.',
         ]);
 
-        $property->load(['department', 'images', 'amenities', 'rules']);
+        $property->load(['department', 'images', 'amenities', 'rules', 'verificationRequests.validator']);
 
         return response()->json([
             'message' => 'Propiedad creada con éxito en borrador y solicitud de inspección enviada a la mesa de supervisores.',
@@ -127,7 +131,7 @@ class ClientPropertyController extends Controller
     public function show(int $id, Request $request): JsonResponse
     {
         $property = Property::where('user_id', $request->user()->id)
-            ->with(['department', 'images', 'amenities', 'rules', 'availabilities'])
+            ->with(['department', 'images', 'amenities', 'rules', 'availabilities', 'verificationRequests.validator'])
             ->findOrFail($id);
 
         return response()->json([

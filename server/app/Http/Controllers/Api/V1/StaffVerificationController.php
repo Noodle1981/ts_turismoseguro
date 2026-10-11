@@ -110,6 +110,7 @@ class StaffVerificationController extends Controller
                 'imageUrl' => $prop?->images?->first()?->image_path ?? 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80',
                 'amenities' => $prop?->amenities?->pluck('amenity')->all() ?? [],
                 'notes' => $vr->notes,
+                'security_token' => $vr->security_token,
                 'validator_id' => $vr->validator_id,
                 'validator_name' => $vr->validator?->name,
                 'supervisor_id' => $vr->supervisor_id,
@@ -145,10 +146,16 @@ class StaffVerificationController extends Controller
         $validator = User::where('role', 'validator')->findOrFail($validated['validator_id']);
         $verificationRequest = VerificationRequest::findOrFail($id);
 
+        $token = $verificationRequest->security_token;
+        if (! $token) {
+            $token = 'TS-' . str_pad((string) random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
+        }
+
         $verificationRequest->update([
             'validator_id' => $validator->id,
             'supervisor_id' => $request->user()->id,
             'status' => 'assigned',
+            'security_token' => $token,
             'notes' => $validated['notes'] ?? $verificationRequest->notes,
         ]);
 

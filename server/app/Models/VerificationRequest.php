@@ -18,6 +18,7 @@ class VerificationRequest extends Model
         'validator_id',
         'supervisor_id',
         'status',
+        'security_token',
         'rejection_reason',
         'visit_date',
         'checklist',

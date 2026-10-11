@@ -76,6 +76,25 @@ function mapApiPropertyToOferta(prop: any, existingOffer?: PropietarioOferta): P
         ]),
     tenants: existingOffer?.tenants || [],
     pastTenants: existingOffer?.pastTenants || [],
+    verificationStatus: prop.verification_status ?? existingOffer?.verificationStatus ?? 'unverified',
+    publicationStatus: prop.publication_status ?? existingOffer?.publicationStatus ?? 'draft',
+    capacity: prop.capacity ?? existingOffer?.capacity ?? 20,
+    verificationRequest: prop.verification_request
+      ? {
+          id: prop.verification_request.id,
+          status: prop.verification_request.status,
+          securityToken: prop.verification_request.security_token,
+          notes: prop.verification_request.notes,
+          createdAt: prop.verification_request.created_at,
+          validator: prop.verification_request.validator ? {
+            id: prop.verification_request.validator.id,
+            name: prop.verification_request.validator.name,
+            phone: prop.verification_request.validator.phone,
+            dni: prop.verification_request.validator.dni,
+            origin_city: prop.verification_request.validator.origin_city,
+          } : null,
+        }
+      : existingOffer?.verificationRequest ?? null,
   }
 }
 

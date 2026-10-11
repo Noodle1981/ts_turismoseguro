@@ -59,6 +59,23 @@ export interface PropietarioMetrics {
   resenasCount: number
 }
 
+export interface VerificationAuditorInfo {
+  id: number
+  name: string
+  phone: string
+  dni?: string
+  origin_city?: string
+}
+
+export interface VerificationRequestInfo {
+  id: number
+  status: 'pending' | 'assigned' | 'visited' | 'under_supervision' | 'approved' | 'rejected'
+  securityToken?: string
+  notes?: string
+  createdAt?: string
+  validator?: VerificationAuditorInfo | null
+}
+
 export interface PropietarioOferta {
   id: number
   legajo: string
@@ -79,6 +96,10 @@ export interface PropietarioOferta {
   amenities: AmenityBadge[]
   tenants: Tenant[]
   pastTenants: Tenant[]
+  verificationStatus?: 'unverified' | 'pending' | 'verified' | 'rejected'
+  publicationStatus?: 'draft' | 'published' | 'paused' | 'archived'
+  capacity?: number
+  verificationRequest?: VerificationRequestInfo | null
 }
 
 export interface CalendarDay {

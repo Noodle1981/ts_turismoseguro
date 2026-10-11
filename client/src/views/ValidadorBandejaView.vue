@@ -54,6 +54,7 @@ interface InspectionRequest {
   validator_name?: string | null
   hasLocalValidator?: boolean
   coverageAlert?: string | null
+  security_token?: string | null
 }
 
 interface ValidatorItem {
@@ -118,6 +119,7 @@ const fetchRequests = async () => {
         imageUrl: item.imageUrl || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80',
         amenities: item.amenities || [],
         notes: item.notes || 'Inspección de seguridad in situ.',
+        security_token: item.security_token || null,
         validator_id: item.validator_id,
         validator_name: item.validator_name,
         hasLocalValidator: item.hasLocalValidator ?? true,
@@ -712,6 +714,22 @@ const handleLogout = async () => {
               <span class="font-body-sm text-body-sm text-on-surface-variant">DNI: {{ selectedRequest.ownerDni }}</span>
               <span class="font-body-sm text-body-sm text-secondary font-semibold flex items-center gap-1">
                 <span class="material-symbols-outlined text-[16px]">call</span> {{ selectedRequest.ownerPhone }}
+              </span>
+            </div>
+
+            <!-- Token Antifraude Obligatorio para Contacto -->
+            <div class="p-3.5 rounded-xl bg-secondary-fixed/30 border border-secondary/30 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-[22px]">verified_user</span>
+                <div class="flex flex-col">
+                  <span class="text-[10px] uppercase tracking-wider text-secondary font-bold">Token Antifraude a Informar al Anfitrión</span>
+                  <span class="font-mono text-sm font-extrabold text-primary">
+                    {{ selectedRequest.security_token ?? 'TS-GENERANDO' }}
+                  </span>
+                </div>
+              </div>
+              <span class="text-[11px] text-on-surface-variant text-right max-w-[130px] leading-tight font-medium">
+                Indicar al propietario al iniciar contacto.
               </span>
             </div>
 

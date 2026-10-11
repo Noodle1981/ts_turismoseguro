@@ -118,13 +118,23 @@ const handleAddOfferClick = () => {
                 </span>
                 <span class="truncate">{{ offer.title }}</span>
               </div>
-              <span
-                v-if="selectedOfferId === offer.id"
-                class="material-symbols-outlined text-[15px] shrink-0 text-secondary-fixed"
-                aria-hidden="true"
-              >
-                check_circle
-              </span>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <span
+                  v-if="offer.publicationStatus === 'draft' || offer.verificationStatus === 'unverified' || offer.verificationStatus === 'pending'"
+                  class="px-1.5 py-0.5 rounded text-[10px] font-bold"
+                  :class="selectedOfferId === offer.id ? 'bg-amber-400 text-amber-950' : 'bg-amber-500/20 text-amber-700 dark:text-amber-300'"
+                  title="Propiedad en espera de validación presencial"
+                >
+                  En Trámite
+                </span>
+                <span
+                  v-else-if="selectedOfferId === offer.id"
+                  class="material-symbols-outlined text-[15px] shrink-0 text-secondary-fixed"
+                  aria-hidden="true"
+                >
+                  check_circle
+                </span>
+              </div>
             </button>
           </div>
         </div>
