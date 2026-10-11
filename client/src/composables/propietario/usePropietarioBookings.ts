@@ -1,5 +1,7 @@
 import { ref, computed, type Ref } from 'vue'
+import { useConfirmDialog } from './useConfirmDialog'
 import type { PropietarioOferta, NewBookingPayload } from '../../types/propietario'
+
 
 // Estado compartido a nivel módulo para persistencia de reservas y bloqueos
 const customBookedDays = ref<
@@ -64,10 +66,16 @@ export function usePropietarioBookings(
   const handleAddBooking = () => {
     const offerId = selectedOffer.value.id
 
+    const { showAlert } = useConfirmDialog()
+
     // CASO A: BLOQUEO / INDISPONIBILIDAD (Familiar, Mantenimiento o Reserva Externa)
     if (newBooking.value.modality === 'bloqueo') {
       if (!newBooking.value.date) {
-        window.alert('Por favor seleccione una fecha a bloquear.')
+        showAlert({
+          title: 'Fecha Requerida',
+          message: 'Por favor seleccione una fecha a bloquear en el calendario.',
+          icon: 'event_busy',
+        })
         return
       }
 
@@ -119,20 +127,30 @@ export function usePropietarioBookings(
       showBookingModal.value = false
 
       if (isExterno) {
-        window.alert(
-          `¡Fecha(s) bloqueada(s) con éxito!\n\n` +
-            `Estado: "Reserva Particular (Fuera de Plataforma)"\n` +
-            `Constancia Legal: La fecha figura NO DISPONIBLE para alquiler en Turismo Seguro San Juan. Ni la plataforma ni el seguro emitido amparan eventos o incidentes acordados por fuera del sistema.`
-        )
+        showAlert({
+          title: 'Fecha Bloqueada con Éxito',
+          message:
+            'Estado: "Reserva Particular (Fuera de Plataforma)"\n\n' +
+            'Constancia Legal: La fecha figura NO DISPONIBLE para alquiler en Turismo Seguro San Juan. Ni la plataforma ni el seguro emitido amparan eventos o incidentes acordados por fuera del sistema.',
+          icon: 'no_crash',
+        })
       } else {
-        window.alert(`¡Fecha(s) bloqueada(s) con éxito como ${isFamiliar ? 'Uso Familiar' : 'Mantenimiento'}!`)
+        showAlert({
+          title: 'Fecha Bloqueada con Éxito',
+          message: `La fecha se ha bloqueado exitosamente como "${isFamiliar ? 'Uso Familiar' : 'Mantenimiento'}".`,
+          icon: isFamiliar ? 'cottage' : 'construction',
+        })
       }
       return
     }
 
     // CASO B: RESERVA DE INQUILINO (Diurno, Multidía o Fiesta)
     if (!newBooking.value.tenantName || !newBooking.value.tenantDni) {
-      window.alert('Por favor complete el nombre y DNI del inquilino titular.')
+      showAlert({
+        title: 'Datos Requeridos',
+        message: 'Por favor complete el nombre y DNI del inquilino titular.',
+        icon: 'person',
+      })
       return
     }
 
@@ -216,9 +234,11 @@ export function usePropietarioBookings(
     selectedMonth.value = startM
 
     showBookingModal.value = false
-    window.alert(
-      `¡Reserva confirmada con éxito!\n\nModalidad: ${newBooking.value.modality === 'multidia' ? 'Estadía Multidía con Pernocte' : newBooking.value.modality === 'fiesta_nocturna' ? 'Fiesta / Evento Nocturno' : 'Jornada Diurna'}.\nFechas aseguradas y bloqueadas en el almanaque.`
-    )
+    showAlert({
+      title: '¡Reserva Confirmada con Éxito!',
+      message: `Modalidad: ${newBooking.value.modality === 'multidia' ? 'Estadía Multidía con Pernocte' : newBooking.value.modality === 'fiesta_nocturna' ? 'Fiesta / Evento Nocturno' : 'Jornada Diurna'}.\n\nFechas aseguradas y reflejadas en el almanaque.`,
+      icon: 'check_circle',
+    })
   }
 
   return {

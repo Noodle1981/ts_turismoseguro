@@ -173,19 +173,26 @@ const emit = defineEmits<{
       <!-- Morado: Evento Especial -->
       <div class="flex items-center gap-1.5">
         <div class="w-3.5 h-3.5 rounded-full bg-purple-600 flex items-center justify-center shadow-2xs">
-          <span class="material-symbols-outlined text-white text-[10px]">festival</span>
+          <span class="material-symbols-outlined text-white text-[10px]" aria-hidden="true">festival</span>
         </div>
         <span class="text-on-surface font-bold text-purple-900 dark:text-purple-200">Evento Especial</span>
       </div>
+      <!-- Rojo: Reserva Particular Externa -->
+      <div class="flex items-center gap-1.5">
+        <div class="w-3.5 h-3.5 rounded-full bg-rose-500 flex items-center justify-center shadow-2xs">
+          <span class="material-symbols-outlined text-white text-[10px]" aria-hidden="true">no_crash</span>
+        </div>
+        <span class="text-on-surface font-semibold text-rose-800 dark:text-rose-200">Reserva Particular</span>
+      </div>
       <div class="flex items-center gap-1.5">
         <div class="w-3.5 h-3.5 rounded-full bg-amber-200 border border-amber-400 flex items-center justify-center">
-          <span class="material-symbols-outlined text-amber-950 text-[10px]">block</span>
+          <span class="material-symbols-outlined text-amber-950 text-[10px]" aria-hidden="true">block</span>
         </div>
         <span class="text-on-surface font-semibold text-amber-900 dark:text-amber-300">Bloqueado</span>
       </div>
       <div class="flex items-center gap-1.5">
         <div class="w-3.5 h-3.5 rounded-full bg-tertiary-fixed-dim flex items-center justify-center">
-          <span class="material-symbols-outlined text-tertiary text-[10px]">cottage</span>
+          <span class="material-symbols-outlined text-tertiary text-[10px]" aria-hidden="true">cottage</span>
         </div>
         <span class="text-on-surface">Uso Familiar / Mantenimiento</span>
       </div>
@@ -220,9 +227,12 @@ const emit = defineEmits<{
                 cDay.status !== 'booked' &&
                 cDay.status !== 'maintenance' &&
                 cDay.status !== 'blocked' &&
-                cDay.status !== 'special_event',
+                cDay.status !== 'special_event' &&
+                cDay.status !== 'external_booking',
               'bg-purple-100 text-purple-950 border-2 border-purple-400 dark:bg-purple-950/60 dark:text-purple-200 dark:border-purple-600 hover:bg-purple-200/90 cursor-pointer shadow-xs':
                 cDay.status === 'special_event',
+              'bg-rose-100 text-rose-950 border-2 border-rose-400 dark:bg-rose-950/60 dark:text-rose-200 dark:border-rose-600 hover:bg-rose-200/90 cursor-pointer shadow-xs':
+                cDay.status === 'external_booking',
               'bg-primary text-on-primary shadow-xs hover:opacity-95 cursor-pointer': cDay.status === 'booked',
               'bg-secondary-container/50 text-on-surface hover:bg-secondary-container cursor-pointer':
                 cDay.status === 'available' && !cDay.isPast,
@@ -241,6 +251,7 @@ const emit = defineEmits<{
                 class="material-symbols-outlined text-[16px]"
                 :class="{
                   'text-purple-700 dark:text-purple-300 font-bold': cDay.status === 'special_event',
+                  'text-rose-700 dark:text-rose-300 font-bold': cDay.status === 'external_booking',
                   'text-secondary': cDay.status === 'available' && !cDay.isPast,
                   'text-amber-700 dark:text-amber-300': cDay.status === 'unconfigured',
                   'text-tertiary': cDay.status === 'maintenance',

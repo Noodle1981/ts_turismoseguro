@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, defineAsyncComponent } from 'vue'
+import { ref, onMounted, onUnmounted, watch, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 
 // Composables de Dominio
@@ -34,12 +34,21 @@ const ModalScheduleConfig = defineAsyncComponent(
 const ModalSpecialEvent = defineAsyncComponent(
   () => import('../components/propietario/modals/ModalSpecialEvent.vue')
 )
+import ModalConfirmDialog from '../components/propietario/modals/ModalConfirmDialog.vue'
+import { useConfirmDialog } from '../composables/propietario/useConfirmDialog'
 
 const route = useRoute()
+
+// Diálogo visual unificado de alertas y confirmaciones
+const { dialogState, handleConfirm, handleCancel } = useConfirmDialog()
 
 // Período activo de visualización (Octubre 2026 por defecto)
 const selectedYear = ref<number>(2026)
 const selectedMonth = ref<number>(10)
+
+// Estado del Drawer Móvil para pantallas < 1024px
+const isMobileSidebarOpen = ref(false)
+
 
 // 1. Estado y Operaciones de Ofertas
 const {
@@ -118,10 +127,53 @@ const {
   newBooking
 )
 
+// Cierre accesible por teclado (Escape)
+const handleGlobalKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Escape') {
+    dialogState.value.isOpen = false
+    showBookingModal.value = false
+    showTenantModal.value = false
+    showAddOfferModal.value = false
+    showScheduleModal.value = false
+    showSpecialEventModal.value = false
+    isMobileSidebarOpen.value = false
+  }
+}
+
+
+// Sincronización de activeNav con el hash de la URL
+const syncNavWithHash = () => {
+  const hash = window.location.hash
+  if (hash === '#calendario') {
+    activeNav.value = 'calendario'
+  } else if (hash === '#inquilinos') {
+    activeNav.value = 'inquilinos'
+  } else if (hash === '#tarifas' || hash === '#mis-ofertas-y-tarifas' || hash === '#resumen-general') {
+    activeNav.value = 'tarifas'
+  }
+}
+
+// Al cambiar activeNav manualmente, sincronizar hash
+watch(activeNav, (newNav) => {
+  if (window.location.hash !== `#${newNav}`) {
+    history.replaceState(null, '', `#${newNav}`)
+  }
+})
+
 onMounted(() => {
+  window.addEventListener('keydown', handleGlobalKeydown)
+  window.addEventListener('hashchange', syncNavWithHash)
+
+  syncNavWithHash()
+
   if (route.query.action === 'nueva-oferta') {
     showAddOfferModal.value = true
   }
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleGlobalKeydown)
+  window.removeEventListener('hashchange', syncNavWithHash)
 })
 
 watch(
@@ -136,20 +188,22 @@ watch(
 
 <template>
   <div class="bg-background font-body-md text-on-surface min-h-screen">
-    <!-- 1. ASIDE: SIDEBAR IZQUIERDO -->
+    <!-- 1. ASIDE: SIDEBAR IZQUIERDO (RESPONSIVE OFF-CANVAS) -->
     <PropietarioSidebar
       :my-offers="myOffers"
       :selected-offer-id="selectedOfferId"
       :active-nav="activeNav"
       :user-name="user?.name"
+      :is-mobile-open="isMobileSidebarOpen"
       @select-offer="selectedOfferId = $event"
       @update-nav="activeNav = $event"
       @open-add-offer="showAddOfferModal = true"
       @logout="handleLogout"
+      @close-mobile="isMobileSidebarOpen = false"
     />
 
-    <!-- 2. CONTENIDO PRINCIPAL CON OFFSET PL-72 -->
-    <div class="pl-72">
+    <!-- 2. CONTENIDO PRINCIPAL CON OFFSET RESPONSIVO (PL-0 en móvil, PL-72 en lg) -->
+    <div class="pl-0 lg:pl-72 transition-all duration-200">
       <!-- FIXED TOP SUB-HEADER -->
       <PropietarioTopHeader
         :selected-offer="selectedOffer"
@@ -157,63 +211,72 @@ watch(
         v-model:selected-year="selectedYear"
         :available-months="availableMonths"
         :available-years="availableYears"
+        @toggle-mobile-sidebar="isMobileSidebarOpen = !isMobileSidebarOpen"
       />
+
 
       <!-- MAIN PAGE CONTENT (pt-16) -->
       <main class="relative pt-16 bg-background min-h-screen">
         <div class="flex flex-col w-full">
-          <div class="p-space-lg lg:p-margin flex flex-col gap-space-lg max-w-[1440px] mx-auto w-full">
-            <!-- 1. HEADER: ESTADO DE LA PROPIEDAD Y MÉTRICAS CLAVE -->
-            <PropietarioMetricsHeader
-              :selected-offer="selectedOffer"
-              :current-metrics="currentMetrics"
-              :current-month-events="currentMonthEvents"
-              @open-special-events="openSpecialEventModal"
-            />
-
-            <!-- 2. GESTIÓN DE OFERTA Y TARIFAS + REVALIDACIÓN IN SITU -->
-            <div id="mis-ofertas-y-tarifas" class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg scroll-mt-20">
-              <PropietarioTariffsCard
+          <div class="p-space-md lg:p-space-lg flex flex-col gap-space-md max-w-[1440px] mx-auto w-full">
+            <!-- 1. VISTA INDEPENDIENTE: CONFIGURAR TARIFAS (#tarifas) -->
+            <div v-show="activeNav === 'tarifas'" id="tarifas" class="flex flex-col gap-space-md">
+              <!-- Métricas Clave y Estado de la Propiedad -->
+              <PropietarioMetricsHeader
                 :selected-offer="selectedOffer"
-                v-model:tariffs-tab="tariffsTab"
-                :tarifa-saved-feedback="tarifaSavedFeedback"
-                :week-day-defs="weekDayDefs"
-                :calculate-hours-duration="calculateHoursDuration"
-                @save-tarifas="handleSaveTarifas"
-                @open-schedule-modal="showScheduleModal = true"
-                @toggle-active-day="toggleActiveDay"
+                :current-metrics="currentMetrics"
+                :current-month-events="currentMonthEvents"
+                @open-special-events="openSpecialEventModal"
               />
 
-              <PropietarioRevalidacionCard
-                :revalidacion-form="revalidacionForm"
-                @submit="handleSolicitarRevalidacion"
+              <!-- Gestión de Tarifas Diurnas/Pernocte/Fiestas + Revalidación In Situ -->
+              <div id="mis-ofertas-y-tarifas" class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+                <PropietarioTariffsCard
+                  :selected-offer="selectedOffer"
+                  v-model:tariffs-tab="tariffsTab"
+                  :tarifa-saved-feedback="tarifaSavedFeedback"
+                  :week-day-defs="weekDayDefs"
+                  :calculate-hours-duration="calculateHoursDuration"
+                  @save-tarifas="handleSaveTarifas"
+                  @open-schedule-modal="showScheduleModal = true"
+                  @toggle-active-day="toggleActiveDay"
+                />
+
+                <PropietarioRevalidacionCard
+                  :revalidacion-form="revalidacionForm"
+                  @submit="handleSolicitarRevalidacion"
+                />
+              </div>
+            </div>
+
+            <!-- 2. VISTA INDEPENDIENTE: CALENDARIO Y RESERVAS (#calendario) -->
+            <div v-show="activeNav === 'calendario'" id="calendario">
+              <PropietarioCalendarSection
+                v-model:selected-month="selectedMonth"
+                v-model:selected-year="selectedYear"
+                :available-months="availableMonths"
+                :available-years="availableYears"
+                :current-month-events="currentMonthEvents"
+                :selected-offer-department="selectedOffer.department"
+                :calendar-days="calendarDays"
+                :first-day-offset="firstDayOffset"
+                @prev-month="prevMonth"
+                @next-month="nextMonth"
+                @open-special-events="openSpecialEventModal"
+                @open-internal-blocks="openInternalBlockModal"
+                @toggle-cell-state="toggleCellState"
               />
             </div>
 
-            <!-- 3. ALMANAQUE / CALENDARIO INTERACTIVO DIURNO -->
-            <PropietarioCalendarSection
-              v-model:selected-month="selectedMonth"
-              v-model:selected-year="selectedYear"
-              :available-months="availableMonths"
-              :available-years="availableYears"
-              :current-month-events="currentMonthEvents"
-              :selected-offer-department="selectedOffer.department"
-              :calendar-days="calendarDays"
-              :first-day-offset="firstDayOffset"
-              @prev-month="prevMonth"
-              @next-month="nextMonth"
-              @open-special-events="openSpecialEventModal"
-              @open-internal-blocks="openInternalBlockModal"
-              @toggle-cell-state="toggleCellState"
-            />
-
-            <!-- 4. TABLA DETALLADA DE INQUILINOS Y PÓLIZAS -->
-            <PropietarioTenantsSection
-              :selected-offer="selectedOffer"
-              v-model:tenant-tab="tenantTab"
-              @open-detail="openTenantDetail"
-              @rate="setTenantRating($event.tenant, $event.rating)"
-            />
+            <!-- 3. VISTA INDEPENDIENTE: REGISTRO DE INQUILINOS (#inquilinos) -->
+            <div v-show="activeNav === 'inquilinos'" id="inquilinos">
+              <PropietarioTenantsSection
+                :selected-offer="selectedOffer"
+                v-model:tenant-tab="tenantTab"
+                @open-detail="openTenantDetail"
+                @rate="setTenantRating($event.tenant, $event.rating)"
+              />
+            </div>
           </div>
         </div>
       </main>
@@ -258,5 +321,13 @@ watch(
       :special-event-form="specialEventForm"
       @apply="applySpecialEventToCalendar"
     />
+
+    <!-- Diálogo de Confirmación y Alerta del Sistema (Visual Stitch Canónico) -->
+    <ModalConfirmDialog
+      :dialog="dialogState"
+      @confirm="handleConfirm"
+      @cancel="handleCancel"
+    />
   </div>
 </template>
+

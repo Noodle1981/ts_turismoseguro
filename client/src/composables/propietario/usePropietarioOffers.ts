@@ -1,7 +1,9 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '../useAuth'
+import { useConfirmDialog } from './useConfirmDialog'
 import { INITIAL_OFFERS } from '../../data/mockPropietarioData'
+
 import type {
   PropietarioOferta,
   NewOfferPayload,
@@ -11,7 +13,7 @@ import type {
 // Estado compartido a nivel módulo para persistencia durante la sesión
 const myOffers = ref<PropietarioOferta[]>(JSON.parse(JSON.stringify(INITIAL_OFFERS)))
 const selectedOfferId = ref<number>(8)
-const activeNav = ref<'general' | 'ofertas' | 'calendario' | 'inquilinos' | 'revalidacion'>('general')
+const activeNav = ref<'tarifas' | 'calendario' | 'inquilinos'>('tarifas')
 
 export function usePropietarioOffers() {
   const router = useRouter()
@@ -46,8 +48,13 @@ export function usePropietarioOffers() {
   })
 
   const handleAddOffer = () => {
+    const { showAlert } = useConfirmDialog()
     if (!newOffer.value.title || !newOffer.value.location) {
-      window.alert('Por favor complete el nombre del predio y su ubicación.')
+      showAlert({
+        title: 'Datos Incompletos',
+        message: 'Por favor complete el nombre del predio y su ubicación.',
+        icon: 'error_outline',
+      })
       return
     }
 
@@ -101,9 +108,11 @@ export function usePropietarioOffers() {
     myOffers.value.push(created)
     selectedOfferId.value = newId
     showAddOfferModal.value = false
-    window.alert(
-      `¡Oferta "${created.title}" registrada con éxito! Ya puedes gestionar sus tarifas individuales. Se ha notificado al validador para coordinar la inspección in situ.`
-    )
+    showAlert({
+      title: '¡Oferta Registrada con Éxito!',
+      message: `La oferta "${created.title}" fue registrada exitosamente. Ya puedes gestionar sus tarifas individuales. Se notificó al cuerpo de validadores para coordinar la inspección in situ.`,
+      icon: 'check_circle',
+    })
   }
 
   // Solicitud de revalidación in situ
@@ -114,9 +123,12 @@ export function usePropietarioOffers() {
   })
 
   const handleSolicitarRevalidacion = () => {
-    window.alert(
-      'Solicitud enviada al cuerpo técnico de inspectores de Turismo Seguro San Juan. Nos comunicaremos dentro de las 24hs hábiles para confirmar el turno presencial.'
-    )
+    const { showAlert } = useConfirmDialog()
+    showAlert({
+      title: 'Solicitud Enviada',
+      message: 'Solicitud enviada al cuerpo técnico de validadores de Turismo Seguro San Juan. Nos comunicaremos dentro de las 24hs hábiles para confirmar el turno presencial.',
+      icon: 'assignment_turned_in',
+    })
     revalidacionForm.value.notas = ''
   }
 

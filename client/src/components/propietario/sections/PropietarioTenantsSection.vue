@@ -222,8 +222,16 @@ const emit = defineEmits<{
               </td>
             </tr>
             <tr v-if="!selectedOffer.tenants || selectedOffer.tenants.length === 0">
-              <td colspan="6" class="py-space-lg text-center text-on-surface-variant">
-                No hay próximos alquileres programados para esta propiedad.
+              <td colspan="6" class="py-space-xl text-center">
+                <div class="flex flex-col items-center justify-center gap-space-xs py-space-md text-on-surface-variant">
+                  <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-secondary mb-1">
+                    <span class="material-symbols-outlined text-[28px]" aria-hidden="true">event_available</span>
+                  </div>
+                  <span class="font-headline-sm text-headline-sm text-primary font-bold">Sin reservas próximas agendadas</span>
+                  <p class="font-body-sm text-body-sm max-w-md text-on-surface-variant">
+                    Cuando confirmes una reserva desde el calendario o por consulta directa, aparecerá registrada aquí con su constancia de identidad y póliza activa.
+                  </p>
+                </div>
               </td>
             </tr>
           </template>
@@ -367,8 +375,16 @@ const emit = defineEmits<{
               </td>
             </tr>
             <tr v-if="!selectedOffer.pastTenants || selectedOffer.pastTenants.length === 0">
-              <td colspan="6" class="py-space-lg text-center text-on-surface-variant">
-                No hay alquileres pasados registrados para esta propiedad.
+              <td colspan="6" class="py-space-xl text-center">
+                <div class="flex flex-col items-center justify-center gap-space-xs py-space-md text-on-surface-variant">
+                  <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant mb-1">
+                    <span class="material-symbols-outlined text-[28px]" aria-hidden="true">history_toggle_off</span>
+                  </div>
+                  <span class="font-headline-sm text-headline-sm text-primary font-bold">Sin historial de alquileres previos</span>
+                  <p class="font-body-sm text-body-sm max-w-md text-on-surface-variant">
+                    Aquí se archivarán los alquileres completados para consultar constancias, calificaciones y el comportamiento de los huéspedes.
+                  </p>
+                </div>
               </td>
             </tr>
           </template>

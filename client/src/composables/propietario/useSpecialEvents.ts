@@ -1,6 +1,8 @@
 import { ref, computed, watch, type Ref } from 'vue'
+import { useConfirmDialog } from './useConfirmDialog'
 import { OFFICIAL_PROVINCIAL_EVENTS } from '../../data/mockPropietarioData'
 import type { ProvincialEvent, PropietarioOferta } from '../../types/propietario'
+
 
 // Estado compartido a nivel módulo para persistencia de vinculaciones
 const officialProvincialEvents = ref<ProvincialEvent[]>(OFFICIAL_PROVINCIAL_EVENTS)
@@ -114,9 +116,12 @@ export function useSpecialEvents(
     selectedYear.value = startY
     selectedMonth.value = startM
     showSpecialEventModal.value = false
-    window.alert(
-      `¡Fechas vinculadas exitosamente a ${evt.title}!\n\nSe asignó tarifa especial de $${specialEventForm.value.rate.toLocaleString()} ARS ${specialEventForm.value.allowsOvernight ? '(con pernocte habilitado)' : '(jornada diurna)'}.`
-    )
+    const { showAlert } = useConfirmDialog()
+    showAlert({
+      title: '¡Fechas Vinculadas con Éxito!',
+      message: `Vinculación completada para ${evt.title}.\n\nSe asignó tarifa especial de $${specialEventForm.value.rate.toLocaleString()} ARS ${specialEventForm.value.allowsOvernight ? '(con pernocte habilitado)' : '(jornada diurna)'}.`,
+      icon: 'festival',
+    })
   }
 
   return {

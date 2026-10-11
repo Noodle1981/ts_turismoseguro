@@ -20,6 +20,7 @@ const close = () => {
   <div
     v-if="modelValue && selectedTenant"
     class="fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm flex items-center justify-center p-4"
+    @click.self="close"
   >
     <div
       class="bg-surface-container-lowest rounded-xl shadow-xl max-w-lg w-full p-space-lg flex flex-col gap-space-md border border-surface-container animate-in fade-in duration-200"

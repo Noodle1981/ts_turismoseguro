@@ -74,7 +74,7 @@ export interface PropietarioOferta {
 export interface CalendarDay {
   day: number
   dateStr: string
-  status: 'available' | 'booked' | 'blocked' | 'maintenance' | 'past' | 'unconfigured' | 'special_event'
+  status: 'available' | 'booked' | 'blocked' | 'maintenance' | 'past' | 'unconfigured' | 'special_event' | 'external_booking'
   isPast?: boolean
   title?: string
   subtitle?: string
@@ -83,6 +83,19 @@ export interface CalendarDay {
   specialRate?: number
   allowsOvernight?: boolean
 }
+
+export interface ConfirmDialogState {
+  isOpen: boolean
+  title: string
+  message: string
+  confirmText?: string
+  cancelText?: string
+  type?: 'confirm' | 'alert' | 'danger'
+  icon?: string
+  onConfirm?: () => void
+  onCancel?: () => void
+}
+
 
 export interface ProvincialEvent {
   id: number

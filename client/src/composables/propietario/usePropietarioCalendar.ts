@@ -1,4 +1,5 @@
 import { ref, computed, type Ref } from 'vue'
+import { useConfirmDialog } from './useConfirmDialog'
 import {
   AVAILABLE_YEARS,
   AVAILABLE_MONTHS,
@@ -9,6 +10,7 @@ import {
   OCTOBER_DAYS_REFUGIO,
 } from '../../data/mockPropietarioData'
 import type { CalendarDay, PropietarioOferta, NewBookingPayload } from '../../types/propietario'
+
 
 export function usePropietarioCalendar(
   selectedOffer: Ref<PropietarioOferta>,
@@ -103,7 +105,12 @@ export function usePropietarioCalendar(
     const index = active.indexOf(dayId)
     if (index >= 0) {
       if (active.length === 1) {
-        window.alert('Debe quedar al menos un día habilitado para la oferta.')
+        const { showAlert } = useConfirmDialog()
+        showAlert({
+          title: 'Configuración Requerida',
+          message: 'Debe quedar al menos un día habilitado para la oferta.',
+          icon: 'warning',
+        })
         return
       }
       active.splice(index, 1)
@@ -187,9 +194,16 @@ export function usePropietarioCalendar(
 
       const internalBlk = internalBlocks.value[key]
       if (internalBlk) {
+        const blkStatus =
+          internalBlk.type === 'externo'
+            ? ('external_booking' as const)
+            : internalBlk.type === 'mantenimiento'
+              ? ('maintenance' as const)
+              : ('blocked' as const)
+
         return {
           ...d,
-          status: internalBlk.type === 'mantenimiento' ? ('maintenance' as const) : ('blocked' as const),
+          status: blkStatus,
           title: internalBlk.title,
           subtitle: internalBlk.subtitle,
           icon: internalBlk.icon,
@@ -238,18 +252,25 @@ export function usePropietarioCalendar(
   })
 
   const toggleCellState = async (dayNumber: number) => {
+    const { showConfirm, showAlert } = useConfirmDialog()
     const item = calendarDays.value.find((d) => d.day === dayNumber)
     if (!item) return
 
     if (item.isPast || item.status === 'past') {
-      window.alert(`Día ${dayNumber}: Es una fecha pasada ya concluida y no puede ser modificada.`)
+      await showAlert({
+        title: 'Fecha Concluida',
+        message: `El día ${dayNumber} pertenece a una fecha pasada ya concluida y no puede ser modificada.`,
+        icon: 'history',
+      })
       return
     }
 
     if (item.status === 'booked') {
-      window.alert(
-        `Día ${dayNumber}: Turno Diurno reservado para ${item.title || 'Inquilino'} (${item.subtitle || 'Verificado'}). Las fechas con seña no pueden liberarse directamente sin cancelar la reserva.`
-      )
+      await showAlert({
+        title: 'Turno Reservado con Seña',
+        message: `El día ${dayNumber} se encuentra reservado para ${item.title || 'Inquilino'} (${item.subtitle || 'Verificado'}).\n\nLas reservas vigentes no pueden liberarse directamente desde el calendario. Debe gestionarse desde la sección "Registro de Inquilinos".`,
+        icon: 'verified_user',
+      })
       return
     }
 
@@ -259,9 +280,14 @@ export function usePropietarioCalendar(
       const dayOfWeek = new Date(year, month - 1, dayNum).getDay()
       const nameOfDay = dayNames[dayOfWeek]
 
-      const confirmEnable = window.confirm(
-        `Día ${dayNumber} (${nameOfDay}): Este día figura 'Bloqueado' porque los ${nameOfDay}s no están habilitados en la Franja Diurna de tu oferta.\n\n¿Deseas habilitar los ${nameOfDay}s en tu oferta para que esté disponible?`
-      )
+      const confirmEnable = await showConfirm({
+        title: 'Habilitar Día en la Oferta',
+        message: `El día ${dayNumber} (${nameOfDay}) figura "Bloqueado" porque los ${nameOfDay}s no están habilitados en la Franja Diurna de tu propiedad.\n\n¿Deseas habilitar los ${nameOfDay}s para que este día pase a estar DISPONIBLE para alquileres?`,
+        confirmText: 'Sí, Habilitar Día',
+        cancelText: 'Mantener Bloqueado',
+        icon: 'calendar_month',
+      })
+
       if (confirmEnable) {
         if (!selectedOffer.value.schedule.activeDays.includes(dayOfWeek)) {
           selectedOffer.value.schedule.activeDays.push(dayOfWeek)
@@ -284,7 +310,36 @@ export function usePropietarioCalendar(
       return
     }
 
-    // Alternar entre available -> blocked -> maintenance -> available en el array base
+    // Si el día está bloqueado, en mantenimiento o reserva particular externa:
+    // Modal con confirmación que pregunta si desea pasarlo a disponibilidad
+    const monthNames = [
+      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ]
+    const mName = monthNames[selectedMonth.value - 1] || 'este mes'
+    const statusLabel =
+      item.status === 'external_booking'
+        ? 'Reserva Particular (Externa)'
+        : item.status === 'maintenance'
+          ? 'Mantenimiento'
+          : item.title || 'Bloqueo Privado'
+
+    const confirmLiberar = await showConfirm({
+      title: '¿Pasar Fecha a Disponible?',
+      message: `El día ${dayNumber} de ${mName} actualmente figura como "${statusLabel}".\n\n¿Deseas liberar esta fecha para que quede DISPONIBLE para alquileres?`,
+      confirmText: 'Sí, Pasar a Disponible',
+      cancelText: 'Cancelar',
+      icon: 'event_available',
+    })
+
+    if (!confirmLiberar) return
+
+    // Limpiar bloqueo interno si existía
+    const offerId = selectedOffer.value.id
+    const key = `${offerId}_${item.dateStr}`
+    delete internalBlocks.value[key]
+
+    // Limpiar en arrays base
     const isOlivos = selectedOffer.value.id === 8
     const baseDays =
       selectedMonth.value === 9
@@ -295,23 +350,7 @@ export function usePropietarioCalendar(
           ? octOlivos.value
           : octRefugio.value
     const rawItem = baseDays.find((d) => d.day === dayNumber)
-    if (!rawItem) return
-
-    let nextStatus: 'available' | 'blocked' | 'maintenance' = 'available'
-    if (rawItem.status === 'available') {
-      nextStatus = 'blocked'
-      rawItem.status = 'blocked'
-      rawItem.title = 'Uso Familiar'
-      rawItem.subtitle = 'Bloqueado por Anfitrión'
-      rawItem.icon = 'cottage'
-    } else if (rawItem.status === 'blocked') {
-      nextStatus = 'maintenance'
-      rawItem.status = 'maintenance'
-      rawItem.title = 'Mantenimiento'
-      rawItem.subtitle = 'Filtrado & Parquizado'
-      rawItem.icon = 'construction'
-    } else {
-      nextStatus = 'available'
+    if (rawItem) {
       rawItem.status = 'available'
       rawItem.title = undefined
       rawItem.subtitle = undefined
@@ -330,8 +369,8 @@ export function usePropietarioCalendar(
           },
           body: JSON.stringify({
             date: item.dateStr,
-            status: nextStatus,
-            notes: rawItem.title,
+            status: 'available',
+            notes: 'Liberado a disponibilidad',
           }),
         })
       }
