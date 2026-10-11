@@ -1,6 +1,6 @@
 # Plan de Trabajo - Próximo Sprint
 
-Documento de seguimiento y backlog para la próxima sesión de desarrollo en **Turismo Seguro San Juan**.
+Documento de seguimiento, registro de hitos completados y backlog para la próxima sesión de desarrollo en **Turismo Seguro San Juan**.
 
 ---
 
@@ -23,7 +23,31 @@ Documento de seguimiento y backlog para la próxima sesión de desarrollo en **T
 
 ---
 
-## 3. Lógica y Estructura de la Base de Datos & Laravel Best Practices
+## 3. Seguridad, Control de Accesos (RBAC) y Aislamiento de Sesiones
+
+- [x] **Navigation Guards Globales en Vue Router (`router/index.ts`):**
+  - Protección estricta con `requiresAuth: true` y control de roles (`roles`):
+    - `/propietario/panel` restringido a roles `client` y `super_admin`.
+    - `/inquilino/panel` restringido a roles `rent` y `super_admin`.
+    - `/validador/*` restringido a roles de staff (`validator`, `supervisor`, `admin`, `super_admin`).
+  - Redirección automática al login correspondiente si el usuario no está autenticado o si intenta acceder a un panel que no corresponde a su rol.
+- [x] **Prevención de Sesiones Zombis y Conflicto de Roles (`StaffAuthView.vue`):**
+  - Detección de sesión activa de Propietario/Inquilino al ingresar al Portal Staff (`/staff/login`).
+  - Banner interactivo de advertencia con acciones claras: *"Cerrar sesión de Propietario y continuar como Staff"* o *"Volver a mi panel"*.
+  - Limpieza atómica de sesión previa antes de procesar el login de staff para evitar mezcla de tokens y estados residuales.
+- [x] **Navegación Cruzada entre Vistas Pública y Privada:**
+  - En `PropietarioTopHeader.vue`: botón **"Ver como Inquilino"** que lleva a `/` y botón explícito de **"Cerrar Sesión"** en la barra superior.
+  - En `AppHeader.vue`:
+    - Eliminado el enlace *"Panel Propietario"* para visitantes no autenticados (solo se muestra *"Iniciar Sesión"*).
+    - Eliminados los accesos internos del propietario (`Mis Ofertas`, `Agregar Oferta`, `Pagos`) del header público.
+    - Eliminado el enlace `#protocolo` (*"Cómo Validamos"*).
+    - Agregado el botón **"Ver como Propietario"** en el navbar público cuando se navega con sesión activa de anfitrión, permitiendo volver a `/propietario/panel` en un clic.
+- [x] **Salvaguarda defensiva en vistas:**
+  - Chequeo de autenticación en ciclo de vida `onMounted` de `PropietarioPanelView.vue` e `InquilinoPanelView.vue`.
+
+---
+
+## 4. Lógica y Estructura de la Base de Datos & Laravel Best Practices
 
 - [x] **Modelo de Datos y Localidades Reales (San Juan):**
   - Creada tabla `localities` vinculada a los 19 departamentos oficiales de San Juan.
@@ -35,7 +59,7 @@ Documento de seguimiento y backlog para la próxima sesión de desarrollo en **T
     - Franja diurna (`schedule_start`, `schedule_end`) y días activos (`active_days` JSON).
     - Visibilidad y vacaciones (`is_listing_visible`, `pause_mode`, `pause_start_date`, `pause_end_date`).
     - Póliza de seguro (`insurance_company`, `policy_number`, `policy_valid_until`, `acta_inspeccion_fecha`).
-- [x] **Reglas de Filtros y Cobertura (Puntos 6 y 7):**
+- [x] **Reglas de Filtros y Cobertura (Puntos 6 y 7 de respuestas):**
   - `GET /api/v1/departments?with_offers=true`: Oculta automáticamente los departamentos que no tienen ofertas activas en los filtros de búsqueda.
   - `GET /api/v1/departments`: Retorna los 19 departamentos completos de San Juan para la navegación general/portada.
   - `GET /api/v1/departments/{slug}/localities`: Endpoint para obtener las localidades de cada departamento.
@@ -46,10 +70,12 @@ Documento de seguimiento y backlog para la próxima sesión de desarrollo en **T
 
 ---
 
-## 4. Próximos Pasos en el Flujo Backend $\rightarrow$ Frontend
+## 5. Próximos Pasos Pendientes (Backlog para Reanudar)
 
 - [ ] **Conectar el Panel del Propietario con la API:**
-  - Reemplazar el guardado mockeado en `usePropietarioOffers.ts` por llamadas reales a `PUT /api/v1/client/properties/{id}` con las tarifas multimodales y horarios.
+  - Reemplazar el guardado mockeado en `usePropietarioOffers.ts` por llamadas reales a `PUT /api/v1/client/properties/{id}` con las tarifas multimodales, horarios y estado de receso/vacaciones.
 - [ ] **Flujo End-to-End: "Agregar Oferta" $\rightarrow$ Bandeja del Validador:**
   - El modal *"Agregar Oferta"* (`ModalAddOffer.vue`) persiste la propiedad en `POST /api/v1/client/properties` y genera la `verification_request` en estado `pending`.
-  - Debe verse reflejada en la bandeja del validador (`ValidadorBandejaView.vue`).
+  - Debe verse reflejada automáticamente en la bandeja del validador (`ValidadorBandejaView.vue`).
+- [ ] **Geocodificación y Marcaciones Geográficas:**
+  - Integrar el JSON de marcaciones geográficas en preparación para la visualización del mapa territorial de inspecciones y catálogo geoespacial.
