@@ -8,6 +8,7 @@ defineProps<{
   activeNav: string
   userName?: string
   isMobileOpen?: boolean
+  isOfferPending?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -141,47 +142,68 @@ const handleAddOfferClick = () => {
 
         <!-- Navigation Items (Vistas Independientes) -->
         <nav class="px-space-md flex flex-col gap-space-xs" aria-label="Secciones del panel">
-          <a
-            href="#tarifas"
-            class="flex items-center gap-space-sm px-space-md py-space-sm transition-all rounded-xl font-label-lg text-label-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-            :class="
-              activeNav === 'tarifas'
-                ? 'bg-primary-container text-on-primary shadow-[0_1px_3px_0_rgba(15,41,66,0.04)] font-bold'
-                : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
-            "
-            @click.prevent="handleNavClick('tarifas')"
-          >
-            <span class="material-symbols-outlined" aria-hidden="true">tune</span>
-            <span>Configurar Tarifas</span>
-          </a>
+          <template v-if="isOfferPending">
+            <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-300 flex flex-col gap-1.5 mb-1">
+              <span class="font-bold text-xs flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px] text-amber-600">hourglass_top</span>
+                Trámite en Curso
+              </span>
+              <p class="text-[11px] leading-tight text-on-surface-variant">
+                Tarifas, calendario e inquilinos se habilitarán una vez aprobada la inspección in situ oficial.
+              </p>
+            </div>
 
-          <a
-            href="#calendario"
-            class="flex items-center gap-space-sm px-space-md py-space-sm transition-all rounded-xl font-label-lg text-label-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-            :class="
-              activeNav === 'calendario'
-                ? 'bg-primary-container text-on-primary shadow-[0_1px_3px_0_rgba(15,41,66,0.04)] font-bold'
-                : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
-            "
-            @click.prevent="handleNavClick('calendario')"
-          >
-            <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
-            <span>Calendario y Reservas</span>
-          </a>
+            <div
+              class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl font-label-lg text-label-lg bg-primary-container text-on-primary font-bold shadow-xs cursor-default"
+            >
+              <span class="material-symbols-outlined text-secondary-fixed" aria-hidden="true">verified</span>
+              <span>Estado de Homologación</span>
+            </div>
+          </template>
 
-          <a
-            href="#inquilinos"
-            class="flex items-center gap-space-sm px-space-md py-space-sm transition-all rounded-xl font-label-lg text-label-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-            :class="
-              activeNav === 'inquilinos'
-                ? 'bg-primary-container text-on-primary shadow-[0_1px_3px_0_rgba(15,41,66,0.04)] font-bold'
-                : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
-            "
-            @click.prevent="handleNavClick('inquilinos')"
-          >
-            <span class="material-symbols-outlined" aria-hidden="true">assignment_ind</span>
-            <span>Registro de Inquilinos</span>
-          </a>
+          <template v-else>
+            <a
+              href="#tarifas"
+              class="flex items-center gap-space-sm px-space-md py-space-sm transition-all rounded-xl font-label-lg text-label-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+              :class="
+                activeNav === 'tarifas'
+                  ? 'bg-primary-container text-on-primary shadow-[0_1px_3px_0_rgba(15,41,66,0.04)] font-bold'
+                  : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
+              "
+              @click.prevent="handleNavClick('tarifas')"
+            >
+              <span class="material-symbols-outlined" aria-hidden="true">tune</span>
+              <span>Configurar Tarifas</span>
+            </a>
+
+            <a
+              href="#calendario"
+              class="flex items-center gap-space-sm px-space-md py-space-sm transition-all rounded-xl font-label-lg text-label-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+              :class="
+                activeNav === 'calendario'
+                  ? 'bg-primary-container text-on-primary shadow-[0_1px_3px_0_rgba(15,41,66,0.04)] font-bold'
+                  : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
+              "
+              @click.prevent="handleNavClick('calendario')"
+            >
+              <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
+              <span>Calendario y Reservas</span>
+            </a>
+
+            <a
+              href="#inquilinos"
+              class="flex items-center gap-space-sm px-space-md py-space-sm transition-all rounded-xl font-label-lg text-label-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+              :class="
+                activeNav === 'inquilinos'
+                  ? 'bg-primary-container text-on-primary shadow-[0_1px_3px_0_rgba(15,41,66,0.04)] font-bold'
+                  : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
+              "
+              @click.prevent="handleNavClick('inquilinos')"
+            >
+              <span class="material-symbols-outlined" aria-hidden="true">assignment_ind</span>
+              <span>Registro de Inquilinos</span>
+            </a>
+          </template>
 
           <!-- Botón de Agregar Oferta directo en barra -->
           <button

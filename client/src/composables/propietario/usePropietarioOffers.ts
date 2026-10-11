@@ -54,13 +54,13 @@ function mapApiPropertyToOferta(prop: any, existingOffer?: PropietarioOferta): P
       fiestaNocturna: prop.tariffs?.fiesta_nocturna ?? existingOffer?.tariffs?.fiestaNocturna ?? 120000,
     },
     metrics: existingOffer?.metrics || {
-      jornadas: 14,
-      jornadasDiff: '+3 jornadas vs. mes pasado',
-      ocupacion: 78,
-      ingresosEstimados: 630000,
-      ingresosCobrado: 490000,
-      reputacion: 4.95,
-      resenasCount: 14,
+      jornadas: 0,
+      jornadasDiff: 'Sin reservas previas',
+      ocupacion: 0,
+      ingresosEstimados: 0,
+      ingresosCobrado: 0,
+      reputacion: 0,
+      resenasCount: 0,
     },
     amenities: Array.isArray(prop.amenities) && prop.amenities.length > 0
       ? prop.amenities.map((a: string) => ({
@@ -68,12 +68,7 @@ function mapApiPropertyToOferta(prop: any, existingOffer?: PropietarioOferta): P
           label: a,
           isSecurityFeature: a.toLowerCase().includes('cerca') || a.toLowerCase().includes('segur') || a.toLowerCase().includes('disyuntor'),
         }))
-      : (existingOffer?.amenities || [
-          { icon: 'pool', label: 'Pileta Cercada (1.80m)', isSecurityFeature: true },
-          { icon: 'outdoor_grill', label: 'Parrillero Techado' },
-          { icon: 'kitchen', label: '2 Freezers de Bebidas' },
-          { icon: 'bolt', label: 'Disyuntor Diferencial OK', isSecurityFeature: true },
-        ]),
+      : (existingOffer?.amenities || []),
     tenants: existingOffer?.tenants || [],
     pastTenants: existingOffer?.pastTenants || [],
     verificationStatus: prop.verification_status ?? existingOffer?.verificationStatus ?? 'unverified',
@@ -263,12 +258,7 @@ export function usePropietarioOffers() {
 
     const baseWeekday = newOffer.value.rateWeekday ?? 38000
 
-    const amenitiesList = [
-      ...(newOffer.value.poolFenced ? ['Pileta Cercada (1.80m)'] : []),
-      ...(newOffer.value.hasGrill ? ['Parrillero Techado'] : []),
-      ...(newOffer.value.hasFreezer ? ['Freezer de Bebidas'] : []),
-      'Disyuntor Diferencial OK',
-    ]
+    const amenitiesList: string[] = []
 
     try {
       if (isAuthenticated.value) {

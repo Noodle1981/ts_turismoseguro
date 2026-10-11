@@ -158,59 +158,139 @@ const copyToken = async () => {
       </div>
     </div>
 
-    <!-- FICHA TÉCNICA DECLARADA POR EL PROPIETARIO PARA AUDITORÍA IN SITU -->
-    <div class="bg-surface-container-lowest rounded-xl p-5 sm:p-6 border border-surface-container shadow-xs flex flex-col gap-4">
-      <div class="flex items-center justify-between pb-3 border-b border-surface-container">
-        <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-primary text-[20px]">checklist</span>
+    <!-- SECCIÓN INFORMATIVA: REQUISITOS OFICIALES Y PLANES DE SEGURO HOMOLOGADOS -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <!-- 1. Pólizas Homologadas Triunfo Seguros (Mensual / Anual) (5 cols) -->
+      <div class="lg:col-span-5 bg-surface-container-lowest rounded-xl p-5 border border-surface-container shadow-xs flex flex-col justify-between gap-4">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed/50 text-on-secondary-fixed font-label-sm text-label-sm font-bold">
+              <span class="material-symbols-outlined text-[16px] text-secondary">health_and_safety</span>
+              Triunfo Seguros Oficial
+            </span>
+            <span class="text-xs font-mono font-bold text-on-surface-variant">Ley Prov. San Juan</span>
+          </div>
+
           <h3 class="font-headline-sm text-headline-sm text-primary font-bold">
-            Datos Declarados para Constatación Presencial
+            Póliza de Responsabilidad Civil
           </h3>
-        </div>
-        <span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-xs font-semibold">
-          Aforo declarado: {{ offer.capacity ?? 40 }} personas
-        </span>
-      </div>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            Para habilitar el predio y comenzar a publicar tarifas y recibir reservas, la propiedad debe contar con el microseguro homologado para alquileres diurnos.
+          </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <!-- Tarjeta 1: Aforo y Ubicación -->
-        <div class="p-4 rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-2">
-          <span class="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold">Ubicación y Departamento</span>
-          <span class="font-body-md text-body-md text-primary font-bold flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[18px] text-tertiary">location_on</span>
-            {{ offer.location }}
-          </span>
-          <span class="text-xs text-on-surface-variant">Departamento: {{ offer.department }}</span>
-          <span class="text-xs text-on-surface-variant">Tipo de Inmueble: {{ offer.subtitle }}</span>
-        </div>
+          <!-- Opciones de Cobertura -->
+          <div class="flex flex-col gap-2 pt-1">
+            <div class="p-3 rounded-xl bg-surface-container-low border border-surface-container flex items-center justify-between">
+              <div class="flex flex-col">
+                <span class="font-bold text-xs text-primary">Plan Mensual Temporada</span>
+                <span class="text-[11px] text-on-surface-variant">Cobertura RC por 30 días para eventos familiares</span>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg bg-surface-container text-primary font-mono text-xs font-extrabold">
+                Por Jornada / Mes
+              </span>
+            </div>
 
-        <!-- Tarjeta 2: Fotos & Fachada -->
-        <div class="p-4 rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-2">
-          <span class="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold">Registro Fotográfico Inicial</span>
-          <div class="flex items-center gap-3">
-            <img :src="offer.image" :alt="offer.title" class="w-16 h-12 rounded-lg object-cover border border-surface-container shrink-0" />
-            <div class="flex flex-col">
-              <span class="text-xs font-bold text-primary">Foto Principal Declarada</span>
-              <span class="text-[11px] text-on-surface-variant">El inspector tomará fotos geolocalizadas durante la visita.</span>
+            <div class="p-3 rounded-xl bg-surface-container-low border border-secondary/30 flex items-center justify-between">
+              <div class="flex flex-col">
+                <span class="font-bold text-xs text-secondary flex items-center gap-1">
+                  Plan Anual Bonificado <span class="material-symbols-outlined text-[14px]">stars</span>
+                </span>
+                <span class="text-[11px] text-on-surface-variant">Protección integral 365 días + Sello Oro</span>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-mono text-xs font-extrabold">
+                Anual 12 Meses
+              </span>
             </div>
           </div>
         </div>
 
-        <!-- Tarjeta 3: Seguridad Declarada -->
-        <div class="p-4 rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-2">
-          <span class="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold">Instalaciones a Inspeccionar</span>
-          <div class="flex flex-wrap gap-1.5">
-            <span
-              v-for="amenity in offer.amenities"
-              :key="amenity.label"
-              class="px-2 py-0.5 rounded-full text-[11px] font-semibold border"
-              :class="amenity.isSecurityFeature
-                ? 'bg-secondary-fixed/40 text-on-secondary-fixed border-secondary/30'
-                : 'bg-surface-container text-on-surface border-surface-container'"
-            >
-              {{ amenity.label }}
-            </span>
+        <div class="pt-2 border-t border-surface-container flex items-center justify-between text-xs text-on-surface-variant">
+          <span>Emitido tras la aprobación in situ</span>
+          <span class="text-secondary font-bold flex items-center gap-0.5">
+            <span class="material-symbols-outlined text-[14px]">verified</span> Sin adelantos previos
+          </span>
+        </div>
+      </div>
+
+      <!-- 2. Matriz de Requisitos Oficiales a Evaluar por el Validador (7 cols) -->
+      <div class="lg:col-span-7 bg-surface-container-lowest rounded-xl p-5 border border-surface-container shadow-xs flex flex-col justify-between gap-4">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center justify-between pb-2 border-b border-surface-container">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[20px]">assignment_turned_in</span>
+              <h3 class="font-headline-sm text-headline-sm text-primary font-bold">
+                Criterios Oficiales de Auditoría In Situ
+              </h3>
+            </div>
+            <span class="text-[11px] text-on-surface-variant font-medium">Auditoría Presencial</span>
           </div>
+
+          <p class="text-xs text-on-surface-variant">
+            Durante la visita, el validador matriculado cotejará las instalaciones físicas y completará el Acta Oficial con los siguientes ítems:
+          </p>
+
+          <!-- Lista de Items a Evaluar con enlaces de consulta -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <div class="p-2.5 rounded-lg bg-surface-container-low border border-surface-container flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary text-[18px]">fence</span>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-primary">Cerco Perimetral de Pileta</span>
+                <span class="text-[10px] text-on-surface-variant">Altura mín. 1.20m con traba de seguridad</span>
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-lg bg-surface-container-low border border-surface-container flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary text-[18px]">electric_bolt</span>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-primary">Disyuntor y Puesta a Tierra</span>
+                <span class="text-[10px] text-on-surface-variant">Tablero eléctrico estanco certificado</span>
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-lg bg-surface-container-low border border-surface-container flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary text-[18px]">fire_extinguisher</span>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-primary">Matafuego ABC con Carga Vigente</span>
+                <span class="text-[10px] text-on-surface-variant">Ubicado cerca del quincho/parrillero</span>
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-lg bg-surface-container-low border border-surface-container flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary text-[18px]">medical_services</span>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-primary">Botiquín de Primeros Auxilios</span>
+                <span class="text-[10px] text-on-surface-variant">Elementos básicos y números de emergencia</span>
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-lg bg-surface-container-low border border-surface-container flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary text-[18px]">photo_camera</span>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-primary">Relevamiento Fotográfico GPS</span>
+                <span class="text-[10px] text-on-surface-variant">Fotos geolocalizadas tomadas por el auditor</span>
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-lg bg-surface-container-low border border-surface-container flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary text-[18px]">pin_drop</span>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-primary">Coordenadas y Titularidad</span>
+                <span class="text-[10px] text-on-surface-variant">Cotejo de ubicación real y DNI titular</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-surface-container flex flex-wrap items-center justify-between gap-2 text-xs">
+          <span class="text-on-surface-variant">¿Tenés dudas sobre las normas de seguridad?</span>
+          <a
+            href="https://turismo.sanjuan.gob.ar"
+            target="_blank"
+            class="text-secondary font-bold hover:underline flex items-center gap-1"
+          >
+            <span>Ver Protocolo de Seguridad Oficial</span>
+            <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+          </a>
         </div>
       </div>
     </div>

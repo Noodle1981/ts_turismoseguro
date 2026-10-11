@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, defineAsyncComponent } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch, defineAsyncComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuth } from '../composables/useAuth'
 
@@ -71,6 +71,15 @@ const {
   handleSolicitarRevalidacion,
   handleLogout,
 } = usePropietarioOffers()
+
+const isOfferPending = computed(() => {
+  if (!selectedOffer.value) return false
+  return (
+    selectedOffer.value.publicationStatus === 'draft' ||
+    selectedOffer.value.verificationStatus === 'unverified' ||
+    selectedOffer.value.verificationStatus === 'pending'
+  )
+})
 
 const handleConfirmPause = async (payload: { mode: 'indefinite' | 'vacation'; startDate?: string; endDate?: string }) => {
   if (selectedOffer.value) {
@@ -262,6 +271,7 @@ watch(
       :active-nav="activeNav"
       :user-name="user?.name"
       :is-mobile-open="isMobileSidebarOpen"
+      :is-offer-pending="isOfferPending"
       @select-offer="selectedOfferId = $event"
       @update-nav="activeNav = $event"
       @open-add-offer="showAddOfferModal = true"
@@ -288,73 +298,76 @@ watch(
       <main class="relative pt-16 bg-background min-h-screen">
         <div class="flex flex-col w-full">
           <div class="p-space-md lg:p-space-lg flex flex-col gap-space-md max-w-[1440px] mx-auto w-full">
-            <!-- 1. VISTA INDEPENDIENTE: CONFIGURAR TARIFAS (#tarifas) -->
-            <div v-show="activeNav === 'tarifas'" id="tarifas" class="flex flex-col gap-space-md">
-              <!-- Tarjeta de Estado de Homologación e Inspección In Situ (esperando / validador asignado / token antifraude) -->
-              <PropietarioHomologacionStatusCard
-                v-if="selectedOffer"
-                :offer="selectedOffer"
-              />
+            
+            <!-- SI LA PROPIEDAD ESTÁ EN TRÁMITE DE HOMOLOGACIÓN / PENDIENTE DE INSPECCIÓN -->
+            <div v-if="selectedOffer && isOfferPending" class="flex flex-col gap-space-md">
+              <PropietarioHomologacionStatusCard :offer="selectedOffer" />
+            </div>
 
-              <!-- Métricas Clave y Estado de la Propiedad -->
-              <PropietarioMetricsHeader
-                :selected-offer="selectedOffer"
-                :current-metrics="currentMetrics"
-                :current-month-events="currentMonthEvents"
-                @open-special-events="openSpecialEventModal"
-              />
-
-              <!-- Gestión de Tarifas Diurnas/Pernocte/Fiestas + Revalidación In Situ -->
-              <div id="mis-ofertas-y-tarifas" class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
-                <PropietarioTariffsCard
+            <!-- SI LA PROPIEDAD ESTÁ HOMOLOGADA Y PUBLICADA -->
+            <template v-else-if="selectedOffer">
+              <!-- 1. VISTA INDEPENDIENTE: CONFIGURAR TARIFAS (#tarifas) -->
+              <div v-show="activeNav === 'tarifas'" id="tarifas" class="flex flex-col gap-space-md">
+                <!-- Métricas Clave y Estado de la Propiedad -->
+                <PropietarioMetricsHeader
                   :selected-offer="selectedOffer"
-                  v-model:tariffs-tab="tariffsTab"
-                  :tarifa-saved-feedback="tarifaSavedFeedback"
-                  :week-day-defs="weekDayDefs"
-                  :calculate-hours-duration="calculateHoursDuration"
-                  @save-tarifas="handleSaveTarifas"
-                  @open-schedule-modal="showScheduleModal = true"
-                  @open-vacation-modal="showVacationModal = true"
-                  @toggle-listing-visibility="handleReactivateOffer"
-                  @toggle-active-day="toggleActiveDay"
+                  :current-metrics="currentMetrics"
+                  :current-month-events="currentMonthEvents"
+                  @open-special-events="openSpecialEventModal"
                 />
 
-                <PropietarioRevalidacionCard
-                  :revalidacion-form="revalidacionForm"
-                  @submit="handleSolicitarRevalidacion"
+                <!-- Gestión de Tarifas Diurnas/Pernocte/Fiestas + Revalidación In Situ -->
+                <div id="mis-ofertas-y-tarifas" class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+                  <PropietarioTariffsCard
+                    :selected-offer="selectedOffer"
+                    v-model:tariffs-tab="tariffsTab"
+                    :tarifa-saved-feedback="tarifaSavedFeedback"
+                    :week-day-defs="weekDayDefs"
+                    :calculate-hours-duration="calculateHoursDuration"
+                    @save-tarifas="handleSaveTarifas"
+                    @open-schedule-modal="showScheduleModal = true"
+                    @open-vacation-modal="showVacationModal = true"
+                    @toggle-listing-visibility="handleReactivateOffer"
+                    @toggle-active-day="toggleActiveDay"
+                  />
+
+                  <PropietarioRevalidacionCard
+                    :revalidacion-form="revalidacionForm"
+                    @submit="handleSolicitarRevalidacion"
+                  />
+                </div>
+              </div>
+
+              <!-- 2. VISTA INDEPENDIENTE: CALENDARIO Y RESERVAS (#calendario) -->
+              <div v-show="activeNav === 'calendario'" id="calendario">
+                <PropietarioCalendarSection
+                  v-model:selected-month="selectedMonth"
+                  v-model:selected-year="selectedYear"
+                  :available-months="availableMonths"
+                  :available-years="availableYears"
+                  :current-month-events="currentMonthEvents"
+                  :selected-offer-department="selectedOffer.department"
+                  :calendar-days="calendarDays"
+                  :first-day-offset="firstDayOffset"
+                  @prev-month="prevMonth"
+                  @next-month="nextMonth"
+                  @open-special-events="openSpecialEventModal"
+                  @open-internal-blocks="openInternalBlockModal"
+                  @toggle-cell-state="toggleCellState"
                 />
               </div>
-            </div>
 
-            <!-- 2. VISTA INDEPENDIENTE: CALENDARIO Y RESERVAS (#calendario) -->
-            <div v-show="activeNav === 'calendario'" id="calendario">
-              <PropietarioCalendarSection
-                v-model:selected-month="selectedMonth"
-                v-model:selected-year="selectedYear"
-                :available-months="availableMonths"
-                :available-years="availableYears"
-                :current-month-events="currentMonthEvents"
-                :selected-offer-department="selectedOffer.department"
-                :calendar-days="calendarDays"
-                :first-day-offset="firstDayOffset"
-                @prev-month="prevMonth"
-                @next-month="nextMonth"
-                @open-special-events="openSpecialEventModal"
-                @open-internal-blocks="openInternalBlockModal"
-                @toggle-cell-state="toggleCellState"
-              />
-            </div>
-
-            <!-- 3. VISTA INDEPENDIENTE: REGISTRO DE INQUILINOS (#inquilinos) -->
-            <div v-show="activeNav === 'inquilinos'" id="inquilinos">
-              <PropietarioTenantsSection
-                :selected-offer="selectedOffer"
-                v-model:tenant-tab="tenantTab"
-                @open-detail="openTenantDetail"
-                @rate="setTenantRating($event.tenant, $event.rating)"
-                @save-observation="saveTenantObservation($event.tenant, $event.observation)"
-              />
-            </div>
+              <!-- 3. VISTA INDEPENDIENTE: REGISTRO DE INQUILINOS (#inquilinos) -->
+              <div v-show="activeNav === 'inquilinos'" id="inquilinos">
+                <PropietarioTenantsSection
+                  :selected-offer="selectedOffer"
+                  v-model:tenant-tab="tenantTab"
+                  @open-detail="openTenantDetail"
+                  @rate="setTenantRating($event.tenant, $event.rating)"
+                  @save-observation="saveTenantObservation($event.tenant, $event.observation)"
+                />
+              </div>
+            </template>
           </div>
         </div>
       </main>
