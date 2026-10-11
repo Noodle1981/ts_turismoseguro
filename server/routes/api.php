@@ -68,4 +68,10 @@ Route::prefix('v1')->group(function () {
         Route::post('/bookings/{id}/observation', [ClientPropertyController::class, 'saveBookingObservation'])->name('client.bookings.observation');
         Route::post('/verifications/request', [ClientPropertyController::class, 'requestVerification'])->name('client.verifications.request');
     });
+
+    // Panel Staff / Mesa de Supervisión y Validadores (Rol: validator, supervisor, admin, super_admin)
+    Route::middleware(['auth:sanctum', 'role:validator,supervisor,admin,super_admin'])->prefix('staff')->group(function () {
+        Route::get('/verifications', [\App\Http\Controllers\Api\V1\StaffVerificationController::class, 'index'])->name('staff.verifications.index');
+        Route::put('/verifications/{id}/assign', [\App\Http\Controllers\Api\V1\StaffVerificationController::class, 'assignValidator'])->name('staff.verifications.assign');
+    });
 });

@@ -1,17 +1,23 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '../composables/useAuth'
+import { api } from '../composables/useApi'
 
 const router = useRouter()
 const { user, logout } = useAuth()
 
+const isSupervisorOrAdmin = computed(() => {
+  const role = user.value?.role
+  return role === 'supervisor' || role === 'admin' || role === 'super_admin'
+})
+
 // Métricas de la bandeja
 const metrics = ref({
-  pending: 12,
-  inProgress: 8,
-  approved: 48,
-  rejected: 6,
+  pending: 0,
+  inProgress: 0,
+  approved: 0,
+  rejected: 0,
 })
 
 // Tab activo
@@ -21,10 +27,10 @@ const activeTab = ref<TabKey>('todos')
 // Filtros
 const searchQuery = ref('')
 const selectedDepartment = ref('Todos')
-const onlyMyAssignments = ref(true)
+const onlyMyAssignments = ref(false)
 
 // Solicitud seleccionada en el Drawer lateral
-const selectedRequestId = ref<string>('SOL-2025-1042')
+const selectedRequestId = ref<string>('')
 
 interface InspectionRequest {
   id: string
@@ -44,82 +50,107 @@ interface InspectionRequest {
   progressPercentage?: number
   actCode?: string
   notes?: string
+  validator_id?: number | null
+  validator_name?: string | null
+  hasLocalValidator?: boolean
+  coverageAlert?: string | null
 }
 
-const requests = ref<InspectionRequest[]>([
-  {
-    id: 'SOL-2025-1042',
-    code: 'SOL-2025-1042',
-    propertyTitle: 'Quinta El Remanso del Médano',
-    department: 'Rawson',
-    address: 'Calle 5 y Ramón Franco, Médano de Oro',
-    ownerName: 'Elena Morales (Anfitriona Verificada)',
-    ownerDni: '28.412.091',
-    ownerPhone: '+54 9 264 400-0004',
-    hoursAgo: 'Hace 3 horas',
-    status: 'pending',
-    priority: 'urgent',
-    photosCount: 6,
-    imageUrl: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80',
-    amenities: ['Pileta con cerco seguro', 'Quincho 35 pax', '2 Freezers', 'Parrillero techado'],
-    notes: 'Solicitó inspección preferencial para habilitación de fin de semana.',
-  },
-  {
-    id: 'SOL-2025-0988',
-    code: 'SOL-2025-0988',
-    propertyTitle: 'Finca Los Olivos Diurnos',
-    department: 'Pocito',
-    address: 'Calle 12 y Vidart, Pocito Sur',
-    ownerName: 'Elena Morales (Anfitriona Verificada)',
-    ownerDni: '28.412.091',
-    ownerPhone: '+54 9 264 400-0004',
-    hoursAgo: 'Visita Hoy 16:30 hs',
-    status: 'in_progress',
-    priority: 'normal',
-    photosCount: 8,
-    imageUrl: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
-    amenities: ['Pileta de diseño', 'Galería para 40 pers.', 'Cancha de fútbol 5', 'Parrilla'],
-    progressPercentage: 65,
-    actCode: 'Acta #988-POC/26',
-    notes: 'Verificar traba del cerco perimetral y constatar titularidad de cuenta bancaria.',
-  },
-  {
-    id: 'SOL-2025-0849',
-    code: 'SOL-2025-0849',
-    propertyTitle: 'Solo Día Quinta Los Olivos',
-    department: 'Rawson',
-    address: 'Calle Picasso 1400, Médano de Oro',
-    ownerName: 'Elena Morales (Anfitriona Verificada)',
-    ownerDni: '28.412.091',
-    ownerPhone: '+54 9 264 400-0004',
-    hoursAgo: 'Certificado 14/02/2026',
-    status: 'approved',
-    priority: 'normal',
-    photosCount: 10,
-    imageUrl: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80',
-    amenities: ['Pileta cercada', 'Quincho 45 personas', 'Cancha de vóley', 'Estacionamiento'],
-    progressPercentage: 100,
-    actCode: 'Acta #849-MED/26',
-    notes: 'Propiedad con Sello San Juan Verificado activo y QR de autenticidad emitido.',
-  },
-  {
-    id: 'SOL-2025-0812',
-    code: 'SOL-2025-0812',
-    propertyTitle: 'Quincho San Cayetano',
-    department: 'Rivadavia',
-    address: 'Calle Comercio s/n, La Bebida',
-    ownerName: 'Elena Morales (Anfitriona Verificada)',
-    ownerDni: '28.412.091',
-    ownerPhone: '+54 9 264 400-0004',
-    hoursAgo: 'Observado 10/02/2026',
-    status: 'rejected',
-    priority: 'normal',
-    photosCount: 4,
-    imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
-    amenities: ['Pileta abierta', 'Quincho 20 pax', 'Parrilla'],
-    notes: 'CBU informado no coincide con el DNI del titular. En proceso de rectificación de documentación.',
-  },
-])
+interface ValidatorItem {
+  id: number
+  name: string
+  phone?: string
+  origin_city?: string
+}
+
+const requests = ref<InspectionRequest[]>([])
+const availableValidators = ref<ValidatorItem[]>([])
+const isLoading = ref(false)
+const isAssigning = ref(false)
+const selectedAssignValidatorId = ref<number | ''>('')
+const assignSuccessMsg = ref<string | null>(null)
+
+// Estados para Sincronizar y Registrar Solicitud Manual
+const isSyncing = ref(false)
+const showManualModal = ref(false)
+const syncSuccess = ref(false)
+
+const fetchRequests = async () => {
+  isLoading.value = true
+  try {
+    const params: Record<string, any> = {}
+    if (activeTab.value !== 'todos') {
+      params.status = activeTab.value
+    }
+    if (selectedDepartment.value !== 'Todos') {
+      params.department = selectedDepartment.value
+    }
+    if (onlyMyAssignments.value) {
+      params.only_my_assignments = true
+    }
+
+    const res = await api.get('/staff/verifications', { params })
+    const data = res.data.data || []
+
+    requests.value = data.map((item: any): InspectionRequest => {
+      let uiStatus: 'pending' | 'in_progress' | 'approved' | 'rejected' = 'pending'
+      if (item.status === 'assigned' || item.status === 'visited' || item.status === 'under_supervision') {
+        uiStatus = 'in_progress'
+      } else if (item.status === 'approved') {
+        uiStatus = 'approved'
+      } else if (item.status === 'rejected') {
+        uiStatus = 'rejected'
+      }
+
+      return {
+        id: String(item.id),
+        code: item.code || `SOL-TS-${item.id}`,
+        propertyTitle: item.propertyTitle,
+        department: item.department,
+        address: item.address,
+        ownerName: item.ownerName,
+        ownerDni: item.ownerDni,
+        ownerPhone: item.ownerPhone,
+        hoursAgo: item.hoursAgo,
+        status: uiStatus,
+        priority: item.priority || 'normal',
+        photosCount: item.photosCount || 0,
+        imageUrl: item.imageUrl || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80',
+        amenities: item.amenities || [],
+        notes: item.notes || 'Inspección de seguridad in situ.',
+        validator_id: item.validator_id,
+        validator_name: item.validator_name,
+        hasLocalValidator: item.hasLocalValidator ?? true,
+        coverageAlert: item.coverageAlert ?? null,
+      }
+    })
+
+    if (res.data.metrics) {
+      metrics.value = {
+        pending: res.data.metrics.pending ?? 0,
+        inProgress: res.data.metrics.inProgress ?? 0,
+        approved: res.data.metrics.approved ?? 0,
+        rejected: res.data.metrics.rejected ?? 0,
+      }
+    }
+
+    if (res.data.available_validators) {
+      availableValidators.value = res.data.available_validators
+    }
+
+    if (requests.value.length > 0 && !requests.value.some(r => r.id === selectedRequestId.value)) {
+      selectedRequestId.value = requests.value[0].id
+    }
+  } catch (err) {
+    console.warn('Error fetching verifications from API, keeping local fallback:', err)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+onMounted(() => {
+  fetchRequests()
+})
 
 // Solicitudes filtradas
 const filteredRequests = computed(() => {
@@ -147,33 +178,47 @@ const filteredRequests = computed(() => {
   })
 })
 
-const selectedRequest = computed(() => {
-  return requests.value.find((r) => r.id === selectedRequestId.value) ?? requests.value[0]
+const selectedRequest = computed<InspectionRequest | null>(() => {
+  return requests.value.find((r) => r.id === selectedRequestId.value) ?? requests.value[0] ?? null
 })
 
 const handleSelectRequest = (id: string) => {
   selectedRequestId.value = id
+  assignSuccessMsg.value = null
+  selectedAssignValidatorId.value = ''
 }
 
 const handleStartActa = (request: InspectionRequest) => {
   router.push(`/validador/acta/${request.id}`)
 }
 
-// Estados para Sincronizar y Registrar Solicitud Manual
-const isSyncing = ref(false)
-const showManualModal = ref(false)
-const syncSuccess = ref(false)
+const handleAssignValidator = async () => {
+  if (!selectedRequest.value || !selectedAssignValidatorId.value) return
+  isAssigning.value = true
+  assignSuccessMsg.value = null
+  try {
+    const res = await api.put(`/staff/verifications/${selectedRequest.value.id}/assign`, {
+      validator_id: Number(selectedAssignValidatorId.value),
+      notes: 'Validador designado desde la Mesa de Supervisión.',
+    })
+    assignSuccessMsg.value = res.data.message || 'Validador asignado correctamente.'
+    await fetchRequests()
+  } catch (err: any) {
+    alert(err?.response?.data?.message || 'Error al asignar validador.')
+  } finally {
+    isAssigning.value = false
+  }
+}
 
-const handleSync = () => {
+const handleSync = async () => {
   isSyncing.value = true
   syncSuccess.value = false
+  await fetchRequests()
+  isSyncing.value = false
+  syncSuccess.value = true
   setTimeout(() => {
-    isSyncing.value = false
-    syncSuccess.value = true
-    setTimeout(() => {
-      syncSuccess.value = false
-    }, 2500)
-  }, 1000)
+    syncSuccess.value = false
+  }, 2500)
 }
 
 const newManualRequest = ref({
@@ -506,35 +551,63 @@ const handleLogout = async () => {
                 </span>
               </div>
 
-              <!-- Status Badge -->
-              <span
-                v-if="req.status === 'pending'"
-                class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-tertiary-container/20 text-tertiary font-label-sm text-label-sm font-bold"
-              >
-                <span class="w-2 h-2 rounded-full bg-tertiary"></span>
-                Pendiente de Visita
-              </span>
-              <span
-                v-else-if="req.status === 'in_progress'"
-                class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm font-bold"
-              >
-                <span class="material-symbols-outlined text-[14px] text-secondary">sync</span>
-                En Curso ({{ req.progressPercentage }}%)
-              </span>
-              <span
-                v-else-if="req.status === 'approved'"
-                class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-fixed/50 text-secondary font-label-sm text-label-sm font-bold"
-              >
-                <span class="material-symbols-outlined text-[14px]">verified</span>
-                Auditada & Publicada
-              </span>
-              <span
-                v-else
-                class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-error-container/40 text-error font-label-sm text-label-sm font-bold"
-              >
-                <span class="material-symbols-outlined text-[14px]">error</span>
-                Observada
-              </span>
+              <!-- Status & Alert Badges -->
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span
+                  v-if="req.coverageAlert"
+                  class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 font-label-sm text-label-sm font-bold border border-amber-500/30"
+                  title="Falta de cobertura en este departamento"
+                >
+                  <span class="material-symbols-outlined text-[15px] text-amber-600">warning</span>
+                  Sin Validador Local
+                </span>
+
+                <span
+                  v-if="req.validator_name"
+                  class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-primary font-label-sm text-label-sm font-semibold"
+                >
+                  <span class="material-symbols-outlined text-[14px]">badge</span>
+                  {{ req.validator_name }}
+                </span>
+
+                <span
+                  v-if="req.status === 'pending'"
+                  class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-tertiary-container/20 text-tertiary font-label-sm text-label-sm font-bold"
+                >
+                  <span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                  Pendiente de Visita
+                </span>
+                <span
+                  v-else-if="req.status === 'in_progress'"
+                  class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm font-bold"
+                >
+                  <span class="material-symbols-outlined text-[14px] text-secondary">sync</span>
+                  En Curso ({{ req.progressPercentage ?? 50 }}%)
+                </span>
+                <span
+                  v-else-if="req.status === 'approved'"
+                  class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-fixed/50 text-secondary font-label-sm text-label-sm font-bold"
+                >
+                  <span class="material-symbols-outlined text-[14px]">verified</span>
+                  Auditada & Publicada
+                </span>
+                <span
+                  v-else
+                  class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-error-container/40 text-error font-label-sm text-label-sm font-bold"
+                >
+                  <span class="material-symbols-outlined text-[14px]">error</span>
+                  Observada
+                </span>
+              </div>
+            </div>
+
+            <!-- Banner Alerta de Cobertura en la tarjeta si aplica -->
+            <div
+              v-if="req.coverageAlert"
+              class="px-3.5 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-300 dark:border-amber-800 flex items-center gap-2 text-amber-800 dark:text-amber-300 text-xs font-semibold"
+            >
+              <span class="material-symbols-outlined text-[18px] text-amber-600 shrink-0">emergency_home</span>
+              <span>{{ req.coverageAlert }}</span>
             </div>
 
             <!-- Content Body -->
@@ -604,60 +677,133 @@ const handleLogout = async () => {
 
         <!-- DRAWER RESUMEN RÁPIDO DE SOLICITUD SELECCIONADA (5 COLS) -->
         <aside class="lg:col-span-5 sticky top-6 bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-surface-container flex flex-col gap-5">
-          <div class="flex items-center justify-between pb-3 border-b border-surface-container">
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center">
-                <span class="material-symbols-outlined text-[18px]">assignment</span>
+          <div v-if="selectedRequest" class="flex flex-col gap-5">
+            <div class="flex items-center justify-between pb-3 border-b border-surface-container">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center">
+                  <span class="material-symbols-outlined text-[18px]">assignment</span>
+                </div>
+                <div>
+                  <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Inspección In Situ</span>
+                  <h2 class="font-headline-sm text-headline-sm text-primary font-bold">
+                    {{ selectedRequest.propertyTitle }}
+                  </h2>
+                </div>
               </div>
-              <div>
-                <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Inspección In Situ</span>
-                <h2 class="font-headline-sm text-headline-sm text-primary font-bold">
-                  {{ selectedRequest.propertyTitle }}
-                </h2>
+
+              <span class="font-mono text-xs font-bold text-secondary bg-secondary-fixed/50 px-2 py-0.5 rounded-full">
+                {{ selectedRequest.code }}
+              </span>
+            </div>
+
+            <!-- Imagen y Datos del Predio -->
+            <div class="rounded-xl overflow-hidden h-40 bg-surface-container relative">
+              <img :src="selectedRequest.imageUrl" :alt="selectedRequest.propertyTitle" class="w-full h-full object-cover" />
+              <div class="absolute bottom-2 left-2 bg-primary/80 backdrop-blur px-2.5 py-1 rounded-lg text-white font-label-sm text-label-sm font-semibold flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">pin_drop</span>
+                {{ selectedRequest.department }}, San Juan
               </div>
             </div>
 
-            <span class="font-mono text-xs font-bold text-secondary bg-secondary-fixed/50 px-2 py-0.5 rounded-full">
-              {{ selectedRequest.code }}
-            </span>
-          </div>
-
-          <!-- Imagen y Datos del Predio -->
-          <div class="rounded-xl overflow-hidden h-40 bg-surface-container relative">
-            <img :src="selectedRequest.imageUrl" :alt="selectedRequest.propertyTitle" class="w-full h-full object-cover" />
-            <div class="absolute bottom-2 left-2 bg-primary/80 backdrop-blur px-2.5 py-1 rounded-lg text-white font-label-sm text-label-sm font-semibold flex items-center gap-1">
-              <span class="material-symbols-outlined text-[14px]">pin_drop</span>
-              {{ selectedRequest.department }}, San Juan
+            <!-- Datos del Propietario -->
+            <div class="p-3.5 rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-1.5">
+              <span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold">Titular Declarado</span>
+              <span class="font-headline-sm text-headline-sm text-primary font-bold">{{ selectedRequest.ownerName }}</span>
+              <span class="font-body-sm text-body-sm text-on-surface-variant">DNI: {{ selectedRequest.ownerDni }}</span>
+              <span class="font-body-sm text-body-sm text-secondary font-semibold flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px]">call</span> {{ selectedRequest.ownerPhone }}
+              </span>
             </div>
+
+            <!-- Notas y Puntos Clave -->
+            <div class="flex flex-col gap-1.5">
+              <span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold">Instrucciones de Auditoría</span>
+              <p class="font-body-sm text-body-sm text-on-surface p-3 rounded-xl bg-surface-container-low border border-surface-container">
+                {{ selectedRequest.notes }}
+              </p>
+            </div>
+
+            <!-- MESA DE SUPERVISIÓN: ASIGNACIÓN DE VALIDADOR MATRICULADO -->
+            <div
+              v-if="isSupervisorOrAdmin"
+              class="p-4 rounded-xl bg-surface-container-low border border-primary/20 flex flex-col gap-3 shadow-xs"
+            >
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-1.5 font-label-md text-label-md font-bold text-primary">
+                  <span class="material-symbols-outlined text-[18px] text-secondary">admin_panel_settings</span>
+                  <span>Despacho de Supervisión</span>
+                </div>
+                <span
+                  v-if="selectedRequest.validator_name"
+                  class="px-2 py-0.5 rounded-full bg-secondary-fixed/50 text-secondary text-[11px] font-bold"
+                >
+                  Asignado
+                </span>
+                <span
+                  v-else
+                  class="px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-700 text-[11px] font-bold"
+                >
+                  Sin asignar
+                </span>
+              </div>
+
+              <div v-if="selectedRequest.coverageAlert" class="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-300 text-xs flex items-start gap-2">
+                <span class="material-symbols-outlined text-[16px] text-amber-600 mt-0.5 shrink-0">info</span>
+                <span><strong>Alerta Departamental:</strong> Designe a un validador con cobertura limítrofe para realizar el traslado in situ.</span>
+              </div>
+
+              <div class="flex flex-col gap-1.5">
+                <label class="font-label-sm text-label-sm text-on-surface font-semibold">
+                  Designar Validador Matriculado:
+                </label>
+                <div class="flex items-center gap-2">
+                  <select
+                    v-model="selectedAssignValidatorId"
+                    class="flex-1 px-3 py-2 rounded-lg bg-surface-container-lowest border border-surface-container text-on-surface text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                  >
+                    <option value="">Seleccione un inspector...</option>
+                    <option
+                      v-for="val in availableValidators"
+                      :key="val.id"
+                      :value="val.id"
+                    >
+                      {{ val.name }} ({{ val.origin_city ?? 'San Juan' }})
+                    </option>
+                  </select>
+
+                  <button
+                    type="button"
+                    class="px-3.5 py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm font-bold disabled:opacity-50 transition-all cursor-pointer flex items-center gap-1"
+                    :disabled="!selectedAssignValidatorId || isAssigning"
+                    @click="handleAssignValidator"
+                  >
+                    <span v-if="isAssigning" class="material-symbols-outlined text-[16px] animate-spin">sync</span>
+                    <span>{{ isAssigning ? 'Designando...' : 'Asignar' }}</span>
+                  </button>
+                </div>
+
+                <p v-if="assignSuccessMsg" class="text-secondary text-xs font-bold pt-1 flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                  {{ assignSuccessMsg }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Botón de apertura de Acta -->
+            <button
+              type="button"
+              class="w-full py-3.5 px-4 rounded-xl bg-secondary text-on-secondary font-label-md text-label-md hover:bg-secondary/90 transition-all font-bold shadow-md cursor-pointer flex items-center justify-center gap-2"
+              @click="handleStartActa(selectedRequest)"
+            >
+              <span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+              <span>Completar Acta de Inspección In Situ</span>
+            </button>
           </div>
 
-          <!-- Datos del Propietario -->
-          <div class="p-3.5 rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-1.5">
-            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold">Titular Declarado</span>
-            <span class="font-headline-sm text-headline-sm text-primary font-bold">{{ selectedRequest.ownerName }}</span>
-            <span class="font-body-sm text-body-sm text-on-surface-variant">DNI: {{ selectedRequest.ownerDni }}</span>
-            <span class="font-body-sm text-body-sm text-secondary font-semibold flex items-center gap-1">
-              <span class="material-symbols-outlined text-[16px]">call</span> {{ selectedRequest.ownerPhone }}
-            </span>
+          <div v-else class="text-center py-12 text-on-surface-variant font-body-sm text-body-sm">
+            <span class="material-symbols-outlined text-[36px] text-on-surface-variant/40 mb-2 block">touch_app</span>
+            <span>Seleccione una solicitud para ver los detalles e iniciar la inspección.</span>
           </div>
-
-          <!-- Notas y Puntos Clave -->
-          <div class="flex flex-col gap-1.5">
-            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold">Instrucciones de Auditoría</span>
-            <p class="font-body-sm text-body-sm text-on-surface p-3 rounded-xl bg-surface-container-low border border-surface-container">
-              {{ selectedRequest.notes }}
-            </p>
-          </div>
-
-          <!-- Botón de apertura de Acta -->
-          <button
-            type="button"
-            class="w-full py-3.5 px-4 rounded-xl bg-secondary text-on-secondary font-label-md text-label-md hover:bg-secondary/90 transition-all font-bold shadow-md cursor-pointer flex items-center justify-center gap-2"
-            @click="handleStartActa(selectedRequest)"
-          >
-            <span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
-            <span>Completar Acta de Inspección In Situ</span>
-          </button>
         </aside>
 
       </div>

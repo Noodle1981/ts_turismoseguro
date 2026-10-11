@@ -48,9 +48,9 @@ class ClientPropertyController extends Controller
             'property_type' => 'required|string|max:100',
             'location' => 'required|string|max:255',
             'address' => 'nullable|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|integer|min:1',
-            'price_type' => 'required|string|in:por día,/noche',
+            'description' => 'nullable|string',
+            'price' => 'nullable|integer|min:1',
+            'price_type' => 'nullable|string|in:por día,/noche',
             'capacity' => 'required|integer|min:1',
             'bedrooms' => 'nullable|integer|min:0',
             'bathrooms' => 'nullable|integer|min:1',
@@ -60,6 +60,7 @@ class ClientPropertyController extends Controller
             'amenities.*' => 'string|max:50',
             'rules' => 'nullable|array',
             'rules.*' => 'string|max:255',
+            'observations' => 'nullable|string',
         ]);
 
         $slugBase = Str::slug($validated['title']);
@@ -70,12 +71,12 @@ class ClientPropertyController extends Controller
             'department_id' => $validated['department_id'],
             'title' => $validated['title'],
             'slug' => $slug,
-            'property_type' => $validated['property_type'],
+            'property_type' => $validated['property_type'] ?? 'Quinta',
             'location' => $validated['location'],
-            'address' => $validated['address'] ?? null,
-            'description' => $validated['description'],
-            'price' => $validated['price'],
-            'price_type' => $validated['price_type'],
+            'address' => $validated['address'] ?? $validated['location'],
+            'description' => $validated['description'] ?? ($validated['observations'] ?? 'Predio registrado en proceso de validación oficial.'),
+            'price' => $validated['price'] ?? 35000,
+            'price_type' => $validated['price_type'] ?? 'por día',
             'capacity' => $validated['capacity'],
             'bedrooms' => $validated['bedrooms'] ?? 0,
             'bathrooms' => $validated['bathrooms'] ?? 1,
@@ -103,11 +104,20 @@ class ClientPropertyController extends Controller
             }
         }
 
+        // Crear automáticamente la Solicitud de Verificación In Situ para la mesa de supervisión
+        $verificationRequest = VerificationRequest::create([
+            'property_id' => $property->id,
+            'client_id' => $request->user()->id,
+            'status' => 'pending',
+            'notes' => $validated['observations'] ?? 'Alta inicial de oferta realizada desde el Panel del Anfitrión.',
+        ]);
+
         $property->load(['department', 'images', 'amenities', 'rules']);
 
         return response()->json([
-            'message' => 'Propiedad creada con éxito en borrador.',
+            'message' => 'Propiedad creada con éxito en borrador y solicitud de inspección enviada a la mesa de supervisores.',
             'data' => new PropertyResource($property),
+            'verification_request_id' => $verificationRequest->id,
         ], 201);
     }
 

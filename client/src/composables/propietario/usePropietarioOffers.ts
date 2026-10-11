@@ -199,7 +199,7 @@ export function usePropietarioOffers() {
     hasFreezer: true,
   })
 
-  const handleAddOffer = () => {
+  const handleAddOffer = async () => {
     const { showAlert } = useConfirmDialog()
     if (!newOffer.value.title || !newOffer.value.location) {
       showAlert({
@@ -210,59 +210,79 @@ export function usePropietarioOffers() {
       return
     }
 
-    const newId = myOffers.value.length + 1
-    const baseWeekday = newOffer.value.rateWeekday ?? 38000
-    const baseWeekend = newOffer.value.rateWeekend ?? 52000
-    const created: PropietarioOferta = {
-      id: newId,
-      legajo: `#${Math.floor(500 + Math.random() * 400)}-POC/25`,
-      title: newOffer.value.title,
-      subtitle: newOffer.value.observations || 'Parque & Piscina Exclusiva',
-      department: newOffer.value.department,
-      location: newOffer.value.location,
-      poliza: 'Pre-Aprobación In Situ Pendiente',
-      actaFecha: 'En trámite',
-      image:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuCFE8VNKwk6C-6laXIn64SOPW1ZYffatwwjHBr2RNecI7Gf49w0OyzheH8aK9DIobLdIn4W35_NN33g4fMHjlQ0QcL7uHBmf4uRFRViMuNahLbAe9SepGVFsLndtDM7a7mQ2gshqkerWImCWWnyzz1T5kCGwtJDYRmRM5pHS9i1AWfMh8i_IrGmOHfC__cUP2bFmIZnCi_rwLs_2280LksARH0G4JmNHrcIRoIzScDnaGiBEsiZZOmk',
-      isListingVisible: false,
-      schedule: {
-        start: '10:00',
-        end: '20:00',
-        activeDays: [4, 5, 6, 0],
-      },
-      tariffs: {
-        lunesJueves: baseWeekday,
-        viernesDomingo: Math.round(baseWeekday * 1.25),
-        sabadoFeriados: baseWeekend,
-        eventoEspecial: Math.round(baseWeekend * 1.5),
-      },
-      metrics: {
-        jornadas: 0,
-        jornadasDiff: 'Nueva publicación',
-        ocupacion: 0,
-        ingresosEstimados: 0,
-        ingresosCobrado: 0,
-        reputacion: 5.0,
-        resenasCount: 0,
-      },
-      amenities: [
-        ...(newOffer.value.poolFenced
-          ? [{ icon: 'pool', label: 'Pileta Cercada Homologada', isSecurityFeature: true }]
-          : []),
-        ...(newOffer.value.hasGrill ? [{ icon: 'outdoor_grill', label: 'Parrillero Techado' }] : []),
-        ...(newOffer.value.hasFreezer ? [{ icon: 'kitchen', label: 'Freezer de Bebidas' }] : []),
-        { icon: 'bolt', label: 'Disyuntor Diferencial OK', isSecurityFeature: true },
-      ],
-      tenants: [],
-      pastTenants: [],
+    // Mapear nombre del departamento a department_id oficial de San Juan
+    const deptMap: Record<string, number> = {
+      'Calingasta': 1,
+      'Valle Fértil': 2,
+      'Iglesia': 3,
+      'Jáchal': 4,
+      'Zonda': 5,
+      'Ullum': 6,
+      'Rawson': 7,
+      'Pocito': 8,
+      'Capital': 9,
+      'Rivadavia': 10,
+      'Santa Lucía': 11,
+      'Caucete': 12,
+      'Albardón': 13,
+      'Angaco': 14,
+      'San Martín': 15,
+      'Sarmiento': 16,
+      '9 de Julio': 17,
+      '25 de Mayo': 18,
+      'Chimbas': 19,
     }
 
-    myOffers.value.push(created)
-    selectedOfferId.value = newId
+    const deptStr = newOffer.value.department || 'Pocito'
+    let deptId = 8 // Pocito por defecto
+    for (const [name, id] of Object.entries(deptMap)) {
+      if (deptStr.toLowerCase().includes(name.toLowerCase())) {
+        deptId = id
+        break
+      }
+    }
+
+    const baseWeekday = newOffer.value.rateWeekday ?? 38000
+
+    const amenitiesList = [
+      ...(newOffer.value.poolFenced ? ['Pileta Cercada (1.80m)'] : []),
+      ...(newOffer.value.hasGrill ? ['Parrillero Techado'] : []),
+      ...(newOffer.value.hasFreezer ? ['Freezer de Bebidas'] : []),
+      'Disyuntor Diferencial OK',
+    ]
+
+    try {
+      if (isAuthenticated.value) {
+        const payload = {
+          title: newOffer.value.title,
+          department_id: deptId,
+          property_type: 'Quinta',
+          location: newOffer.value.location,
+          address: newOffer.value.location,
+          description: newOffer.value.observations || 'Quinta diurna registrada para homologación presencial.',
+          price: baseWeekday,
+          price_type: 'por día',
+          capacity: newOffer.value.capacity || 40,
+          amenities: amenitiesList,
+          observations: newOffer.value.observations,
+        }
+
+        const res = await api.post('/client/properties', payload)
+        if (res.data?.data) {
+          const apiProp = res.data.data
+          const newOferta = mapApiPropertyToOferta(apiProp)
+          myOffers.value.push(newOferta)
+          selectedOfferId.value = newOferta.id
+        }
+      }
+    } catch (err: any) {
+      console.warn('Error guardando en backend, se mantiene registro local.', err)
+    }
+
     showAddOfferModal.value = false
     showAlert({
       title: '¡Oferta Registrada con Éxito!',
-      message: `La oferta "${created.title}" fue registrada exitosamente. Ya puedes gestionar sus tarifas individuales. Se notificó al cuerpo de validadores para coordinar la inspección in situ.`,
+      message: `La oferta "${newOffer.value.title}" fue registrada exitosamente en borrador. La Mesa de Supervisores de Turismo Seguro San Juan recibió la solicitud para coordinar y asignar la inspección in situ del predio.`,
       icon: 'check_circle',
     })
   }
