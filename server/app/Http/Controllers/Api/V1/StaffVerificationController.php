@@ -118,6 +118,13 @@ class StaffVerificationController extends Controller
                 'coverageAlert' => ! $hasLocalValidator && ! $vr->validator_id
                     ? 'Zona sin validador local asignado. El supervisor debe designar un validador limítrofe.'
                     : null,
+                'payout_account_type' => $vr->payout_account_type ?? $vr->client?->payout_account_type ?? 'cbu',
+                'payout_account_number' => $vr->payout_account_number ?? $vr->client?->payout_account_number ?? null,
+                'payout_bank_name' => $vr->payout_bank_name ?? $vr->client?->payout_bank_name ?? 'Banco San Juan',
+                'payout_verified' => (bool) ($vr->payout_verified ?? $vr->client?->payout_verified ?? false),
+                'visit_date' => $vr->visit_date ? $vr->visit_date->format('d/m/Y') : null,
+                'checklist' => $vr->checklist,
+                'rejection_reason' => $vr->rejection_reason,
             ];
         });
 
@@ -162,6 +169,71 @@ class StaffVerificationController extends Controller
         return response()->json([
             'message' => "Validador {$validator->name} designado exitosamente para la inspección.",
             'verification_request' => $verificationRequest->load(['validator', 'supervisor']),
+        ]);
+    }
+
+    /**
+     * Resolver dictamen de supervisión (aprobar, pedir modificaciones, rechazar).
+     */
+    public function resolveDocket(int $id, \App\Http\Requests\Staff\ResolveSupervisorDocketRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+        $action = $validated['action'];
+        $notes = $validated['notes'] ?? '';
+
+        $verificationRequest = VerificationRequest::with(['property', 'client', 'validator'])->findOrFail($id);
+        $property = $verificationRequest->property;
+
+        if ($action === 'approve') {
+            $verificationRequest->update([
+                'status' => 'approved',
+                'supervisor_id' => $request->user()->id,
+                'notes' => $notes ?: 'Auditoría in situ 100% conforme. Cumple normativa provincial Res. 182-MTyC/24. Sello San Juan Seguro habilitado para publicación y reserva inmediata.',
+            ]);
+
+            if ($property) {
+                $propertyDept = $property->department?->slug ?? 'SAN';
+                $deptCode = strtoupper(substr($propertyDept, 0, 3));
+                $actNumber = $property->verification_certificate_number ?: "Acta #{$property->id}-{$deptCode}/26";
+
+                $property->update([
+                    'verification_status' => 'verified',
+                    'publication_status' => 'published',
+                    'verified_at' => now(),
+                    'verification_certificate_number' => $actNumber,
+                ]);
+            }
+
+            $message = 'Expediente aprobado con éxito. Firma digital aplicada y Sello QR Oficial emitido.';
+        } elseif ($action === 'modify') {
+            $verificationRequest->update([
+                'status' => 'under_supervision',
+                'supervisor_id' => $request->user()->id,
+                'rejection_reason' => $notes ?: 'Requerimiento técnico de subsanación dentro de las 48/72hs hábiles.',
+            ]);
+
+            $message = 'Plazo de subsanación de 48/72hs notificado al propietario y al validador.';
+        } else {
+            // reject
+            $verificationRequest->update([
+                'status' => 'rejected',
+                'supervisor_id' => $request->user()->id,
+                'rejection_reason' => $notes ?: 'Dictamen técnico desestimado por inconsistencias o incumplimiento normativo.',
+            ]);
+
+            if ($property) {
+                $property->update([
+                    'verification_status' => 'rejected',
+                    'publication_status' => 'draft',
+                ]);
+            }
+
+            $message = 'Dictamen rechazado y archivado con causa vinculante en el registro provincial.';
+        }
+
+        return response()->json([
+            'message' => $message,
+            'verification_request' => $verificationRequest->fresh(['property.department', 'client', 'validator', 'supervisor']),
         ]);
     }
 }

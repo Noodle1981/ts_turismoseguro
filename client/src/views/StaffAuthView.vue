@@ -79,8 +79,10 @@ const handleLogin = async () => {
     setTimeout(() => {
       if (currentRole === 'validator') {
         router.push('/validador/bandeja')
+      } else if (currentRole === 'supervisor') {
+        router.push('/supervisor/mesa')
       } else {
-        router.push('/')
+        router.push('/supervisor/mesa')
       }
     }, 700)
   } catch (err: any) {

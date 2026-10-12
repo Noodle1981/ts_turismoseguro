@@ -5,6 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Client\RateBookingRequest;
+use App\Http\Requests\Client\RequestVerificationRequest;
+use App\Http\Requests\Client\SaveBookingObservationRequest;
+use App\Http\Requests\Client\StoreClientPropertyRequest;
+use App\Http\Requests\Client\ToggleAvailabilityDateRequest;
+use App\Http\Requests\Client\UpdateAvailabilityRangeRequest;
+use App\Http\Requests\Client\UpdateClientPropertyRequest;
 use App\Http\Resources\PropertyResource;
 use App\Models\Booking;
 use App\Models\Property;
@@ -40,28 +47,9 @@ class ClientPropertyController extends Controller
     /**
      * Store a new property owned by the authenticated client.
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreClientPropertyRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'department_id' => 'required|exists:departments,id',
-            'property_type' => 'required|string|max:100',
-            'location' => 'required|string|max:255',
-            'address' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'nullable|integer|min:1',
-            'price_type' => 'nullable|string|in:por día,/noche',
-            'capacity' => 'required|integer|min:1',
-            'bedrooms' => 'nullable|integer|min:0',
-            'bathrooms' => 'nullable|integer|min:1',
-            'host_whatsapp' => 'nullable|string|max:50',
-            'host_phone' => 'nullable|string|max:50',
-            'amenities' => 'nullable|array',
-            'amenities.*' => 'string|max:50',
-            'rules' => 'nullable|array',
-            'rules.*' => 'string|max:255',
-            'observations' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
 
         $slugBase = Str::slug($validated['title']);
         $slug = $slugBase.'-'.Str::random(5);
@@ -140,53 +128,11 @@ class ClientPropertyController extends Controller
     /**
      * Update an existing property owned by client.
      */
-    public function update(int $id, Request $request): JsonResponse
+    public function update(int $id, UpdateClientPropertyRequest $request): JsonResponse
     {
         $property = Property::where('user_id', $request->user()->id)->findOrFail($id);
 
-        $validated = $request->validate([
-            'title' => 'sometimes|required|string|max:255',
-            'department_id' => 'sometimes|required|exists:departments,id',
-            'locality_id' => 'nullable|exists:localities,id',
-            'property_type' => 'sometimes|required|string|max:100',
-            'location' => 'sometimes|required|string|max:255',
-            'address' => 'nullable|string|max:255',
-            'description' => 'sometimes|required|string',
-            'price' => 'sometimes|required|integer|min:1',
-            'price_type' => 'sometimes|required|string|in:por día,/noche',
-            'capacity' => 'sometimes|required|integer|min:1',
-            'bedrooms' => 'nullable|integer|min:0',
-            'bathrooms' => 'nullable|integer|min:1',
-            'host_whatsapp' => 'nullable|string|max:50',
-            'host_phone' => 'nullable|string|max:50',
-
-            // Tarifas multimodales
-            'tariff_lunes_jueves' => 'nullable|integer|min:0',
-            'tariff_viernes_domingo' => 'nullable|integer|min:0',
-            'tariff_sabado_feriados' => 'nullable|integer|min:0',
-            'tariff_evento_especial' => 'nullable|integer|min:0',
-            'tariff_pernocte_camas' => 'nullable|integer|min:0',
-            'tariff_pernocte_carpas' => 'nullable|integer|min:0',
-            'tariff_finde_completo' => 'nullable|integer|min:0',
-            'tariff_fiesta_nocturna' => 'nullable|integer|min:0',
-
-            // Horarios y Días
-            'schedule_start' => 'nullable|string|max:10',
-            'schedule_end' => 'nullable|string|max:10',
-            'active_days' => 'nullable|array',
-            'active_days.*' => 'integer|between:0,6',
-
-            // Visibilidad y Vacaciones
-            'is_listing_visible' => 'nullable|boolean',
-            'pause_mode' => 'nullable|string|in:indefinite,vacation',
-            'pause_start_date' => 'nullable|date',
-            'pause_end_date' => 'nullable|date|after_or_equal:pause_start_date',
-
-            'amenities' => 'nullable|array',
-            'amenities.*' => 'string|max:50',
-            'rules' => 'nullable|array',
-            'rules.*' => 'string|max:255',
-        ]);
+        $validated = $request->validated();
 
         $property->update($validated);
 
@@ -243,15 +189,11 @@ class ClientPropertyController extends Controller
     /**
      * Toggle or set status for a specific date on a property.
      */
-    public function toggleAvailabilityDate(int $id, Request $request): JsonResponse
+    public function toggleAvailabilityDate(int $id, ToggleAvailabilityDateRequest $request): JsonResponse
     {
         $property = Property::where('user_id', $request->user()->id)->findOrFail($id);
 
-        $validated = $request->validate([
-            'date' => 'required|date',
-            'status' => 'required|string|in:available,blocked,maintenance',
-            'notes' => 'nullable|string|max:150',
-        ]);
+        $validated = $request->validated();
 
         if ($validated['status'] === 'available') {
             PropertyAvailability::where('property_id', $property->id)
@@ -285,15 +227,11 @@ class ClientPropertyController extends Controller
     /**
      * Update range availability (block/free).
      */
-    public function updateAvailability(int $id, Request $request): JsonResponse
+    public function updateAvailability(int $id, UpdateAvailabilityRangeRequest $request): JsonResponse
     {
         $property = Property::where('user_id', $request->user()->id)->findOrFail($id);
 
-        $validated = $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'action' => 'required|string|in:block,free',
-        ]);
+        $validated = $request->validated();
 
         try {
             $this->availabilityService->updateRange(
@@ -316,12 +254,9 @@ class ClientPropertyController extends Controller
     /**
      * Request in-situ physical verification for a property.
      */
-    public function requestVerification(Request $request): JsonResponse
+    public function requestVerification(RequestVerificationRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'property_id' => 'required|exists:properties,id',
-            'notes' => 'nullable|string|max:500',
-        ]);
+        $validated = $request->validated();
 
         $property = Property::where('user_id', $request->user()->id)
             ->findOrFail($validated['property_id']);
@@ -461,11 +396,9 @@ class ClientPropertyController extends Controller
     /**
      * Rate a tenant booking (up, follow_up, down, rejected, none).
      */
-    public function rateBooking(int $bookingId, Request $request): JsonResponse
+    public function rateBooking(int $bookingId, RateBookingRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'rating' => 'required|string|in:up,follow_up,down,rejected,none',
-        ]);
+        $validated = $request->validated();
 
         $booking = Booking::whereHas('property', function ($q) use ($request) {
             $q->where('user_id', $request->user()->id);
@@ -485,11 +418,9 @@ class ClientPropertyController extends Controller
     /**
      * Save observation/comment for a completed past booking.
      */
-    public function saveBookingObservation(int $bookingId, Request $request): JsonResponse
+    public function saveBookingObservation(int $bookingId, SaveBookingObservationRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'observation' => 'nullable|string|max:1000',
-        ]);
+        $validated = $request->validated();
 
         $booking = Booking::whereHas('property', function ($q) use ($request) {
             $q->where('user_id', $request->user()->id);

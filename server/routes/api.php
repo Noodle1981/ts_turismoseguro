@@ -73,5 +73,6 @@ Route::prefix('v1')->group(function () {
     Route::middleware(['auth:sanctum', 'role:validator,supervisor,admin,super_admin'])->prefix('staff')->group(function () {
         Route::get('/verifications', [\App\Http\Controllers\Api\V1\StaffVerificationController::class, 'index'])->name('staff.verifications.index');
         Route::put('/verifications/{id}/assign', [\App\Http\Controllers\Api\V1\StaffVerificationController::class, 'assignValidator'])->name('staff.verifications.assign');
+        Route::put('/verifications/{id}/resolve', [\App\Http\Controllers\Api\V1\StaffVerificationController::class, 'resolveDocket'])->name('staff.verifications.resolve');
     });
 });

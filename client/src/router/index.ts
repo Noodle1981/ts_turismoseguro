@@ -104,6 +104,20 @@ const routes = [
     },
   },
   {
+    path: '/supervisor',
+    redirect: '/supervisor/mesa',
+  },
+  {
+    path: '/supervisor/mesa',
+    name: 'supervisor-mesa',
+    component: () => import('../views/SupervisorDictamenesView.vue'),
+    meta: {
+      title: 'Mesa de Supervisión y Dictámenes Técnicos — Turismo Seguro San Juan',
+      requiresAuth: true,
+      roles: ['supervisor', 'admin', 'super_admin'],
+    },
+  },
+  {
     path: '/eventos',
     name: 'eventos',
     component: EventosCercanosView,
@@ -187,15 +201,15 @@ router.beforeEach((to) => {
     // Si está autenticado, validar que su rol tenga permiso para esta ruta
     const allowedRoles = (to.meta.roles as string[]) || []
     if (allowedRoles.length > 0 && userRole && !allowedRoles.includes(userRole)) {
-      // Si un staff intenta acceder a rutas de cliente/inquilino
-      if (['validator', 'supervisor', 'admin'].includes(userRole)) {
+      if (['supervisor', 'admin', 'super_admin'].includes(userRole)) {
+        return { path: '/supervisor/mesa' }
+      }
+      if (userRole === 'validator') {
         return { path: '/validador/bandeja' }
       }
-      // Si un propietario intenta entrar a validador o inquilino
       if (userRole === 'client') {
         return { path: '/propietario/panel' }
       }
-      // Si un inquilino intenta entrar a validador o propietario
       if (userRole === 'rent') {
         return { path: '/inquilino/panel' }
       }
@@ -209,7 +223,9 @@ router.beforeEach((to) => {
       return { path: '/propietario/panel' }
     } else if (userRole === 'rent') {
       return { path: '/inquilino/panel' }
-    } else if (['validator', 'supervisor', 'admin', 'super_admin'].includes(userRole || '')) {
+    } else if (['supervisor', 'admin', 'super_admin'].includes(userRole || '')) {
+      return { path: '/supervisor/mesa' }
+    } else if (userRole === 'validator') {
       return { path: '/validador/bandeja' }
     }
   }

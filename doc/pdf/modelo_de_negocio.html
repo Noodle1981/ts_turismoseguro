@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Turismo Seguro San Juan — Dossier Integral de Modelo de Negocio</title>
+  <style>
+    /* ==========================================================================
+       MODO AHORRO DE TINTA / IMPRESIÓN ECOLÓGICA INTELIGENTE
+       - Fondos 100% blancos para mínimo consumo de tóner/cartucho.
+       - Bordes y líneas tenues (0.5pt a 1pt) de alta definición.
+       - Tipografías legibles y optimizadas (Helvetica, Arial, sans-serif).
+       - Colores de acento desaturados y estratégicos (Deep Navy, Forest Green, Amber).
+       - Saltos de página controlados y sin desbordes.
+       ========================================================================== */
+    @page {
+      size: A4 portrait;
+      margin: 15mm 14mm 18mm 14mm;
+      @bottom-right {
+        content: "Página " counter(page) " de " counter(pages);
+        font-size: 7.5pt;
+        color: #555555;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      @bottom-left {
+        content: "Turismo Seguro San Juan • Dossier Integral de Modelo de Negocio (Modo Ahorro)";
+        font-size: 7pt;
+        color: #777777;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8.5pt;
+      line-height: 1.38;
+      color: #111111;
+      background: #ffffff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ENCABEZADOS Y BANNERS */
+    .header-banner {
+      border-bottom: 1.5pt solid #0b1f3a;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .brand-title {
+      font-size: 17pt;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      color: #0b1f3a;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-size: 8.5pt;
+      font-weight: 600;
+      color: #333333;
+      margin-top: 2px;
+    }
+
+    .meta-box {
+      text-align: right;
+      font-size: 7.5pt;
+      color: #555555;
+      line-height: 1.3;
+    }
+
+    .badge-eco {
+      display: inline-block;
+      border: 0.8pt solid #1b5e20;
+      color: #1b5e20;
+      padding: 1.5px 6px;
+      border-radius: 3px;
+      font-weight: 700;
+      font-size: 7pt;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 3px;
+    }
+
+    h2 {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #0b1f3a;
+      border-bottom: 0.75pt solid #cccccc;
+      padding-bottom: 3px;
+      margin-top: 13px;
+      margin-bottom: 6px;
+      page-break-after: avoid;
+    }
+
+    h3 {
+      font-size: 9.5pt;
+      font-weight: 700;
+      color: #222222;
+      margin-top: 9px;
+      margin-bottom: 4px;
+      page-break-after: avoid;
+    }
+
+    p {
+      margin-bottom: 5px;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 17px;
+      margin-bottom: 6px;
+    }
+
+    li {
+      margin-bottom: 2.5px;
+    }
+
+    strong {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 8pt;
+      background-color: #f5f5f5;
+      padding: 1px 3px;
+      border: 0.4pt solid #cccccc;
+      border-radius: 2px;
+    }
+
+    /* TABLAS ESTILO AHORRO */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 7px 0 10px 0;
+      font-size: 7.8pt;
+      page-break-inside: avoid;
+    }
+
+    th, td {
+      border: 0.5pt solid #b0b0b0;
+      padding: 4.5px 6px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #f2f4f7;
+      color: #0b1f3a;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 7.2pt;
+      letter-spacing: 0.2px;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #fafbfc;
+    }
+
+    /* RECUADROS DE RESALTE (CALLOUTS) */
+    .callout {
+      border-left: 2.5pt solid #0b1f3a;
+      border-top: 0.4pt solid #d0d0d0;
+      border-right: 0.4pt solid #d0d0d0;
+      border-bottom: 0.4pt solid #d0d0d0;
+      background-color: #fcfdfe;
+      padding: 7px 9px;
+      margin: 7px 0 10px 0;
+      border-radius: 0 3px 3px 0;
+      page-break-inside: avoid;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      font-size: 8.2pt;
+      color: #0b1f3a;
+      margin-bottom: 3px;
+    }
+
+    .callout-green {
+      border-left-color: #1b5e20;
+      background-color: #fcfdfc;
+    }
+
+    .callout-green .callout-title {
+      color: #1b5e20;
+    }
+
+    .callout-amber {
+      border-left-color: #8c5b00;
+      background-color: #fffefb;
+    }
+
+    .callout-amber .callout-title {
+      color: #8c5b00;
+    }
+
+    /* REJILLA DE FLUJOS Y KPIS */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin: 7px 0 10px 0;
+      page-break-inside: avoid;
+    }
+
+    .flow-box {
+      border: 0.6pt solid #999999;
+      border-radius: 3px;
+      padding: 5px 6px;
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .flow-step {
+      font-size: 6.8pt;
+      font-weight: 800;
+      color: #555555;
+      text-transform: uppercase;
+    }
+
+    .flow-title {
+      font-size: 7.8pt;
+      font-weight: 700;
+      color: #0b1f3a;
+      margin: 1.5px 0;
+    }
+
+    .flow-desc {
+      font-size: 6.8pt;
+      color: #444444;
+      line-height: 1.2;
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      margin: 7px 0 9px 0;
+      page-break-inside: avoid;
+    }
+
+    .kpi-card {
+      border: 0.6pt solid #cccccc;
+      padding: 6px 8px;
+      border-radius: 3px;
+      background: #ffffff;
+    }
+
+    .kpi-val {
+      font-size: 13pt;
+      font-weight: 800;
+      color: #0b1f3a;
+      line-height: 1.1;
+    }
+
+    .kpi-label {
+      font-size: 7.5pt;
+      font-weight: 700;
+      color: #222222;
+      margin-top: 2px;
+    }
+
+    .kpi-sub {
+      font-size: 6.8pt;
+      color: #555555;
+      margin-top: 1.5px;
+      line-height: 1.2;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .formula-box {
+      border: 0.6pt dashed #666666;
+      background: #fdfdfd;
+      padding: 6px 10px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 7.8pt;
+      margin: 6px 0;
+      border-radius: 3px;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      padding-top: 6px;
+      border-top: 0.5pt solid #cccccc;
+      font-size: 6.8pt;
+      color: #666666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PÁGINA 1: EJECUTIVO Y MONETIZACIÓN ==================== -->
+  <div class="header-banner">
+    <div>
+      <span class="badge-eco">DOCUMENTO OFICIAL • MODO AHORRO DE ENERGÍA Y TÓNER</span>
+      <div class="brand-title">Turismo Seguro San Juan</div>
+      <div class="brand-subtitle">Dossier Maestro: Modelo de Negocio, Reputación y Roadmap Estratégico</div>
+    </div>
+    <div class="meta-box">
+      <strong>Iniciativa Privada Homologada</strong><br>
+      Provincia de San Juan, Argentina<br>
+      Versión: 3.0 Consolidada — Año 2026<br>
+      Base de Datos & Código en Producción
+    </div>
+  </div>
+
+  <h2>1. Resumen Ejecutivo y Tesis de Negocio</h2>
+  <p>
+    <strong>Turismo Seguro San Juan</strong> es una compañía y plataforma privada de certificación física, blindaje antifraude y comercialización de alquileres temporarios, quintas de eventos y experiencias en la provincia de San Juan. Erradica de raíz las estafas virtuales mediante la <strong>inspección pericial presencial obligatoria <em>in situ</em></strong> y el otorgamiento del sello de calidad con código QR <strong>"San Juan Verificado TS"</strong>.
+  </p>
+
+  <div class="callout callout-green">
+    <div class="callout-title">Regla Canónica Inquebrantable del Catálogo</div>
+    <p style="margin-bottom:0;">
+      <strong>Cero publicación sin validación técnica aprobada:</strong> Ningún inmueble puede publicarse ni recibir reservas en la plataforma sin haber completado la visita técnica en terreno de un inspector matriculado, haber sido auditado por el área de Calidad (Supervisor) y contar con su medio de cobro (CBU o Billetera Virtual) validado bajo estricta coincidencia de titularidad con su DNI.
+    </p>
+  </div>
+
+  <h2>2. Estructura de Ingresos y Esquema Comercial de Validadores</h2>
+  <p>
+    El negocio monetiza a través de un esquema híbrido de tarifa inicial de alta por auditoría pericial, suscripciones mensuales de visibilidad segura y esquemas de comisiones escalonadas para el equipo en calle:
+  </p>
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-val">Mes 1</div>
+      <div class="kpi-label">Tarifa de Alta & Auditoría</div>
+      <div class="kpi-sub">Cubre visita in situ, georreferenciación, acta pericial y emisión del Token QR inicial.</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">Mes 2+</div>
+      <div class="kpi-label">Suscripción SaaS Anfitrión</div>
+      <div class="kpi-sub">Mantenimiento de sello activo, motor de tarifas, calendario interactivo y blindaje antifraude.</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">60% - 70%</div>
+      <div class="kpi-label">Comisión Captación Calle</div>
+      <div class="kpi-sub">Incentivo mayoritario al validador en el Mes 1 para romper la inercia del mercado.</div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Etapa Comercial</th>
+        <th style="width: 20%;">Comisión Validador</th>
+        <th style="width: 20%;">Margen Plataforma</th>
+        <th style="width: 35%;">Función Operativa y Justificación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Mes 1: Captación e Inspección</strong></td>
+        <td><strong>60% al 70%</strong> del arancel</td>
+        <td>30% al 40%</td>
+        <td>Retribuye el esfuerzo comercial de calle, movilidad hasta el predio y confección del acta técnica digital.</td>
+      </tr>
+      <tr>
+        <td><strong>Mes 2 en adelante: Cartera Activa</strong></td>
+        <td><strong>15% al 20%</strong> residual</td>
+        <td>80% al 85%</td>
+        <td>Incentiva al validador a mantener fidelizado al cliente, colaborar en actualizaciones de servicios y retención.</td>
+      </tr>
+      <tr>
+        <td><strong>Margen Neto Operativo TS</strong></td>
+        <td>—</td>
+        <td>Beneficio neto reinvertible</td>
+        <td>Financia la infraestructura de servidores, campañas de marketing del catálogo público y custodia legal.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. La Gobernanza de los 5 Roles del Ecosistema</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 18%;">Rol</th>
+        <th style="width: 14%;">Identificador</th>
+        <th style="width: 38%;">Alcance y Atribuciones en el Sistema</th>
+        <th style="width: 30%;">Impacto en el Modelo de Negocio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Super Admin</strong></td>
+        <td><code>super_admin</code></td>
+        <td>Gobierno central, control contable, fijación de aranceles, auditoría de liquidaciones comerciales y analítica territorial.</td>
+        <td>Rentabilidad global, equilibrio de comisiones y alianzas estratégicas provinciales.</td>
+      </tr>
+      <tr>
+        <td><strong>Supervisor de Calidad</strong></td>
+        <td><code>supervisor</code></td>
+        <td>Mesa de supervisión: asigna validadores a trámites entrantes, controla actas in situ, valida CBU/Billetera y emite dictámenes.</td>
+        <td>Garantía de antifraude interno; previene colusiones y certifica el estándar San Juan Seguro.</td>
+      </tr>
+      <tr>
+        <td><strong>Validador Comercial</strong></td>
+        <td><code>validator</code></td>
+        <td>Fuerza en calle. Audita predios (cerco pileta, disyuntor, matafuego), labra el acta oficial y consulta sus comisiones devengadas.</td>
+        <td>Expansión territorial de la oferta formal en los departamentos de San Juan.</td>
+      </tr>
+      <tr>
+        <td><strong>Cliente Oferente</strong></td>
+        <td><code>client</code></td>
+        <td>Propietario o administrador. Carga tarifas segmentadas (semana, finde, eventos), gestiona disponibilidad y recibe reservas.</td>
+        <td>Monetización recurrente y canal de venta blindado contra usurpaciones digitales.</td>
+      </tr>
+      <tr>
+        <td><strong>Inquilino / Interesado</strong></td>
+        <td><code>rent</code></td>
+        <td>Turista o residente sanjuanino. Declara procedencia geográfica, accede a ofertas verificadas y contacta directo sin sobreprecios.</td>
+        <td>Generación de demanda orgánica calificada con tasa cero de estafas.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ==================== PÁGINA 2: AUDITORÍA Y FLUJO DEL TRÁMITE ==================== -->
+  <div class="page-break"></div>
+
+  <h2>4. Ciclo de Vida del Trámite y Auditoría Antifraude</h2>
+  <p>
+    El sistema opera mediante una máquina de estados determinista y auditable en la base de datos:
+  </p>
+
+  <div class="flow-grid">
+    <div class="flow-box">
+      <div class="flow-step">Fase 1</div>
+      <div class="flow-title">Bandeja de Entrada</div>
+      <div class="flow-desc">Estado: <code>pending</code>. Solicitud inicial. Checklist no completado. Sin QR. Dictamen bloqueado.</div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-step">Fase 2</div>
+      <div class="flow-title">Designación Zonal</div>
+      <div class="flow-desc">Estado: <code>assigned</code>. Supervisor designa inspector matriculado del departamento. Token generado.</div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-step">Fase 3</div>
+      <div class="flow-title">Peritaje In Situ</div>
+      <div class="flow-desc">Estado: <code>visited</code>. Validador acude al inmueble, prueba seguridad y labra el acta técnica.</div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-step">Fase 4</div>
+      <div class="flow-title">Dictamen & Sello QR</div>
+      <div class="flow-desc">Estado: <code>approved</code>. Control cruzado bancario conforme. Emisión de Sello QR oficial.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-title">Gobernanza Bancaria Obligatoria: CBU o Billetera Virtual Única</div>
+    <p style="margin-bottom:0;">
+      Para erradicar triangulaciones delictivas, transferencias a cuentas fantasma o cobros indebidos de intermediarios no autorizados, la cuenta de cobro declarada (CBU bancario o Billetera Virtual como Mercado Pago) <strong>debe ser única en el sistema</strong> y <strong>pertenecer fehacientemente al titular registral DNI auditado</strong>. La Mesa de Supervisión no puede emitir dictamen aprobatorio si los datos de cobro no han sido cruzados y confirmados.
+    </p>
+  </div>
+
+  <h2>5. El Acta Oficial de Homologación (Ejemplo Canónico: Acta #849-MED/26)</h2>
+  <ul>
+    <li><strong>Definición:</strong> Instrumento técnico-legal labrado por el validador matriculado al culminar la auditoría física in situ. Su codificación oficial identifica correlativo, localidad (<code>MED</code> = Médano de Oro / Rawson) y año provincial (<code>26</code> = 2026).</li>
+    <li><strong>Acreditación Fehaciente:</strong> Certifica georreferenciación GPS milimétrica, fotos en terreno, titularidad dominial DNI y cumplimiento de medidas de seguridad pasiva (cerco perimetral de pileta 1.20m con traba infantil, disyuntor diferencial test 30mA, matafuegos ABC y botiquín).</li>
+    <li><strong>Triple Finalidad Estratégica:</strong>
+      <ol style="margin-left: 14px; margin-top: 3px;">
+        <li><strong>Habilitación de Insignia & Algoritmo:</strong> Dictamen indispensable exigido por la Mesa de Supervisión para rankear en el Top #1 de búsquedas.</li>
+        <li><strong>Suscripción de Póliza RC:</strong> Documento técnico legal exigido por la aseguradora aliada (Triunfo Seguros) para emitir cobertura sin cobros previos.</li>
+        <li><strong>Blindaje Administrativo:</strong> Respaldo probatorio pleno ante el Ministerio de Turismo y entes fiscalizadores de San Juan.</li>
+      </ol>
+    </li>
+  </ul>
+
+  <h2>6. Sistema Tarifario Multi-Modalidad del Anfitrión</h2>
+  <p>
+    Diseñado para capturar la realidad del mercado inmobiliario temporal y recreativo de San Juan:
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Modalidad de Tarifa</th>
+        <th style="width: 25%;">Aplicación Concreta</th>
+        <th style="width: 50%;">Impacto Operativo y Comercial</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Lunes a Jueves</strong></td>
+        <td>Días laborables estándar</td>
+        <td>Tarifas accesibles para escapadas de teletrabajo, retiros y descansos diurnos.</td>
+      </tr>
+      <tr>
+        <td><strong>Viernes a Domingo</strong></td>
+        <td>Fin de semana regular</td>
+        <td>Tarifa premium orientada a grupos familiares y turismo recreativo.</td>
+      </tr>
+      <tr>
+        <td><strong>Sábado y Feriados</strong></td>
+        <td>Picos de alta demanda</td>
+        <td>Precios pico en fines de semana largos, Fiesta del Sol y vendimias.</td>
+      </tr>
+      <tr>
+        <td><strong>Evento Especial</strong></td>
+        <td>Cumpleaños, aniversarios, fiestas</td>
+        <td>Tarifa diferenciada por aforo extendido en quinchos (40 a 100 personas).</td>
+      </tr>
+      <tr>
+        <td><strong>Pernocte Adicional</strong></td>
+        <td>Camas interiores o carpas</td>
+        <td>Arancel complementario para invitados que pernoctan luego del evento diurno.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ==================== PÁGINA 3: FUTURAS IMPLEMENTACIONES (SCORING Y PRONTUARIO) ==================== -->
+  <div class="page-break"></div>
+
+  <h2>7. Sistema de Reputación, Scoring y Ficha Prontuarial de Inquilinos</h2>
+  <p>
+    Gobernanza bidireccional y control de admisiones para premiar a los buenos huéspedes y proteger a los propietarios de daños y conductas maliciosas:
+  </p>
+
+  <h3>7.1 Escala Canónica de Calificación del Anfitrión (5 Estados en Base de Datos)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 20%;">Estado Canónico</th>
+        <th style="width: 15%;">Código DB</th>
+        <th style="width: 20%;">Visualización UI</th>
+        <th style="width: 45%;">Comportamiento y Regla de Negocio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Buen Inquilino</strong></td>
+        <td><code>up</code></td>
+        <td>🟢 Verde (<code>thumb_up</code>)</td>
+        <td>Huésped ejemplar: cuidó instalaciones, respetó horarios y límites sonoros.</td>
+      </tr>
+      <tr>
+        <td><strong>En Observación</strong></td>
+        <td><code>follow_up</code></td>
+        <td>🟡 Ámbar (<code>visibility</code>)</td>
+        <td>Admisible pero requiere seguimiento (demoras menores, llamados de atención leves).</td>
+      </tr>
+      <tr>
+        <td><strong>No Conforme</strong></td>
+        <td><code>down</code></td>
+        <td>🔴 Rojo suave (<code>thumb_down</code>)</td>
+        <td>Incumplimiento comprobado de convivencia o daño menor no malicioso.</td>
+      </tr>
+      <tr>
+        <td><strong>No Aceptar / Bloqueado</strong></td>
+        <td><code>rejected</code></td>
+        <td>⛔ Rojo oscuro (<code>block</code>)</td>
+        <td>Falta grave, maltrato a instalaciones, ruidos desmedidos o exceso de aforo. Veto firme del anfitrión.</td>
+      </tr>
+      <tr>
+        <td><strong>Sin Historial</strong></td>
+        <td><code>none</code></td>
+        <td>⚪ Gris (<code>horizontal_rule</code>)</td>
+        <td>Inquilino nuevo o reserva pendiente de calificación post-egreso.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>7.2 Ficha Prontuarial Cruzada y Restricción Automática de Veto</h3>
+  <ul>
+    <li><strong>Trazabilidad Acumulada por <code>user_id</code>:</strong> Las calificaciones y observaciones privadas (<code>owner_observation</code>) persisten a lo largo del tiempo. Ante una nueva solicitud, los propietarios consultan el historial consolidado de estadías en la Red TS.</li>
+    <li><strong>Restricción "No Aceptar" (<code>rejected</code>):</strong> Si un anfitrión marca a un inquilino como vetado:
+      <ol style="margin-left: 14px; margin-top: 2px;">
+        <li><strong>Ocultamiento Inteligente:</strong> Las ofertas de ese propietario no aparecen en el catálogo de ese usuario.</li>
+        <li><strong>Bloqueo al Reservar:</strong> El botón de reserva se deshabilita notificando que el predio no posee cupo disponible para su perfil.</li>
+      </ol>
+    </li>
+  </ul>
+
+  <h3>7.3 Algoritmo Anti-Bias (Control de Propietarios Hipercríticos)</h3>
+  <p>
+    Para evitar que dueños excesivamente conflictivos perjudiquen a huéspedes correctos, el sistema calcula el ratio crítico del anfitrión:
+  </p>
+  <div class="formula-box">
+    Ratio_Host = (Calificaciones_Negativas [down + rejected]) / Total_Alquileres_Realizados
+  </div>
+  <p>
+    Si el promedio de la red provincial es del 5% y un propietario supera el <strong>35% de calificaciones negativas</strong>, el sistema dispara una <strong>Alerta de Sesgo</strong>: sus votos pierden ponderación en el score global del inquilino y la Mesa de Supervisión audita el caso para garantizar el derecho a descargo.
+  </p>
+
+  <!-- ==================== PÁGINA 4: CATEGORÍAS, PÓLIZAS Y ROADMAP ==================== -->
+  <div class="page-break"></div>
+
+  <h2>8. Las Dos Categorías de Publicación y Algoritmo de Búsqueda</h2>
+  <p>
+    Estrategia de <em>"Zanahoria en vez de Palo"</em>: no se excluye a la oferta informal inicial, pero se premia a los predios con auditoría y seguro mediante máxima conversión:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Parámetro</th>
+        <th style="width: 35%;">Categoría 1: Publicación Estándar</th>
+        <th style="width: 40%;">Categoría 2: Premium / Oferta con Seguro</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Requisitos</strong></td>
+        <td>Alta base sin validación ni póliza previa.</td>
+        <td>Validación in situ aprobada + Póliza de RC vigente.</td>
+      </tr>
+      <tr>
+        <td><strong>Insignia Visual</strong></td>
+        <td>Sin insignia. Cartel informativo transparente.</td>
+        <td>Insignia verde destacada: <strong>"Oferta con Seguro"</strong>.</td>
+      </tr>
+      <tr>
+        <td><strong>Aviso al Huésped</strong></td>
+        <td><em>«Propiedad sin validación de seguro activa»</em>.</td>
+        <td><em>«Predio Verificado In Situ · Cobertura RC Triunfo Seguros»</em>.</td>
+      </tr>
+      <tr>
+        <td><strong>Posicionamiento</strong></td>
+        <td>Indexación orgánica base (segundo orden).</td>
+        <td><strong>Prioridad Top #1 absoluta</strong> en portadas y búsquedas.</td>
+      </tr>
+      <tr>
+        <td><strong>Deslinde Legal</strong></td>
+        <td>Intermediación publicitaria pura. Riesgo civil del huésped.</td>
+        <td>Respaldo legal pleno, acta provincial y trazabilidad de póliza.</td>
+      </tr>
+      <tr>
+        <td><strong>Tasa de Conversión</strong></td>
+        <td>Nivel base de consultas informales.</td>
+        <td><strong>Hasta 5x más conversiones</strong> por WhatsApp por alta confianza.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="formula-box">
+    Ordering_Score = (P_seguro * 100) + (P_visita_insitu * 50) + (Score_reputacion * 20) + Reciente
+  </div>
+
+  <h2>9. Flujo Post-Validación: Homologación y Contratación de Pólizas</h2>
+  <p>
+    Una vez que el inspector aprueba el acta técnica in situ, se habilitan dos rutas de homologación:
+  </p>
+  <ul>
+    <li><strong>Camino A (Póliza Propia):</strong> El propietario presenta su póliza contratada previamente. El validador la coteja en terreno y al aprobar el acta adquiere de inmediato la insignia <strong>"Oferta con Seguro"</strong>.</li>
+    <li><strong>Camino B (Alianza Triunfo Seguros - Post-Constatación):</strong> Tras la aprobación del acta pericial, el panel del dueño desbloquea el módulo <em>«Activar Cobertura Oficial»</em> en 2 clics:
+      <ul style="margin-left: 14px; margin-top: 3px;">
+        <li><em>Plan Mensual Temporada:</em> Cobertura diurna continua para predios de alquiler habitual.</li>
+        <li><em>Microseguro por Jornada:</em> Cobertura puntual por fin de semana o reserva concreta devengada.</li>
+        <li><em>Seguro de Eventos / Fiestas:</em> Cobertura para bodas, aniversarios o eventos con aforo ampliado.</li>
+        <li><em>Plan Anual Bonificado:</em> 365 días con arancel preferencial e insignia permanente.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2>10. Hoja de Ruta y Próximos Pasos en el Código</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 10%;">Estado</th>
+        <th style="width: 45%;">Hito Técnico / Funcional</th>
+        <th style="width: 45%;">Capa Afectada</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Completado</strong></td>
+        <td>Escala canónica de 5 estados de rating en reservas (<code>up</code>, <code>follow_up</code>, <code>down</code>, <code>rejected</code>, <code>none</code>).</td>
+        <td>Migraciones SQLite/MySQL, Modelos Eloquent y Vistas Vue 3.</td>
+      </tr>
+      <tr>
+        <td><strong>Completado</strong></td>
+        <td>Campos de cuenta de cobro única (<code>payout_account_type</code>, <code>number</code>, <code>bank</code>, <code>verified</code>).</td>
+        <td>Tablas <code>users</code> y <code>verification_requests</code>, Controladores Staff.</td>
+      </tr>
+      <tr>
+        <td><strong>En Desarrollo</strong></td>
+        <td>Tabla <code>host_blocked_tenants</code> para indexar vetos permanentes entre anfitriones e inquilinos.</td>
+        <td>Migración Laravel, Modelo <code>HostBlockedTenant</code>, Políticas de Acceso.</td>
+      </tr>
+      <tr>
+        <td><strong>En Desarrollo</strong></td>
+        <td>Ponderación del <code>ordering_score</code> en <code>CatalogController@properties</code> para priorizar predios asegurados.</td>
+        <td>Query Builder Eloquent y Filtros Reactivos del Catálogo Público.</td>
+      </tr>
+      <tr>
+        <td><strong>Planificado</strong></td>
+        <td>Modal interactivo <code>ModalActivateInsurance.vue</code> para emisión en 2 clics con Triunfo Seguros.</td>
+        <td>Frontend Vue 3 (Pinia + Tailwind Design System Stitch).</td>
+      </tr>
+      <tr>
+        <td><strong>Planificado</strong></td>
+        <td>Ficha prontuarial con gráfico radar de scoring en el perfil del inquilino (<code>InquilinoPanelView.vue</code>).</td>
+        <td>Componente de Reputación y Métricas de Calidad de Huésped.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- FOOTER FINAL AMIGABLE CON EL MEDIO AMBIENTE -->
+  <div class="footer-note">
+    Documento emitido conforme a las directrices de Turismo Seguro San Juan • Arquitectura de Software Limpia y Sostenible • Consumo Óptimo de Tintas.
+  </div>
+
+</body>
+</html>
