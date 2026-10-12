@@ -85,13 +85,6 @@ const handleAddOfferClick = () => {
             <span class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">
               Ofertas Registradas:
             </span>
-            <button
-              type="button"
-              class="text-[11px] font-bold text-secondary hover:underline cursor-pointer flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 rounded"
-              @click="handleAddOfferClick"
-            >
-              <span class="material-symbols-outlined text-[13px]" aria-hidden="true">add</span> Agregar
-            </button>
           </div>
           <div class="flex flex-col gap-1.5">
             <button
@@ -218,20 +211,8 @@ const handleAddOfferClick = () => {
       </div>
 
       <!-- Footer del Sidebar -->
-      <div class="px-space-lg flex flex-col gap-space-sm">
-        <div
-          class="p-space-sm bg-secondary-container/40 rounded-xl flex items-center justify-between border border-secondary/20"
-        >
-          <div class="flex items-center gap-space-xs">
-            <span class="material-symbols-outlined text-secondary text-[20px]" aria-hidden="true">gshield</span>
-            <div class="flex flex-col">
-              <span class="font-label-sm text-label-sm text-on-surface font-bold">Trazabilidad Seguro</span>
-              <span class="font-label-sm text-label-sm text-secondary">Vence: Nov 2025</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex items-center justify-between pt-space-sm">
+      <div class="px-space-lg flex flex-col gap-space-sm pt-space-sm border-t border-surface-container">
+        <div class="flex items-center justify-between">
           <div class="flex items-center gap-space-sm min-w-0">
             <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0">
               <span class="text-xs font-bold text-on-primary">

@@ -104,15 +104,13 @@ class ClientPropertyController extends Controller
             }
         }
 
-        // Generar Token de Seguridad Oficial Antifraude (ej: TS-748291)
-        $securityToken = 'TS-' . str_pad((string) random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
-
         // Crear automáticamente la Solicitud de Verificación In Situ para la mesa de supervisión
+        // El Token Antifraude Oficial (TS-XXXXXX) se emitirá cuando el supervisor asigne un validador para la visita
         $verificationRequest = VerificationRequest::create([
             'property_id' => $property->id,
             'client_id' => $request->user()->id,
             'status' => 'pending',
-            'security_token' => $securityToken,
+            'security_token' => null,
             'notes' => $validated['observations'] ?? 'Alta inicial de oferta realizada desde el Panel del Anfitrión.',
         ]);
 
