@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             BookingSeeder::class,
             EventSeeder::class,
             LegacyExperienceSeeder::class,
+            PayoutAccountSeeder::class,
         ]);
     }
 }

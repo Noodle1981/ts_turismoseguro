@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Turismo Seguro — Matriz FODA y Estrategias CAME</title>
+  <style>
+    /* ==========================================================================
+       MODO AHORRO DE TINTA / IMPRESIÓN ECOLÓGICA INTELIGENTE (A4 PORTRAIT)
+       ========================================================================== */
+    @page {
+      size: A4 portrait;
+      margin: 12mm 12mm 14mm 12mm;
+      @bottom-right {
+        content: "Página " counter(page) " de " counter(pages);
+        font-size: 7pt;
+        color: #555555;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      @bottom-left {
+        content: "Turismo Seguro • Matriz FODA & Estrategias CAME (Modo Ahorro)";
+        font-size: 7pt;
+        color: #777777;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8pt;
+      line-height: 1.35;
+      color: #111111;
+      background: #ffffff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .header-banner {
+      border-bottom: 1.5pt solid #0b1f3a;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .brand-title {
+      font-size: 15pt;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      color: #0b1f3a;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-size: 8pt;
+      font-weight: 600;
+      color: #333333;
+      margin-top: 2px;
+    }
+
+    .meta-box {
+      text-align: right;
+      font-size: 7pt;
+      color: #555555;
+      line-height: 1.3;
+    }
+
+    .badge-eco {
+      display: inline-block;
+      border: 0.8pt solid #1b5e20;
+      color: #1b5e20;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-weight: 700;
+      font-size: 6.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 2px;
+    }
+
+    h2 {
+      font-size: 10pt;
+      font-weight: 700;
+      color: #0b1f3a;
+      border-bottom: 0.6pt solid #cccccc;
+      padding-bottom: 2px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      page-break-after: avoid;
+    }
+
+    h3 {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #222222;
+      margin-top: 7px;
+      margin-bottom: 3px;
+      page-break-after: avoid;
+    }
+
+    p {
+      margin-bottom: 4px;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 14px;
+      margin-bottom: 5px;
+    }
+
+    li {
+      margin-bottom: 2px;
+    }
+
+    strong {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       REJILLA FODA (4 CUADRANTES)
+       ========================================================================== */
+    .foda-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      margin: 8px 0 12px 0;
+      page-break-inside: avoid;
+    }
+
+    .foda-card {
+      border: 0.8pt solid #cccccc;
+      border-radius: 3px;
+      padding: 7px 8px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .foda-header {
+      font-size: 7.8pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding-bottom: 3px;
+      margin-bottom: 5px;
+      border-bottom: 1pt solid #cccccc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .foda-badge {
+      font-size: 6.5pt;
+      padding: 1px 4px;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+
+    /* Estilos por cuadrante */
+    .card-f {
+      border-color: #1b5e20;
+      background: #fcfdfc;
+    }
+    .card-f .foda-header {
+      color: #1b5e20;
+      border-bottom-color: #1b5e20;
+    }
+    .card-f .foda-badge {
+      background: #e8f5e9;
+      color: #1b5e20;
+    }
+
+    .card-o {
+      border-color: #0b1f3a;
+      background: #fcfdfe;
+    }
+    .card-o .foda-header {
+      color: #0b1f3a;
+      border-bottom-color: #0b1f3a;
+    }
+    .card-o .foda-badge {
+      background: #eef2f6;
+      color: #0b1f3a;
+    }
+
+    .card-d {
+      border-color: #8c5b00;
+      background: #fffefb;
+    }
+    .card-d .foda-header {
+      color: #8c5b00;
+      border-bottom-color: #8c5b00;
+    }
+    .card-d .foda-badge {
+      background: #fff8e1;
+      color: #8c5b00;
+    }
+
+    .card-a {
+      border-color: #b71c1c;
+      background: #fffdfd;
+    }
+    .card-a .foda-header {
+      color: #b71c1c;
+      border-bottom-color: #b71c1c;
+    }
+    .card-a .foda-badge {
+      background: #ffebee;
+      color: #b71c1c;
+    }
+
+    .foda-list {
+      list-style-type: disc;
+      margin-left: 12px;
+      font-size: 7.2pt;
+      line-height: 1.28;
+      color: #222222;
+    }
+
+    .foda-list li {
+      margin-bottom: 3.5px;
+    }
+
+    /* TABLAS ESTILO AHORRO */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 6px 0 8px 0;
+      font-size: 7.5pt;
+      page-break-inside: avoid;
+    }
+
+    th, td {
+      border: 0.5pt solid #b0b0b0;
+      padding: 4px 5px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #f2f4f7;
+      color: #0b1f3a;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 6.8pt;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #fafbfc;
+    }
+
+    .callout {
+      border-left: 2pt solid #0b1f3a;
+      border-top: 0.4pt solid #d0d0d0;
+      border-right: 0.4pt solid #d0d0d0;
+      border-bottom: 0.4pt solid #d0d0d0;
+      background-color: #fcfdfe;
+      padding: 6px 8px;
+      margin: 6px 0 8px 0;
+      border-radius: 0 3px 3px 0;
+      page-break-inside: avoid;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      font-size: 7.8pt;
+      color: #0b1f3a;
+      margin-bottom: 2px;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .footer-note {
+      margin-top: 10px;
+      padding-top: 5px;
+      border-top: 0.5pt solid #dddddd;
+      font-size: 6.8pt;
+      color: #666666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PÁGINA 1: MATRIZ FODA SINTÉTICA ==================== -->
+  <div class="header-banner">
+    <div>
+      <div class="brand-title">Turismo Seguro — San Juan Verificado</div>
+      <div class="brand-subtitle">Matriz FODA y Estrategias CAME • Análisis Estratégico Integral</div>
+    </div>
+    <div class="meta-box">
+      <span class="badge-eco">Modo Ahorro Tóner</span><br>
+      Versión: 2.4 Oficial • Octubre 2026<br>
+      Marco: SWOT / CAME Cruzado
+    </div>
+  </div>
+
+  <p>
+    <strong>Propósito Estratégico:</strong> El análisis FODA y la matriz CAME formulan las directrices operativas y de mercado para consolidar a Turismo Seguro como el estándar unánime de confianza en alquileres temporales, protegiendo a anfitriones e inquilinos frente a las estafas virtuales y neutralizando amenazas competitivas.
+  </p>
+
+  <!-- MATRIZ FODA EN 4 CUADRANTES -->
+  <div class="foda-grid">
+    
+    <!-- FORTALEZAS (INTERNO +) -->
+    <div class="foda-card card-f">
+      <div class="foda-header">
+        <span>Fortalezas (F) — Factores Internos</span>
+        <span class="foda-badge">Activos Propios</span>
+      </div>
+      <ul class="foda-list">
+        <li><strong>F1. Peritaje Físico In Situ:</strong> Única plataforma con inspección presencial obligatoria de seguridad pasiva (cerco pileta 1,20m, disyuntor 30mA, matafuegos).</li>
+        <li><strong>F2. Blindaje Antifraude Diferido:</strong> Token de seguridad de 6 dígitos y congelamiento total de tarifas y calendario durante el trámite.</li>
+        <li><strong>F3. Gobernanza Bancaria Estricta:</strong> Validación de que la cuenta de cobro (CBU/CVU) pertenezca al titular DNI acreditado.</li>
+        <li><strong>F4. Motor Multi-Modalidad Sanjuanino:</strong> Precios por turnos diurnos (mañana/tarde/día completo), fines de semana y eventos.</li>
+        <li><strong>F5. Ficha Prontuarial de Huéspedes:</strong> Scoring de 5 niveles, veto directo y algoritmo anti-bias para anfitriones conflictivos.</li>
+        <li><strong>F6. Comisiones Agresivas en Calle:</strong> 60%-70% Mes 1 y 15%-20% residual recurrente que movilizan al validador.</li>
+        <li><strong>F7. Alianza Insurtech (Triunfo Seguros):</strong> Emisión instantánea de pólizas RC y microseguros diarios en 2 clics.</li>
+      </ul>
+    </div>
+
+    <!-- OPORTUNIDADES (EXTERNO +) -->
+    <div class="foda-card card-o">
+      <div class="foda-header">
+        <span>Oportunidades (O) — Factores Externos</span>
+        <span class="foda-badge">Entorno Favorable</span>
+      </div>
+      <ul class="foda-list">
+        <li><strong>O1. Clamor Social por Ciberestafas:</strong> Proliferación de fraudes en Facebook Marketplace e Instagram genera urgencia por un sello de autenticidad.</li>
+        <li><strong>O2. Boom de Quintas Diurnas de Cercanía:</strong> Fuerte demanda de familias sanjuaninas por piletas en Médano de Oro, Pocito y Zonda.</li>
+        <li><strong>O3. Calendario de Mega-Eventos:</strong> Fiesta Nacional del Sol, TC El Villicum y turismo de bodegas saturan la plaza hotelera.</li>
+        <li><strong>O4. Alianzas Institucionales:</strong> Ministerio de Turismo y municipios buscan ordenar la oferta informal sin persecución fiscal.</li>
+        <li><strong>O5. Vacío de Competencia Presencial:</strong> Ni Airbnb ni Booking tienen inspectores en calle en los departamentos sanjuaninos.</li>
+        <li><strong>O6. Escalabilidad Regional:</strong> Potencial de réplica inmediata en Mendoza, San Luis y La Rioja.</li>
+      </ul>
+    </div>
+
+    <!-- DEBILIDADES (INTERNO -) -->
+    <div class="foda-card card-d">
+      <div class="foda-header">
+        <span>Debilidades (D) — Factores Internos</span>
+        <span class="foda-badge">A Corregir</span>
+      </div>
+      <ul class="foda-list">
+        <li><strong>D1. Dependencia de Logística Física:</strong> El ritmo de crecimiento inicial está sujeto a la movilidad física de los validadores en terreno.</li>
+        <li><strong>D2. Fricción Inicial de Pago:</strong> Resistencia de propietarios a pagar arancel y cuota mensual frente a la gratuidad informal de redes sociales.</li>
+        <li><strong>D3. Historial de Scoring en Desarrollo:</strong> La base de datos de calificaciones de inquilinos requiere tiempo para madurar volumen.</li>
+        <li><strong>D4. Brecha Digital en Zonas Rurales:</strong> Anfitriones tradicionales (Calingasta, Iglesia) que demandan asistencia en la carga de datos.</li>
+        <li><strong>D5. Penetración de Marca Inicial:</strong> Notoriedad en construcción frente al hábito arraigado de buscar en canales informales.</li>
+      </ul>
+    </div>
+
+    <!-- AMENAZAS (EXTERNO -) -->
+    <div class="foda-card card-a">
+      <div class="foda-header">
+        <span>Amenazas (A) — Factores Externos</span>
+        <span class="foda-badge">A Neutralizar</span>
+      </div>
+      <ul class="foda-list">
+        <li><strong>A1. Gigantes Internacionales (Airbnb/Booking):</strong> Enorme presupuesto global de marketing y posicionamiento mental masivo.</li>
+        <li><strong>A2. Persistencia del Canal Informal:</strong> Grupos cerrados de WhatsApp y avisos gratuitos en redes sociales sin control.</li>
+        <li><strong>A3. Volatilidad Económica e Inflación:</strong> Caída del poder adquisitivo que restrinja el gasto recreativo familiar.</li>
+        <li><strong>A4. Temor a Fiscalización Impositiva:</strong> Propietarios que confunden certificación técnica de seguridad con control fiscal (DGR/AFIP).</li>
+        <li><strong>A5. Riesgo de Colusión en Terreno:</strong> Intentos de fraude o negligencia entre validador y dueño (frenado por Supervisión).</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ==================== PÁGINA 2: MATRIZ CAME Y ESTRATEGIAS CRUZADAS ==================== -->
+  <div class="page-break"></div>
+
+  <h2>2. Matriz Estratégica Cruzada (CAME / FO, FA, DO, DA)</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 20%;">Tipo de Estrategia</th>
+        <th style="width: 40%;">Combinación de Factores</th>
+        <th style="width: 40%;">Iniciativa Táctica Concreta</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Ofensivas (FO)<br><em>Explotar Oportunidades con Fortalezas</em></strong></td>
+        <td>
+          • F1 + F2 + O1 (Inspección + Clamor ciberestafas)<br>
+          • F4 + F6 + O2 (Motor turnos + Quintas diurnas)<br>
+          • F7 + O3 + O4 (Seguros + Fiesta del Sol)
+        </td>
+        <td>
+          • <strong>Campaña "Verano Seguro Sin Estafas":</strong> Posicionar el Sello QR oficial como el único con garantía física in situ.<br>
+          • <strong>Operativo Zonal de Quintas:</strong> Desplegar validadores en Médano de Oro y Pocito antes de temporada alta.<br>
+          • <strong>Co-Branding con Triunfo Seguros:</strong> Impulsar la Categoría 2 (Con Seguro) en eventos provinciales oficiales.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Defensivas (FA)<br><em>Afrontar Amenazas con Fortalezas</em></strong></td>
+        <td>
+          • F1 + A1 (Inspección in situ vs Gigantes)<br>
+          • F2 + F3 + A5 (Supervisión vs Fraude interno)<br>
+          • F4 + A3 (Precios en pesos vs Inflación)
+        </td>
+        <td>
+          • <strong>Contraste Radical de Confianza:</strong> <em>«En Airbnb no sabés si existe; en Turismo Seguro fue un perito a probar la pileta»</em>.<br>
+          • <strong>Doble Candado Antifraude:</strong> La Mesa de Supervisión coteja fotos georreferenciadas y CBU con DNI antes de emitir sello.<br>
+          • <strong>Cero Comisiones Ocultas al Huésped:</strong> Precios directos sin sobreprecios en dólares ni intermediación bancaria externa.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Reorientación (DO)<br><em>Corregir Debilidades con Oportunidades</em></strong></td>
+        <td>
+          • D2 + O4 (Resistencia pago + Apoyo ministerial)<br>
+          • D4 + O2 (Brecha digital + Venta en terreno)<br>
+          • D3 + O3 (Historial scoring + Grandes eventos)
+        </td>
+        <td>
+          • <strong>Tarifa Promocional "Plan Pionero":</strong> Bonificación de ingreso apalancada en difusión municipal para romper inercia.<br>
+          • <strong>Onboarding Presencial:</strong> El validador configura el perfil, tarifas y fotos directamente en el predio del anfitrión.<br>
+          • <strong>Gamificación del Scoring:</strong> Campañas de calificación post-estadía en eventos provinciales para nutrir la base.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Supervivencia (DA)<br><em>Minimizar Debilidades y evitar Amenazas</em></strong></td>
+        <td>
+          • D1 + A3 (Costes fijos vs Recesión)<br>
+          • D2 + A4 (Fricción pago + Temor fiscal)<br>
+          • D1 + A5 (Logística calle + Disciplina técnica)
+        </td>
+        <td>
+          • <strong>Estructura Magra a Éxito:</strong> Modelo remunerado a comisión de validadores (60-70% / 15-20%) sin costes fijos pesados.<br>
+          • <strong>Deslinde Pedagógico Fiscal:</strong> Mensajes y actas aclarando que la certificación es de <em>seguridad física y civil</em>, no fiscal.<br>
+          • <strong>Auditorías Aleatorias Periódicas:</strong> Revalidación anual obligatoria y control sorpresa a propiedades aprobadas.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. Hoja de Ruta Táctica e Indicadores de Éxito</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Fase Estratégica</th>
+        <th style="width: 45%;">Objetivo Operativo</th>
+        <th style="width: 30%;">KPI de Control</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Fase 1 (Meses 1 - 3)<br>Despliegue Zonal</strong></td>
+        <td>Captar los primeros 60 predios en Médano de Oro, Pocito y Zonda con la fuerza en calle.</td>
+        <td>• 10 validadores activos.<br>• 60 actas periciales aprobadas.<br>• 0 incidentes de fraude.</td>
+      </tr>
+      <tr>
+        <td><strong>Fase 2 (Meses 4 - 6)<br>Temporada Alta & Seguros</strong></td>
+        <td>Maximizar la contratación de pólizas de RC y microseguros diarios en verano y eventos.</td>
+        <td>• > 65% predios en Categoría 2.<br>• > 85% retención mensual SaaS.</td>
+      </tr>
+      <tr>
+        <td><strong>Fase 3 (Meses 7 - 12)<br>Consolidación & Scoring</strong></td>
+        <td>Maduración de la ficha de inquilinos, acuerdos municipales y réplica en Cuyo (Mendoza).</td>
+        <td>• 150+ predios verificados.<br>• > 1.000 estadías calificadas.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer-note">
+    Documento emitido conforme a las directrices de Turismo Seguro San Juan • Arquitectura de Software Limpia y Sostenible • Consumo Óptimo de Tintas.
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Turismo Seguro — Business Model Canvas (BMC)</title>
+  <style>
+    /* ==========================================================================
+       MODO AHORRO DE TINTA / IMPRESIÓN ECOLÓGICA INTELIGENTE (A4 PORTRAIT)
+       ========================================================================== */
+    @page {
+      size: A4 portrait;
+      margin: 12mm 12mm 14mm 12mm;
+      @bottom-right {
+        content: "Página " counter(page) " de " counter(pages);
+        font-size: 7pt;
+        color: #555555;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      @bottom-left {
+        content: "Turismo Seguro • Business Model Canvas (Modo Ahorro Ecológico)";
+        font-size: 7pt;
+        color: #777777;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8pt;
+      line-height: 1.35;
+      color: #111111;
+      background: #ffffff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .header-banner {
+      border-bottom: 1.5pt solid #0b1f3a;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .brand-title {
+      font-size: 15pt;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      color: #0b1f3a;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-size: 8pt;
+      font-weight: 600;
+      color: #333333;
+      margin-top: 2px;
+    }
+
+    .meta-box {
+      text-align: right;
+      font-size: 7pt;
+      color: #555555;
+      line-height: 1.3;
+    }
+
+    .badge-eco {
+      display: inline-block;
+      border: 0.8pt solid #1b5e20;
+      color: #1b5e20;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-weight: 700;
+      font-size: 6.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 2px;
+    }
+
+    h2 {
+      font-size: 10pt;
+      font-weight: 700;
+      color: #0b1f3a;
+      border-bottom: 0.6pt solid #cccccc;
+      padding-bottom: 2px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      page-break-after: avoid;
+    }
+
+    h3 {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #222222;
+      margin-top: 7px;
+      margin-bottom: 3px;
+      page-break-after: avoid;
+    }
+
+    p {
+      margin-bottom: 4px;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 14px;
+      margin-bottom: 5px;
+    }
+
+    li {
+      margin-bottom: 2px;
+    }
+
+    strong {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 7.5pt;
+      background-color: #f5f5f5;
+      padding: 1px 3px;
+      border: 0.4pt solid #cccccc;
+      border-radius: 2px;
+    }
+
+    /* ==========================================================================
+       CANVAS VISUAL GRID (EL LIENZO DE 9 BLOQUES)
+       ========================================================================== */
+    .canvas-container {
+      border: 1pt solid #0b1f3a;
+      border-radius: 4px;
+      margin: 8px 0 12px 0;
+      background: #ffffff;
+      page-break-inside: avoid;
+    }
+
+    .canvas-top {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1.2fr 1fr 1.1fr;
+      border-bottom: 1pt solid #0b1f3a;
+      min-height: 220px;
+    }
+
+    .canvas-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 90px;
+    }
+
+    .canvas-cell {
+      padding: 6px;
+      border-right: 0.5pt solid #cccccc;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .canvas-cell:last-child {
+      border-right: none;
+    }
+
+    .canvas-split {
+      display: flex;
+      flex-direction: column;
+      border-right: 0.5pt solid #cccccc;
+    }
+
+    .canvas-split-cell {
+      padding: 6px;
+      flex: 1;
+      border-bottom: 0.5pt solid #cccccc;
+    }
+
+    .canvas-split-cell:last-child {
+      border-bottom: none;
+    }
+
+    .canvas-header {
+      font-size: 6.8pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #0b1f3a;
+      border-bottom: 0.5pt solid #0b1f3a;
+      padding-bottom: 2px;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .canvas-badge {
+      background: #eef2f6;
+      color: #0b1f3a;
+      font-size: 6pt;
+      padding: 1px 3px;
+      border-radius: 2px;
+    }
+
+    .canvas-list {
+      list-style-type: disc;
+      margin-left: 11px;
+      font-size: 6.8pt;
+      line-height: 1.25;
+      color: #222222;
+    }
+
+    .canvas-list li {
+      margin-bottom: 2px;
+    }
+
+    /* TABLAS ESTILO AHORRO */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 6px 0 8px 0;
+      font-size: 7.5pt;
+      page-break-inside: avoid;
+    }
+
+    th, td {
+      border: 0.5pt solid #b0b0b0;
+      padding: 4px 5px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #f2f4f7;
+      color: #0b1f3a;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 6.8pt;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #fafbfc;
+    }
+
+    .callout {
+      border-left: 2pt solid #0b1f3a;
+      border-top: 0.4pt solid #d0d0d0;
+      border-right: 0.4pt solid #d0d0d0;
+      border-bottom: 0.4pt solid #d0d0d0;
+      background-color: #fcfdfe;
+      padding: 6px 8px;
+      margin: 6px 0 8px 0;
+      border-radius: 0 3px 3px 0;
+      page-break-inside: avoid;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      font-size: 7.8pt;
+      color: #0b1f3a;
+      margin-bottom: 2px;
+    }
+
+    .callout-green {
+      border-left-color: #1b5e20;
+      background-color: #fcfdfc;
+    }
+
+    .callout-green .callout-title {
+      color: #1b5e20;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .footer-note {
+      margin-top: 10px;
+      padding-top: 5px;
+      border-top: 0.5pt solid #dddddd;
+      font-size: 6.8pt;
+      color: #666666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PÁGINA 1: EL LIENZO OFICIAL DE 9 BLOQUES ==================== -->
+  <div class="header-banner">
+    <div>
+      <div class="brand-title">Turismo Seguro — San Juan Verificado</div>
+      <div class="brand-subtitle">Business Model Canvas (BMC) • Lienzo Estratégico de Negocio Oficial</div>
+    </div>
+    <div class="meta-box">
+      <span class="badge-eco">Modo Ahorro Tóner</span><br>
+      Versión: 2.4 Oficial • Octubre 2026<br>
+      Marco: Alexander Osterwalder (9 Bloques)
+    </div>
+  </div>
+
+  <p>
+    <strong>Tesis Operativa:</strong> Turismo Seguro opera una <strong>Plataforma Multi-Lado (Multi-Sided Platform)</strong> de certificación pericial física <em>in situ</em>, blindaje antifraude y comercialización de alquileres temporarios y quintas recreativas en San Juan, erradicando al 100% las estafas virtuales mediante inspección presencial y el otorgamiento del Sello Oficial con QR.
+  </p>
+
+  <!-- LIENZO VISUAL COMPACTO -->
+  <div class="canvas-container">
+    <div class="canvas-top">
+      
+      <!-- 8. ASOCIACIONES CLAVE -->
+      <div class="canvas-cell">
+        <div class="canvas-header">
+          <span>8. Asociaciones Clave</span>
+          <span class="canvas-badge">Socios</span>
+        </div>
+        <ul class="canvas-list">
+          <li><strong>Validadores en Calle:</strong> Red matriculada comisionada.</li>
+          <li><strong>Triunfo Seguros:</strong> Pólizas de RC y microseguros en 2 clics.</li>
+          <li><strong>Ministerio de Turismo de SJ:</strong> Respaldo institucional y homologación.</li>
+          <li><strong>Municipios:</strong> Rawson (Médano), Pocito, Zonda, Ullum, Calingasta.</li>
+          <li><strong>Cámaras Inmobiliarias:</strong> Combate conjunto a estafas ilegales.</li>
+        </ul>
+      </div>
+
+      <!-- 7. ACTIVIDADES & 6. RECURSOS -->
+      <div class="canvas-split">
+        <div class="canvas-split-cell">
+          <div class="canvas-header">
+            <span>7. Actividades Clave</span>
+            <span class="canvas-badge">Operación</span>
+          </div>
+          <ul class="canvas-list">
+            <li><strong>Auditoría In Situ:</strong> Prueba física de disyuntor, cerco pileta y matafuegos.</li>
+            <li><strong>Mesa Antifraude:</strong> Token diferido y cruce estricto CBU/DNI.</li>
+            <li><strong>Desarrollo SaaS:</strong> Calendario, tarifas y catálogo reactivo.</li>
+          </ul>
+        </div>
+        <div class="canvas-split-cell">
+          <div class="canvas-header">
+            <span>6. Recursos Clave</span>
+            <span class="canvas-badge">Activos</span>
+          </div>
+          <ul class="canvas-list">
+            <li><strong>Fuerza Pericial:</strong> Inspectores zonales.</li>
+            <li><strong>Software & API:</strong> Laravel 13, Vue 3, OpenAPI 3.1.</li>
+            <li><strong>Marca y Sello QR:</strong> San Juan Verificado.</li>
+            <li><strong>Base de Datos:</strong> Scoring y actas.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 2. PROPUESTAS DE VALOR -->
+      <div class="canvas-cell" style="background-color: #fafbfc;">
+        <div class="canvas-header" style="border-bottom-color: #1b5e20;">
+          <span style="color: #1b5e20;">2. Propuestas de Valor</span>
+          <span class="canvas-badge" style="background: #e8f5e9; color: #1b5e20;">Diferencial</span>
+        </div>
+        <ul class="canvas-list">
+          <li><strong>Garantía Cero Estafas:</strong> 100% inspección física presencial obligatoria in situ.</li>
+          <li><strong>Para Propietarios:</strong> Sello QR oficial, blindaje contra robos de identidad, tarifas multi-modalidad (semana, finde, eventos) y ficha prontuarial de inquilinos.</li>
+          <li><strong>Para Inquilinos:</strong> Seguridad pasiva certificada, contacto directo por WhatsApp al titular verificado y microseguros diarios accesibles.</li>
+          <li><strong>Para Validadores:</strong> Comisiones agresivas (60-70% Mes 1, 15-20% residual permanente).</li>
+        </ul>
+      </div>
+
+      <!-- 4. RELACIÓN & 3. CANALES -->
+      <div class="canvas-split">
+        <div class="canvas-split-cell">
+          <div class="canvas-header">
+            <span>4. Relación Clientes</span>
+            <span class="canvas-badge">Vínculo</span>
+          </div>
+          <ul class="canvas-list">
+            <li><strong>Alianza B2Pro:</strong> Asesoría en visita y autogestión SaaS.</li>
+            <li><strong>Confianza B2C:</strong> Transparencia, actas públicas, sin comisión oculta.</li>
+            <li><strong>Comunidad:</strong> Acompañamiento a validadores.</li>
+          </ul>
+        </div>
+        <div class="canvas-split-cell">
+          <div class="canvas-header">
+            <span>3. Canales</span>
+            <span class="canvas-badge">Llegada</span>
+          </div>
+          <ul class="canvas-list">
+            <li><strong>Web PWA Responsive:</strong> Mobile-first.</li>
+            <li><strong>WhatsApp Oficial:</strong> Enlace preformateado.</li>
+            <li><strong>Venta en Calle:</strong> Visitas de prospección.</li>
+            <li><strong>Eventos Oficiales:</strong> Fiesta del Sol.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 1. SEGMENTOS DE CLIENTES -->
+      <div class="canvas-cell">
+        <div class="canvas-header">
+          <span>1. Segmentos Clientes</span>
+          <span class="canvas-badge">Mercado</span>
+        </div>
+        <ul class="canvas-list">
+          <li><strong>Dueños de Quintas:</strong> Predios diurnos con pileta (Médano, Pocito, Rawson).</li>
+          <li><strong>Cabañas & Posadas:</strong> Zonda, Ullum, Calingasta, Iglesia.</li>
+          <li><strong>Residentes Sanjuaninos:</strong> Familias y grupos de fin de semana / eventos.</li>
+          <li><strong>Turistas Nacionales/Ext.:</strong> Viajeros vacacionales o corporativos.</li>
+          <li><strong>Validadores:</strong> Profesionales y técnicos en búsqueda de ingresos.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- FILA INFERIOR FINANCIERA -->
+    <div class="canvas-bottom">
+      <!-- 9. ESTRUCTURA DE COSTES -->
+      <div class="canvas-cell" style="border-right: 0.5pt solid #cccccc;">
+        <div class="canvas-header">
+          <span>9. Estructura de Costes (Egresos)</span>
+          <span class="canvas-badge">Costos</span>
+        </div>
+        <ul class="canvas-list">
+          <li><strong>Comisiones a Validadores:</strong> 60%-70% arancel alta (Mes 1) y 15%-20% cuota mensual (Mes 2+).</li>
+          <li><strong>Infraestructura Cloud:</strong> Servidores, base de datos gestionada, SSL, CDN.</li>
+          <li><strong>Pauta Digital:</strong> Google Ads geolocalizado y Meta Ads (Instagram/FB).</li>
+          <li><strong>Operación Fija:</strong> Mesa de Supervisión, soporte legal y contable.</li>
+        </ul>
+      </div>
+
+      <!-- 5. FUENTES DE INGRESOS -->
+      <div class="canvas-cell" style="background-color: #fafbfc;">
+        <div class="canvas-header" style="border-bottom-color: #1b5e20;">
+          <span style="color: #1b5e20;">5. Fuentes de Ingresos (Monetización)</span>
+          <span class="canvas-badge" style="background: #e8f5e9; color: #1b5e20;">Flujos</span>
+        </div>
+        <ul class="canvas-list">
+          <li><strong>Tarifa de Alta & Auditoría In Situ (Mes 1):</strong> Cobro inicial por visita pericial y QR.</li>
+          <li><strong>Suscripción SaaS Mensual Anfitrión (Mes 2+):</strong> Mantenimiento de sello, tarifas y agenda.</li>
+          <li><strong>Intermediación Insurtech:</strong> Margen por pólizas anuales/mensuales y microseguros diarios.</li>
+          <li><strong>Aranceles por Eventos Especiales:</strong> Coberturas de gran aforo y pautas premium.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PÁGINA 2: ANÁLISIS DETALLADO POR BLOQUE ==================== -->
+  <div class="page-break"></div>
+
+  <h2>1. Desglose Analítico de los 9 Bloques Estratégicos</h2>
+
+  <h3>Bloque 1 & 2: Segmentos de Clientes y Propuesta de Valor Única</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Segmento de Cliente</th>
+        <th style="width: 35%;">Dolor / Problema Previo</th>
+        <th style="width: 40%;">Propuesta de Valor Turismo Seguro</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Dueños de Quintas y Cabañas (`client`)</strong></td>
+        <td>Clonación de fotos en Facebook, estafas en su nombre, huéspedes conflictivos que dañan el predio e incertidumbre tarifaria.</td>
+        <td>Sello oficial San Juan Verificado con QR, motor tarifario multi-modalidad (turnos diurnos), ficha prontuarial de inquilinos y póliza RC simplificada.</td>
+      </tr>
+      <tr>
+        <td><strong>Inquilinos Locales y Turistas (`rent`)</strong></td>
+        <td>Pánico a transferir señas a estafadores virtuales, fotos engañosas, falta de seguridad en piletas y sobreprecios de comisiones.</td>
+        <td>Cero estafas garantizadas por peritaje in situ, CBU auditado del titular DNI, fotos reales de fachada y microseguros por día desde el celular.</td>
+      </tr>
+      <tr>
+        <td><strong>Validadores Comerciales (`validator`)</strong></td>
+        <td>Dificultad para generar ingresos estables en tareas técnicas de terreno y falta de herramientas operativas móviles.</td>
+        <td>60%-70% del arancel en Mes 1, residual del 15%-20% por cartera activa, app responsive con checklist pericial y mapa de rutas.</td>
+      </tr>
+      <tr>
+        <td><strong>Aseguradoras & Entes Turísticos</strong></td>
+        <td>Imposibilidad de asegurar inmuebles informales sin inspección previa; imagen provincial dañada por estafas reiteradas.</td>
+        <td>Inspección física previa que reduce siniestralidad a cero, formalización del parque turístico y fomento del turismo seguro.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Bloque 3, 4 & 7: Canales, Relación y Actividades Clave</h3>
+  <ul>
+    <li><strong>Canales Integrados:</strong> Portal Web PWA responsive de alta velocidad, botón directo de WhatsApp oficial preformateado y fuerza comercial de validadores en calle visitando corredores recreativos (Médano de Oro, Pocito, Zonda).</li>
+    <li><strong>Relación B2Pro & B2C:</strong> Asesoría en terreno en el alta inicial y autogestión total mediante el Panel del Anfitrión; máxima transparencia para el inquilino (sin sobreprecios de comisión agregados al valor del alquiler).</li>
+    <li><strong>Actividades Críticas:</strong>
+      <ol style="margin-left: 14px; margin-top: 2px;">
+        <li><em>Auditoría Pericial In Situ:</em> Prueba física de disyuntor test 30mA, cerco de pileta 1,20m, matafuegos ABC y coordenadas GPS.</li>
+        <li><em>Torre de Supervisión Antifraude:</em> Emisión de token diferido de 6 dígitos, cruce bancario estricto CBU/DNI y dictamen técnico.</li>
+        <li><em>Desarrollo Tecnológico Continuo:</em> Mantenimiento del stack Laravel 13, Vue 3, OpenAPI 3.1 y motor de búsqueda reactivo.</li>
+      </ol>
+    </li>
+  </ul>
+
+  <h3>Bloque 5, 8 & 9: Ecuación Económica y Alianzas</h3>
+  <div class="callout callout-green">
+    <div class="callout-title">Esquema Financiero Escalable y de Bajo Riesgo</div>
+    <p>
+      El modelo convierte los principales costes operativos de captación en <strong>costes variables por éxito</strong> (comisiones a validadores). Al retener el 80%-85% de la suscripción SaaS recurrente desde el Mes 2 en adelante, la plataforma genera un flujo de caja predecible con alto margen neto reinvertible en marketing y tecnología.
+    </p>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 28%;">Concepto Económico</th>
+        <th style="width: 22%;">Mes 1 (Alta & Peritaje)</th>
+        <th style="width: 25%;">Mes 2+ (Cartera Activa)</th>
+        <th style="width: 25%;">Destino de Fondos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Participación Validador</strong></td>
+        <td><strong>60% al 70%</strong> del arancel</td>
+        <td><strong>15% al 20%</strong> de la suscripción</td>
+        <td>Retribuye movilidad en calle y fidelización.</td>
+      </tr>
+      <tr>
+        <td><strong>Margen Bruto Plataforma</strong></td>
+        <td>30% al 40%</td>
+        <td><strong>80% al 85%</strong> recurrente</td>
+        <td>Infraestructura cloud, marketing y beneficio neto.</td>
+      </tr>
+      <tr>
+        <td><strong>Vertical Insurtech (Seguros)</strong></td>
+        <td>Cotización bonificada</td>
+        <td>Comisión de intermediación</td>
+        <td>Pólizas RC anuales y microseguros diarios.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer-note">
+    Documento emitido conforme a las directrices de Turismo Seguro San Juan • Arquitectura de Software Limpia y Sostenible • Consumo Óptimo de Tintas.
+  </div>
+
+</body>
+</html>
