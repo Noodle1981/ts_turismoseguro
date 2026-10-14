@@ -144,7 +144,7 @@ const close = () => {
 
       <div class="p-space-sm rounded-lg bg-surface-container flex flex-col gap-1">
         <span class="font-label-sm text-label-sm text-on-surface font-bold">
-          Historial en Red Turismo Seguro San Juan:
+          Historial en Red Turismo Seguro:
         </span>
         <p class="font-body-sm text-body-sm text-secondary font-semibold">
           {{ selectedTenant.history }}

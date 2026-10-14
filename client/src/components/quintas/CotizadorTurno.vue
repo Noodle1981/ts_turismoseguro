@@ -57,7 +57,7 @@ const decrementGuests = () => {
 const whatsappBookingUrl = computed(() => {
   const cleanPhone = props.hostWhatsapp.replace(/[^0-9]/g, '')
   const shiftText = selectedShift.value === 'full_day' ? 'Día Completo (10:00 a 20:30 hs)' : 'Turno Tarde / Noche (15:00 a 01:00 hs)'
-  const message = `¡Hola! Me comunico a través del portal oficial *Turismo Seguro San Juan* para reservar tu quinta o cabaña *${props.quintaTitle}* (ID: ${props.quintaId}).\n\n📅 Fecha: ${rentDate.value}\n⏰ Turno: ${shiftText}\n👥 Cantidad de Personas: ${guestCount.value}\n💵 Presupuesto de Referencia: ${formattedTotal.value}\n\n¿Tienen disponibilidad para coordinar la seña oficial? Muchas gracias!`
+  const message = `¡Hola! Me comunico a través del portal oficial *Turismo Seguro* para reservar tu quinta o cabaña *${props.quintaTitle}* (ID: ${props.quintaId}).\n\n📅 Fecha: ${rentDate.value}\n⏰ Turno: ${shiftText}\n👥 Cantidad de Personas: ${guestCount.value}\n💵 Presupuesto de Referencia: ${formattedTotal.value}\n\n¿Tienen disponibilidad para coordinar la seña oficial? Muchas gracias!`
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`
 })
 </script>

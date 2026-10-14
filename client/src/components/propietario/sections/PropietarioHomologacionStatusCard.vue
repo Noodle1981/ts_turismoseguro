@@ -719,7 +719,7 @@ const showStandardCategoryModal = ref(false)
 
         <div class="flex flex-col gap-3 text-xs leading-relaxed text-on-surface-variant">
           <p>
-            En <strong>Turismo Seguro San Juan</strong> no te excluimos ni te obligamos a tener seguro para dar a conocer tu predio. Sin embargo, para cuidar la transparencia con los turistas y la seguridad jurídica de la plataforma, aplican estas condiciones:
+            En <strong>Turismo Seguro</strong> no te excluimos ni te obligamos a tener seguro para dar a conocer tu predio. Sin embargo, para cuidar la transparencia con los turistas y la seguridad jurídica de la plataforma, aplican estas condiciones:
           </p>
 
           <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 space-y-2">

@@ -13,7 +13,7 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      title: 'Turismo Seguro San Juan — Alquileres Diurnos Verificados',
+      title: 'Turismo Seguro — Alquileres Diurnos Verificados',
     },
   },
   {
@@ -21,7 +21,7 @@ const routes = [
     name: 'explorar',
     component: ExplorarQuintasView,
     meta: {
-      title: 'Catálogo de Filtros y Quintas Verificadas — Turismo Seguro San Juan',
+      title: 'Catálogo de Filtros y Quintas Verificadas — Turismo Seguro',
     },
   },
   {
@@ -29,7 +29,7 @@ const routes = [
     name: 'quinta-detalle',
     component: DetalleQuintaView,
     meta: {
-      title: 'Detalle de Quinta Diurna — Turismo Seguro San Juan',
+      title: 'Detalle de Quinta Diurna — Turismo Seguro',
     },
   },
   {
@@ -37,7 +37,7 @@ const routes = [
     name: 'login',
     component: AuthView,
     meta: {
-      title: 'Iniciar Sesión y Registro — Turismo Seguro San Juan',
+      title: 'Iniciar Sesión y Registro — Turismo Seguro',
       hideLayout: true,
       guestOnly: true,
     },
@@ -47,7 +47,7 @@ const routes = [
     name: 'registro',
     component: AuthView,
     meta: {
-      title: 'Registro de Propietario — Turismo Seguro San Juan',
+      title: 'Registro de Propietario — Turismo Seguro',
       hideLayout: true,
       guestOnly: true,
     },
@@ -57,7 +57,7 @@ const routes = [
     name: 'staff-login',
     component: StaffAuthView,
     meta: {
-      title: 'Portal Staff & Auditoría — Turismo Seguro San Juan',
+      title: 'Portal Staff & Auditoría — Turismo Seguro',
       hideLayout: true,
     },
   },
@@ -78,7 +78,7 @@ const routes = [
     name: 'validador-bandeja',
     component: () => import('../views/ValidadorBandejaView.vue'),
     meta: {
-      title: 'Bandeja Operativa de Solicitudes — Turismo Seguro San Juan',
+      title: 'Bandeja Operativa de Solicitudes — Turismo Seguro',
       requiresAuth: true,
       roles: ['validator', 'supervisor', 'admin', 'super_admin'],
     },
@@ -88,7 +88,7 @@ const routes = [
     name: 'validador-mapa',
     component: () => import('../views/ValidadorMapaView.vue'),
     meta: {
-      title: 'Mapa Territorial de Inspecciones — Turismo Seguro San Juan',
+      title: 'Mapa Territorial de Inspecciones — Turismo Seguro',
       requiresAuth: true,
       roles: ['validator', 'supervisor', 'admin', 'super_admin'],
     },
@@ -98,7 +98,7 @@ const routes = [
     name: 'validador-acta',
     component: ValidadorActaView,
     meta: {
-      title: 'Acta de Inspección In Situ — Turismo Seguro San Juan',
+      title: 'Acta de Inspección In Situ — Turismo Seguro',
       requiresAuth: true,
       roles: ['validator', 'supervisor', 'admin', 'super_admin'],
     },
@@ -112,7 +112,7 @@ const routes = [
     name: 'supervisor-mesa',
     component: () => import('../views/SupervisorDictamenesView.vue'),
     meta: {
-      title: 'Mesa de Supervisión y Dictámenes Técnicos — Turismo Seguro San Juan',
+      title: 'Mesa de Supervisión y Dictámenes Técnicos — Turismo Seguro',
       requiresAuth: true,
       roles: ['supervisor', 'admin', 'super_admin'],
     },
@@ -122,7 +122,7 @@ const routes = [
     name: 'eventos',
     component: EventosCercanosView,
     meta: {
-      title: 'Eventos & Experiencias Cercanas — Turismo Seguro San Juan',
+      title: 'Eventos & Experiencias Cercanas — Turismo Seguro',
     },
   },
   {
@@ -134,7 +134,7 @@ const routes = [
     name: 'inquilino-panel',
     component: () => import('../views/InquilinoPanelView.vue'),
     meta: {
-      title: 'Mis Alquileres Diurnos & Pólizas — Turismo Seguro San Juan',
+      title: 'Mis Alquileres Diurnos & Pólizas — Turismo Seguro',
       requiresAuth: true,
       roles: ['rent', 'super_admin'],
     },
@@ -148,7 +148,7 @@ const routes = [
     name: 'propietario-panel',
     component: () => import('../views/PropietarioPanelView.vue'),
     meta: {
-      title: 'Panel de Propietario — Turismo Seguro San Juan',
+      title: 'Panel de Propietario — Turismo Seguro',
       hideLayout: true,
       requiresAuth: true,
       roles: ['client', 'super_admin'],

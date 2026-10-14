@@ -122,7 +122,7 @@ const selectTab = (tab: string) => {
         <div class="flex flex-wrap items-center gap-space-sm mb-space-md">
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/40 text-on-secondary-fixed font-label-sm text-label-sm font-bold">
             <span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
-            TURISMO SEGURO SAN JUAN • RED AUDITADA 2026
+            TURISMO SEGURO • RED AUDITADA 2026
           </span>
           <span class="text-on-surface-variant font-label-md text-label-md hidden sm:inline-flex items-center gap-1 font-semibold">
             <span class="material-symbols-outlined text-[14px]">shield_lock</span>

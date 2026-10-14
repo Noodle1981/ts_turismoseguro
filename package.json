@@ -2,7 +2,7 @@
   "name": "turismo-seguro-san-juan",
   "version": "1.0.0",
   "private": true,
-  "description": "Plataforma de Alquileres Verificados y Turismo Seguro San Juan - Monorepo Contract-First",
+  "description": "Plataforma de Alquileres Verificados y Turismo Seguro - Monorepo Contract-First",
   "scripts": {
     "docs": "scalar document serve -p 5054 -w ./contracts/openapi.yaml",
     "docs:preview": "pnpm dlx @redocly/cli preview-docs ./contracts/openapi.yaml",

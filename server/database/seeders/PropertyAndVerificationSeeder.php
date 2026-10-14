@@ -49,7 +49,7 @@ class PropertyAndVerificationSeeder extends Seeder
                 'capacity' => 45,
                 'bedrooms' => 1,
                 'bathrooms' => 3,
-                'description' => 'Predio diurno homologado por Turismo Seguro San Juan. Quincho cerrado para 45 personas, pileta cercada de 8x4m, cancha de vóley, 2 freezers y amplio estacionamiento interno sombreado.',
+                'description' => 'Predio diurno homologado por Turismo Seguro. Quincho cerrado para 45 personas, pileta cercada de 8x4m, cancha de vóley, 2 freezers y amplio estacionamiento interno sombreado.',
                 'host_whatsapp' => '+54 9 264 458-9211',
                 'host_phone' => '+54 9 264 458-9211',
                 'latitude' => -31.6155000,

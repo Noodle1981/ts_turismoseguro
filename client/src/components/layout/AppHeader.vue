@@ -62,7 +62,7 @@ const handleLogout = async () => {
               <span class="material-symbols-outlined text-[24px]">shield</span>
             </div>
             <span class="font-headline-sm text-headline-sm text-primary tracking-tight hidden sm:inline-block">
-              Turismo Seguro <span class="font-headline-sm text-headline-sm text-secondary">San Juan</span>
+              Turismo Seguro
             </span>
           </RouterLink>
 

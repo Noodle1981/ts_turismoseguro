@@ -138,7 +138,7 @@ const handleAssign = () => {
             <div class="p-2.5 rounded-lg bg-surface-container border border-surface-container-high/80 text-[11px] leading-relaxed text-on-surface-variant flex items-start gap-2">
               <span class="material-symbols-outlined text-primary text-[16px] shrink-0 mt-0.5">verified_user</span>
               <div>
-                <p class="font-semibold text-primary">Política Oficial de Turismo Seguro San Juan:</p>
+                <p class="font-semibold text-primary">Política Oficial de Turismo Seguro:</p>
                 <p class="mt-0.5">
                   El medio de pago (CBU o Billetera Virtual) debe ser <strong>único</strong> y encontrarse registrado <strong>estrictamente bajo la misma titularidad</strong> del propietario registral (<strong>{{ docket.ownerName }}</strong> - DNI <span class="font-mono">{{ docket.ownerDni }}</span>).
                 </p>

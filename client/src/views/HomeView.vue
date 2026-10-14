@@ -145,7 +145,7 @@ const handleSearch = () => {
               <div class="relative rounded-xl overflow-hidden mb-space-md">
                 <img
                   class="w-full h-48 object-cover rounded-xl"
-                  alt="Inspector técnico de Turismo Seguro San Juan"
+                  alt="Inspector técnico de Turismo Seguro"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-KblXpDFmkd1I3C_w8SVRktSYLOCOV0v2ot_dMeZI1aN59rCAd_z2Gss294DIeq115NWf8uaJmr3PP__p6F_Ij2el6w9qWKf2s_EAIqayziI5n4TXEDzkK1bHNr5x3g4Ft-SSNofAGZaWKZiU7wJXoJFNCgylz-mYxqOdOXjN3duA7Q83c1n2aGeIOaYRO0vE-Yq6m8_YALBTQeAYs6x2DTW95pyETYM7lzrhZY6AXwax7BTyfWd0"
                   loading="eager"
                   fetchpriority="high"

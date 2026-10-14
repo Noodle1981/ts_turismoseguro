@@ -1,6 +1,6 @@
 # 📜 Contratos de API (Single Source of Truth)
 
-Este directorio alberga la especificación canónica **OpenAPI 3.1** de la API para `Turismo Seguro San Juan`.
+Este directorio alberga la especificación canónica **OpenAPI 3.1** de la API para `Turismo Seguro`.
 
 ---
 

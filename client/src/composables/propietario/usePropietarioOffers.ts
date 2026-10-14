@@ -291,7 +291,7 @@ export function usePropietarioOffers() {
     showAddOfferModal.value = false
     showAlert({
       title: '¡Oferta Registrada con Éxito!',
-      message: `La oferta "${newOffer.value.title}" fue registrada exitosamente en borrador. La Mesa de Supervisores de Turismo Seguro San Juan recibió la solicitud para coordinar y asignar la inspección in situ del predio.`,
+      message: `La oferta "${newOffer.value.title}" fue registrada exitosamente en borrador. La Mesa de Supervisores de Turismo Seguro recibió la solicitud para coordinar y asignar la inspección in situ del predio.`,
       icon: 'check_circle',
     })
   }
@@ -307,7 +307,7 @@ export function usePropietarioOffers() {
     const { showAlert } = useConfirmDialog()
     showAlert({
       title: 'Solicitud Enviada',
-      message: 'Solicitud enviada al cuerpo técnico de validadores de Turismo Seguro San Juan. Nos comunicaremos dentro de las 24hs hábiles para confirmar el turno presencial.',
+      message: 'Solicitud enviada al cuerpo técnico de validadores de Turismo Seguro. Nos comunicaremos dentro de las 24hs hábiles para confirmar el turno presencial.',
       icon: 'assignment_turned_in',
     })
     revalidacionForm.value.notas = ''

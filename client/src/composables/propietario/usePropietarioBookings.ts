@@ -131,7 +131,7 @@ export function usePropietarioBookings(
           title: 'Fecha Bloqueada con Éxito',
           message:
             'Estado: "Reserva Particular (Fuera de Plataforma)"\n\n' +
-            'Constancia Legal: La fecha figura NO DISPONIBLE para alquiler en Turismo Seguro San Juan. Ni la plataforma ni el seguro emitido amparan eventos o incidentes acordados por fuera del sistema.',
+            'Constancia Legal: La fecha figura NO DISPONIBLE para alquiler en Turismo Seguro. Ni la plataforma ni el seguro emitido amparan eventos o incidentes acordados por fuera del sistema.',
           icon: 'no_crash',
         })
       } else {

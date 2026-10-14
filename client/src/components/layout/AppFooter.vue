@@ -11,7 +11,7 @@
             <span class="material-symbols-outlined text-secondary text-[28px]" style="font-variation-settings: 'FILL' 1;">
               verified_user
             </span>
-            <span class="font-headline-sm text-headline-sm text-primary font-bold">Turismo Seguro San Juan</span>
+            <span class="font-headline-sm text-headline-sm text-primary font-bold">Turismo Seguro</span>
           </div>
           <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
             Plataforma sanjuanina de alquiler temporal para pasar el día. Eliminamos las estafas virtuales mediante auditoría física in situ en quintas, cabañas y quinchos.
@@ -71,7 +71,7 @@
 
       <div class="pt-space-md border-t border-surface-container flex flex-col md:flex-row items-center justify-between gap-space-sm text-xs">
         <p class="font-body-sm text-body-sm text-on-surface-variant">
-          © 2026 Turismo Seguro San Juan. Plataforma de fiscalización comunitaria para eventos y días de campo.
+          © 2026 Turismo Seguro. Plataforma de fiscalización comunitaria para eventos y días de campo.
         </p>
         <div class="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant font-bold">
           <span>San Juan Seguro</span>

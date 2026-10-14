@@ -1,9 +1,9 @@
 openapi: 3.1.0
 info:
-  title: Turismo Seguro San Juan - API
+  title: Turismo Seguro - API
   version: 1.0.0
   description: >
-    API REST oficial de la plataforma Turismo Seguro San Juan.
+    API REST oficial de la plataforma Turismo Seguro.
     Gobernada bajo arquitectura Contract-First para certificación in situ,
     catálogo de alojamientos verificados, experiencias turísticas y gestión de comisiones.
   contact:

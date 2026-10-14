@@ -322,7 +322,7 @@ const close = () => {
               <span>Constancia Legal y Deslinde de Responsabilidad:</span>
             </div>
             <p class="text-[11px] leading-relaxed">
-              Al declarar esta fecha como <strong>Bloqueada por Reserva Externa</strong>, queda registrado fehacientemente que el inmueble <strong>no estuvo disponible para alquiler dentro del sistema</strong>. Ante cualquier incidente, siniestro o reclamo de terceros, la plataforma y la aseguradora contarán con la constancia de que la estadía fue acordada fuera de Turismo Seguro San Juan, eximiendo de validación, certificación o amparo de póliza.
+              Al declarar esta fecha como <strong>Bloqueada por Reserva Externa</strong>, queda registrado fehacientemente que el inmueble <strong>no estuvo disponible para alquiler dentro del sistema</strong>. Ante cualquier incidente, siniestro o reclamo de terceros, la plataforma y la aseguradora contarán con la constancia de que la estadía fue acordada fuera de Turismo Seguro, eximiendo de validación, certificación o amparo de póliza.
             </p>
           </div>
           <div
